@@ -29,7 +29,11 @@
       "parser": "@typescript-eslint/parser"
     }
   ],
-  "ignorePatterns": ["/components/ui/*", "/lib/utils.ts"],
+  "ignorePatterns": [
+    "/src/components/ui/*",
+    "/src/lib/utils.ts",
+    "/src/hooks/use-toast.ts"
+  ],
   "rules": {
     "react/prop-types": 0,
     "react/react-in-jsx-scope": "off",
