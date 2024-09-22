@@ -31,7 +31,7 @@ export function Footer() {
           <NewsletterSection />
 
           {/* social media section  */}
-          <div className="flex h-full items-center justify-between gap-x-5 rounded-2xl bg-base-0 px-8 shadow-xl">
+          <div className="flex h-full items-center justify-between gap-x-5 rounded-2xl bg-base-0 px-8 shadow-[7px_20px_50px_rgba(0,0,0,0.09)]">
             <SocialIcon icon={<IconBrandFacebook size={34} />} />
             <SocialIcon icon={<IconBrandInstagram size={34} />} />
             <SocialIcon icon={<IconBrandTwitter size={34} />} />
