@@ -1,0 +1,9 @@
+node_modules/*
+
+src/components/ui/*
+src/lib/utils.ts
+src/hooks/use-toast.ts
+
+.gitignore
+.next
+

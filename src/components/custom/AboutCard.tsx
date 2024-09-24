@@ -8,7 +8,7 @@ type AboutCardProps = {
 
 export function AboutCard({ icon, title, desc }: AboutCardProps) {
   return (
-    <div className="rounded-[10px] px-20 py-8 shadow-lg">
+    <div className="rounded-[10px] px-20 py-8 shadow-[2px_9px_42px_rgba(0,0,0,0.04)]">
       <div className="flex items-end gap-x-6">
         {icon}
         <h3 className="text-[40px] font-bold leading-8 text-base-400">
