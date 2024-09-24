@@ -1,3 +1,5 @@
+"use client";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,8 +9,11 @@ import {
 import { menuItems } from "@/constants/menuItems";
 import { IconChevronDown } from "@tabler/icons-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export function Nav() {
+  const pathname = usePathname();
+  console.log(pathname);
   return (
     <nav>
       <ul className="flex items-center gap-x-2">
@@ -16,7 +21,8 @@ export function Nav() {
           !menu?.submenu ? (
             <li
               key={menu.id}
-              className="text-lg font-extrabold transition-all duration-200 ease-in-out hover:text-primary"
+              data-link={menu.path === pathname}
+              className={`text-lg font-extrabold transition-all duration-200 ease-in-out hover:text-primary data-[link=true]:text-primary`}
             >
               <Link className="px-2 py-1" href={menu.path}>
                 {menu.name}

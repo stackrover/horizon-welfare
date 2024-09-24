@@ -1,5 +1,6 @@
 export * from "./custom/AboutCard";
 export * from "./custom/AboutCards";
+export * from "./custom/AwardCard";
 export * from "./custom/Banner";
 export * from "./custom/BlogCard";
 export * from "./custom/BlogSection";
@@ -16,8 +17,10 @@ export * from "./custom/Nav";
 export * from "./custom/Navbar";
 export * from "./custom/NewsletterSection";
 export * from "./custom/NgoProjectSection";
+export * from "./custom/OurJourneySummary";
 export * from "./custom/SocialIcon";
 export * from "./custom/SummaryCard";
 export * from "./custom/SummaryCards";
+export * from "./custom/TeamMemberCard";
 export * from "./custom/TopPartnersSection";
 export * from "./custom/WatchOurGallerySection";
