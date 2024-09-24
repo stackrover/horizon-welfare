@@ -14,7 +14,7 @@ type CardData = {
 export function BlogCard({ cardData }: { cardData: CardData }) {
   return (
     <div className="group overflow-hidden rounded-xl border shadow">
-      <div className="m-2 overflow-hidden rounded-lg">
+      <div className="m-4 overflow-hidden rounded-lg">
         <Image
           src={cardData.imageUrl}
           alt="Donation"

@@ -9,7 +9,7 @@ import * as React from "react";
 export function Navbar() {
   const [position, setPosition] = React.useState("ENG");
   return (
-    <header className="sticky left-0 top-0 z-50 h-[113px] bg-base-0">
+    <header className="sticky left-0 top-0 z-50 h-[113px] bg-base-0 shadow">
       <div className="mx-auto flex h-full max-w-[1520px] items-center justify-between">
         {/* logo section  */}
         <Logo />
