@@ -48,6 +48,10 @@ html {
   overflow: -moz-hidden-unscrollable;
 }
 
+body {
+  scroll-behavior: smooth;
+}
+
 @layer base {
   * {
     @apply border-border;
