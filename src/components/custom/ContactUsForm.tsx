@@ -73,7 +73,7 @@ export function ContactUsForm({ className }: { className?: string }) {
   );
 }
 
-const FormInput = ({ className, type, ...props }: InputProps) => {
+const FormInput = ({ type, ...props }: InputProps) => {
   return (
     <input
       type={type}
