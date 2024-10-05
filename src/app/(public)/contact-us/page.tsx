@@ -72,7 +72,7 @@ export default function ContactUs() {
           </div>
         </div>
       </section>
-      {/* contact us section end  */}
+      {/* contact us section end   */}
 
       {/* contact form section  */}
       <section className="mx-auto mt-[100px] max-w-3xl">

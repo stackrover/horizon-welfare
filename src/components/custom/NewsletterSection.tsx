@@ -1,9 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 
-export function NewsletterSection() {
+export function NewsletterSection({ className }: { className?: string }) {
   return (
-    <div className="flex h-full flex-1 items-center justify-between rounded-2xl bg-base-0 px-8 py-8 pl-16 shadow-[7px_20px_50px_rgba(0,0,0,0.09)]">
+    <div
+      className={cn(
+        "flex h-full flex-1 items-center justify-between rounded-2xl bg-base-0 px-8 py-8 pl-16 shadow-[7px_20px_50px_rgba(0,0,0,0.09)]",
+        className,
+      )}
+    >
       <div>
         <h2 className="text-[40px] font-extrabold leading-[48px] text-base-400">
           Newsletter

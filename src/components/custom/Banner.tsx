@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 import PlayerIcon from "../../../public/icons/PlayerIcon";
 
-export function Banner() {
+export function Banner({ className }: { className?: string }) {
   return (
-    <section className="relative">
+    <section className={cn("relative", className)}>
       <Image
         src="/images/banner.png"
         alt="Banner"
