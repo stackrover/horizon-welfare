@@ -1,8 +1,9 @@
+"use client";
+
 import {
   FooterMenuItems,
   NewsletterSection,
   SocialIcon,
-  SummaryCards,
   TopPartnersSection,
 } from "@/components";
 import {
@@ -11,9 +12,14 @@ import {
   IconBrandTwitter,
   IconBrandYoutube,
 } from "@tabler/icons-react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { Separator } from "../ui/separator";
+
+const SummaryCards = dynamic(() => import("@/components/custom/SummaryCards"), {
+  ssr: false,
+});
 
 export function Footer() {
   return (

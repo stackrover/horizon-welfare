@@ -2,7 +2,7 @@ import React from "react";
 
 type SummaryCardProps = {
   icon: React.ReactNode;
-  title: string;
+  title: string | React.ReactNode;
   subTitle: string;
 };
 

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { cardData } from "@/constants/cardData";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   DonateHandIcon,
   FoodIcon,
@@ -12,6 +13,7 @@ import {
 } from "../../../../public/icons";
 
 export default function Projects() {
+  const pathname = usePathname();
   return (
     <main>
       {/* top news section  */}
@@ -68,31 +70,31 @@ export default function Projects() {
           image="/images/project-image-2.png"
           title="ZAKAT PROJECTS"
           subtext="When you donate, you’re supporting effective care to children with special needs—an investment in the leaders of tomorrow."
-          link="/"
+          link={`${pathname}/1`}
         />
         <StoryCard
           image="/images/project-image-2.png"
           title="ZAKAT PROJECTS"
           subtext="When you donate, you’re supporting effective care to children with special needs—an investment in the leaders of tomorrow."
-          link="/"
+          link={`${pathname}/2`}
         />
         <StoryCard
           image="/images/project-image-2.png"
           title="ZAKAT PROJECTS"
           subtext="When you donate, you’re supporting effective care to children with special needs—an investment in the leaders of tomorrow."
-          link="/"
+          link={`${pathname}/3`}
         />
         <StoryCard
           image="/images/project-image-2.png"
           title="ZAKAT PROJECTS"
           subtext="When you donate, you’re supporting effective care to children with special needs—an investment in the leaders of tomorrow."
-          link="/"
+          link={`${pathname}/4`}
         />
         <StoryCard
           image="/images/project-image-2.png"
           title="ZAKAT PROJECTS"
           subtext="When you donate, you’re supporting effective care to children with special needs—an investment in the leaders of tomorrow."
-          link="/"
+          link={`${pathname}/5`}
         />
       </section>
       {/* success stories section  */}
