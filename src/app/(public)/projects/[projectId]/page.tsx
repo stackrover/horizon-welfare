@@ -11,11 +11,7 @@ import {
 import Image from "next/image";
 import SirenIcon from "../../../../../public/icons/SirenIcon";
 
-export default function ProjectDetailsPage({
-  params,
-}: {
-  params: { projectId: string };
-}) {
+export default function ProjectDetailsPage() {
   return (
     <main>
       {/* image gallery section  */}
