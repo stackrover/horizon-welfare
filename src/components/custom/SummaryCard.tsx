@@ -1,10 +1,4 @@
-import React from "react";
-
-type SummaryCardProps = {
-  icon: React.ReactNode;
-  title: string | React.ReactNode;
-  subTitle: string;
-};
+import { SummaryCardProps } from "@/types/types";
 
 export function SummaryCard({ icon, title, subTitle }: SummaryCardProps) {
   return (

@@ -14,7 +14,8 @@ export function Banner({ className }: { className?: string }) {
         height={800}
         priority
       />
-      <div className="absolute left-60 top-1/2 flex max-w-[728px] -translate-y-1/2 flex-col gap-y-4 rounded-lg bg-base-0 p-4 opacity-80">
+
+      <div className="absolute left-60 top-1/2 flex max-w-[728px] -translate-y-1/2 flex-col gap-y-4 rounded-lg bg-base-0/80 p-4 backdrop-blur-[5px]">
         <h1 className="text-6xl font-bold leading-[72px] text-primary">
           Happiness comes from your action.
         </h1>

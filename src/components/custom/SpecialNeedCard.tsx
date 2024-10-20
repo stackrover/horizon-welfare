@@ -1,10 +1,4 @@
-import React from "react";
-
-type SpecialNeedCardProps = {
-  icon: React.ReactNode;
-  title: string;
-  text: string;
-};
+import { SpecialNeedCardProps } from "@/types/types";
 
 export function SpecialNeedCard({ icon, title, text }: SpecialNeedCardProps) {
   return (

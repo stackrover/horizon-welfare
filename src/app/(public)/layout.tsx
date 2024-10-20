@@ -1,4 +1,5 @@
 import { Footer, Navbar } from "@/components";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import React from "react";
 
 export default function PublicLayout({
@@ -8,9 +9,11 @@ export default function PublicLayout({
 }>) {
   return (
     <div className="bg-[#FCFCFC]">
-      <Navbar />
-      {children}
-      <Footer />
+      <TooltipProvider>
+        <Navbar />
+        {children}
+        <Footer />
+      </TooltipProvider>
     </div>
   );
 }

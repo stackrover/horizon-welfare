@@ -1,12 +1,13 @@
 "use client";
 
+import { SummaryCard } from "@/components";
+
+import CountUp from "react-countup";
 import {
   PeopleRaisedIcon,
   PoorPeopleSavedIcon,
   Volunteer,
-} from "@/../public/icons";
-import { SummaryCard } from "@/components";
-import CountUp from "react-countup";
+} from "../../../public/icons";
 
 export default function SummaryCards() {
   return (
@@ -21,20 +22,20 @@ export default function SummaryCards() {
       <SummaryCard
         icon={<PoorPeopleSavedIcon />}
         title={
-          <h1>
+          <span>
             <CountUp enableScrollSpy={true} scrollSpyOnce={true} end={100} />
             <span>+</span>
-          </h1>
+          </span>
         }
         subTitle="Projects Accomplished"
       />
       <SummaryCard
         icon={<Volunteer />}
         title={
-          <h1>
+          <span>
             <CountUp enableScrollSpy={true} scrollSpyOnce={true} end={1000} />
             <span>+</span>
-          </h1>
+          </span>
         }
         subTitle="People Established"
       />

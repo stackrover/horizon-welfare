@@ -1,10 +1,4 @@
-import React from "react";
-
-type AboutCardProps = {
-  title: string;
-  desc: string;
-  icon: React.ReactNode;
-};
+import { AboutCardProps } from "@/types/types";
 
 export function AboutCard({ icon, title, desc }: AboutCardProps) {
   return (

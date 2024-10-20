@@ -1,16 +1,10 @@
 "use client";
 
 import { Separator } from "@/components/ui/separator";
+import { ProjectProps } from "@/types/types";
 import { IconArrowRight } from "@tabler/icons-react";
 import Link from "next/link";
-import React from "react";
 import { Button } from "../ui/button";
-
-type ProjectProps = {
-  title: string;
-  icon: React.ReactNode;
-  link: string;
-};
 
 export function Project({ title, icon, link }: ProjectProps) {
   return (

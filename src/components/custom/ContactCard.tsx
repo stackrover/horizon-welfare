@@ -1,12 +1,6 @@
-import React from "react";
+import { ContactCardProps } from "@/types/types";
 
-type ContactCardProp = {
-  icon: React.ReactNode;
-  title: string;
-  subtitle: string;
-};
-
-export function ContactCard({ icon, title, subtitle }: ContactCardProp) {
+export function ContactCard({ icon, title, subtitle }: ContactCardProps) {
   return (
     <div className="flex w-[330px] items-center gap-x-2 rounded-[20px] bg-base-0 px-6 py-4 shadow-lg">
       <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-r from-primary-light to-primary">

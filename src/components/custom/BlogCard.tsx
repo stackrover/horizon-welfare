@@ -1,18 +1,11 @@
+import { BlogCardProps } from "@/types/types";
 import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
-type CardData = {
-  imageUrl: string;
-  title: string;
-  userImgUrl: string;
-  userName: string;
-  publishingDate: string;
-};
-
-export function BlogCard({ cardData }: { cardData: CardData }) {
+export function BlogCard({ cardData }: { cardData: BlogCardProps }) {
   return (
     <div className="group overflow-hidden rounded-xl border border-[#E8E8EA] p-4">
-      <div className="m-2 overflow-hidden rounded-lg pb-4">
+      <div className="m-2 mb-4 overflow-hidden rounded-lg">
         <Image
           src={cardData.imageUrl}
           alt="Donation"

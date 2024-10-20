@@ -2,14 +2,8 @@
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { ProjectCardProps } from "@/types/types";
 import Link from "next/link";
-
-type ProjectCardProps = {
-  title: string;
-  description: string;
-  path: string;
-  className?: string;
-};
 
 export function ProjectCard({
   title,

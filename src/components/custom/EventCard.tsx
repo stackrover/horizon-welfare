@@ -1,13 +1,7 @@
+import { EventCardProps } from "@/types/types";
 import { IconArrowRight, IconBellRinging } from "@tabler/icons-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
-
-type EventCardProps = {
-  day: string;
-  month: string;
-  title: string;
-  url: string;
-};
 
 export function EventCard({ day, month, title, url }: EventCardProps) {
   return (

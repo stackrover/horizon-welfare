@@ -1,7 +1,4 @@
-type JourneySummaryProps = {
-  count: string;
-  text: string;
-};
+import { JourneySummaryProps } from "@/types/types";
 
 export function OurJourneySummary({ count, text }: JourneySummaryProps) {
   return (

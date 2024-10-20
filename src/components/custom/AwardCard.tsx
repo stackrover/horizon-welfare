@@ -1,11 +1,4 @@
-import React from "react";
-
-type AwardCardProps = {
-  icon: React.ReactNode;
-  year: string;
-  name: string;
-  place: string;
-};
+import { AwardCardProps } from "@/types/types";
 
 export function AwardCard({ icon, year, name, place }: AwardCardProps) {
   return (

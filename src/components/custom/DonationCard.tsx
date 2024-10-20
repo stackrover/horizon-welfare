@@ -1,17 +1,10 @@
 "use client";
 
+import { DonationCardProps } from "@/types/types";
 import { IconGift } from "@tabler/icons-react";
 import Image from "next/image";
 
-type CardData = {
-  imageUrl: string;
-  title: string;
-  desc: string;
-  collection: number;
-  percentage: number;
-};
-
-export function DonationCard({ cardData }: { cardData: CardData }) {
+export function DonationCard({ cardData }: { cardData: DonationCardProps }) {
   return (
     <div className="group overflow-hidden rounded-xl border shadow">
       <Image
