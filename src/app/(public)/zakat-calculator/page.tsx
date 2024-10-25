@@ -30,7 +30,7 @@ export default function ZakatCalculatorPage() {
           Zakat.
         </h5>
       </section>
-      <section className="container grid grid-cols-12 gap-16">
+      <section className="container mt-20 grid grid-cols-12 gap-16">
         <div className="col-span-7">
           <div className="flex flex-col gap-y-4 bg-base-0 px-8 py-6 shadow">
             <InputRow
