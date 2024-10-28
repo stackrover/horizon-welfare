@@ -31,8 +31,9 @@ export function LanguageChangeDropdown({
             className,
           )}
         >
-          <GlobeIcon /> <span>{value}</span>
-          <ChevronDownIcon />
+          <GlobeIcon />
+          <span className="flex-1 text-left">{value}</span>
+          <ChevronDownIcon className="justify-end" />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-full">

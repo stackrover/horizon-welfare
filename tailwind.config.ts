@@ -91,6 +91,9 @@ const config: Config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      backgroundImage: {
+        "sidebar-grd": "linear-gradient(120deg, #4BC8E8 0%, #31B0E5 100%)",
+      },
     },
   },
   plugins: [TailwindAnimation],
