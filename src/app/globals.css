@@ -50,8 +50,6 @@ body {
   scroll-behavior: smooth;
 }
 
-
-
 @layer base {
   * {
     @apply border-border;
@@ -59,4 +57,12 @@ body {
   body {
     @apply h-screen w-screen overflow-y-auto overflow-x-hidden bg-background text-foreground;
   }
+}
+
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
 }

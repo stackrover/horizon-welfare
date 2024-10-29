@@ -3,10 +3,8 @@
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
@@ -22,12 +20,12 @@ export function LanguageChangeDropdown({
   setValue: (value: string) => void;
 }) {
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <button
           type="button"
           className={cn(
-            "flex h-[45px] items-center gap-1 rounded border px-3",
+            "flex h-[45px] w-[100px] items-center justify-between gap-1 rounded border px-3",
             className,
           )}
         >
@@ -35,9 +33,7 @@ export function LanguageChangeDropdown({
           <ChevronDownIcon />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-full">
-        <DropdownMenuLabel>Language</DropdownMenuLabel>
-        <DropdownMenuSeparator />
+      <DropdownMenuContent className="w-[100px]">
         <DropdownMenuRadioGroup value={value} onValueChange={setValue}>
           <DropdownMenuRadioItem value="ENG">ENG</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="BN">BN</DropdownMenuRadioItem>

@@ -13,11 +13,11 @@ import { usePathname } from "next/navigation";
 
 export function Nav() {
   const pathname = usePathname();
-  console.log(pathname);
+
   return (
     <nav>
       <ul className="flex items-center gap-x-2">
-        {menuItems.map((menu) =>
+        {menuItems.map((menu: any) =>
           !menu?.submenu ? (
             <li
               key={menu.id}
@@ -30,7 +30,7 @@ export function Nav() {
             </li>
           ) : (
             <li key={menu.id}>
-              <DropdownMenu>
+              <DropdownMenu modal={false}>
                 <DropdownMenuTrigger asChild>
                   <div className="flex cursor-pointer items-center text-lg font-extrabold transition-all duration-200 ease-in-out hover:text-primary">
                     <h4 className="">{menu.name}</h4>

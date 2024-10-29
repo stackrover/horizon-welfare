@@ -26,6 +26,7 @@ export * from "./custom/NewsCard";
 export * from "./custom/NewsletterSection";
 export * from "./custom/NgoProjectSection";
 export * from "./custom/OurJourneySummary";
+export * from "./custom/Pagination";
 export * from "./custom/Project";
 export * from "./custom/ProjectCard";
 export * from "./custom/ProjectDetailSectionWrapper";
