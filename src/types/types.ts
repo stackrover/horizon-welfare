@@ -8,11 +8,11 @@ export type NewsCardProps = {
 
 // story card props
 export type StoryCardProps = {
-  title: string;
-  subtext: string;
-  link: string;
+  title?: string;
+  subtext?: string;
+  link?: string;
   className?: string;
-  image: string;
+  image?: string;
 };
 
 // about card props

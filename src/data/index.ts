@@ -14,6 +14,7 @@ export * from "./media-center/banner";
 export * from "./media-center/hero";
 export * from "./projects/hero";
 export * from "./projects/project";
+export * from "./projects/successStories";
 export * from "./what-we-do/card";
 export * from "./what-we-do/hero";
 export * from "./what-we-do/kidSection";

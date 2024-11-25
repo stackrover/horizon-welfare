@@ -58,6 +58,7 @@ export * from "./page-sections/media-center/MediaCenterHeroSection";
 export * from "./page-sections/ProfileNav";
 export * from "./page-sections/projects/PackageHeroSection";
 export * from "./page-sections/projects/ProjectsSection";
+export * from "./page-sections/projects/SuccessStoriesSection";
 export * from "./page-sections/SubscriptionCard";
 export * from "./page-sections/VolunteerCard";
 export * from "./page-sections/what-we-do/EventCardSection";

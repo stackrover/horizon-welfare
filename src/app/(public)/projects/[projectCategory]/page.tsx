@@ -1,6 +1,6 @@
 "use client";
 
-import { DonationCard, ProjectsSection, StoryCard } from "@/components";
+import { DonationCard, StoryCard } from "@/components";
 import { Button } from "@/components/ui/button";
 import { cardData } from "@/constants/cardData";
 import Link from "next/link";
@@ -10,10 +10,6 @@ export default function Projects() {
   const pathname = usePathname();
   return (
     <main>
-      {/* project section */}
-      <ProjectsSection />
-      {/* project section end  */}
-
       {/* success stories section  */}
       <section className="container mt-[100px] grid grid-cols-3 gap-2">
         <div className="flex flex-col gap-y-4 p-8">

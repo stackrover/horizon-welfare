@@ -16,7 +16,7 @@ export function StoryCard({
     <div className={cn(`group relative overflow-hidden`, className)}>
       <div className="from-black via-black/0 to-black/0 bg-cover bg-center transition-all duration-300 ease-in-out before:absolute before:left-0 before:top-0 before:h-full before:w-full before:bg-gradient-to-t before:content-[''] group-hover:scale-110">
         <Image
-          src={image}
+          src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}${image}`}
           alt="image"
           height={366}
           width={435}
@@ -28,9 +28,9 @@ export function StoryCard({
           {title}
         </h1>
         <h5 className="mb-4 text-sm leading-[18px] text-base-200">{subtext}</h5>
-        <Link href={link}>
+        <Link href={link ?? "#"}>
           <Button
-            className="h-fit gap-x-2 px-0 py-0 font-bold text-destructive"
+            className="h-fit gap-x-2 px-0 py-0 font-bold text-destructive transition-all duration-300 ease-in-out hover:gap-x-3"
             variant="link"
           >
             <span>VISIT PROJECT</span>
