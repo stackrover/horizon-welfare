@@ -9,7 +9,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { makeData, Person } from "@/lib/makeData";
 import { CalendarIcon } from "@radix-ui/react-icons";
-import { IconCopy, IconDots, IconEdit, IconTrash } from "@tabler/icons-react";
+import {
+  IconCopy,
+  IconDots,
+  IconEdit,
+  IconFilter,
+  IconTrash,
+} from "@tabler/icons-react";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import dynamic from "next/dynamic";
@@ -82,7 +88,7 @@ export default function Transactions() {
     {
       id: "actions",
       header: "Actions",
-      cell: (info) => (
+      cell: () => (
         <div className="flex justify-center">
           <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
@@ -121,45 +127,51 @@ export default function Transactions() {
         data={data}
         columns={columns}
         elements={
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                id="date"
-                variant="outline"
-                className={cn(
-                  "-max-w-[300px] justify-start gap-2 border-base-200 text-left font-normal text-base-300 hover:bg-base-100 hover:text-base-300",
-                  !date && "text-muted-foreground",
-                )}
-              >
-                <CalendarIcon />
-                {date?.from ? (
-                  date.to ? (
-                    <>
-                      {format(date.from, "LLL dd, y")} -{" "}
-                      {format(date.to, "LLL dd, y")}
-                    </>
+          <div className="flex items-center gap-2">
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  id="date"
+                  variant="outline"
+                  className={cn(
+                    "-max-w-[300px] justify-start gap-2 border-base-200 text-left font-normal text-base-300 hover:bg-base-100 hover:text-base-300",
+                    !date && "text-muted-foreground",
+                  )}
+                >
+                  <CalendarIcon />
+                  {date?.from ? (
+                    date.to ? (
+                      <>
+                        {format(date.from, "LLL dd, y")} -{" "}
+                        {format(date.to, "LLL dd, y")}
+                      </>
+                    ) : (
+                      format(date.from, "LLL dd, y")
+                    )
                   ) : (
-                    format(date.from, "LLL dd, y")
-                  )
-                ) : (
-                  <span>Pick a date</span>
-                )}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
-              <Calendar
-                initialFocus
-                mode="range"
-                defaultMonth={date?.from}
-                selected={date}
-                onSelect={setDate}
-                numberOfMonths={2}
-                disabled={(date) =>
-                  date > new Date() || date < new Date("1900-01-01")
-                }
-              />
-            </PopoverContent>
-          </Popover>
+                    <span>Pick a date</span>
+                  )}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  initialFocus
+                  mode="range"
+                  defaultMonth={date?.from}
+                  selected={date}
+                  onSelect={setDate}
+                  numberOfMonths={2}
+                  disabled={(date) =>
+                    date > new Date() || date < new Date("1900-01-01")
+                  }
+                />
+              </PopoverContent>
+            </Popover>
+            <Button variant="secondary">
+              <IconFilter size={20} />
+              <span>Filter</span>
+            </Button>
+          </div>
         }
       />
     </main>

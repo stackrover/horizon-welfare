@@ -1,7 +1,7 @@
 "use client";
 
 import {
-  FooterMenuItems,
+  BottomFooter,
   NewsletterSection,
   SocialIcon,
   TopPartnersSection,
@@ -13,9 +13,6 @@ import {
   IconBrandYoutube,
 } from "@tabler/icons-react";
 import dynamic from "next/dynamic";
-import Image from "next/image";
-import Link from "next/link";
-import { Separator } from "../ui/separator";
 
 const SummaryCards = dynamic(() => import("@/components/custom/SummaryCards"), {
   ssr: false,
@@ -45,44 +42,8 @@ export function Footer() {
           </div>
           {/* top footer end  */}
         </div>
-        <FooterMenuItems />
 
-        {/* footer payment method section  */}
-        <div className="my-10 flex justify-center">
-          <Image
-            src="/images/payment-method.png"
-            alt="Payment Method"
-            height={107}
-            width={975}
-          />
-        </div>
-
-        <Separator className="container" />
-
-        <div className="container flex items-center justify-between pt-4">
-          <h4 className="text-xl font-medium leading-[30px]">
-            ©2022 Horizon Welfare Organization. All rights reserved
-          </h4>
-          <div>
-            <ul className="flex items-center gap-x-8">
-              <li>
-                <Link className="text-xl font-semibold leading-[30px]" href="/">
-                  Privacy & Policy
-                </Link>
-              </li>
-              <li>
-                <Link className="text-xl font-semibold leading-[30px]" href="/">
-                  Terms & Condition
-                </Link>
-              </li>
-              <li>
-                <Link className="text-xl font-semibold leading-[30px]" href="/">
-                  Cookies and Data
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <BottomFooter />
       </footer>
     </div>
   );

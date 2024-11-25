@@ -1,34 +1,45 @@
-import { AboutCard } from "@/components";
-import {
-  CharityIcon1,
-  CharityIcon2,
-  LoveIcon,
-  SolidarityIcon,
-} from "../../../public/icons";
+"use client";
 
-export function AboutCards() {
+import { AboutCard, SectionWrapper } from "@/components";
+import { Services } from "@/data";
+import { useSWR } from "@/hooks/use-swr";
+import { cn } from "@/lib/utils";
+import _ from "lodash";
+
+export function AboutCards({ className }: { className?: string }) {
+  const { data, isLoading, isError } = useSWR("/home/service");
+
+  const serializedData = new Services(_.head(data?.data?.results));
+
   return (
-    <section className="container grid grid-cols-2 gap-8 pt-[100px]">
+    <SectionWrapper
+      isLoading={isLoading}
+      isError={isError}
+      errorClass="h-[630px]"
+      loadingClass="h-[630px]"
+      hidden={serializedData.status !== "active"}
+      className={cn("container grid grid-cols-2 gap-8 pt-[100px]", className)}
+    >
       <AboutCard
-        icon={<CharityIcon1 />}
-        title="Direct Help"
-        desc="Charities empower people to make a difference, even if it is just in a small way"
+        imageUrl={serializedData.image1}
+        title={serializedData.title1}
+        desc={serializedData.description1}
       />
       <AboutCard
-        icon={<SolidarityIcon />}
-        title="Giving Information"
-        desc="Charities empower people to make a difference, even if it is just in a small way"
+        imageUrl={serializedData.image2}
+        title={serializedData.title2}
+        desc={serializedData.description2}
       />
       <AboutCard
-        icon={<LoveIcon />}
-        title="Raising Awareness"
-        desc="Charities empower people to make a difference, even if it is just in a small way"
+        imageUrl={serializedData.image3}
+        title={serializedData.title3}
+        desc={serializedData.description3}
       />
       <AboutCard
-        icon={<CharityIcon2 />}
-        title="Relieving Poverty"
-        desc="Charities empower people to make a difference, even if it is just in a small way"
+        imageUrl={serializedData.image4}
+        title={serializedData.title4}
+        desc={serializedData.description4}
       />
-    </section>
+    </SectionWrapper>
   );
 }

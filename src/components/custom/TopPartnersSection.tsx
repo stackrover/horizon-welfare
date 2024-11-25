@@ -1,5 +1,6 @@
 "use client";
 
+import { SectionWrapper } from "@/components";
 import {
   Carousel,
   CarouselContent,
@@ -7,13 +8,30 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { partnerLogos } from "@/constants/topPartnerSliderImages";
+import { Partner } from "@/data";
+import { useSWR } from "@/hooks/use-swr";
+import { cn } from "@/lib/utils";
 import AutoScroll from "embla-carousel-auto-scroll";
 import Image from "next/image";
 
-export function TopPartnersSection() {
+export function TopPartnersSection({ className }: { className?: string }) {
+  const { data, isLoading, isError } = useSWR("/partner/list");
+
+  const serializedData = data?.data?.results
+    ? data.data.results.map(
+        (item: Record<string, unknown>) => new Partner(item),
+      )
+    : [];
+
   return (
-    <section className="mb-[160px]">
+    <SectionWrapper
+      isError={isError}
+      isLoading={isLoading}
+      errorClass="h-[220px]"
+      loadingClass="h-[220px]"
+      // hidden={data?.data?.status !== "active"}
+      className={cn("mb-[160px]", className)}
+    >
       <h1 className="text-center text-[40px] font-extrabold leading-[50px]">
         OUR TOP <span className="font-normal">Partners</span>
       </h1>
@@ -33,13 +51,10 @@ export function TopPartnersSection() {
           className="w-full max-w-full"
         >
           <CarouselContent>
-            {partnerLogos.map((image) => (
-              <CarouselItem
-                key={image.id}
-                className="md:basis-1/2 lg:basis-1/6"
-              >
+            {serializedData?.map((item: any) => (
+              <CarouselItem key={item.id} className="md:basis-1/2 lg:basis-1/6">
                 <Image
-                  src={image.url}
+                  src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${item.logo}`}
                   alt="img"
                   height={56}
                   width={300}
@@ -52,6 +67,6 @@ export function TopPartnersSection() {
           <CarouselNext />
         </Carousel>
       </div>
-    </section>
+    </SectionWrapper>
   );
 }

@@ -19,12 +19,12 @@ export type StoryCardProps = {
 export type AboutCardProps = {
   title: string;
   desc: string;
-  icon: React.ReactNode;
+  imageUrl: string;
 };
 
 // award card props
 export type AwardCardProps = {
-  icon: React.ReactNode;
+  imageUrl: string;
   year: string;
   name: string;
   place: string;
@@ -86,14 +86,14 @@ export type ProjectCardProps = {
 
 // special need card props
 export type SpecialNeedCardProps = {
-  icon: React.ReactNode;
+  iconUrl: string;
   title: string;
   text: string;
 };
 
 // summary card props
 export type SummaryCardProps = {
-  icon: React.ReactNode;
+  imageUrl: string;
   title: string | React.ReactNode;
   subTitle: string;
 };
@@ -104,4 +104,20 @@ export type SingleCommentProps = {
   name: string;
   date: string;
   comment: string;
+};
+
+// donor profile nav item props
+export type ProfileNavItemProps = {
+  className?: string;
+  children: React.ReactNode;
+  path: string;
+};
+
+// subscription card props
+export type SubscriptionCardProps = {
+  imageUrl: string;
+  buttonText: string;
+  title: string;
+  description: string;
+  className?: string;
 };

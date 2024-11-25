@@ -7,17 +7,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { menuItems } from "@/constants/menuItems";
+import { cn } from "@/lib/utils";
 import { IconChevronDown } from "@tabler/icons-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export function Nav() {
+export function Nav({ className }: { className?: string }) {
   const pathname = usePathname();
 
   return (
-    <nav>
+    <nav className={cn("", className)}>
       <ul className="flex items-center gap-x-2">
-        {menuItems.map((menu: any) =>
+        {menuItems.map((menu) =>
           !menu?.submenu ? (
             <li
               key={menu.id}

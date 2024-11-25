@@ -1,28 +1,21 @@
 "use client";
 
 import {
-  BankDetails,
-  BkashMarchantCard,
   ContactDetailsCard,
-  Donation,
   ProjectDetailSectionWrapper,
-  RecentContributionCard,
+  SubscriptionCard,
 } from "@/components";
 import Image from "next/image";
-import SirenIcon from "../../../../../public/icons/SirenIcon";
 
-export default function ProjectDetailsPage() {
+export default function MonthlyAvailableProjectDetailsPage() {
   return (
     <main>
       {/* image gallery section  */}
       <section className="container mt-[60px]">
-        <h1 className="mb-4 text-[40px] font-semibold leading-[48px] text-base-400">
-          WASH PROJECT ON CHATTROGRAM
+        <h1 className="mb-2 text-[40px] font-semibold leading-[48px] text-base-400">
+          General Donation For Ngo
         </h1>
-        <div className="flex w-fit items-center gap-4 rounded-full bg-[#FEF3F2] px-10 py-2 font-medium">
-          <SirenIcon className="mb-1" />
-          <h4 className="text-[#B42318]">Emergency Requirement</h4>
-        </div>
+        <h5 className="text-2xl leading-7 text-base-300">Details goes here</h5>
 
         <div className="mt-10 flex items-start gap-2">
           <Image
@@ -83,19 +76,6 @@ export default function ProjectDetailsPage() {
             </p>
           </ProjectDetailSectionWrapper>
 
-          <ProjectDetailSectionWrapper title="Documents">
-            <div className="grid grid-cols-3 gap-2">
-              <div className="aspect-square w-full bg-base-100"></div>
-              <div className="aspect-square w-full bg-base-100"></div>
-              <div className="aspect-square w-full bg-base-100"></div>
-            </div>
-          </ProjectDetailSectionWrapper>
-
-          <ProjectDetailSectionWrapper title="Other Donation Methods">
-            <BankDetails />
-            <BkashMarchantCard />
-          </ProjectDetailSectionWrapper>
-
           <ProjectDetailSectionWrapper title="Contact Details">
             <ContactDetailsCard />
           </ProjectDetailSectionWrapper>
@@ -104,8 +84,7 @@ export default function ProjectDetailsPage() {
 
         {/* aside section  */}
         <aside className="sticky top-[128px] flex w-fit min-w-[420px] flex-col gap-y-6">
-          <Donation />
-          <RecentContributionCard />
+          <SubscriptionCard subscribed={false} />
         </aside>
         {/* aside section end  */}
       </section>

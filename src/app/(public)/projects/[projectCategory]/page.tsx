@@ -1,56 +1,17 @@
 "use client";
 
-import { DonationCard, Project, StoryCard } from "@/components";
+import { DonationCard, ProjectsSection, StoryCard } from "@/components";
 import { Button } from "@/components/ui/button";
 import { cardData } from "@/constants/cardData";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  DonateHandIcon,
-  FoodIcon,
-  SavingHandIcon,
-} from "../../../../public/icons";
 
 export default function Projects() {
   const pathname = usePathname();
   return (
     <main>
-      {/* top news section  */}
-      <section className="bg-[#CEF4FF] py-[80px]">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-x-4">
-          <div>
-            <h4 className="mb-6 text-base font-bold leading-[18px] text-base-400">
-              Donate
-            </h4>
-            <h1 className="mb-10 text-[56px] font-bold leading-[68px] text-base-400">
-              Making a donation for our children.
-            </h1>
-            <p className="mb-4 text-base leading-[26px] text-base-300">
-              When you donate, you’re supporting effective care to children with
-              special needs—an investment in the leaders of tomorrow.
-            </p>
-            <Button className="rounded-sm">Donate Now</Button>
-          </div>
-          <div className="flex justify-end">
-            <Image
-              src="/images/donate.png"
-              alt="Donate"
-              width={552}
-              height={419}
-              className="h-[419px] w-[552px]"
-            />
-          </div>
-        </div>
-      </section>
-      {/* top news section end */}
-
       {/* project section */}
-      <section className="container mt-[100px] grid grid-cols-3 gap-x-6">
-        <Project title="ZAKAT PROJECTS" icon={<DonateHandIcon />} link="/" />
-        <Project title="SADAKATUN JARIYA" icon={<SavingHandIcon />} link="/" />
-        <Project title="FOOD PROGRAMS" icon={<FoodIcon />} link="/" />
-      </section>
+      <ProjectsSection />
       {/* project section end  */}
 
       {/* success stories section  */}

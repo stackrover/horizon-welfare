@@ -13,6 +13,17 @@ const config: Config = {
       padding: "1rem",
     },
     extend: {
+      screens: {
+        xs: "350px",
+        sm: "480px",
+        md: "640px",
+        xmd: "768px",
+        lg: "1024px",
+        xl: "1140px",
+        "2xl": "1280px",
+        "3xl": "1536px",
+        "4xl": "1660px",
+      },
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",

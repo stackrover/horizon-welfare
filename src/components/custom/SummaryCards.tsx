@@ -1,44 +1,66 @@
 "use client";
 
-import { SummaryCard } from "@/components";
+import { SectionWrapper, SummaryCard } from "@/components";
 
+import { Counter } from "@/data";
+import { useSWR } from "@/hooks/use-swr";
+import { cn } from "@/lib/utils";
+import _ from "lodash";
 import CountUp from "react-countup";
-import {
-  PeopleRaisedIcon,
-  PoorPeopleSavedIcon,
-  Volunteer,
-} from "../../../public/icons";
 
-export default function SummaryCards() {
+export default function SummaryCards({ className }: { className?: string }) {
+  const { data, isLoading, isError } = useSWR("/counter");
+
+  const serializedData = new Counter(_.head(data?.data?.results));
+
   return (
-    <section className="container grid grid-cols-3 gap-x-20 py-[80px]">
+    <SectionWrapper
+      isLoading={isLoading}
+      isError={isError}
+      errorClass="h-[300px]"
+      loadingClass="h-[300px]"
+      hidden={serializedData.status !== "active"}
+      className={cn("container grid grid-cols-3 gap-x-20 py-[80px]", className)}
+    >
       <SummaryCard
-        icon={<PeopleRaisedIcon />}
+        imageUrl={serializedData.icon1}
         title={
-          <CountUp enableScrollSpy={true} scrollSpyOnce={true} end={39000} />
+          <CountUp
+            enableScrollSpy={true}
+            scrollSpyOnce={true}
+            end={serializedData.number1}
+          />
         }
-        subTitle="People Prevention of Cruelty"
+        subTitle={serializedData.title1}
       />
       <SummaryCard
-        icon={<PoorPeopleSavedIcon />}
+        imageUrl={serializedData.icon2}
         title={
           <span>
-            <CountUp enableScrollSpy={true} scrollSpyOnce={true} end={100} />
+            <CountUp
+              enableScrollSpy={true}
+              scrollSpyOnce={true}
+              end={serializedData.number2}
+            />
             <span>+</span>
           </span>
         }
-        subTitle="Projects Accomplished"
+        subTitle={serializedData.title2}
       />
       <SummaryCard
-        icon={<Volunteer />}
+        imageUrl={serializedData.icon3}
         title={
           <span>
-            <CountUp enableScrollSpy={true} scrollSpyOnce={true} end={1000} />
+            <CountUp
+              enableScrollSpy={true}
+              scrollSpyOnce={true}
+              end={serializedData.number3}
+            />
             <span>+</span>
           </span>
         }
-        subTitle="People Established"
+        subTitle={serializedData.title3}
       />
-    </section>
+    </SectionWrapper>
   );
 }
