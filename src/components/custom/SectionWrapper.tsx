@@ -10,6 +10,7 @@ type SectionWrapperProps = {
   loadingClass?: string;
   hidden?: boolean;
   className?: string;
+  style?: Record<string, unknown>;
 };
 
 export function SectionWrapper({

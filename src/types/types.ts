@@ -121,3 +121,16 @@ export type SubscriptionCardProps = {
   description: string;
   className?: string;
 };
+
+export type EventProps = {
+  image: string;
+  title: string;
+  date: string;
+  description: string;
+  id: number;
+};
+
+export type VideoCardProps = {
+  videoUrl: string;
+  title: string;
+};

@@ -2,18 +2,20 @@
 
 import { SectionWrapper } from "@/components";
 import { Button } from "@/components/ui/button";
-import { Hero } from "@/data";
+import { VideoGalleryHero } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
 import { cn } from "@/lib/utils";
 import _ from "lodash";
 import Image from "next/image";
 import Link from "next/link";
-import PlayerIcon from "../../../public/icons/PlayerIcon";
+import PlayerIcon from "../../../../public/icons/PlayerIcon";
 
-export function Banner({ className }: { className?: string }) {
-  const { data, isLoading, isError } = useSWR("/home/hero");
+export function VideoGalleryHeroSection({ className }: { className?: string }) {
+  const { data, isLoading, isError } = useSWR("/video/page/hero/show");
 
-  const serializedData = new Hero(_.head(data?.data?.results));
+  const serializedData = new VideoGalleryHero(_.head(data?.data?.results));
+
+  console.log(serializedData);
 
   return (
     <SectionWrapper
@@ -43,23 +45,23 @@ export function Banner({ className }: { className?: string }) {
           {serializedData.description}
         </p>
         <div className="flex items-center gap-4">
-          <Link href={serializedData.donateNowBtLink}>
+          <Link href={serializedData.donateBtnLink}>
             <Button
               type="button"
               className="h-[55px] rounded-full px-8 text-lg"
             >
-              {serializedData.donateNowBtTitle}
+              {serializedData.donateBtnTitle}
             </Button>
           </Link>
 
-          <Link href={serializedData.watchVideoBtLink}>
+          <Link href={serializedData.videoBtnLink}>
             <Button
               type="button"
               variant="outline"
               className="group h-[55px] gap-x-2 rounded-full px-8 text-lg"
             >
               <PlayerIcon className="h-6 w-6 fill-primary group-hover:fill-base-0" />
-              <span>{serializedData.watchVideoBtTitle}</span>
+              <span>{serializedData.videoBtnTitle}</span>
             </Button>
           </Link>
         </div>

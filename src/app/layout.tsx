@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SessionProvider } from "next-auth/react";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
@@ -17,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${plusJakartaSans.className} antialiased`}>
-        {children}
+        <SessionProvider>{children}</SessionProvider>
       </body>
     </html>
   );

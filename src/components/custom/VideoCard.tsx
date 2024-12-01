@@ -1,17 +1,22 @@
-import Image from "next/image";
+"use client";
 
-export function VideoCard() {
+import { VideoCardProps } from "@/types/types";
+import ReactPlayer from "react-player";
+
+export function VideoCard({ videoUrl, title }: VideoCardProps) {
   return (
     <div className="flex flex-col gap-y-4">
-      <Image
-        src="/images/banner.png"
-        className="h-[200px] w-full"
-        alt="video-card"
-        width={290}
-        height={200}
-      />
+      <div>
+        <ReactPlayer
+          width="100%"
+          height="100%"
+          controls
+          url={videoUrl}
+          style={{ aspectRatio: "16/9" }}
+        />
+      </div>
       <h2 className="text-base font-semibold leading-5 text-base-400">
-        Water Well pump Installation in Rangpur mitha pukur
+        {title}
       </h2>
     </div>
   );

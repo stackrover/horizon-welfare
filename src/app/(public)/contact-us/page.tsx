@@ -1,11 +1,16 @@
 "use client";
 
-import { ContactUsForm, Loader, SectionWrapper } from "@/components";
-import { Button } from "@/components/ui/button";
+import {
+  ContactUsForm,
+  JoinAsVolunteerCard,
+  Loader,
+  SectionWrapper,
+} from "@/components";
 import { Separator } from "@/components/ui/separator";
 import { ContactUsContent } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
 import _ from "lodash";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import {
   FacebookIcon,
@@ -15,14 +20,15 @@ import {
 
 export default function ContactUs() {
   const { data, isLoading, isError } = useSWR("/contact/us/page/content/show");
+  const session = useSession();
+
+  console.log({ session });
 
   if (isLoading) {
     return <Loader className="h-[800px]" />;
   }
 
   const serializedData = new ContactUsContent(_.head(data?.data?.results));
-
-  console.log(serializedData);
 
   return (
     <main>
@@ -102,24 +108,7 @@ export default function ContactUs() {
         {/* contact form section end */}
 
         {/* join as volunteer section  */}
-        <section className="relative mx-auto mt-[100px] h-[384px] max-w-7xl rounded-[20px] bg-[url('/images/joinUs.png')] bg-cover bg-center before:absolute before:left-0 before:top-0 before:h-full before:w-full before:rounded-[20px] before:bg-black/50 before:content-['']">
-          <div className="absolute left-0 top-0 z-10 mx-auto flex h-full w-full flex-col items-center justify-center gap-y-8 p-8">
-            <h4 className="max-w-[900px] text-center text-5xl font-bold leading-[58px] text-base-0">
-              You can contribute to provide a place for children with special
-              needs!
-            </h4>
-            <div className="flex items-center gap-4">
-              <Link href="/">
-                <Button className="w-fit">Join As A Volunteer</Button>
-              </Link>
-              <Link href="/">
-                <Button variant="light" className="w-fit">
-                  Donate
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </section>
+        <JoinAsVolunteerCard />
         {/* join as volunteer section end */}
 
         {/* map section  */}

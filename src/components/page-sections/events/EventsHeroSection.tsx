@@ -1,19 +1,25 @@
 "use client";
 
-import { SectionWrapper } from "@/components";
+import { Loader, SectionWrapper } from "@/components";
 import { Button } from "@/components/ui/button";
-import { Hero } from "@/data";
+import { MediaCenterBanner } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
 import { cn } from "@/lib/utils";
 import _ from "lodash";
 import Image from "next/image";
 import Link from "next/link";
-import PlayerIcon from "../../../public/icons/PlayerIcon";
+import PlayerIcon from "../../../../public/icons/PlayerIcon";
 
-export function Banner({ className }: { className?: string }) {
-  const { data, isLoading, isError } = useSWR("/home/hero");
+export function EventsHeroSection({ className }: { className?: string }) {
+  const { data, isLoading, isError } = useSWR("/media/page/cta/show");
 
-  const serializedData = new Hero(_.head(data?.data?.results));
+  if (isLoading) {
+    return <Loader className="h-[630px]" />;
+  }
+
+  const serializedData = new MediaCenterBanner(_.head(data?.data?.results));
+
+  console.log(serializedData);
 
   return (
     <SectionWrapper
@@ -43,23 +49,23 @@ export function Banner({ className }: { className?: string }) {
           {serializedData.description}
         </p>
         <div className="flex items-center gap-4">
-          <Link href={serializedData.donateNowBtLink}>
+          <Link href={serializedData.donateNowBtnLink}>
             <Button
               type="button"
               className="h-[55px] rounded-full px-8 text-lg"
             >
-              {serializedData.donateNowBtTitle}
+              {serializedData.donateNowBtnTitle}
             </Button>
           </Link>
 
-          <Link href={serializedData.watchVideoBtLink}>
+          <Link href={serializedData.watchVideoBtnLink} target="_blank">
             <Button
               type="button"
               variant="outline"
               className="group h-[55px] gap-x-2 rounded-full px-8 text-lg"
             >
               <PlayerIcon className="h-6 w-6 fill-primary group-hover:fill-base-0" />
-              <span>{serializedData.watchVideoBtTitle}</span>
+              <span>{serializedData.watchVideoBtnTitle}</span>
             </Button>
           </Link>
         </div>

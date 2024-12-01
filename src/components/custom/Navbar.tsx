@@ -16,7 +16,7 @@ import * as React from "react";
 export function Navbar() {
   const [position, setPosition] = React.useState("ENG");
   const [isOpen, setIsOpen] = React.useState(false);
-  console.log(isOpen);
+
   return (
     <header className="sticky left-0 top-0 z-50 h-[80px] bg-base-0 shadow 2xl:h-[113px]">
       <div className="mx-auto flex h-full max-w-[1520px] items-center justify-between px-4">

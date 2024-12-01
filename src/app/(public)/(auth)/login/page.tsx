@@ -1,5 +1,6 @@
 "use client";
 
+import { singInWithCredentials } from "@/app/actions/authActions";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -22,6 +23,7 @@ import { z } from "zod";
 
 export default function Login() {
   const [isShown, setIsShown] = React.useState<boolean>(false);
+  const [error, setError] = React.useState("");
   const form = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -30,8 +32,16 @@ export default function Login() {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof loginFormSchema>) => {
-    console.log(values);
+  const onSubmit = async (values: z.infer<typeof loginFormSchema>) => {
+    try {
+      const result = await singInWithCredentials(values);
+
+      if (result?.message) {
+        setError(result.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <main className="relative">
@@ -48,6 +58,7 @@ export default function Login() {
       <div className="absolute left-0 top-0 z-20 flex h-full w-full items-center justify-center">
         <div className="grid w-full max-w-[1280px] grid-cols-12">
           <div className="col-span-4 bg-base-0 px-8 py-12">
+            {error ? <p className="text-destructive">{error}</p> : null}
             <h3 className="text-2xl font-medium leading-9 text-base-400">
               Sign in
             </h3>
@@ -127,7 +138,7 @@ export default function Login() {
                 />
 
                 <Button type="submit" className="mt-2 w-full rounded-full">
-                  Sign in
+                  {form.formState.isSubmitting ? "Loading..." : "Sing in"}
                 </Button>
               </form>
             </Form>
