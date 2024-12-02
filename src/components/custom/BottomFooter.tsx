@@ -36,30 +36,39 @@ export function BottomFooter() {
           alt="Payment Method"
           height={107}
           width={975}
-          className="h-[107px] w-[975px]"
+          className="mx-4 h-[50px] w-full max-w-[975px] sm:h-[65px] xmd:h-[80px] xl:h-[107px]"
         />
       </div>
 
       <Separator className="container" />
 
-      <div className="container flex items-center justify-between pt-4">
-        <h4 className="text-xl font-medium leading-[30px]">
+      <div className="container flex flex-col items-center justify-between gap-2 py-4 2xl:flex-row">
+        <h4 className="text-center text-base font-medium leading-[30px] md:text-lg lg:text-xl">
           {serializedData.footerCredit}
         </h4>
         <div>
-          <ul className="flex items-center gap-x-8">
+          <ul className="flex flex-col items-center gap-x-4 sm:flex-row xmd:gap-x-8">
             <li>
-              <Link className="text-xl font-semibold leading-[30px]" href="/">
+              <Link
+                className="text-base font-semibold leading-[30px] md:text-lg lg:text-xl"
+                href="/"
+              >
                 Privacy & Policy
               </Link>
             </li>
             <li>
-              <Link className="text-xl font-semibold leading-[30px]" href="/">
+              <Link
+                className="text-base font-semibold leading-[30px] md:text-lg lg:text-xl"
+                href="/"
+              >
                 Terms & Condition
               </Link>
             </li>
             <li>
-              <Link className="text-xl font-semibold leading-[30px]" href="/">
+              <Link
+                className="text-base font-semibold leading-[30px] md:text-lg lg:text-xl"
+                href="/"
+              >
                 Cookies and Data
               </Link>
             </li>

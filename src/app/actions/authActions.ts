@@ -13,6 +13,7 @@ export const singInWithCredentials = async (
     await signIn("credentials", {
       email: values.email,
       password: values.password,
+      redirectTo: "/login",
     });
   } catch (error) {
     if (error instanceof AuthError) {
@@ -20,10 +21,12 @@ export const singInWithCredentials = async (
         case "CredentialsSignin":
           return {
             message: "Invalid credentials!",
+            status: "error",
           };
         default:
           return {
             message: "Something went wrong!",
+            status: "error",
           };
       }
     }

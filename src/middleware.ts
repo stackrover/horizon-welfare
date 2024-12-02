@@ -1,30 +1,47 @@
 import { auth } from "@/auth";
+import { NextResponse } from "next/server";
+
+const authRoutes = [
+  "/login",
+  "/signup/volunteer",
+  "/signup/donor",
+  "/reset-password",
+  "/reset-password/success",
+  "/forgot-password",
+  "/forgot-password/email-sent",
+];
 
 export default auth((req) => {
-  console.log({ auth: req.auth });
-
   // validate protected routes
-  const isProtectedRoute = req.nextUrl.pathname
-    .split("/")
-    .some((d) => ["donor", "volunteer", "staff"].includes(d));
+  const protectedRoles = ["donor", "volunteer", "staff"];
+  const isProtectedRoute = protectedRoles.some((role) =>
+    req.nextUrl.pathname.startsWith(`/${role}`),
+  );
+  const isAuthRoute = authRoutes.indexOf(req.nextUrl.pathname);
 
   if (!req.auth && isProtectedRoute) {
-    const newUrl = new URL("/login", req.nextUrl.origin);
-    return Response.redirect(newUrl);
+    if (isAuthRoute) {
+      return NextResponse.next();
+    }
+
+    if (isProtectedRoute) {
+      const newUrl = new URL("/login", req.nextUrl.origin);
+      return NextResponse.redirect(newUrl);
+    }
   }
 
-  if (req.auth) {
+  if (req.auth && req.auth?.user) {
     const { role } = req.auth.user;
 
     const redirectMap: { [key: string]: string } = {
-      staff: "/staff/dashboard",
+      staff: "/admin/dashboard",
       donor: "/donor/profile",
       volunteer: "/volunteer/profile",
     };
 
-    if (req.nextUrl.pathname === "/login") {
+    if (authRoutes.indexOf(req.nextUrl.pathname) !== -1) {
       const newUrl = new URL(redirectMap[role], req.nextUrl.origin);
-      return Response.redirect(newUrl);
+      return NextResponse.redirect(newUrl);
     }
 
     const roleProtectedRoutes: { [key: string]: string[] } = {
@@ -39,11 +56,11 @@ export default auth((req) => {
       )
     ) {
       const newUrl = new URL(redirectMap[role], req.nextUrl.origin);
-      return Response.redirect(newUrl);
+      return NextResponse.redirect(newUrl);
     }
   }
 
-  return;
+  return NextResponse.next();
 });
 
 export const config = {

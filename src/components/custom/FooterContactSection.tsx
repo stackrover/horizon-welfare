@@ -7,9 +7,9 @@ import { ContactCard } from "./ContactCard";
 
 export function FooterContactSection() {
   return (
-    <div className="flex justify-end">
+    <div className="flex justify-start xl:justify-end">
       <div>
-        <h2 className="mb-6 text-[26px] font-semibold leading-8 text-base-400">
+        <h2 className="mb-6 text-[22px] font-semibold leading-8 text-base-400 lg:text-[26px]">
           Contact Us
         </h2>
         <div className="flex flex-col gap-y-4">

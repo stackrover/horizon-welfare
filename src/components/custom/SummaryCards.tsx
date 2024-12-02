@@ -20,7 +20,10 @@ export default function SummaryCards({ className }: { className?: string }) {
       errorClass="h-[300px]"
       loadingClass="h-[300px]"
       hidden={serializedData.status !== "active"}
-      className={cn("container grid grid-cols-3 gap-x-20 py-[80px]", className)}
+      className={cn(
+        "container grid grid-cols-1 gap-6 py-[80px] md:grid-cols-2 lg:grid-cols-3 3xl:gap-x-20",
+        className,
+      )}
     >
       <SummaryCard
         imageUrl={serializedData.icon1}

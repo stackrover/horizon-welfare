@@ -53,7 +53,7 @@ export default function VolunteerSignup() {
   };
   return (
     <main>
-      <div className="mx-auto mt-10 max-w-[1200px] rounded-[24px] border border-base-100 bg-base-0 p-8 shadow-lg">
+      <div className="mx-4 mt-10 max-w-[1140px] rounded-[24px] border border-base-100 bg-base-0 p-8 shadow-lg xl:mx-auto">
         {/* form section  */}
         <div>
           <div className="h-12 w-12 rounded-full bg-[#C4C4C4]"></div>
@@ -69,7 +69,7 @@ export default function VolunteerSignup() {
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="mt-8">
-              <div className="grid grid-cols-4 gap-4">
+              <div className="mlg:grid-cols-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {/* first name  */}
                 <FormField
                   control={form.control}
@@ -183,7 +183,7 @@ export default function VolunteerSignup() {
                   control={form.control}
                   name="email"
                   render={({ field }) => (
-                    <FormItem className="col-span-2">
+                    <FormItem className="col-span-1 sm:col-span-2">
                       <FormLabel className="text-base-300">
                         Email address
                       </FormLabel>
@@ -205,7 +205,7 @@ export default function VolunteerSignup() {
                   control={form.control}
                   name="address"
                   render={({ field }) => (
-                    <FormItem className="col-span-2">
+                    <FormItem className="col-span-1 sm:col-span-2">
                       <FormLabel className="text-base-300">Address</FormLabel>
                       <FormControl>
                         <Input
@@ -322,7 +322,7 @@ export default function VolunteerSignup() {
                   control={form.control}
                   name="profession"
                   render={({ field }) => (
-                    <FormItem className="col-span-2">
+                    <FormItem className="col-span-1 sm:col-span-2">
                       <FormLabel className="text-base-300">
                         Profession
                       </FormLabel>
@@ -344,7 +344,7 @@ export default function VolunteerSignup() {
                   control={form.control}
                   name="education"
                   render={({ field }) => (
-                    <FormItem className="col-span-2">
+                    <FormItem className="grid-cols-1 sm:col-span-2">
                       <FormLabel className="text-base-300">Education</FormLabel>
                       <FormControl>
                         <Input

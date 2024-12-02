@@ -4,7 +4,7 @@ import { FooterContactSection, FooterMenuLink, Logo } from "@/components";
 
 export function FooterMenuItems({ data }: { data: any }) {
   return (
-    <footer className="container grid grid-cols-4 gap-x-10">
+    <footer className="container grid grid-cols-1 gap-x-10 gap-y-16 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
       {/* logo section  */}
       <div className="flex flex-col gap-y-5">
         <Logo logo={data?.footerLogo} />
@@ -15,9 +15,9 @@ export function FooterMenuItems({ data }: { data: any }) {
 
       {/* link section 1  */}
 
-      <div className="flex justify-center">
+      <div className="flex justify-start lg:justify-center">
         <nav>
-          <h2 className="mb-6 text-[26px] font-semibold leading-8 text-base-400">
+          <h2 className="mb-6 text-[22px] font-semibold leading-8 text-base-400 lg:text-[26px]">
             Useful Links
           </h2>
           <ul className="flex flex-col gap-y-4">
@@ -42,9 +42,9 @@ export function FooterMenuItems({ data }: { data: any }) {
       </div>
 
       {/* link section 1  */}
-      <div className="flex justify-center">
+      <div className="flex justify-start lg:justify-center">
         <nav>
-          <h2 className="mb-6 text-[26px] font-semibold leading-8 text-base-400">
+          <h2 className="mb-6 text-[22px] font-semibold leading-8 text-base-400 lg:text-[26px]">
             Main Menu
           </h2>
           <ul className="flex flex-col gap-y-4">

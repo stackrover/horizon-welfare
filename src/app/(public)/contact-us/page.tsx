@@ -10,7 +10,6 @@ import { Separator } from "@/components/ui/separator";
 import { ContactUsContent } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
 import _ from "lodash";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import {
   FacebookIcon,
@@ -20,9 +19,6 @@ import {
 
 export default function ContactUs() {
   const { data, isLoading, isError } = useSWR("/contact/us/page/content/show");
-  const session = useSession();
-
-  console.log({ session });
 
   if (isLoading) {
     return <Loader className="h-[800px]" />;

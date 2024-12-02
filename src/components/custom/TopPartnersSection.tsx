@@ -32,7 +32,7 @@ export function TopPartnersSection({ className }: { className?: string }) {
       // hidden={data?.data?.status !== "active"}
       className={cn("mb-[160px]", className)}
     >
-      <h1 className="text-center text-[40px] font-extrabold leading-[50px]">
+      <h1 className="text-center text-3xl font-extrabold leading-[50px] md:text-[40px]">
         OUR TOP <span className="font-normal">Partners</span>
       </h1>
       <div className="mt-[60px]">
