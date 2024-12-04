@@ -1,10 +1,18 @@
 import { AboutCardProps } from "@/types/types";
+import Image from "next/image";
 
-export function AboutCard({ icon, title, desc }: AboutCardProps) {
+export function AboutCard({ imageUrl, title, desc }: AboutCardProps) {
   return (
     <div className="rounded-[10px] px-20 py-8 shadow-[2px_9px_42px_rgba(0,0,0,0.04)]">
       <div className="flex items-end gap-x-6">
-        {icon}
+        <Image
+          src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${imageUrl}`}
+          alt="service image"
+          width={200}
+          height={200}
+          className="h-[70px] w-[70px]"
+        />
+
         <h3 className="text-[40px] font-bold leading-8 text-base-400">
           {title}
         </h3>

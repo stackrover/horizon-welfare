@@ -6,19 +6,19 @@ export function NewsletterSection({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "flex h-full flex-1 items-center justify-between rounded-2xl bg-base-0 px-8 py-8 pl-16 shadow-[7px_20px_50px_rgba(0,0,0,0.09)]",
+        "flex h-full w-full flex-1 items-center justify-between gap-x-8 rounded-2xl bg-base-0 p-4 shadow-[7px_20px_50px_rgba(0,0,0,0.09)] xmd:p-8 3xl:pl-16",
         className,
       )}
     >
-      <div>
-        <h2 className="text-[40px] font-extrabold leading-[48px] text-base-400">
+      <div className="hidden md:block">
+        <h2 className="text-2xl font-extrabold leading-8 text-base-400 xl:text-4xl xl:leading-[48px] 2xl:text-[40px]">
           Newsletter
         </h2>
-        <h5 className="text-base font-normal leading-8 text-base-300">
+        <h5 className="text-sm font-normal leading-8 text-base-300 2xl:text-base">
           Get Update on out latest project
         </h5>
       </div>
-      <form className="flex max-w-[500px] flex-1 items-center rounded-lg bg-[rgba(239,241,249,0.6)] p-1">
+      <form className="flex w-full max-w-[500px] flex-1 items-center rounded-lg bg-[rgba(239,241,249,0.6)] p-1">
         <Input
           className="w-full border-none bg-transparent shadow-none focus:shadow-none focus-visible:ring-0"
           placeholder="Email Address"

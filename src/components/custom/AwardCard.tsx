@@ -1,10 +1,16 @@
 import { AwardCardProps } from "@/types/types";
+import Image from "next/image";
 
-export function AwardCard({ icon, year, name, place }: AwardCardProps) {
+export function AwardCard({ imageUrl, year, name, place }: AwardCardProps) {
   return (
     <div className="flex w-full justify-center">
       <div className="flex w-fit flex-col items-center gap-y-1">
-        {icon}
+        <Image
+          src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${imageUrl}`}
+          height={119}
+          width={92}
+          alt="Award Image"
+        />
         <h3 className="mb-1 text-2xl font-bold leading-[38px] text-base-400">
           {year}
         </h3>

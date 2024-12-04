@@ -1,54 +1,21 @@
-import { Banner, BlogCard, NewsCard, NewsletterSection } from "@/components";
-import { Button } from "@/components/ui/button";
+import {
+  BlogCard,
+  MediaCenterBannerSection,
+  MediaCenterHeroSection,
+  NewsletterSection,
+} from "@/components";
 import { blogData } from "@/constants/blogData";
 
 export default function MediaCenter() {
   return (
     <main>
       {/* top news section  */}
-      <section className="bg-[#CEF4FF] py-[80px]">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-x-4">
-          <div>
-            <h4 className="mb-6 text-base font-bold leading-[18px] text-base-400">
-              TOP NEWS
-            </h4>
-            <h1 className="mb-10 text-[56px] font-bold leading-[68px] text-base-400">
-              Our goal is to provide inclusive care for children with special
-              needs
-            </h1>
-            <p className="mb-4 text-base leading-[26px] text-base-300">
-              Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet.
-              Nunc ut sem vitae risus tristique posuere.
-            </p>
-            <Button className="rounded-sm">Read More</Button>
-          </div>
-          <div className="flex flex-col gap-y-6 rounded-[20px] bg-base-0 p-6">
-            <NewsCard
-              title="Autism care day"
-              date="15th Nov 2022"
-              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim"
-              image="/images/media-center-1.png"
-            />
-            <NewsCard
-              title="Down syndrome outreach"
-              date="15th Nov 2022"
-              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim"
-              image="/images/media-center-2.png"
-            />
-            <NewsCard
-              title="Caring for children with cerebral palsy"
-              date="15th Nov 2022"
-              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim"
-              image="/images/media-center-3.png"
-            />
-          </div>
-        </div>
-      </section>
+      <MediaCenterHeroSection />
       {/* top news section end */}
 
       {/* banner section  */}
       <section className="p-6">
-        <Banner className="overflow-hidden rounded-lg" />
+        <MediaCenterBannerSection className="overflow-hidden rounded-lg" />
       </section>
       {/* banner section end */}
 

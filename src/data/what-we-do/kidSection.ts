@@ -1,0 +1,65 @@
+export class WhatWeDoKid {
+  id: number;
+  title: string;
+  serviceTitle1: string;
+  serviceDescription1: string;
+  serviceIcon1: string;
+  serviceTitle2: string;
+  serviceDescription2: string;
+  serviceIcon2: string;
+  serviceTitle3: string;
+  serviceDescription3: string;
+  serviceIcon3: string;
+  serviceTitle4: string;
+  serviceDescription4: string;
+  serviceIcon4: string;
+  serviceTitle5: string;
+  serviceDescription5: string;
+  serviceIcon5: string;
+  serviceTitle6: string;
+  serviceDescription6: string;
+  serviceIcon6: string;
+  serviceTitle7: string;
+  serviceDescription7: string;
+  serviceIcon7: string;
+  serviceTitle8: string;
+  serviceDescription8: string;
+  serviceIcon8: string;
+  status: string;
+  updatedBy: number;
+  createdAt: string;
+  updatedAt: string;
+
+  constructor(data: any) {
+    this.id = data.id;
+    this.title = data.title;
+    this.serviceTitle1 = data.service_title_1;
+    this.serviceDescription1 = data.service_description_1;
+    this.serviceIcon1 = data.service_icon_1;
+    this.serviceTitle2 = data.service_title_2;
+    this.serviceDescription2 = data.service_description_2;
+    this.serviceIcon2 = data.service_icon_2;
+    this.serviceTitle3 = data.service_title_3;
+    this.serviceDescription3 = data.service_description_3;
+    this.serviceIcon3 = data.service_icon_3;
+    this.serviceTitle4 = data.service_title_4;
+    this.serviceDescription4 = data.service_description_4;
+    this.serviceIcon4 = data.service_icon_4;
+    this.serviceTitle5 = data.service_title_5;
+    this.serviceDescription5 = data.service_description_5;
+    this.serviceIcon5 = data.service_icon_5;
+    this.serviceTitle6 = data.service_title_6;
+    this.serviceDescription6 = data.service_description_6;
+    this.serviceIcon6 = data.service_icon_6;
+    this.serviceTitle7 = data.service_title_7;
+    this.serviceDescription7 = data.service_description_7;
+    this.serviceIcon7 = data.service_icon_7;
+    this.serviceTitle8 = data.service_title_8;
+    this.serviceDescription8 = data.service_description_8;
+    this.serviceIcon8 = data.service_icon_8;
+    this.status = data.status;
+    this.updatedBy = data.updated_by;
+    this.createdAt = data.created_at;
+    this.updatedAt = data.updated_at;
+  }
+}

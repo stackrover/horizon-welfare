@@ -5,10 +5,10 @@ const regex =
 
 export const volunteerRegistrationFormSchema = z
   .object({
-    first_name: z.string().min(1, {
+    f_name: z.string().min(1, {
       message: "First name is required.",
     }),
-    last_name: z.string().min(1, {
+    l_name: z.string().min(1, {
       message: "Last name is required.",
     }),
     division: z.string().min(1, {
@@ -16,6 +16,9 @@ export const volunteerRegistrationFormSchema = z
     }),
     district: z.string().min(1, {
       message: "Select a district.",
+    }),
+    thana: z.string().min(1, {
+      message: "Select a thana.",
     }),
     email: z
       .string()
@@ -39,7 +42,7 @@ export const volunteerRegistrationFormSchema = z
     blood_group: z.string().min(1, {
       message: "Select a blood group.",
     }),
-    mobile: z.string().min(1, {
+    mobile_number: z.string().min(1, {
       message: "Mobile no is required.",
     }),
     profession: z.string().min(1, {
@@ -48,6 +51,7 @@ export const volunteerRegistrationFormSchema = z
     education: z.string().min(1, {
       message: "Education is required.",
     }),
+    honey_pot: z.string(),
   })
   .superRefine((schema, context) => {
     if (schema.password !== schema.confirm_password) {
@@ -58,20 +62,20 @@ export const volunteerRegistrationFormSchema = z
       });
     }
 
-    if (schema.mobile.length !== 11) {
+    if (schema.mobile_number.length !== 11) {
       context.addIssue({
         code: z.ZodIssueCode.custom,
         message: "Mobile number must be 11 digits.",
-        path: ["mobile"],
+        path: ["mobile_number"],
       });
     } else if (
-      schema.mobile.length === 11 &&
-      !/(^(\+8801|8801|01|008801))[3-9]{1}(\d){8}$/.test(schema.mobile)
+      schema.mobile_number.length === 11 &&
+      !/(^(\+8801|8801|01|008801))[3-9]{1}(\d){8}$/.test(schema.mobile_number)
     ) {
       context.addIssue({
         code: z.ZodIssueCode.custom,
         message: "Invalid mobile number.",
-        path: ["mobile"],
+        path: ["mobile_number"],
       });
     }
   });

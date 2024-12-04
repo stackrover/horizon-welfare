@@ -12,7 +12,7 @@ export function SocialIcon({ className, icon }: SocialIconType) {
     <Link
       href="/"
       className={cn(
-        "flex h-[75px] w-[75px] items-center justify-center rounded-full bg-primary/10 from-primary-light to-primary text-primary hover:bg-gradient-to-r hover:text-base-0",
+        "flex h-[60px] w-[60px] items-center justify-center rounded-full bg-primary/10 from-primary-light to-primary text-primary hover:bg-gradient-to-r hover:text-base-0 xmd:h-[75px] xmd:w-[75px]",
         className,
       )}
     >
