@@ -2,15 +2,6 @@
 
 import { LanguageChangeDropdown, Logo, Nav } from "@/components";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { IconMenu2 } from "@tabler/icons-react";
 import * as React from "react";
 
 export function Navbar() {
@@ -32,15 +23,15 @@ export function Navbar() {
         </div>
 
         {/* hidden dropdown menu for small device  */}
-        <button
+        {/* <button
           className="block border 2xl:hidden"
           onClick={() => setIsOpen((prev) => !prev)}
           type="button"
         >
           <IconMenu2 size={32} />
-        </button>
+        </button> */}
 
-        <DropdownMenu
+        {/* <DropdownMenu
           open={isOpen}
           onOpenChange={(open) => !open && setIsOpen(false)}
           modal={false}
@@ -54,7 +45,7 @@ export function Navbar() {
             <DropdownMenuItem>Team</DropdownMenuItem>
             <DropdownMenuItem>Subscription</DropdownMenuItem>
           </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu> */}
       </div>
     </header>
   );

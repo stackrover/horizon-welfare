@@ -5,11 +5,14 @@ const regex =
 
 export const donorRegistrationFormSchema = z
   .object({
-    first_name: z.string().min(1, {
+    f_name: z.string().min(1, {
       message: "First name is required.",
     }),
-    last_name: z.string().min(1, {
+    l_name: z.string().min(1, {
       message: "Last name is required.",
+    }),
+    mobile_number: z.string().min(1, {
+      message: "Mobile number is required.",
     }),
     email: z
       .string()
@@ -27,6 +30,7 @@ export const donorRegistrationFormSchema = z
           "Password must contain at least 6 characters, 1 uppercase, 1 lowercase, 2 digits & 2 special characters!",
       }),
     confirm_password: z.string(),
+    honey_pot: z.string(),
   })
   .superRefine((schema, context) => {
     if (schema.password !== schema.confirm_password) {

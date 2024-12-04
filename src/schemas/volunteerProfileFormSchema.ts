@@ -3,13 +3,16 @@ import { z } from "zod";
 const regex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d.*\d)(?=.*[^a-zA-Z0-9].*[^a-zA-Z0-9])[a-zA-Z0-9\S]{6,}$/;
 
-export const volunteerRegistrationFormSchema = z
+export const volunteerProfileFormSchema = z
   .object({
     f_name: z.string().min(1, {
       message: "First name is required.",
     }),
     l_name: z.string().min(1, {
       message: "Last name is required.",
+    }),
+    location: z.string().min(1, {
+      message: "Select a location.",
     }),
     division: z.string().min(1, {
       message: "Select a division.",
@@ -20,6 +23,15 @@ export const volunteerRegistrationFormSchema = z
     thana: z.string().min(1, {
       message: "Select a thana.",
     }),
+    age: z.string().min(1, {
+      message: "Age is required.",
+    }),
+    gender: z.string().min(1, {
+      message: "Choose a gender.",
+    }),
+    person: z.string().min(1, {
+      message: "Person is required.",
+    }),
     email: z
       .string()
       .min(1, {
@@ -29,16 +41,6 @@ export const volunteerRegistrationFormSchema = z
     address: z.string().min(1, {
       message: "Address is required.",
     }),
-    password: z
-      .string()
-      .min(1, {
-        message: "Password is required.",
-      })
-      .refine((val) => regex.test(val), {
-        message:
-          "Password must contain at least 6 characters, 1 uppercase, 1 lowercase, 2 digits & 2 special characters!",
-      }),
-    confirm_password: z.string(),
     blood_group: z.string().min(1, {
       message: "Select a blood group.",
     }),
@@ -51,17 +53,8 @@ export const volunteerRegistrationFormSchema = z
     education: z.string().min(1, {
       message: "Education is required.",
     }),
-    honey_pot: z.string(),
   })
   .superRefine((schema, context) => {
-    if (schema.password !== schema.confirm_password) {
-      context.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Password do not match!",
-        path: ["confirm_password"],
-      });
-    }
-
     if (schema.mobile_number.length !== 11) {
       context.addIssue({
         code: z.ZodIssueCode.custom,

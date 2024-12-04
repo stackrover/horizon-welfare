@@ -17,7 +17,9 @@ export default auth((req) => {
   const isProtectedRoute = protectedRoles.some((role) =>
     req.nextUrl.pathname.startsWith(`/${role}`),
   );
-  const isAuthRoute = authRoutes.indexOf(req.nextUrl.pathname);
+  const isAuthRoute = authRoutes.indexOf(req.nextUrl.pathname) !== -1;
+
+  console.log({ isProtectedRoute, auth: req?.auth, isAuthRoute });
 
   if (!req.auth && isProtectedRoute) {
     if (isAuthRoute) {

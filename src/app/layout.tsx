@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
 import { Plus_Jakarta_Sans } from "next/font/google";
@@ -19,6 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${plusJakartaSans.className} antialiased`}>
         <SessionProvider>{children}</SessionProvider>
+        <Toaster />
       </body>
     </html>
   );

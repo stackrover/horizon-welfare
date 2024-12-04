@@ -1,6 +1,6 @@
 "use client";
 
-import { ProfileNav } from "@/components";
+import { DonorProfileNav } from "@/components";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -20,6 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
+import { donorProfileFormSchema } from "@/schemas/donorProfileUpdateSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   IconCloudUpload,
@@ -61,51 +62,63 @@ export default function DonorProfile() {
     },
   });
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof donorProfileFormSchema>>({
+    resolver: zodResolver(donorProfileFormSchema),
     defaultValues: {
-      username: "",
+      f_name: "",
+      l_name: "",
+      location: "",
+      gender: "",
+      age: "",
+      email: "",
+      person: "",
     },
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+  function onSubmit(values: z.infer<typeof donorProfileFormSchema>) {
     console.log(values);
   }
   return (
     <main>
-      <ProfileNav />
+      <DonorProfileNav />
 
       {/* personal info  */}
       <section className="container mt-10">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="">
-            <div className="flex items-start justify-between">
+            <div className="flex items-start justify-between gap-4">
               <div>
-                <h2 className="text-[30px] font-semibold leading-9 text-base-400">
+                <h2 className="text-2xl font-semibold leading-9 text-base-400 md:text-[30px]">
                   Personal Info
                 </h2>
-                <p className="text-base-300">
+                <p className="text-sm text-base-300 md:text-base">
                   Update your personal info with your data preferences
                 </p>
               </div>
-              <Button type="submit">Save Settings</Button>
+              <Button
+                disabled={form.formState.isSubmitting}
+                className="hidden w-[132px] md:flex"
+                type="submit"
+              >
+                {form.formState.isSubmitting ? "Loading..." : "Save Settings"}
+              </Button>
             </div>
 
             <Separator className="my-4" />
 
             <div className="grid grid-cols-12 gap-x-4 gap-y-6">
               {/* left side column  */}
-              <div className="col-span-8 grid grid-cols-12 gap-x-4 gap-y-6">
-                <label className="col-span-4 font-medium">Name</label>
+              <div className="order-2 col-span-12 grid grid-cols-12 gap-x-4 gap-y-6 xl:order-1 xl:col-span-8">
+                <label className="col-span-12 font-medium sm:col-span-4">
+                  Name
+                </label>
                 {/* first name  */}
                 <FormField
                   control={form.control}
-                  name="username"
+                  name="f_name"
                   render={({ field }) => (
-                    <FormItem className="col-span-4">
+                    <FormItem className="col-span-6 sm:col-span-4">
                       <FormControl>
                         <Input type="text" placeholder="shadcn" {...field} />
                       </FormControl>
@@ -117,9 +130,9 @@ export default function DonorProfile() {
                 {/* last name  */}
                 <FormField
                   control={form.control}
-                  name="username"
+                  name="l_name"
                   render={({ field }) => (
-                    <FormItem className="col-span-4">
+                    <FormItem className="col-span-6 sm:col-span-4">
                       <FormControl>
                         <Input type="text" placeholder="shadcn" {...field} />
                       </FormControl>
@@ -128,23 +141,29 @@ export default function DonorProfile() {
                   )}
                 />
 
-                <label className="col-span-4 font-medium">Email Address</label>
+                <label className="col-span-12 font-medium sm:col-span-4">
+                  Email Address
+                </label>
                 {/* email  */}
                 <FormField
                   control={form.control}
-                  name="username"
+                  name="email"
                   render={({ field }) => (
-                    <FormItem className="col-span-8">
+                    <FormItem className="col-span-12 sm:col-span-8">
                       <FormControl>
-                        <Input type="email" placeholder="shadcn" {...field} />
+                        <Input
+                          type="email"
+                          placeholder="test@gmail.com"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
 
-                <div className="col-span-4 font-medium"></div>
-                <div className="col-span-8 flex gap-x-4">
+                <div className="col-span-4 hidden font-medium xmd:block"></div>
+                <div className="col-span-12 flex flex-col gap-4 sm:flex-row xmd:col-span-8">
                   <div className="aspect-square h-[140px] w-[140px] rounded-full bg-base-200"></div>
 
                   <div className="grid flex-1 grid-cols-12 gap-x-4 gap-y-6">
@@ -152,7 +171,7 @@ export default function DonorProfile() {
                     <label className="col-span-4">Person</label>
                     <FormField
                       control={form.control}
-                      name="username"
+                      name="person"
                       render={({ field }) => (
                         <FormItem className="col-span-8">
                           <FormControl>
@@ -171,7 +190,7 @@ export default function DonorProfile() {
                     <label className="col-span-4">Age</label>
                     <FormField
                       control={form.control}
-                      name="username"
+                      name="age"
                       render={({ field }) => (
                         <FormItem className="col-span-8">
                           <FormControl>
@@ -190,14 +209,14 @@ export default function DonorProfile() {
                     <label className="col-span-4">Gender</label>
                     <FormField
                       control={form.control}
-                      name="username"
+                      name="gender"
                       render={({ field }) => (
                         <FormItem className="col-span-8">
                           <FormControl>
                             <RadioGroup
                               onValueChange={field.onChange}
                               defaultValue={field.value}
-                              className="flex gap-3"
+                              className="flex flex-col gap-3 md:flex-row"
                             >
                               <FormItem className="flex items-center space-x-2 space-y-0">
                                 <FormControl>
@@ -238,7 +257,7 @@ export default function DonorProfile() {
                     <div className="left-0 top-0 flex h-[46px] w-fit min-w-[46px] items-center justify-center rounded-full outline outline-[6px] outline-[#8EE7FF]">
                       <IconCurrencyDollar size={24} />
                     </div>
-                    <h3 className="py-2 text-lg font-semibold leading-7 text-base-400">
+                    <h3 className="py-2 text-base font-semibold leading-7 text-base-400 xmd:text-lg">
                       Your Last Donated Amount Was 12,980 BDT at Wednesday 12
                       january
                     </h3>
@@ -249,7 +268,7 @@ export default function DonorProfile() {
                 <label className="col-span-4">Location</label>
                 <FormField
                   control={form.control}
-                  name="username"
+                  name="location"
                   render={({ field }) => (
                     <FormItem className="col-span-8">
                       <Select
@@ -258,7 +277,7 @@ export default function DonorProfile() {
                       >
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Select a location" />
+                            <SelectValue placeholder="Select one" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -273,8 +292,10 @@ export default function DonorProfile() {
                   )}
                 />
 
-                <label className="col-span-4">Banner Image</label>
-                <div className="relative col-span-3">
+                <label className="col-span-12 xmd:col-span-4">
+                  Banner Image
+                </label>
+                <div className="relative col-span-12 md:col-span-5 xmd:col-span-3">
                   {file.length > 0 ? (
                     <>
                       <Image
@@ -294,7 +315,7 @@ export default function DonorProfile() {
                     </>
                   ) : null}
                 </div>
-                <div className="col-span-5 h-[150px] rounded-lg border shadow">
+                <div className="col-span-12 h-[150px] rounded-lg border bg-base-0 p-2 shadow md:col-span-7 xmd:col-span-5">
                   <div
                     {...getRootProps({
                       className: "h-full hover:cursor-pointer",
@@ -322,17 +343,29 @@ export default function DonorProfile() {
                     </div>
                   </div>
                 </div>
+
+                <div className="col-span-12 md:hidden">
+                  <Button
+                    disabled={form.formState.isSubmitting}
+                    className="w-[132px]"
+                    type="submit"
+                  >
+                    {form.formState.isSubmitting
+                      ? "Loading..."
+                      : "Save Settings"}
+                  </Button>
+                </div>
               </div>
 
               {/* right side column  */}
-              <div className="col-span-4">
-                <div className="ml-4 overflow-hidden rounded-xl border shadow-sm">
+              <div className="order-1 col-span-12 xl:order-2 xl:col-span-4">
+                <div className="ml-0 overflow-hidden rounded-xl border shadow-sm xl:ml-4">
                   <Image
                     src="/images/project-image-6.png"
                     alt="banner"
                     height={200}
                     width={600}
-                    className="h-[200px] w-full"
+                    className="aspect-[7/3] h-fit w-full"
                   />
                   <div className="p-4">
                     <div className="flex items-center gap-3">

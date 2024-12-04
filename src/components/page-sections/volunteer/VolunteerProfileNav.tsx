@@ -1,5 +1,6 @@
 "use client";
 
+import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { ProfileNavItemProps } from "@/types/types";
 import {
@@ -11,28 +12,27 @@ import {
 } from "@tabler/icons-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Input } from "../ui/input";
 
-export function ProfileNav() {
+export function VolunteerProfileNav() {
   return (
     <nav className="container mt-10 flex items-center justify-between">
       <ul className="flex items-center gap-3">
-        <ProfileNavItem path="/donor/profile">
+        <ProfileNavItem path="/volunteer/profile">
           <IconSettings size={24} />
           <span>Home</span>
         </ProfileNavItem>
 
-        <ProfileNavItem path="/donor/transactions">
+        <ProfileNavItem path="/volunteer/transactions">
           <IconBell size={24} />
           <span>Subscription</span>
         </ProfileNavItem>
 
-        <ProfileNavItem path="/donor/transactions">
+        <ProfileNavItem path="/volunteer/transactions">
           <IconHeart size={24} />
           <span>All Projects Subscription</span>
         </ProfileNavItem>
 
-        <ProfileNavItem path="/donor/transactions">
+        <ProfileNavItem path="/volunteer/transactions">
           <IconClock size={24} />
           <span>Transaction History</span>
         </ProfileNavItem>

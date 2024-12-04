@@ -8,12 +8,12 @@ export default function PublicLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="bg-[#FCFCFC]">
-      <TooltipProvider>
+    <TooltipProvider>
+      <div className="bg-[#FCFCFC]">
         <Navbar />
         {children}
         <Footer />
-      </TooltipProvider>
-    </div>
+      </div>
+    </TooltipProvider>
   );
 }

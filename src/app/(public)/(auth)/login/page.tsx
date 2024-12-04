@@ -142,7 +142,11 @@ export default function Login() {
                     )}
                   />
 
-                  <Button type="submit" className="mt-2 w-full rounded-full">
+                  <Button
+                    disabled={form.formState.isSubmitting}
+                    type="submit"
+                    className="mt-2 w-full rounded-full"
+                  >
                     {form.formState.isSubmitting ? "Loading..." : "Sing in"}
                   </Button>
                 </form>

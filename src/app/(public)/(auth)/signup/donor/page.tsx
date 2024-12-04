@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { donorRegistrationAction } from "@/app/actions/authActions";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -17,32 +18,64 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
 import { donorRegistrationFormSchema } from "@/schemas/donorRegistrationFormSchema";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 export default function DonorSignup() {
   const [isShown, setIsShown] = React.useState<boolean>(false);
+  const router = useRouter();
+  const { toast } = useToast();
+
   const form = useForm<z.infer<typeof donorRegistrationFormSchema>>({
     resolver: zodResolver(donorRegistrationFormSchema),
     defaultValues: {
-      first_name: "",
-      last_name: "",
+      f_name: "",
+      l_name: "",
       email: "",
       password: "",
       confirm_password: "",
+      honey_pot: "",
+      mobile_number: "",
     },
   });
 
-  const onSubmit = (values: z.infer<typeof donorRegistrationFormSchema>) => {
-    console.log(values);
+  const onSubmit = async (
+    values: z.infer<typeof donorRegistrationFormSchema>,
+  ) => {
+    if (values.honey_pot) return;
+
+    const data = await donorRegistrationAction(values);
+
+    console.log(data);
+
+    if (data.status === "success") {
+      form.reset();
+      toast({
+        variant: "success",
+        description: "Registration Successful",
+      });
+      setTimeout(() => {
+        router.push("/login");
+      }, 1000);
+    }
+
+    if (data.status === "error") {
+      toast({
+        variant: "destructive",
+        description: data.message,
+      });
+    }
   };
+
   return (
     <main>
-      <div className="mx-auto mt-10 grid max-w-[1200px] grid-cols-2 gap-4 rounded-[24px] border border-base-100 bg-base-0 p-8 shadow-lg">
+      <div className="mx-4 mt-10 grid max-w-[1140px] grid-cols-1 gap-4 rounded-[24px] border border-base-100 bg-base-0 p-6 shadow-lg md:p-8 xmd:grid-cols-2 2xl:mx-auto">
         {/* form section  */}
         <div>
           <div className="h-12 w-12 rounded-full bg-[#C4C4C4]"></div>
-          <h3 className="mt-4 text-[32px] font-medium leading-[48px] text-base-400">
+          <h3 className="mt-4 text-2xl font-medium leading-[48px] text-base-400 sm:text-[28px] md:text-[32px]">
             Create an account
           </h3>
           <div className="mt-1 flex items-center gap-2">
@@ -54,11 +87,33 @@ export default function DonorSignup() {
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="mt-8">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {/* honey pot  */}
+                <FormField
+                  control={form.control}
+                  name="honey_pot"
+                  render={({ field }) => (
+                    <FormItem className="hidden">
+                      <FormLabel className="text-base-300">
+                        First name
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          className="rounded-xl shadow-none"
+                          type="text"
+                          placeholder="Type your first name"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
                 {/* first name  */}
                 <FormField
                   control={form.control}
-                  name="first_name"
+                  name="f_name"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-base-300">
@@ -80,7 +135,7 @@ export default function DonorSignup() {
                 {/* last name  */}
                 <FormField
                   control={form.control}
-                  name="last_name"
+                  name="l_name"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-base-300">Last name</FormLabel>
@@ -102,14 +157,36 @@ export default function DonorSignup() {
                   control={form.control}
                   name="email"
                   render={({ field }) => (
-                    <FormItem className="col-span-2">
+                    <FormItem className="">
                       <FormLabel className="text-base-300">
                         Email address
                       </FormLabel>
                       <FormControl>
                         <Input
                           className="rounded-xl shadow-none"
-                          type="email"
+                          type="Email address"
+                          placeholder="test@example.com"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* mobile_number  */}
+                <FormField
+                  control={form.control}
+                  name="mobile_number"
+                  render={({ field }) => (
+                    <FormItem className="">
+                      <FormLabel className="text-base-300">
+                        Mobile Number
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          className="rounded-xl shadow-none"
+                          type="Mobile number"
                           placeholder="test@example.com"
                           {...field}
                         />
@@ -178,12 +255,21 @@ export default function DonorSignup() {
                   Show Password
                 </label>
               </div>
-              <div className="mt-8 flex w-full items-center justify-between">
-                <Link href="/login" className="underline underline-offset-2">
+              <div className="mt-8 flex w-full flex-col items-start gap-y-4 sm:flex-row sm:items-center sm:justify-between sm:gap-y-0">
+                <Link
+                  href="/login"
+                  className="order-2 underline underline-offset-2 sm:order-1"
+                >
                   Login instead
                 </Link>
-                <Button type="submit" className="rounded-full">
-                  Create an Account
+                <Button
+                  disabled={form.formState.isSubmitting}
+                  type="submit"
+                  className="order-1 w-full rounded-full sm:order-2 sm:w-[164px]"
+                >
+                  {form.formState.isSubmitting
+                    ? "Loading..."
+                    : "Create an Account"}
                 </Button>
               </div>
             </form>
@@ -191,16 +277,16 @@ export default function DonorSignup() {
         </div>
 
         {/* logo section  */}
-        <div className="flex flex-col items-center justify-center">
+        <div className="hidden flex-col items-center justify-center xmd:flex">
           <Image
             src="/images/logo2.png"
             alt="logo"
             height={198}
             width={359}
-            className="h-[198px] w-[359px]"
+            className="h-[150px] w-fit mlg:h-[198px] mlg:w-[359px]"
           />
-          <h1 className="ml-12 max-w-[359px] text-[40px] leading-[46px] text-primary-light">
-            Horizon Welfare Orgainasation
+          <h1 className="max-w-[359px] text-center text-3xl leading-[46px] text-primary-light mlg:text-[40px]">
+            Horizon Welfare Organization
           </h1>
         </div>
       </div>
