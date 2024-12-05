@@ -22,6 +22,7 @@ import dynamic from "next/dynamic";
 import * as React from "react";
 import { DateRange } from "react-day-picker";
 
+import { Loader } from "@/components";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -32,6 +33,7 @@ import {
 import { cn } from "@/lib/utils";
 
 const DataTable = dynamic(() => import("@/components/data-table/Table"), {
+  loading: () => <Loader className="h-[600px]" />,
   ssr: false,
 });
 
@@ -42,85 +44,88 @@ export default function Transactions() {
     to: undefined,
   });
 
-  const columns: ColumnDef<Person>[] = [
-    {
-      accessorKey: "firstName",
-      id: "firstName",
-      header: "Date",
-      cell: (info) => info.getValue(),
-      footer: (props) => props.column.id,
-    },
-    {
-      accessorKey: "lastName",
-      id: "lastName",
-      header: "Trx Id",
-      cell: (info) => info.getValue(),
-      footer: (props) => props.column.id,
-    },
-    {
-      accessorKey: "age",
-      id: "age",
-      header: "Project",
-      cell: (info) => info.getValue(),
-      footer: (props) => props.column.id,
-    },
-    {
-      accessorKey: "visits",
-      id: "visits",
-      header: "Amount",
-      cell: (info) => info.getValue(),
-      footer: (props) => props.column.id,
-    },
-    {
-      accessorKey: "status",
-      id: "status",
-      header: "Status",
-      cell: (info) => info.getValue(),
-      footer: (props) => props.column.id,
-    },
-    {
-      accessorKey: "progress",
-      id: "progress",
-      header: "Method",
-      cell: (info) => info.getValue(),
-      footer: (props) => props.column.id,
-    },
-    {
-      id: "actions",
-      header: "Actions",
-      cell: () => (
-        <div className="flex justify-center">
-          <DropdownMenu modal={false}>
-            <DropdownMenuTrigger asChild>
-              <button className="outline-none">
-                <IconDots size={24} />
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-fit">
-              <DropdownMenuGroup>
-                <DropdownMenuItem className="gap-2 text-base-300 focus:cursor-pointer">
-                  <IconCopy size={18} />
-                  <span>Copy</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="gap-2 text-base-300 focus:cursor-pointer">
-                  <IconEdit size={18} />
-                  <span>Edit</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="gap-2 text-destructive focus:cursor-pointer focus:text-destructive">
-                  <IconTrash size={18} />
-                  <span>Delete</span>
-                </DropdownMenuItem>
-              </DropdownMenuGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      ),
-    },
-  ];
+  const columns: ColumnDef<Person>[] = React.useMemo(
+    () => [
+      {
+        accessorKey: "firstName",
+        id: "firstName",
+        header: "Date",
+        cell: (info) => info.getValue(),
+        footer: (props) => props.column.id,
+      },
+      {
+        accessorKey: "lastName",
+        id: "lastName",
+        header: "Trx Id",
+        cell: (info) => info.getValue(),
+        footer: (props) => props.column.id,
+      },
+      {
+        accessorKey: "age",
+        id: "age",
+        header: "Project",
+        cell: (info) => info.getValue(),
+        footer: (props) => props.column.id,
+      },
+      {
+        accessorKey: "visits",
+        id: "visits",
+        header: "Amount",
+        cell: (info) => info.getValue(),
+        footer: (props) => props.column.id,
+      },
+      {
+        accessorKey: "status",
+        id: "status",
+        header: "Status",
+        cell: (info) => info.getValue(),
+        footer: (props) => props.column.id,
+      },
+      {
+        accessorKey: "progress",
+        id: "progress",
+        header: "Method",
+        cell: (info) => info.getValue(),
+        footer: (props) => props.column.id,
+      },
+      {
+        id: "actions",
+        header: "Actions",
+        cell: () => (
+          <div className="flex justify-center">
+            <DropdownMenu modal={false}>
+              <DropdownMenuTrigger asChild>
+                <button className="outline-none">
+                  <IconDots size={24} />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-fit">
+                <DropdownMenuGroup>
+                  <DropdownMenuItem className="gap-2 text-base-300 focus:cursor-pointer">
+                    <IconCopy size={18} />
+                    <span>Copy</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="gap-2 text-base-300 focus:cursor-pointer">
+                    <IconEdit size={18} />
+                    <span>Edit</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="gap-2 text-destructive focus:cursor-pointer focus:text-destructive">
+                    <IconTrash size={18} />
+                    <span>Delete</span>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        ),
+      },
+    ],
+    [],
+  );
 
   return (
     <main className="container">
-      <h1 className="my-8 text-[30px] font-semibold leading-9">
+      <h1 className="my-5 text-2xl font-semibold leading-9 md:my-8 md:text-[30px]">
         Donation History
       </h1>
       <DataTable
@@ -167,9 +172,12 @@ export default function Transactions() {
                 />
               </PopoverContent>
             </Popover>
-            <Button variant="secondary">
+            <Button variant="secondary" className="hidden px-3 md:flex">
               <IconFilter size={20} />
               <span>Filter</span>
+            </Button>
+            <Button variant="secondary" className="flex px-3 md:hidden">
+              <IconFilter size={20} />
             </Button>
           </div>
         }
