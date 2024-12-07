@@ -27,12 +27,12 @@ export function AboutUsAwardSection({ className }: { className?: string }) {
       errorClass="h-[400px]"
       loadingClass="h-[400px]"
       // hidden={serializedData.status !== "active"}
-      className={cn("mx-auto mt-[100px] max-w-6xl", className)}
+      className={cn("mx-4 mt-[100px] max-w-7xl 2xl:mx-auto", className)}
     >
-      <h1 className="text-center text-5xl font-bold leading-[58px] text-base-400">
+      <h1 className="text-center text-2xl font-bold leading-[58px] text-base-400 sm:text-3xl xmd:text-4xl xl:text-5xl">
         Awards & Recognitions
       </h1>
-      <div className="mt-[60px] grid grid-cols-4">
+      <div className="mt-[60px] grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3 xmd:grid-cols-4">
         {serializedData?.length > 0
           ? serializedData.map((item: any) => (
               <AwardCard

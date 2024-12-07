@@ -24,15 +24,15 @@ export function AboutUsJourneySection({ className }: { className?: string }) {
       loadingClass="h-[655px]"
       hidden={serializedData.status !== "active"}
       className={cn(
-        "container mt-[100px] grid grid-cols-12 gap-x-4 rounded-[20px] bg-primary px-8 py-16",
+        "container mt-[100px] grid grid-cols-12 gap-x-0 gap-y-8 rounded-[20px] bg-primary px-6 py-6 mlg:gap-x-4 mlg:gap-y-0 xl:px-8 xl:py-8 2xl:py-16",
         className,
       )}
     >
-      <div className="col-span-6 ml-12 flex flex-col justify-center gap-y-4">
+      <div className="order-2 col-span-12 flex flex-col justify-center gap-y-4 mlg:order-1 mlg:col-span-6 2xl:ml-12">
         <h4 className="text-base font-bold leading-5 text-base-0">
           {serializedData.title}
         </h4>
-        <h1 className="text-5xl font-bold leading-[58px] text-base-0">
+        <h1 className="text-4xl font-bold leading-[58px] text-base-0 2xl:text-5xl">
           {serializedData.focusTitle}
         </h1>
         <p className="text-base font-normal leading-6 text-base-200">
@@ -56,9 +56,9 @@ export function AboutUsJourneySection({ className }: { className?: string }) {
       <Image
         src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image}`}
         alt="Money-raising"
-        height={448}
+        height={350}
         width={612}
-        className="col-span-6 w-full"
+        className="order-1 col-span-12 h-fit w-fit sm:w-full mlg:order-2 mlg:col-span-6"
       />
     </SectionWrapper>
   );

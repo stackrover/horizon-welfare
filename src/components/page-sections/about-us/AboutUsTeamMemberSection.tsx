@@ -30,8 +30,21 @@ export function AboutUsTeamMemberSection({
       errorClass="h-[655px]"
       loadingClass="h-[655px]"
       //   hidden={serializedData.status !== "active"}
-      className={cn("grid grid-cols-4 gap-x-8 gap-y-12", className)}
+      className={cn(
+        "grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 xmd:grid-cols-3 lg:grid-cols-4",
+        className,
+      )}
     >
+      {serializedData.length > 0
+        ? serializedData.map((item: TeamMember) => (
+            <TeamMemberCard key={item.id} item={item} />
+          ))
+        : null}
+      {serializedData.length > 0
+        ? serializedData.map((item: TeamMember) => (
+            <TeamMemberCard key={item.id} item={item} />
+          ))
+        : null}
       {serializedData.length > 0
         ? serializedData.map((item: TeamMember) => (
             <TeamMemberCard key={item.id} item={item} />

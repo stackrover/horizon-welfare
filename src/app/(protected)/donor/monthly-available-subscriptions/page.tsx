@@ -1,7 +1,7 @@
 import { SubscriptionProjectCard } from "@/components";
 import { Button } from "@/components/ui/button";
 
-// TODO: hello todo 
+// TODO: hello todo
 
 export default function MonthlyAvailableSubscription() {
   return (

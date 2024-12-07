@@ -26,11 +26,11 @@ export function AboutUsTeamSection({ className }: { className?: string }) {
       hidden={serializedData.status !== "active"}
       className={cn("container mt-[100px] flex flex-col gap-y-8", className)}
     >
-      <div className="mx-auto max-w-xl">
-        <h1 className="text-center text-5xl font-bold leading-[58px] text-base-400">
+      <div className="mx-4 max-w-[640px] md:mx-auto">
+        <h1 className="text-center text-3xl font-bold leading-10 text-base-400 sm:leading-[58px] xmd:text-4xl xl:text-5xl">
           {serializedData.title}
         </h1>
-        <h4 className="mt-6 text-center text-base font-normal leading-[25px] text-base-300">
+        <h4 className="mt-3 text-center text-sm font-normal leading-[25px] text-base-300 sm:mt-6 md:text-base">
           {serializedData.description}
         </h4>
       </div>
