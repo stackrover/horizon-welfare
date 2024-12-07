@@ -3,22 +3,24 @@ import Image from "next/image";
 
 export function AboutCard({ imageUrl, title, desc }: AboutCardProps) {
   return (
-    <div className="rounded-[10px] px-20 py-8 shadow-[2px_9px_42px_rgba(0,0,0,0.04)]">
+    <div className="rounded-[10px] px-4 py-4 shadow-[2px_9px_42px_rgba(0,0,0,0.04)] md:px-8 md:py-8 3xl:px-20">
       <div className="flex items-end gap-x-6">
         <Image
           src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${imageUrl}`}
           alt="service image"
           width={200}
           height={200}
-          className="h-[70px] w-[70px]"
+          className="h-[55px] w-[55px] md:h-[70px] md:w-[70px]"
         />
 
-        <h3 className="text-[40px] font-bold leading-8 text-base-400">
+        <h3 className="text-2xl font-bold text-base-400 md:text-3xl md:leading-10 3xl:text-[40px]">
           {title}
         </h3>
       </div>
       <CardDivider />
-      <h5 className="text-xl leading-8 text-base-300">{desc}</h5>
+      <h5 className="text-base leading-8 text-base-300 sm:text-lg xmd:text-xl">
+        {desc}
+      </h5>
     </div>
   );
 }

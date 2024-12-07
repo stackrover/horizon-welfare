@@ -56,6 +56,7 @@ export function AboutUsContentSection({ className }: { className?: string }) {
           <VideoPlayer
             className="h-fit overflow-hidden rounded-xl"
             videoUrl={serializedData.videoLink}
+            playerHeight="448px"
           />
         </div>
 

@@ -1,3 +1,4 @@
+import { TruncateString } from "@/components";
 import { BlogCardProps } from "@/types/types";
 import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
@@ -5,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 export function BlogCard({ cardData }: { cardData: BlogCardProps }) {
   return (
     <div className="group overflow-hidden rounded-xl border border-[#E8E8EA] p-4">
-      <div className="m-2 mb-4 overflow-hidden rounded-lg">
+      <div className="mb-4 overflow-hidden rounded-lg 3xl:m-2">
         <Image
           src={cardData.imageUrl}
           alt="Donation"
@@ -17,24 +18,30 @@ export function BlogCard({ cardData }: { cardData: BlogCardProps }) {
           width={500}
         />
       </div>
-      <div className="flex flex-col gap-y-4 p-2">
+      <div className="flex flex-col gap-y-2 sm:gap-y-4 3xl:p-2">
         <span className="block w-fit rounded-[6px] bg-[#4B6BFB]/5 px-2.5 py-1 text-sm font-medium leading-5 text-[#4B6BFB]">
           WASH
         </span>
-        <h3 className="text-2xl font-semibold leading-8 text-base-400">
-          {cardData.title}
+        <h3 className="text-base font-semibold leading-8 text-base-400 sm:text-xl 3xl:text-2xl">
+          <TruncateString length={50} separator="">
+            {cardData.title}
+          </TruncateString>
         </h3>
         <div className="flex items-center justify-between text-[#97989F]">
           <div className="flex items-center gap-x-3 font-medium">
-            <Avatar className="border border-neutral-200 text-foreground">
+            <Avatar className="h-8 w-8 border border-neutral-200 text-foreground sm:h-10 sm:w-10">
               <AvatarImage src="" />
-              <AvatarFallback className="font-bold">TR</AvatarFallback>
+              <AvatarFallback className="text-sm font-semibold sm:text-base sm:font-bold">
+                TR
+              </AvatarFallback>
             </Avatar>
-            <h4 className="text-lg font-medium leading-6 text-base-300">
+            <h4 className="text-base font-medium leading-6 text-base-300 sm:text-lg">
               {cardData.userName}
             </h4>
           </div>
-          <h4 className="font-medium">{cardData.publishingDate}</h4>
+          <h4 className="text-sm font-medium sm:text-base">
+            {cardData.publishingDate}
+          </h4>
         </div>
       </div>
     </div>
