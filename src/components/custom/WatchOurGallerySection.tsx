@@ -25,25 +25,44 @@ export function WatchOurGallerySection({ className }: { className?: string }) {
       <h2 className="mb-10 text-center text-2xl font-extrabold leading-10 text-base-400 xmd:text-3xl xmd:leading-[64px] xl:text-4xl 2xl:text-5xl">
         {serializedData.title}
       </h2>
-      <div className="grid h-fit w-full grid-cols-12 gap-4 px-4 md:px-10 xmd:gap-10 xl:gap-4 2xl:gap-10">
-        <Image
-          src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image1}`}
-          alt={serializedData.imageTitle1}
-          className="col-span-4 h-fit w-full rounded-lg xl:col-span-1"
-          width={450}
-          height={200}
-          priority
-        />
-        <Image
-          src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image2}`}
-          alt={serializedData.imageTitle2}
-          className="col-span-8 h-fit w-full rounded-lg xl:col-span-2"
-          width={450}
-          height={200}
-          priority
-        />
+      <div className="grid h-fit w-full grid-cols-12 items-center justify-center gap-4 px-4 md:px-10">
+        <div className="col-span-12 grid grid-cols-2 gap-4 3xl:col-span-4">
+          <Image
+            src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image1}`}
+            alt={serializedData.imageTitle1}
+            className="h-fit w-full rounded-lg"
+            width={450}
+            height={200}
+            priority
+          />
+          <Image
+            src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image2}`}
+            alt={serializedData.imageTitle2}
+            className="h-fit w-full rounded-lg"
+            width={450}
+            height={200}
+            priority
+          />
+          <Image
+            src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image3}`}
+            alt={serializedData.imageTitle3}
+            className="h-fit w-full rounded-lg"
+            width={450}
+            height={200}
+            priority
+          />
 
-        <div className="col-span-12 row-span-2 flex items-center xl:col-span-6">
+          <Image
+            src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image4}`}
+            alt={serializedData.imageTitle4}
+            className="h-fit w-full rounded-lg"
+            width={450}
+            height={200}
+            priority
+          />
+        </div>
+
+        <div className="col-span-12 row-span-2 flex items-center 3xl:col-span-4">
           <VideoPlayer
             className="h-fit overflow-hidden rounded-xl"
             videoUrl={serializedData.videoLink}
@@ -51,56 +70,40 @@ export function WatchOurGallerySection({ className }: { className?: string }) {
           />
         </div>
 
-        <Image
-          src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image3}`}
-          alt={serializedData.imageTitle3}
-          className="col-span-4 h-fit w-full rounded-lg xl:col-span-1"
-          width={450}
-          height={200}
-          priority
-        />
-
-        <Image
-          src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image4}`}
-          alt={serializedData.imageTitle4}
-          className="col-span-8 h-fit w-full rounded-lg xl:col-span-2"
-          width={450}
-          height={200}
-          priority
-        />
-
-        <Image
-          src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image5}`}
-          alt={serializedData.imageTitle5}
-          className="col-span-8 h-fit w-full rounded-lg xl:col-span-2"
-          width={450}
-          height={200}
-          priority
-        />
-        <Image
-          src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image6}`}
-          alt={serializedData.imageTitle6}
-          className="col-span-4 h-fit w-full rounded-lg xl:col-span-1"
-          width={450}
-          height={200}
-          priority
-        />
-        <Image
-          src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image7}`}
-          alt={serializedData.imageTitle7}
-          className="col-span-4 h-fit w-full rounded-lg xl:col-span-2"
-          width={450}
-          height={200}
-          priority
-        />
-        <Image
-          src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image8}`}
-          alt={serializedData.imageTitle8}
-          className="col-span-8 h-fit w-full rounded-lg xl:col-span-1"
-          width={450}
-          height={200}
-          priority
-        />
+        <div className="col-span-12 grid grid-cols-2 gap-4 3xl:col-span-4">
+          <Image
+            src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image5}`}
+            alt={serializedData.imageTitle5}
+            className="h-fit w-full rounded-lg"
+            width={450}
+            height={200}
+            priority
+          />
+          <Image
+            src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image6}`}
+            alt={serializedData.imageTitle6}
+            className="h-fit w-full rounded-lg"
+            width={450}
+            height={200}
+            priority
+          />
+          <Image
+            src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image7}`}
+            alt={serializedData.imageTitle7}
+            className="h-fit w-full rounded-lg"
+            width={450}
+            height={200}
+            priority
+          />
+          <Image
+            src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image8}`}
+            alt={serializedData.imageTitle8}
+            className="h-fit w-full rounded-lg"
+            width={450}
+            height={200}
+            priority
+          />
+        </div>
       </div>
     </SectionWrapper>
   );

@@ -4,8 +4,6 @@ import {
   Select,
   SelectContent,
   SelectGroup,
-  SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -19,56 +17,18 @@ export function DonationSection() {
         Donate <span className="font-normal">Now</span>
       </h3>
       <div className="grid w-full flex-1 grid-cols-2 gap-4 md:grid-cols-3 mlg:grid-cols-5">
-        {/* option 1 */}
-        <Select>
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select a fruit" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Fruits</SelectLabel>
-              <SelectItem value="apple">Apple</SelectItem>
-              <SelectItem value="banana">Banana</SelectItem>
-              <SelectItem value="blueberry">Blueberry</SelectItem>
-              <SelectItem value="grapes">Grapes</SelectItem>
-              <SelectItem value="pineapple">Pineapple</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-
-        {/* option 2  */}
-        <Select>
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select a fruit" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Fruits</SelectLabel>
-              <SelectItem value="apple">Apple</SelectItem>
-              <SelectItem value="banana">Banana</SelectItem>
-              <SelectItem value="blueberry">Blueberry</SelectItem>
-              <SelectItem value="grapes">Grapes</SelectItem>
-              <SelectItem value="pineapple">Pineapple</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-
-        {/* option 3  */}
-        <Select>
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select a fruit" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Fruits</SelectLabel>
-              <SelectItem value="apple">Apple</SelectItem>
-              <SelectItem value="banana">Banana</SelectItem>
-              <SelectItem value="blueberry">Blueberry</SelectItem>
-              <SelectItem value="grapes">Grapes</SelectItem>
-              <SelectItem value="pineapple">Pineapple</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+        {[1, 2, 3].map((item) => (
+          <Select key={item}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Pick an option" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <div className="p-4 text-gray-500">No Available option</div>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        ))}
 
         {/* amount */}
         <Input placeholder="Amount" className="w-full" />

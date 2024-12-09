@@ -8,12 +8,19 @@ export const menuItems = [
     id: 2,
     name: "Services",
     path: "/service",
-    submenu: [{ id: 1 }],
+    submenu: [
+      { name: "Service 1", path: "#" },
+      { name: "Service 2", path: "#" },
+    ],
   },
   {
     id: 3,
     name: "Join Us",
     path: "/join-us",
+    submenu: [
+      { name: "As a donor", path: "/signup/donor" },
+      { name: "As a volunteer", path: "/signup/volunteer" },
+    ],
   },
   {
     id: 4,
@@ -23,7 +30,7 @@ export const menuItems = [
   {
     id: 5,
     name: "Donate",
-    path: "/donate",
+    path: "/projects",
   },
   {
     id: 6,

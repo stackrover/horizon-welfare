@@ -24,18 +24,20 @@ export function Banner({ className }: { className?: string }) {
       hidden={serializedData.status !== "active"}
       className={cn("relative", className)}
     >
-      <Image
-        src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image}`}
-        alt="Banner"
-        className="h-[600px] max-h-[808px] w-full lg:h-fit"
-        width={1800}
-        height={800}
-        priority
-      />
+      <div className="h-[800px] w-full overflow-hidden">
+        <Image
+          src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image}`}
+          alt="Banner"
+          className="h-[808px] max-h-[808px] min-w-[1800px]"
+          width={1800}
+          height={800}
+          priority
+        />
+      </div>
 
       <div className="absolute left-0 top-0 h-full w-full bg-black bg-opacity-10 bg-blend-overlay"></div>
 
-      <div className="absolute left-1/2 top-1/2 flex max-w-[728px] -translate-x-1/2 -translate-y-1/2 flex-col gap-y-4 rounded-lg bg-base-0/80 p-8 backdrop-blur-[5px] xmd:left-[10%] xmd:-translate-x-0">
+      <div className="container absolute left-1/2 top-1/2 flex w-full -translate-x-1/2 -translate-y-1/2 flex-col gap-y-4 rounded-lg bg-base-0/80 p-8 backdrop-blur-[5px] lg:left-[10%] lg:max-w-[728px] lg:-translate-x-0">
         <h1 className="text-3xl font-bold text-primary md:text-4xl xmd:text-5xl xmd:leading-[72px] xl:text-6xl">
           {serializedData.title}
         </h1>
