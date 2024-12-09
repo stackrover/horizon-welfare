@@ -50,6 +50,7 @@ export * from "./custom/SubscriptionProjectCard";
 export * from "./custom/SummaryCard";
 export * from "./custom/TeamMemberCard";
 export * from "./custom/TopPartnersSection";
+export * from "./custom/TruncateString";
 export * from "./custom/VideoCard";
 export * from "./custom/VolunteerProjectCard";
 export * from "./custom/WatchOurGallerySection";

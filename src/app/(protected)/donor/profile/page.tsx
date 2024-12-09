@@ -20,6 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
+import axiosInstance from "@/lib/axios";
 import { donorProfileFormSchema } from "@/schemas/donorProfileUpdateSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -41,6 +42,10 @@ const formSchema = z.object({
 
 export default function DonorProfile() {
   const [file, setFile] = React.useState<File[]>([]);
+  const [districts, setDistricts] = React.useState<Record<string, string>[]>(
+    [],
+  );
+
   const {
     acceptedFiles,
     getRootProps,
@@ -74,6 +79,19 @@ export default function DonorProfile() {
       person: "",
     },
   });
+
+  // get the districts list initial render
+  React.useEffect(() => {
+    (async () => {
+      const { data } = await axiosInstance.get(
+        `${process.env.NEXT_PUBLIC_LOCATION_API_URL}/districts`,
+      );
+
+      if (data?.status.code === 200) {
+        setDistricts(data?.data ?? []);
+      }
+    })();
+  }, []);
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof donorProfileFormSchema>) {

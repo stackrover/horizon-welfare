@@ -134,3 +134,9 @@ export type VideoCardProps = {
   videoUrl: string;
   title: string;
 };
+
+export type TruncateStringProps = {
+  children: string;
+  length: number;
+  separator: string;
+};

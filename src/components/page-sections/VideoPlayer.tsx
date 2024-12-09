@@ -6,19 +6,20 @@ import ReactPlayer from "react-player";
 export default function VideoPlayer({
   className,
   videoUrl,
+  playerHeight,
 }: {
   className?: string;
   videoUrl: string;
+  playerHeight: string;
 }) {
   return (
     <div className={cn("mx-auto w-full max-w-7xl overflow-hidden", className)}>
-      {/* <div className="mx-auto w-full max-w-7xl translate-y-1/2 overflow-hidden rounded-[20px]"> */}
       <ReactPlayer
         width="100%"
-        height="448px"
+        height={playerHeight}
         controls
         url={videoUrl}
-        style={{ borderRadius: "20px" }}
+        style={{ borderRadius: "20px", aspectRatio: "16/9" }}
       />
     </div>
   );

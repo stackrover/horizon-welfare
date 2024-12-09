@@ -18,7 +18,10 @@ export function AboutCards({ className }: { className?: string }) {
       errorClass="h-[630px]"
       loadingClass="h-[630px]"
       hidden={serializedData.status !== "active"}
-      className={cn("container grid grid-cols-2 gap-8 pt-[100px]", className)}
+      className={cn(
+        "container grid grid-cols-1 gap-8 pt-[100px] mlg:grid-cols-2",
+        className,
+      )}
     >
       <AboutCard
         imageUrl={serializedData.image1}

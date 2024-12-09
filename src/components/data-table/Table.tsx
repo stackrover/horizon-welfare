@@ -61,7 +61,7 @@ export default function DataTable({ data, columns, elements }: DataTableProps) {
 
   return (
     <div className="block max-w-full p-2">
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-4 flex flex-col items-start gap-2 md:flex-row md:items-center md:justify-between">
         <div>{elements ? elements : null}</div>
         <DebouncedInput
           value={globalFilter ?? ""}
@@ -82,12 +82,12 @@ export default function DataTable({ data, columns, elements }: DataTableProps) {
                       key={header.id}
                       colSpan={header.colSpan}
                       style={{ position: "relative", width: header.getSize() }}
-                      className="h-12 border-y px-5 text-left text-[13px] font-semibold uppercase leading-[15px] text-[#4B465C]"
+                      className="h-12 border-y px-5 text-left text-[11px] font-semibold uppercase leading-[15px] text-[#4B465C] md:text-[13px]"
                     >
                       <div
                         {...{
                           className: header.column.getCanSort()
-                            ? "cursor-pointer select-none flex items-center justify-between"
+                            ? "cursor-pointer select-none flex items-center justify-between gap-x-2"
                             : "",
                           onClick: header.column.getToggleSortingHandler(),
                         }}
@@ -97,13 +97,13 @@ export default function DataTable({ data, columns, elements }: DataTableProps) {
                           header.getContext(),
                         )}
                         {header.column.id !== "actions" ? (
-                          <div className="">
+                          <div className="flex flex-col">
                             <IconChevronUp
-                              className={`${(header.column.getIsSorted() as string) === "asc" ? "text-base-400" : "text-base-400/30"}`}
+                              className={`-mb-[3px] md:-mb-0 ${(header.column.getIsSorted() as string) === "asc" ? "text-base-400" : "text-base-400/30"}`}
                               size={16}
                             />
                             <IconChevronDown
-                              className={`${(header.column.getIsSorted() as string) === "desc" ? "text-base-400" : "text-base-400/30"}`}
+                              className={`-mt-[3px] md:-mb-0 ${(header.column.getIsSorted() as string) === "desc" ? "text-base-400" : "text-base-400/30"}`}
                               size={16}
                             />
                           </div>
@@ -124,7 +124,7 @@ export default function DataTable({ data, columns, elements }: DataTableProps) {
                       <td
                         key={cell.id}
                         style={{ width: cell.column.getSize() }}
-                        className="h-[60px] border-y px-5 text-[15px] font-semibold leading-[22px] text-[#4B465C]"
+                        className="h-10 border-y px-5 text-[10px] font-semibold leading-[22px] text-[#4B465C] md:h-[60px] md:text-[15px]"
                       >
                         {flexRender(
                           cell.column.columnDef.cell,
