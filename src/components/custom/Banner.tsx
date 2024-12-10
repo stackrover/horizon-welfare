@@ -32,6 +32,10 @@ export function Banner({ className }: { className?: string }) {
           width={1800}
           height={800}
           priority
+          placeholder="blur"
+          sizes="100vw"
+          style={{ width: "100%", height: "100%" }}
+          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8VQ8AAnkBewKPWHQAAAAASUVORK5CYII="
         />
       </div>
 

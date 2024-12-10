@@ -17,6 +17,7 @@ export function DonationCard({ cardData }: { cardData: DonationCardProps }) {
         className="w-full transition-all duration-300 ease-in-out group-hover:scale-105"
         height={175}
         width={500}
+        quality={75}
       />
       <div className="flex flex-col gap-y-4 px-4 py-5">
         <h3 className="text-lg font-semibold text-base-400 xmd:text-xl xmd:leading-8 lg:text-2xl">

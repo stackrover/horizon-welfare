@@ -33,7 +33,9 @@ export function WatchOurGallerySection({ className }: { className?: string }) {
             className="h-fit w-full rounded-lg"
             width={450}
             height={200}
-            priority
+            loading="lazy"
+            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Vg8AAnEBdzTCX3oAAAAASUVORK5CYII="
+            placeholder="blur"
           />
           <Image
             src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image2}`}
@@ -41,7 +43,9 @@ export function WatchOurGallerySection({ className }: { className?: string }) {
             className="h-fit w-full rounded-lg"
             width={450}
             height={200}
-            priority
+            loading="lazy"
+            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Vg8AAnEBdzTCX3oAAAAASUVORK5CYII="
+            placeholder="blur"
           />
           <Image
             src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image3}`}
@@ -49,7 +53,9 @@ export function WatchOurGallerySection({ className }: { className?: string }) {
             className="h-fit w-full rounded-lg"
             width={450}
             height={200}
-            priority
+            loading="lazy"
+            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Vg8AAnEBdzTCX3oAAAAASUVORK5CYII="
+            placeholder="blur"
           />
 
           <Image
@@ -58,7 +64,9 @@ export function WatchOurGallerySection({ className }: { className?: string }) {
             className="h-fit w-full rounded-lg"
             width={450}
             height={200}
-            priority
+            loading="lazy"
+            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Vg8AAnEBdzTCX3oAAAAASUVORK5CYII="
+            placeholder="blur"
           />
         </div>
 
@@ -77,7 +85,9 @@ export function WatchOurGallerySection({ className }: { className?: string }) {
             className="h-fit w-full rounded-lg"
             width={450}
             height={200}
-            priority
+            loading="lazy"
+            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Vg8AAnEBdzTCX3oAAAAASUVORK5CYII="
+            placeholder="blur"
           />
           <Image
             src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image6}`}
@@ -85,7 +95,9 @@ export function WatchOurGallerySection({ className }: { className?: string }) {
             className="h-fit w-full rounded-lg"
             width={450}
             height={200}
-            priority
+            loading="lazy"
+            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Vg8AAnEBdzTCX3oAAAAASUVORK5CYII="
+            placeholder="blur"
           />
           <Image
             src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image7}`}
@@ -93,7 +105,9 @@ export function WatchOurGallerySection({ className }: { className?: string }) {
             className="h-fit w-full rounded-lg"
             width={450}
             height={200}
-            priority
+            loading="lazy"
+            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Vg8AAnEBdzTCX3oAAAAASUVORK5CYII="
+            placeholder="blur"
           />
           <Image
             src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image8}`}
@@ -101,7 +115,9 @@ export function WatchOurGallerySection({ className }: { className?: string }) {
             className="h-fit w-full rounded-lg"
             width={450}
             height={200}
-            priority
+            loading="lazy"
+            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Vg8AAnEBdzTCX3oAAAAASUVORK5CYII="
+            placeholder="blur"
           />
         </div>
       </div>

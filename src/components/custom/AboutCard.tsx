@@ -11,6 +11,9 @@ export function AboutCard({ imageUrl, title, desc }: AboutCardProps) {
           width={200}
           height={200}
           className="h-[55px] w-[55px] md:h-[70px] md:w-[70px]"
+          loading="lazy"
+          placeholder="blur"
+          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8VQ8AAnkBewKPWHQAAAAASUVORK5CYII="
         />
 
         <h3 className="text-2xl font-bold text-base-400 md:text-3xl md:leading-10 3xl:text-[40px]">

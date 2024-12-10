@@ -59,6 +59,10 @@ export function TopPartnersSection({ className }: { className?: string }) {
                   height={56}
                   width={300}
                   className="h-[56px] w-fit"
+                  quality={70}
+                  loading="lazy"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Vg8AAnEBdzTCX3oAAAAASUVORK5CYII="
+                  placeholder="blur"
                 />
               </CarouselItem>
             ))}
