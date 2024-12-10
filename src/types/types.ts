@@ -46,15 +46,6 @@ export type ContactCardProps = {
   subtitle: string;
 };
 
-// donation card props
-export type DonationCardProps = {
-  imageUrl: string;
-  title: string;
-  desc: string;
-  collection: number;
-  percentage: number;
-};
-
 // event card props
 export type EventCardProps = {
   day: string;
@@ -139,4 +130,21 @@ export type TruncateStringProps = {
   children: string;
   length: number;
   separator: string;
+};
+
+export type ProjectType = {
+  id: number;
+  categoryId: number;
+  title: string;
+  description: string;
+  thumbnail: string;
+  goalAmount: string;
+  collectionDays: number;
+  volunteerNeed: number;
+  isEmergency: number;
+  status: string;
+  createdBy: number;
+  updatedBy: number;
+  createdAt: string;
+  updatedAt: string;
 };

@@ -16,6 +16,7 @@ export * from "./media-center/banner";
 export * from "./media-center/hero";
 export * from "./projects/hero";
 export * from "./projects/project";
+export * from "./projects/projectByCategory";
 export * from "./projects/successStories";
 export * from "./video-gallery/hero";
 export * from "./video-gallery/video";

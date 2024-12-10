@@ -1,76 +1,69 @@
 "use client";
 
-import { DonationCard, JoinAsVolunteerCard, StoryCard } from "@/components";
-import { Button } from "@/components/ui/button";
-import { cardData } from "@/constants/cardData";
-import { usePathname } from "next/navigation";
+import { DonationCard, Loader, SectionWrapper } from "@/components";
+import { ProjectByCategory } from "@/data";
+import { useSWR } from "@/hooks/use-swr";
+import Image from "next/image";
+import { useParams, usePathname } from "next/navigation";
 
-export default function Projects() {
+export default function ProjectsByCategory() {
   const pathname = usePathname();
+  const params = useParams();
+
+  const { data, isLoading, isError } = useSWR(
+    `/project/category/show/${params.projectCategory}`,
+  );
+
+  if (isLoading) {
+    return <Loader className="h-[540px]" />;
+  }
+
+  const serializedData = new ProjectByCategory(data?.data?.results);
+
+  console.log({ serializedData, data });
+
   return (
     <main>
-      {/* success stories section  */}
-      <section className="container mt-[100px] grid grid-cols-3 gap-2">
-        <div className="flex flex-col gap-y-4 p-8">
-          <Button className="w-fit">SUCCESS STORIES</Button>
-          <h2 className="text-4xl font-semibold leading-[44px] text-base-400">
-            By you It’s happened
-          </h2>
-          <p className="text-base font-normal leading-6 text-base-300">
-            Lorem Ipsum is simply dummy text of the printin typesetting dummy
-            text ever when an unknown printer took a galley of type and
-            scrambled a type specimen book.{" "}
-          </p>
-        </div>
-        <StoryCard
-          image="/images/project-image-2.png"
-          title="ZAKAT PROJECTS"
-          subtext="When you donate, you’re supporting effective care to children with special needs—an investment in the leaders of tomorrow."
-          link={`${pathname}/1`}
-        />
-        <StoryCard
-          image="/images/project-image-2.png"
-          title="ZAKAT PROJECTS"
-          subtext="When you donate, you’re supporting effective care to children with special needs—an investment in the leaders of tomorrow."
-          link={`${pathname}/2`}
-        />
-        <StoryCard
-          image="/images/project-image-2.png"
-          title="ZAKAT PROJECTS"
-          subtext="When you donate, you’re supporting effective care to children with special needs—an investment in the leaders of tomorrow."
-          link={`${pathname}/3`}
-        />
-        <StoryCard
-          image="/images/project-image-2.png"
-          title="ZAKAT PROJECTS"
-          subtext="When you donate, you’re supporting effective care to children with special needs—an investment in the leaders of tomorrow."
-          link={`${pathname}/4`}
-        />
-        <StoryCard
-          image="/images/project-image-2.png"
-          title="ZAKAT PROJECTS"
-          subtext="When you donate, you’re supporting effective care to children with special needs—an investment in the leaders of tomorrow."
-          link={`${pathname}/5`}
-        />
-      </section>
-      {/* success stories section  */}
+      <SectionWrapper
+        isLoading={isLoading}
+        isError={isError}
+        errorClass="h-[540px]"
+        loadingClass="h-[540px]"
+        hidden={serializedData.status !== "active"}
+        className="container mt-[100px]"
+      >
+        {/* project section  */}
+        <div className="flex items-center justify-between">
+          <h1 className="my-8 text-[56px] font-extrabold leading-[67px] text-base-400">
+            Your Donation May Change <br /> Someones Life
+          </h1>
+          <div
+            className={`relative flex h-[130px] w-[434px] items-center justify-between rounded-lg bg-cover bg-center before:absolute before:left-0 before:top-0 before:h-full before:w-full before:rounded-[20px] before:bg-black/50 before:content-['']`}
+          >
+            <Image
+              src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}${serializedData.icon}`}
+              alt="Join as a volunteer"
+              height={130}
+              width={434}
+              className="h-[130px] w-[434px]"
+            />
 
-      {/* project section  */}
-      <section className="container mt-[100px]">
-        <h1 className="my-8 text-[56px] font-extrabold leading-[67px] text-base-400">
-          Your Donation May Change <br /> Someones Life
-        </h1>
+            <div className="absolute left-0 top-0 z-10 mx-auto flex h-full w-full flex-col items-center justify-center gap-y-8 p-8">
+              <h4 className="text-center text-3xl font-bold text-base-0">
+                {serializedData.title}
+              </h4>
+            </div>
+          </div>
+        </div>
         <div className="grid grid-cols-3 gap-x-6 gap-y-8">
-          {Array.from({ length: 6 }).map((_, index) => (
-            <DonationCard key={index} cardData={cardData} />
-          ))}
+          {serializedData?.projects?.length > 0
+            ? serializedData.projects.map((project, index) => (
+                <DonationCard key={index} cardData={project} />
+              ))
+            : null}
         </div>
-      </section>
+      </SectionWrapper>
       {/* project section end */}
-
-      {/* join as volunteer section  */}
-      <JoinAsVolunteerCard />
-      {/* join as volunteer section end */}
     </main>
   );
 }

@@ -31,7 +31,7 @@ export function ProjectsSection({ className }: { className?: string }) {
               key={item.id}
               title={item.title}
               icon={item.icon}
-              link={`/projects/${item.slug}`}
+              link={`/projects/${item.id}`}
             />
           ))
         : null}

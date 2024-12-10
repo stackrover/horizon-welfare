@@ -1,4 +1,4 @@
-import { PackageHeroSection } from "@/components";
+import { JoinAsVolunteerCard, PackageHeroSection } from "@/components";
 
 export default function ProjectPageLayout({
   children,
@@ -9,6 +9,7 @@ export default function ProjectPageLayout({
     <div>
       <PackageHeroSection />
       {children}
+      <JoinAsVolunteerCard />
     </div>
   );
 }

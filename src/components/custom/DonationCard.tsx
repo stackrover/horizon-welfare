@@ -1,15 +1,15 @@
 "use client";
 
 import { TruncateString } from "@/components";
-import { DonationCardProps } from "@/types/types";
+import { ProjectType } from "@/types/types";
 import { IconGift } from "@tabler/icons-react";
 import Image from "next/image";
 
-export function DonationCard({ cardData }: { cardData: DonationCardProps }) {
+export function DonationCard({ cardData }: { cardData: ProjectType }) {
   return (
     <div className="group overflow-hidden rounded-xl border shadow">
       <Image
-        src={cardData.imageUrl}
+        src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}${cardData.thumbnail}`}
         alt="Donation"
         loading="lazy"
         blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Vg8AAnEBdzTCX3oAAAAASUVORK5CYII="
@@ -27,7 +27,7 @@ export function DonationCard({ cardData }: { cardData: DonationCardProps }) {
         </h3>
         <p className="text-sm font-normal leading-6 text-base-300 xmd:text-base">
           <TruncateString length={70} separator="">
-            {cardData.desc}
+            {cardData.description}
           </TruncateString>
         </p>
         <div className="h-1 w-full rounded-full bg-primary/30">
@@ -36,10 +36,10 @@ export function DonationCard({ cardData }: { cardData: DonationCardProps }) {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-x-1 text-sm font-medium xmd:text-base">
             <IconGift size={20} />
-            <h4>৳ {cardData.collection}</h4>
+            <h4>৳ {cardData.goalAmount}</h4>
           </div>
           <h4 className="text-sm font-medium xmd:text-base">
-            {cardData.percentage}%
+            {cardData.collectionDays}%
           </h4>
         </div>
       </div>
