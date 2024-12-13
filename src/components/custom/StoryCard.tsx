@@ -20,7 +20,7 @@ export function StoryCard({
           alt="image"
           height={366}
           width={435}
-          className="h-[366px] w-full"
+          className="h-fit w-full"
         />
       </div>
       <div className="absolute bottom-0 left-0 z-10 mx-auto w-full gap-y-8 p-8">

@@ -26,11 +26,14 @@ export function SuccessStoriesSection({ className }: { className?: string }) {
       errorClass="h-[540px]"
       loadingClass="h-[540px]"
       hidden={serializedData.status !== "active"}
-      className={cn("container mt-[100px] grid grid-cols-3 gap-2", className)}
+      className={cn(
+        "container mt-[100px] grid gap-2 xmd:grid-cols-2 xl:grid-cols-3",
+        className,
+      )}
     >
-      <div className="flex flex-col gap-y-4 p-8">
+      <div className="flex flex-col gap-y-4 mlg:p-8">
         <Button className="w-fit">{serializedData.title}</Button>
-        <h2 className="text-4xl font-semibold leading-[44px] text-base-400">
+        <h2 className="text-2xl font-semibold leading-[44px] text-base-400 md:text-3xl mlg:text-4xl">
           {serializedData.focusTitle}
         </h2>
         <p className="text-base font-normal leading-6 text-base-300">

@@ -4,10 +4,14 @@ import { TruncateString } from "@/components";
 import { ProjectType } from "@/types/types";
 import { IconGift } from "@tabler/icons-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export function DonationCard({ cardData }: { cardData: ProjectType }) {
   return (
-    <div className="group overflow-hidden rounded-xl border shadow">
+    <Link
+      href={`/projects/${cardData.categoryId}/${cardData.id}`}
+      className="group overflow-hidden rounded-xl border shadow"
+    >
       <Image
         src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}${cardData.thumbnail}`}
         alt="Donation"
@@ -43,6 +47,6 @@ export function DonationCard({ cardData }: { cardData: ProjectType }) {
           </h4>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

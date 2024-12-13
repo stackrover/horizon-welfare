@@ -17,6 +17,8 @@ export function JoinAsVolunteerCard() {
 
   const serializedData = new JoinAsVolunteer(_.head(data?.data?.results));
 
+  console.log(serializedData);
+
   return (
     <SectionWrapper
       isLoading={isLoading}
@@ -24,7 +26,7 @@ export function JoinAsVolunteerCard() {
       errorClass="h-[300px]"
       loadingClass="h-[300px]"
       hidden={serializedData.status !== "active"}
-      className={`relative mx-auto mt-[100px] h-[384px] max-w-7xl rounded-[20px] bg-cover bg-center before:absolute before:left-0 before:top-0 before:h-full before:w-full before:rounded-[20px] before:bg-black/50 before:content-['']`}
+      className={`relative mx-4 mt-[100px] h-[384px] max-w-7xl overflow-hidden rounded-[20px] bg-cover bg-center before:absolute before:left-0 before:top-0 before:h-full before:w-full before:rounded-[20px] before:bg-black/50 before:content-[''] 2xl:mx-auto`}
     >
       <div>
         <Image
@@ -32,14 +34,14 @@ export function JoinAsVolunteerCard() {
           alt="Join as a volunteer"
           height={300}
           width={1200}
-          className="h-full w-full"
+          className="h-[384px] w-full min-w-[1200px]"
         />
       </div>
       <div className="absolute left-0 top-0 z-10 mx-auto flex h-full w-full flex-col items-center justify-center gap-y-8 p-8">
-        <h4 className="max-w-[900px] text-center text-5xl font-bold leading-[58px] text-base-0">
-          You can contribute to provide a place for children with special needs!
+        <h4 className="max-w-[900px] text-center text-2xl font-bold text-base-0 xmd:text-3xl mlg:text-4xl lg:leading-[58px] xl:text-5xl">
+          {serializedData.title}
         </h4>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center justify-center gap-4">
           <Link href={serializedData.volunteerBtnLink}>
             <Button className="w-fit">
               {serializedData.volunteerBtnTitle}

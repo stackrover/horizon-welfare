@@ -148,3 +148,22 @@ export type ProjectType = {
   createdAt: string;
   updatedAt: string;
 };
+
+// project manager type
+export type ManagerType = {
+  id: number;
+  projectId: number;
+  managerName: string;
+  email: string;
+  mobile: string;
+  link: string;
+  status: string;
+  createdAt: string;
+};
+
+// recent donation type
+export type RecentDonationType = {
+  uid: number;
+  amount: string;
+  fName: string;
+};

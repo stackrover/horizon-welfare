@@ -12,7 +12,7 @@ export function ProjectDetailSectionWrapper({
 }) {
   return (
     <div className={cn("flex flex-col gap-y-4", className)}>
-      <h3 className="text-2xl font-bold leading-[28px] text-base-400">
+      <h3 className="text-lg font-bold leading-[28px] text-base-400 md:text-2xl">
         {title}
       </h3>
       {children}

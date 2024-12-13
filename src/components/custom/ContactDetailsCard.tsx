@@ -1,30 +1,29 @@
 import { cn } from "@/lib/utils";
+import { ManagerType } from "@/types/types";
 import { IconCopy, IconShare3 } from "@tabler/icons-react";
 import { Button } from "../ui/button";
 
-export function ContactDetailsCard() {
+export function ContactDetailsCard({ manager }: { manager: ManagerType }) {
   return (
     <div className="flex items-start rounded border bg-[#F9FAFB] p-8">
       <div className="flex-1">
-        <table className="w-full">
+        <table className="w-full text-sm md:text-base">
           <tbody>
             <Tr>
               <Td>Head of Project</Td>
-              <Td className="font-bold text-base-400">Abdur Razaak</Td>
+              <Td className="font-bold text-base-400">{manager.managerName}</Td>
             </Tr>
             <Tr>
               <Td>E-mail </Td>
-              <Td className="font-bold text-base-400">
-                abdurrazzak@horizonwelfare.com
-              </Td>
+              <Td className="font-bold text-base-400">{manager.email}</Td>
             </Tr>
             <Tr>
               <Td>Contact</Td>
-              <Td className="font-bold text-base-400">0176345728</Td>
+              <Td className="font-bold text-base-400">{manager.mobile}</Td>
             </Tr>
             <Tr>
               <Td>Status</Td>
-              <Td className="font-bold text-base-400">Running</Td>
+              <Td className="font-bold text-base-400">{manager.status}</Td>
             </Tr>
           </tbody>
         </table>

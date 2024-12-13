@@ -16,7 +16,7 @@ export function Project({ title, icon, link }: ProjectProps) {
           alt="project image"
           width={120}
           height={120}
-          className="h-[120px] w-fit"
+          className="h-[100px] w-[100px] sm:h-[120px] sm:w-fit"
         />
         <h2 className="text-xl font-bold leading-6 text-base-400">{title}</h2>
       </div>

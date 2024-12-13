@@ -1,5 +1,6 @@
 "use client";
 
+import { Project } from "@/data";
 import { cn } from "@/lib/utils";
 import { IconHeartFilled, IconHourglassLow } from "@tabler/icons-react";
 import { motion, useInView } from "framer-motion";
@@ -9,9 +10,28 @@ import { HeartIcon, ShareIcon } from "../../../public/icons";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 
-export function Donation({ className }: { className?: string }) {
+export function Donation({
+  className,
+  serializedData,
+}: {
+  className?: string;
+  serializedData: Project;
+}) {
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true });
+
+  const goalAmount = serializedData?.goalAmount
+    ? +serializedData.goalAmount
+    : 0;
+
+  const totalCollection = serializedData?.totalCollections
+    ? +serializedData.totalCollections
+    : 0;
+
+  const percentage = totalCollection / (goalAmount / 100);
+  const remainingAmount =
+    goalAmount > totalCollection ? goalAmount - totalCollection : 0;
+
   return (
     <div
       className={cn(
@@ -27,15 +47,15 @@ export function Donation({ className }: { className?: string }) {
         <CountUp
           enableScrollSpy={true}
           scrollSpyOnce={true}
-          end={124000}
-          className="text-[40px] font-semibold leading-[64px] text-base-400"
+          end={totalCollection}
+          className="text-3xl font-semibold leading-[64px] text-base-400 md:text-[40px]"
         />
       </div>
       <div className="h-2 w-full rounded-full bg-base-200">
         <motion.div
           ref={ref}
           initial={{ width: "0%" }}
-          animate={isInView ? { width: "50%" } : {}}
+          animate={isInView ? { width: `${percentage}%` } : {}}
           transition={{ delay: 0.1, type: "ease-in-out" }}
           className="h-full w-[20%] rounded-full bg-primary"
         />
@@ -53,7 +73,7 @@ export function Donation({ className }: { className?: string }) {
             <CountUp
               enableScrollSpy={true}
               scrollSpyOnce={true}
-              end={124000}
+              end={goalAmount}
               className="text-left text-lg font-semibold leading-5 text-base-400"
             />
           </div>
@@ -70,7 +90,7 @@ export function Donation({ className }: { className?: string }) {
             <CountUp
               enableScrollSpy={true}
               scrollSpyOnce={true}
-              end={124000}
+              end={remainingAmount}
               className="text-left text-lg font-semibold leading-5 text-base-400"
             />
           </div>
@@ -78,14 +98,14 @@ export function Donation({ className }: { className?: string }) {
       </div>
       <div className="flex items-center gap-2">
         <IconHourglassLow size={24} />
-        <h4 className="text-xl font-medium leading-6 text-base-400">
-          12 days left
+        <h4 className="text-lg font-medium leading-6 text-base-400 md:text-xl">
+          {serializedData.remainingDays} days left
         </h4>
       </div>
       <div className="flex items-center gap-2">
         <IconHeartFilled fill="red" size={24} />
-        <h4 className="text-xl font-medium leading-6 text-base-400">
-          12354 Contributors
+        <h4 className="text-lg font-medium leading-6 text-base-400 md:text-xl">
+          {serializedData.totalDonations} Contributors
         </h4>
       </div>
       <Separator />

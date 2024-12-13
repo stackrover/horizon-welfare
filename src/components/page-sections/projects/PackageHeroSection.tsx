@@ -26,14 +26,14 @@ export function PackageHeroSection({ className }: { className?: string }) {
       errorClass="h-[540px]"
       loadingClass="h-[540px]"
       hidden={serializedData.status !== "active"}
-      className={cn("bg-[#CEF4FF] py-[80px]", className)}
+      className={cn("bg-[#CEF4FF] py-10 mlg:py-[80px]", className)}
     >
-      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-x-4">
+      <div className="mx-auto grid max-w-7xl gap-4 px-4 mlg:grid-cols-2">
         <div>
           <h4 className="mb-6 text-base font-bold leading-[18px] text-base-400">
             {serializedData.title}
           </h4>
-          <h1 className="mb-10 text-[56px] font-bold leading-[68px] text-base-400">
+          <h1 className="mb-6 text-4xl font-bold text-base-400 mlg:mb-10 mlg:text-5xl mlg:leading-[68px] 2xl:text-[56px]">
             {serializedData.focusTitle}
           </h1>
           <p className="mb-4 text-base leading-[26px] text-base-300">
@@ -49,7 +49,7 @@ export function PackageHeroSection({ className }: { className?: string }) {
             alt="Donate"
             width={552}
             height={419}
-            className="h-[419px] w-[552px]"
+            className="h-fit w-full"
           />
         </div>
       </div>

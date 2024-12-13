@@ -23,7 +23,10 @@ export function ProjectsSection({ className }: { className?: string }) {
       isError={isError}
       errorClass="h-[300px]"
       loadingClass="h-[300px]"
-      className={cn("container mt-[100px] grid grid-cols-3 gap-x-6", className)}
+      className={cn(
+        "container mt-[100px] grid gap-6 xmd:grid-cols-2 lg:grid-cols-3",
+        className,
+      )}
     >
       {serializedData?.length > 0
         ? serializedData.map((item: SingleProject) => (

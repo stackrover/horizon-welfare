@@ -1,111 +1,157 @@
 "use client";
 
 import {
-  BankDetails,
-  BkashMarchantCard,
   ContactDetailsCard,
   Donation,
+  Loader,
   ProjectDetailSectionWrapper,
   RecentContributionCard,
 } from "@/components";
+import { Button } from "@/components/ui/button";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { Project } from "@/data";
+import { useSWR } from "@/hooks/use-swr";
+import { IconFileTypeDoc, IconX } from "@tabler/icons-react";
 import Image from "next/image";
 import SirenIcon from "../../../../../../public/icons/SirenIcon";
 
 export default function ProjectDetailsPage() {
+  const { data, isLoading, isError } = useSWR("/project/show/1");
+
+  if (isLoading) {
+    return <Loader className="h-screen" />;
+  }
+
+  const serializedData = new Project(data?.data?.results);
+
+  console.log(serializedData);
+
   return (
     <main>
       {/* image gallery section  */}
       <section className="container mt-[60px]">
-        <h1 className="mb-4 text-[40px] font-semibold leading-[48px] text-base-400">
-          WASH PROJECT ON CHATTROGRAM
+        <h1 className="mb-4 text-2xl font-semibold leading-[48px] text-base-400 md:text-3xl mlg:text-[40px]">
+          {serializedData.title}
         </h1>
-        <div className="flex w-fit items-center gap-4 rounded-full bg-[#FEF3F2] px-10 py-2 font-medium">
+        <div
+          data-emergency={serializedData.isEmergency}
+          className="hidden w-fit items-center gap-4 rounded-full bg-[#FEF3F2] px-6 py-1 text-sm font-medium data-[emergency=1]:flex xmd:px-10 xmd:py-2 xmd:text-base"
+        >
           <SirenIcon className="mb-1" />
           <h4 className="text-[#B42318]">Emergency Requirement</h4>
         </div>
 
         <div className="mt-10 flex items-start gap-2">
           <Image
-            src="/images/project-image-1.png"
+            src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}${serializedData.thumbnail}`}
             alt="project image"
-            width={500}
-            height={500}
-            className="h-[500px] w-fit"
+            width={1800}
+            height={600}
+            className="h-fit max-h-[1000px] w-full"
           />
-          <div className="grid w-full grid-cols-2 gap-2">
-            <Image
-              src="/images/project-image-6.png"
-              alt="project image"
-              width={356}
-              height={246}
-              className="h-[246px] w-full"
-            />
-            <Image
-              src="/images/project-image-6.png"
-              alt="project image"
-              width={356}
-              height={246}
-              className="h-[246px] w-full"
-            />
-            <Image
-              src="/images/project-image-6.png"
-              alt="project image"
-              width={356}
-              height={246}
-              className="h-[246px] w-full"
-            />
-            <Image
-              src="/images/project-image-6.png"
-              alt="project image"
-              width={356}
-              height={246}
-              className="h-[246px] w-full"
-            />
-          </div>
         </div>
       </section>
       {/* image gallery section end  */}
 
+      {/* project gallery section  */}
+      <section className="container mt-[60px]">
+        <ProjectDetailSectionWrapper title="Image Gallery">
+          <div className="grid gap-4 sm:grid-cols-2 xmd:grid-cols-3 xl:grid-cols-4">
+            {serializedData?.images?.length > 0
+              ? serializedData.images.map((img) => (
+                  <Image
+                    key={img.id}
+                    src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}${img.link}`}
+                    alt={img.title}
+                    width={356}
+                    height={246}
+                    className="h-[150px] w-full sm:h-[120px] md:h-[140px] mlg:h-[180px] 2xl:h-[200px]"
+                  />
+                ))
+              : null}
+          </div>
+        </ProjectDetailSectionWrapper>
+      </section>
+      {/* project gallery section end */}
+
       {/* details section  */}
-      <section className="container mt-[60px] flex items-start gap-6">
+      <section className="container mt-10 flex flex-col items-start gap-6 mlg:flex-row">
         {/* about section  */}
-        <div className="flex flex-1 flex-col gap-y-6">
+        <div className="flex w-full flex-1 flex-col gap-y-6">
           <ProjectDetailSectionWrapper title="About">
-            <p className="text-base-300">
-              Veniam quae. Nostrum facere repellendus minus quod aut aliquam
-              neque reiciendis. Qui beatae vel magnam repudiandae ipsum repellat
-              repudiandae. Voluptate at dolores ut dolor sint occaecati
-              similique. Velit eius ab delectus temporibus. For dynamic content,
-              add a rich text field to any collection and then connect a rich
-              text element to that field in the settings panel. Headings,
-              paragraphs, block-quotes, figures, images, and figure captions can
-              all be styled.
+            <p className="text-sm text-base-300 md:text-base">
+              {serializedData.description}
             </p>
           </ProjectDetailSectionWrapper>
 
           <ProjectDetailSectionWrapper title="Documents">
-            <div className="grid grid-cols-3 gap-2">
-              <div className="aspect-square w-full bg-base-100"></div>
-              <div className="aspect-square w-full bg-base-100"></div>
-              <div className="aspect-square w-full bg-base-100"></div>
+            <div className="mt-4 flex flex-col gap-6">
+              <div className="grid grid-cols-3 gap-4">
+                {serializedData.documents.length > 0
+                  ? serializedData.documents.map((doc) => (
+                      <Drawer key={doc.id}>
+                        <DrawerTrigger className="flex aspect-square w-full items-center justify-center rounded-md bg-base-50 text-base-300 shadow-sm hover:bg-base-100">
+                          <IconFileTypeDoc size={32} />
+                        </DrawerTrigger>
+                        <DrawerContent className="h-[calc(100vh-50px)]">
+                          <DrawerHeader>
+                            <DrawerTitle className="hidden">hello</DrawerTitle>
+                            <DrawerClose
+                              asChild
+                              className="absolute right-2 top-2"
+                            >
+                              <Button
+                                variant="secondary"
+                                size="icon"
+                                className="h-7 w-7"
+                              >
+                                <IconX size={18} />
+                              </Button>
+                            </DrawerClose>
+                          </DrawerHeader>
+                          <div className="h-full">
+                            <iframe
+                              src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}${doc.link}`}
+                              className="h-full w-full border-0"
+                            ></iframe>
+                          </div>
+                        </DrawerContent>
+                      </Drawer>
+                    ))
+                  : null}
+              </div>
             </div>
           </ProjectDetailSectionWrapper>
 
-          <ProjectDetailSectionWrapper title="Other Donation Methods">
+          {/* <ProjectDetailSectionWrapper title="Other Donation Methods">
             <BankDetails />
             <BkashMarchantCard />
-          </ProjectDetailSectionWrapper>
-
+          </ProjectDetailSectionWrapper> */}
           <ProjectDetailSectionWrapper title="Contact Details">
-            <ContactDetailsCard />
+            {serializedData?.managers?.length > 0
+              ? serializedData.managers.map((manager) => {
+                  return (
+                    <ContactDetailsCard key={manager.id} manager={manager} />
+                  );
+                })
+              : null}
           </ProjectDetailSectionWrapper>
         </div>
         {/* about section end  */}
 
         {/* aside section  */}
-        <aside className="sticky top-[128px] flex w-fit min-w-[420px] flex-col gap-y-6">
-          <Donation />
-          <RecentContributionCard />
+        <aside className="sticky top-[128px] flex w-full flex-col gap-y-6 mlg:w-fit mlg:min-w-[380px] xl:min-w-[420px]">
+          <Donation serializedData={serializedData} />
+          <RecentContributionCard
+            recentContributions={serializedData?.lastThreeDonations}
+          />
         </aside>
         {/* aside section end  */}
       </section>
