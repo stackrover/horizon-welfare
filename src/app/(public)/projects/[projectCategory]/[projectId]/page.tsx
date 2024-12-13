@@ -31,8 +31,6 @@ export default function ProjectDetailsPage() {
 
   const serializedData = new Project(data?.data?.results);
 
-  console.log(serializedData);
-
   return (
     <main>
       {/* image gallery section  */}

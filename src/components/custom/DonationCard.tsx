@@ -7,6 +7,14 @@ import Image from "next/image";
 import Link from "next/link";
 
 export function DonationCard({ cardData }: { cardData: ProjectType }) {
+  const goalAmount = cardData?.goalAmount ? +cardData.goalAmount : 0;
+
+  const totalCollection = cardData?.totalCollections
+    ? +cardData.totalCollections
+    : 0;
+
+  const percentage = totalCollection / (goalAmount / 100);
+
   return (
     <Link
       href={`/projects/${cardData.categoryId}/${cardData.id}`}
@@ -42,9 +50,7 @@ export function DonationCard({ cardData }: { cardData: ProjectType }) {
             <IconGift size={20} />
             <h4>৳ {cardData.goalAmount}</h4>
           </div>
-          <h4 className="text-sm font-medium xmd:text-base">
-            {cardData.collectionDays}%
-          </h4>
+          <h4 className="text-sm font-medium xmd:text-base">{percentage}%</h4>
         </div>
       </div>
     </Link>

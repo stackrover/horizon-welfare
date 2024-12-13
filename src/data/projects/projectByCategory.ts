@@ -16,6 +16,7 @@ export class ProjectByCategory {
     thumbnail: string;
     goalAmount: string;
     collectionDays: number;
+    totalCollections: string;
     volunteerNeed: number;
     isEmergency: number;
     status: string;
@@ -44,6 +45,7 @@ export class ProjectByCategory {
         thumbnail: project?.thumbnail,
         goalAmount: project?.goal_amount,
         collectionDays: project?.collection_days,
+        totalCollections: project?.total_collections,
         volunteerNeed: project?.volunteer_need,
         isEmergency: project?.is_emergency,
         status: project?.status,

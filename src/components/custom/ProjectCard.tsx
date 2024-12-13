@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ProjectCardProps } from "@/types/types";
 import Link from "next/link";
+import { TruncateString } from "./TruncateString";
 
 export function ProjectCard({
   title,
@@ -18,13 +19,13 @@ export function ProjectCard({
         className,
       )}
     >
-      <div className="absolute left-0 top-0 z-10 flex h-full flex-col justify-between p-12">
+      <div className="absolute left-0 top-0 z-10 flex h-full flex-col justify-between p-6 sm:p-12">
         <div className="flex flex-col gap-y-4">
           <h4 className="text-[28px] font-bold leading-[42px] text-base-0">
             {title}
           </h4>
           <p className="text-base font-normal leading-6 text-base-100">
-            {description}
+            <TruncateString length={50}>{description}</TruncateString>
           </p>
         </div>
         <Link href={path}>

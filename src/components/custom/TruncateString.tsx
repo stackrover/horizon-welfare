@@ -5,7 +5,7 @@ import React from "react";
 export function TruncateString({
   children,
   length,
-  separator,
+  separator = "",
 }: TruncateStringProps) {
   const truncatedStr = _.truncate(children, {
     length: length,

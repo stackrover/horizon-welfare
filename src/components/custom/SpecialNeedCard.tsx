@@ -18,7 +18,9 @@ export function SpecialNeedCard({
         />
       </div>
       <div className="flex flex-col gap-y-2">
-        <h3 className="text-2xl font-bold leading-7 text-base-0">{title}</h3>
+        <h3 className="text-xl font-bold leading-7 text-base-0 sm:text-2xl">
+          {title}
+        </h3>
         <h6 className="text-sm font-normal leading-[22px] text-base-200">
           {text}
         </h6>

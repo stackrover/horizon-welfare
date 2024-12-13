@@ -129,7 +129,7 @@ export type VideoCardProps = {
 export type TruncateStringProps = {
   children: string;
   length: number;
-  separator: string;
+  separator?: string;
 };
 
 export type ProjectType = {
@@ -140,6 +140,7 @@ export type ProjectType = {
   thumbnail: string;
   goalAmount: string;
   collectionDays: number;
+  totalCollections: string;
   volunteerNeed: number;
   isEmergency: number;
   status: string;

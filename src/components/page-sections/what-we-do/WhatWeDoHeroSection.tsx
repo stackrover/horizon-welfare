@@ -24,13 +24,16 @@ export function WhatWeDoHeroSection({ className }: { className?: string }) {
       errorClass="h-[540px]"
       loadingClass="h-[540px]"
       hidden={serializedData.status !== "active"}
-      className={cn("mx-auto mt-[150px] grid max-w-7xl grid-cols-2", className)}
+      className={cn(
+        "mx-auto mt-10 grid max-w-7xl gap-y-8 px-4 xmd:mt-[150px] xmd:grid-cols-2",
+        className,
+      )}
     >
       <div className="flex max-w-xl flex-col justify-center gap-y-6">
         <h5 className="text-base font-bold leading-[18px] text-base-400">
           {serializedData.title}
         </h5>
-        <h1 className="text-[56px] font-bold leading-[68px] text-base-400">
+        <h1 className="text-4xl font-bold text-base-400 xmd:text-5xl xl:text-[56px] xl:leading-[68px]">
           {serializedData.focusTitle}
         </h1>
         <h5 className="text-base font-normal leading-6 text-base-300">
@@ -44,6 +47,7 @@ export function WhatWeDoHeroSection({ className }: { className?: string }) {
           height={384}
           width={476}
           priority
+          className="h-fit w-full xmd:w-fit"
         />
       </div>
     </SectionWrapper>

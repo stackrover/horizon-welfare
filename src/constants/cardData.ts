@@ -17,4 +17,5 @@ export const cardData = {
   updatedBy: 123,
   createdAt: "kjalsd",
   updatedAt: "jlksajdf",
+  totalCollections: "200",
 };

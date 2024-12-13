@@ -15,8 +15,6 @@ export function WhatWeDoKidSection({ className }: { className?: string }) {
 
   const serializedData = new WhatWeDoKid(_.head(data?.data?.results));
 
-  console.log(serializedData);
-
   return (
     <SectionWrapper
       isLoading={isLoading}
@@ -25,14 +23,14 @@ export function WhatWeDoKidSection({ className }: { className?: string }) {
       loadingClass="h-[540px]"
       hidden={serializedData.status !== "active"}
       className={cn(
-        "container mt-[100px] rounded-lg bg-gradient-to-r from-primary-light to-primary p-[80px]",
+        "container mt-[100px] rounded-lg bg-gradient-to-r from-primary-light to-primary p-10 2xl:p-[80px]",
         className,
       )}
     >
-      <h1 className="text-5xl font-bold leading-[56px] text-base-0">
+      <h1 className="text-3xl font-bold text-base-0 xmd:text-4xl xmd:leading-[56px] xl:text-5xl">
         {serializedData.title}
       </h1>
-      <div className="mt-[60px] grid grid-cols-3 gap-x-4 gap-y-12">
+      <div className="mt-[60px] grid gap-x-4 gap-y-6 md:grid-cols-2 mlg:grid-cols-3 lg:gap-y-12">
         <SpecialNeedCard
           iconUrl={serializedData.serviceIcon1}
           title={serializedData.serviceTitle1}

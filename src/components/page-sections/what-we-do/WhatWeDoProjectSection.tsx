@@ -27,7 +27,7 @@ export function WhatWeDoProjectSection({ className }: { className?: string }) {
       loadingClass="h-[540px]"
       hidden={serializedData.status !== "active"}
       className={cn(
-        "mx-auto mt-[80px] flex max-w-7xl flex-col gap-y-16",
+        "mx-auto mt-[80px] flex max-w-7xl flex-col gap-y-10 px-4 xmd:gap-y-16",
         className,
       )}
     >
@@ -35,11 +35,11 @@ export function WhatWeDoProjectSection({ className }: { className?: string }) {
         <h4 className="text-base font-bold leading-[18px] text-base-400">
           {serializedData.title}
         </h4>
-        <h1 className="mt-6 text-5xl font-bold leading-[58px] text-base-400">
+        <h1 className="mt-6 text-3xl font-bold text-base-400 xmd:text-4xl xl:text-5xl xl:leading-[56px]">
           {serializedData.focusTitle}
         </h1>
       </div>
-      <div className="grid grid-cols-3 gap-x-5 gap-y-6">
+      <div className="grid gap-x-5 gap-y-6 md:grid-cols-2 lg:grid-cols-3">
         <ProjectCard
           className="bg-[url(/images/project-done1.png)]"
           title="Mission smile 1k: Outdoor charity"

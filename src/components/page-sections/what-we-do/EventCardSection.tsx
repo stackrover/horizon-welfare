@@ -22,8 +22,6 @@ export function EventCardSection({ className }: { className?: string }) {
         )
       : [];
 
-  console.log(serializedData);
-
   return (
     <SectionWrapper
       isLoading={isLoading}
@@ -31,15 +29,15 @@ export function EventCardSection({ className }: { className?: string }) {
       errorClass="h-[655px]"
       loadingClass="h-[655px]"
       //   hidden={serializedData.status !== "active"}
-      className={cn("mx-auto mt-[100px] max-w-7xl", className)}
+      className={cn("mx-auto mt-[100px] max-w-7xl px-4", className)}
     >
       <div className="flex items-center gap-x-5">
-        <h2 className="mb-1 whitespace-nowrap text-[40px] font-medium leading-[56px] text-base-400">
+        <h2 className="mb-1 whitespace-nowrap text-3xl font-medium text-base-400 md:text-4xl lg:text-[40px] lg:leading-[56px]">
           Our Events
         </h2>
         <Separator className="shrink" />
       </div>
-      <div className="mt-10 grid grid-cols-2 gap-5">
+      <div className="mt-10 grid gap-5 mlg:grid-cols-2">
         {serializedData.length > 0
           ? serializedData.map((item: WhatWeDoEventCard) => (
               <EventCard
