@@ -23,15 +23,15 @@ export function MediaCenterHeroSection({ className }: { className?: string }) {
       isError={isError}
       errorClass="h-[800px]"
       loadingClass="h-[800px]"
-      //   hidden={serializedData.status !== "active"}
-      className={cn("bg-[#CEF4FF] py-[80px]", className)}
+      hidden={data?.data?.results?.length === 0}
+      className={cn("bg-[#CEF4FF] px-4 py-[80px]", className)}
     >
-      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-x-4">
+      <div className="mx-auto grid max-w-7xl gap-4 mlg:grid-cols-2">
         <div>
-          <h4 className="mb-6 text-base font-bold leading-[18px] text-base-400">
+          <h4 className="mb-3 text-base font-bold leading-[18px] text-base-400 xmd:mb-6">
             {serializedData.title}
           </h4>
-          <h1 className="mb-10 text-[56px] font-bold leading-[68px] text-base-400">
+          <h1 className="mb-6 text-3xl font-bold text-base-400 xmd:mb-10 mlg:text-5xl mlg:leading-[68px] 2xl:text-[56px]">
             {serializedData.focusTitle}
           </h1>
           <p className="mb-4 text-base leading-[26px] text-base-300">

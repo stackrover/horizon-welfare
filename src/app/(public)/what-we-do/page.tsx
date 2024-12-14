@@ -26,7 +26,7 @@ export default function WhatWeDo() {
       {/* out event section end */}
 
       {/* contact form section  */}
-      <section className="mx-auto mt-[100px] flex max-w-3xl flex-col gap-y-16">
+      <section className="mx-auto mt-[100px] flex max-w-3xl flex-col gap-y-16 px-4">
         <h1 className="text-center text-[56px] font-bold leading-[68px] text-base-400">
           {"We'd love to hear from you"}
         </h1>

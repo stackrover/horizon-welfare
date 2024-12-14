@@ -34,7 +34,7 @@ export default function ProjectsByCategory() {
         isError={isError}
         errorClass="h-[540px]"
         loadingClass="h-[540px]"
-        hidden={serializedData.status !== "active"}
+        hidden={serializedData.status !== "active" || !data?.data?.results}
         className="container mt-[100px]"
       >
         {/* project section  */}

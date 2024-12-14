@@ -10,7 +10,7 @@ export default function SingleBlogPage() {
       <h4 className="w-fit rounded-md bg-gradient-to-br from-primary-light to-primary px-4 py-2 text-sm font-medium leading-5 text-base-0">
         WASH PROJECT
       </h4>
-      <h1 className="mt-4 text-4xl font-semibold leading-10 text-base-400">
+      <h1 className="mt-4 text-3xl font-semibold leading-10 text-base-400 md:text-4xl">
         Installation of water pump in Rangpur Update and Brefing
       </h1>
       <div className="mt-6 flex items-center gap-2">
@@ -35,7 +35,7 @@ export default function SingleBlogPage() {
       />
 
       {/* blog text  */}
-      <p className="mt-8 text-lg font-normal leading-8 text-base-400">
+      <p className="mt-8 text-base font-normal leading-8 text-base-400 md:text-lg">
         Traveling is an enriching experience that opens up new horizons, exposes
         us to different cultures, and creates memories that last a lifetime.
         However, traveling can also be stressful and overwhelming, especially if

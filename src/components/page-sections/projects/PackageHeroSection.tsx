@@ -25,7 +25,9 @@ export function PackageHeroSection({ className }: { className?: string }) {
       isError={isError}
       errorClass="h-[540px]"
       loadingClass="h-[540px]"
-      hidden={serializedData.status !== "active"}
+      hidden={
+        serializedData.status !== "active" || data?.data?.results?.length === 0
+      }
       className={cn("bg-[#CEF4FF] py-10 mlg:py-[80px]", className)}
     >
       <div className="mx-auto grid max-w-7xl gap-4 px-4 mlg:grid-cols-2">

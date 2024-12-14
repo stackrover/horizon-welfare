@@ -26,7 +26,7 @@ export function AboutUsAwardSection({ className }: { className?: string }) {
       isError={isError}
       errorClass="h-[400px]"
       loadingClass="h-[400px]"
-      // hidden={serializedData.status !== "active"}
+      hidden={data?.data?.results?.length === 0}
       className={cn("mx-4 mt-[100px] max-w-7xl 2xl:mx-auto", className)}
     >
       <h1 className="text-center text-2xl font-bold leading-[58px] text-base-400 sm:text-3xl xmd:text-4xl xl:text-5xl">

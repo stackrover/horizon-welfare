@@ -22,7 +22,9 @@ export function AboutUsJourneySection({ className }: { className?: string }) {
       isError={isError}
       errorClass="h-[655px]"
       loadingClass="h-[655px]"
-      hidden={serializedData.status !== "active"}
+      hidden={
+        serializedData.status !== "active" || data?.data?.results?.length === 0
+      }
       className={cn(
         "container mt-[100px] grid grid-cols-12 gap-x-0 gap-y-8 rounded-[20px] bg-primary px-6 py-6 mlg:gap-x-4 mlg:gap-y-0 xl:px-8 xl:py-8 2xl:py-16",
         className,

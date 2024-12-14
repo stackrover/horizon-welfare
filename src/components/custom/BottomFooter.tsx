@@ -25,7 +25,9 @@ export function BottomFooter() {
       isError={isError}
       errorClass="h-[800px]"
       loadingClass="h-[800px]"
-      hidden={serializedData.status !== "active"}
+      hidden={
+        serializedData.status !== "active" || data?.data?.results?.length === 0
+      }
     >
       <FooterMenuItems data={serializedData} />
 

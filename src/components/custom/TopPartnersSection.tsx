@@ -29,7 +29,7 @@ export function TopPartnersSection({ className }: { className?: string }) {
       isLoading={isLoading}
       errorClass="h-[220px]"
       loadingClass="h-[220px]"
-      // hidden={data?.data?.status !== "active"}
+      hidden={data?.data?.results?.length === 0}
       className={cn("mb-[160px]", className)}
     >
       <h1 className="text-center text-3xl font-extrabold leading-[50px] md:text-[40px]">

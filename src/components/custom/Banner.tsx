@@ -21,7 +21,9 @@ export function Banner({ className }: { className?: string }) {
       isError={isError}
       errorClass="h-[630px]"
       loadingClass="h-[630px]"
-      hidden={serializedData.status !== "active"}
+      hidden={
+        serializedData.status !== "active" || data?.data?.results?.length === 0
+      }
       className={cn("relative", className)}
     >
       <div className="h-[800px] w-full overflow-hidden">

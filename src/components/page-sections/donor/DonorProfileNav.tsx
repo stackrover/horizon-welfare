@@ -8,45 +8,19 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
+import { donorNavMenu } from "@/constants/donorNavMenu";
 import { cn } from "@/lib/utils";
 import { ProfileNavItemProps } from "@/types/types";
-import {
-  IconClock,
-  IconHeart,
-  IconMenu2,
-  IconSearch,
-  IconSettings,
-} from "@tabler/icons-react";
+import { IconMenu2, IconSearch } from "@tabler/icons-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-export const donorNavMenu = [
-  {
-    id: 1,
-    title: "Profile",
-    url: "/donor/profile",
-    icon: IconSettings,
-  },
-  {
-    id: 2,
-    title: "Active Subscriptions",
-    url: "/donor/active-subscriptions",
-    icon: IconHeart,
-  },
-  {
-    id: 3,
-    title: "Transaction",
-    url: "/donor/transaction",
-    icon: IconClock,
-  },
-];
 
 export function DonorProfileNav() {
   const pathname = usePathname();
   return (
     <nav className="container mt-10 flex items-center justify-between">
       {/* hidden on small device  */}
-      <ul className="hidden items-center gap-3 lg:flex">
+      <ul className="hidden items-center gap-3 xl:flex">
         {donorNavMenu.map((menu) => (
           <ProfileNavItem key={menu.id} path={menu.url}>
             <menu.icon size={24} />
@@ -57,7 +31,7 @@ export function DonorProfileNav() {
 
       {/* hidden on large device  */}
       <DropdownMenu>
-        <DropdownMenuTrigger asChild className="lg:hidden">
+        <DropdownMenuTrigger asChild className="xl:hidden">
           <Button size="icon">
             <IconMenu2 size={20} />{" "}
           </Button>

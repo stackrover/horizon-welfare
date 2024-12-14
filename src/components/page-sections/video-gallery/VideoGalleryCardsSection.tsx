@@ -31,6 +31,7 @@ export function VideoGalleryCardsSection() {
       errorClass="h-screen"
       loadingClass="h-screen"
       className="container mt-[60px] grid grid-cols-4 gap-x-6 gap-y-8"
+      hidden={data?.data?.results?.length === 0}
     >
       {serializedData.length > 0
         ? serializedData.map((video: Video) => (

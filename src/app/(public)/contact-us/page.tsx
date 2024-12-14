@@ -33,19 +33,22 @@ export default function ContactUs() {
         isError={isError}
         errorClass="h-[800px]"
         loadingClass="h-[800px]"
-        hidden={serializedData.status !== "active"}
+        hidden={
+          serializedData.status !== "active" ||
+          data?.data?.results?.length === 0
+        }
       >
         {/* contact us section  */}
-        <section className="container mt-[80px] rounded-lg bg-gradient-to-r from-primary-light to-primary p-[100px]">
-          <div className="mx-auto grid max-w-4xl grid-cols-2 gap-8">
-            <div className="flex flex-col gap-y-8">
-              <h5 className="text-base font-bold uppercase leading-[18px] text-base-0">
+        <section className="container mt-10 rounded-lg bg-gradient-to-r from-primary-light to-primary p-4 sm:p-10 lg:mt-[80px] lg:p-[100px]">
+          <div className="mx-auto grid max-w-4xl gap-8 xmd:grid-cols-2">
+            <div className="flex flex-col gap-y-6 mlg:gap-y-8">
+              <h5 className="text-sm font-bold uppercase leading-[18px] text-base-0 md:text-base">
                 {serializedData.title}
               </h5>
-              <h5 className="text-[56px] font-bold leading-[68px] text-base-0">
+              <h5 className="text-3xl font-bold text-base-0 md:text-4xl mlg:text-5xl mlg:leading-[68px] xl:text-[56px]">
                 {serializedData.focusTitle}
               </h5>
-              <p className="text-xl font-normal leading-8 text-base-100">
+              <p className="text-base font-normal leading-8 text-base-100 md:text-xl">
                 {serializedData.description}
               </p>
             </div>
@@ -55,7 +58,7 @@ export default function ContactUs() {
                 <h3 className="mb-4 text-2xl font-bold leading-[38px] text-base-0">
                   {"Let's talk!"}
                 </h3>
-                <div className="mb-4 flex items-center justify-between">
+                <div className="mgl:items-center mb-4 flex flex-col gap-4 mlg:flex-row mlg:justify-between">
                   <h5 className="text-base font-normal leading-7 text-base-0">
                     {serializedData.mobileNumber}
                   </h5>
@@ -98,7 +101,7 @@ export default function ContactUs() {
         {/* contact us section end   */}
 
         {/* contact form section  */}
-        <section className="mx-auto mt-[100px] max-w-3xl">
+        <section className="mx-auto mt-[100px] max-w-3xl px-4">
           <ContactUsForm />
         </section>
         {/* contact form section end */}

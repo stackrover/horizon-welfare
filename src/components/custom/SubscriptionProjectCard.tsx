@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { SubscriptionCardProps } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
+import { TruncateString } from "./TruncateString";
 
 export function SubscriptionProjectCard({
   imageUrl,
@@ -19,13 +20,13 @@ export function SubscriptionProjectCard({
         className,
       )}
     >
-      <div className="order-2 ml-4 flex flex-col items-center gap-6 sm:order-1 sm:items-start">
+      <div className="order-2 flex flex-col items-center gap-6 sm:order-1 sm:items-start md:ml-4">
         <div>
           <h4 className="mb-1 text-center text-lg font-semibold leading-6 text-base-400 sm:text-start">
-            {title}
+            <TruncateString length={30}>{title}</TruncateString>
           </h4>
           <p className="text-center text-sm text-base-300 sm:text-start">
-            {description}
+            <TruncateString length={40}>{description}</TruncateString>
           </p>
         </div>
 
@@ -39,7 +40,7 @@ export function SubscriptionProjectCard({
           alt="subscription"
           height={166}
           width={166}
-          className="aspect-square h-[166px] w-[166px]"
+          className="aspect-square h-[100px] w-[100px] md:h-[166px] md:w-[166px]"
         />
       </div>
     </Link>

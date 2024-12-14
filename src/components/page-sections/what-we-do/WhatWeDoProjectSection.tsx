@@ -25,7 +25,9 @@ export function WhatWeDoProjectSection({ className }: { className?: string }) {
       isError={isError}
       errorClass="h-[540px]"
       loadingClass="h-[540px]"
-      hidden={serializedData.status !== "active"}
+      hidden={
+        serializedData.status !== "active" || data?.data?.results?.length === 0
+      }
       className={cn(
         "mx-auto mt-[80px] flex max-w-7xl flex-col gap-y-10 px-4 xmd:gap-y-16",
         className,

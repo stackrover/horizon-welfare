@@ -1,6 +1,5 @@
 "use client";
 
-import { DonorProfileNav } from "@/components";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -99,8 +98,6 @@ export default function DonorProfile() {
   }
   return (
     <main>
-      <DonorProfileNav />
-
       {/* personal info  */}
       <section className="container mt-10">
         <Form {...form}>

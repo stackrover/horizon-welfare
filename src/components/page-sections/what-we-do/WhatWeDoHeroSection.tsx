@@ -23,7 +23,9 @@ export function WhatWeDoHeroSection({ className }: { className?: string }) {
       isError={isError}
       errorClass="h-[540px]"
       loadingClass="h-[540px]"
-      hidden={serializedData.status !== "active"}
+      hidden={
+        serializedData.status !== "active" || data?.data?.results?.length === 0
+      }
       className={cn(
         "mx-auto mt-10 grid max-w-7xl gap-y-8 px-4 xmd:mt-[150px] xmd:grid-cols-2",
         className,

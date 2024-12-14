@@ -27,7 +27,9 @@ export function AboutUsContentSection({ className }: { className?: string }) {
       isError={isError}
       errorClass="h-[800px]"
       loadingClass="h-[800px]"
-      hidden={serializedData.status !== "active"}
+      hidden={
+        serializedData.status !== "active" || data?.data?.results?.length === 0
+      }
       className={cn("relative", className)}
     >
       {/* know about us section  */}

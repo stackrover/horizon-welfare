@@ -23,7 +23,9 @@ export function AboutUsTeamSection({ className }: { className?: string }) {
       isError={isError}
       errorClass="h-[240px]"
       loadingClass="h-[240px]"
-      hidden={serializedData.status !== "active"}
+      hidden={
+        serializedData.status !== "active" || data?.data?.results?.length === 0
+      }
       className={cn("container mt-[100px] flex flex-col gap-y-8", className)}
     >
       <div className="mx-4 max-w-[640px] md:mx-auto">

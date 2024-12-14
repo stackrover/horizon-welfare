@@ -19,7 +19,9 @@ export function WatchOurGallerySection({ className }: { className?: string }) {
       isLoading={isLoading}
       errorClass="h-[750px]"
       loadingClass="h-[750px]"
-      hidden={serializedData.status !== "active"}
+      hidden={
+        serializedData.status !== "active" || data?.data?.results?.length === 0
+      }
       className={cn("mt-[100px]", className)}
     >
       <h2 className="mb-10 text-center text-2xl font-extrabold leading-10 text-base-400 xmd:text-3xl xmd:leading-[64px] xl:text-4xl 2xl:text-5xl">

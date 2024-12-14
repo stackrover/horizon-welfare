@@ -27,6 +27,7 @@ export function ProjectsSection({ className }: { className?: string }) {
         "container mt-[100px] grid gap-6 xmd:grid-cols-2 lg:grid-cols-3",
         className,
       )}
+      hidden={data?.data?.results?.length === 0}
     >
       {serializedData?.length > 0
         ? serializedData.map((item: SingleProject) => (

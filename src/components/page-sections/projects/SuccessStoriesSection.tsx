@@ -25,7 +25,9 @@ export function SuccessStoriesSection({ className }: { className?: string }) {
       isError={isError}
       errorClass="h-[540px]"
       loadingClass="h-[540px]"
-      hidden={serializedData.status !== "active"}
+      hidden={
+        serializedData.status !== "active" || data?.data?.results?.length === 0
+      }
       className={cn(
         "container mt-[100px] grid gap-2 xmd:grid-cols-2 xl:grid-cols-3",
         className,

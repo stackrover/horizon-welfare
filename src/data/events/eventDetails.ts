@@ -82,11 +82,11 @@ export class EventDetail {
     this.updatedAt = data.updated_at;
 
     // Map nested arrays if needed
-    this.documents = data.documents.map((doc) => ({
+    this.documents = data?.documents?.map((doc) => ({
       ...doc,
     }));
 
-    this.images = data.images.map((img) => ({
+    this.images = data?.images?.map((img) => ({
       ...img,
     }));
   }

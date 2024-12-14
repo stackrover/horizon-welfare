@@ -5,7 +5,7 @@ import { Event } from "@/components";
 export function Events() {
   return (
     <section className="container mt-20">
-      <div className="grid grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 mlg:grid-cols-3 2xl:grid-cols-4 2xl:gap-6">
         {Array.from({ length: 8 }).map((_, i) => (
           <Event
             key={i}

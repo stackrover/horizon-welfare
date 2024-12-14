@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 export function ContactUsForm({ className }: { className?: string }) {
   return (
-    <form className={cn("grid grid-cols-2 gap-8", className)}>
+    <form className={cn("grid grid-cols-1 gap-8 sm:grid-cols-2", className)}>
       <div>
         <label htmlFor="first-name" className="font-semibold text-gray-400">
           First Name
@@ -55,7 +55,7 @@ export function ContactUsForm({ className }: { className?: string }) {
         />
       </div>
 
-      <div className="col-span-2">
+      <div className="col-span-full">
         <label htmlFor="message" className="font-semibold text-gray-400">
           Message
         </label>
@@ -66,7 +66,7 @@ export function ContactUsForm({ className }: { className?: string }) {
           className="shadow-none focus-visible:ring-primary"
         />
       </div>
-      <div className="col-span-2 flex justify-center">
+      <div className="col-span-full flex justify-center">
         <Button type="submit">Send Message</Button>
       </div>
     </form>

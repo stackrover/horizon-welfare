@@ -1,3 +1,4 @@
+import { TruncateString } from "@/components/custom/TruncateString";
 import { EventProps } from "@/types/types";
 import { format } from "date-fns";
 import Image from "next/image";
@@ -30,9 +31,11 @@ export function Event({ image, date, title, description, id }: EventProps) {
             href={`/events/${id}`}
             className="text-base font-bold transition-all hover:text-primary"
           >
-            {title}
+            <TruncateString length={40}>{title}</TruncateString>
           </Link>
-          <p className="text-sm leading-5 text-base-300">{description}</p>
+          <p className="text-sm leading-5 text-base-300">
+            <TruncateString length={50}>{description}</TruncateString>
+          </p>
         </div>
       </div>
     </div>

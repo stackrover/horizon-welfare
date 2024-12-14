@@ -159,7 +159,7 @@ export type ManagerType = {
   mobile: string;
   link: string;
   status: string;
-  createdAt: string;
+  createdAt?: string;
 };
 
 // recent donation type

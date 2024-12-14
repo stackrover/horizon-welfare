@@ -29,7 +29,7 @@ export function AboutUsTeamMemberSection({
       isError={isError}
       errorClass="h-[655px]"
       loadingClass="h-[655px]"
-      //   hidden={serializedData.status !== "active"}
+      hidden={data?.data?.results?.length === 0}
       className={cn(
         "grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 xmd:grid-cols-3 lg:grid-cols-4",
         className,

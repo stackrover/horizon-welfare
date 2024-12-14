@@ -25,7 +25,9 @@ export function JoinAsVolunteerCard() {
       isError={isError}
       errorClass="h-[300px]"
       loadingClass="h-[300px]"
-      hidden={serializedData.status !== "active"}
+      hidden={
+        serializedData.status !== "active" || data?.data?.results?.length === 0
+      }
       className={`relative mx-4 mt-[100px] h-[384px] max-w-7xl overflow-hidden rounded-[20px] bg-cover bg-center before:absolute before:left-0 before:top-0 before:h-full before:w-full before:rounded-[20px] before:bg-black/50 before:content-[''] 2xl:mx-auto`}
     >
       <div>

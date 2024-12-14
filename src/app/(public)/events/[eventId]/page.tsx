@@ -20,6 +20,8 @@ import Link from "next/link";
 export default function EventDetails() {
   const { data, isLoading, isError } = useSWR("/event/show/1");
 
+  console.log(data);
+
   if (isLoading) {
     return <Loader className="h-screen" />;
   }
@@ -54,12 +56,15 @@ export default function EventDetails() {
         errorClass="h-screen"
         loadingClass="h-screen"
         className="mt-20"
+        hidden={data?.data?.results?.length === 0}
       >
         <h1 className="mb-2 text-5xl font-bold leading-[54px] text-base-400">
           {serializedData.title}
         </h1>
         <h4 className="mb-8 text-2xl font-semibold leading-10 text-base-300">
-          {format(new Date(serializedData.createdAt), "EEEE, dd MMMM yyyy")}
+          {serializedData.createdAt
+            ? format(new Date(serializedData.createdAt), "EEEE, dd MMMM yyyy")
+            : ""}
         </h4>
         <Image
           src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}${serializedData.thumbnail}`}
@@ -120,7 +125,7 @@ export default function EventDetails() {
         </div>
 
         <div className="mt-10 space-y-4 text-base-400">
-          {formattedContent.length > 0
+          {formattedContent?.length > 0
             ? formattedContent.map((item, index) => {
                 switch (item.type) {
                   case "bullet":
@@ -156,7 +161,7 @@ export default function EventDetails() {
           <h5 className="text-lg font-bold">Documents</h5>
 
           <div className="grid grid-cols-3 gap-4">
-            {serializedData.documents.length > 0
+            {serializedData?.documents?.length > 0
               ? serializedData.documents.map((doc) => (
                   <Drawer key={doc.id}>
                     <DrawerTrigger className="flex aspect-square w-full items-center justify-center rounded-md bg-base-50 text-base-300 shadow-sm hover:bg-base-100">
@@ -176,7 +181,7 @@ export default function EventDetails() {
                       </DrawerHeader>
                       <div className="h-full">
                         <iframe
-                          src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}${doc.link}`}
+                          src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}${doc?.link}`}
                           className="h-full w-full border-0"
                         ></iframe>
                       </div>

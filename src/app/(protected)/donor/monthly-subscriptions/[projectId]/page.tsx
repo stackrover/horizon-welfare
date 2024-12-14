@@ -78,7 +78,17 @@ export default function MonthlySubscribedProjectDetailsPage() {
           </ProjectDetailSectionWrapper>
 
           <ProjectDetailSectionWrapper title="Contact Details">
-            <ContactDetailsCard />
+            <ContactDetailsCard
+              manager={{
+                managerName: "aa",
+                mobile: "aa",
+                email: "aa",
+                status: "aa",
+                id: 2,
+                projectId: 1,
+                link: "4",
+              }}
+            />
           </ProjectDetailSectionWrapper>
         </div>
         {/* about section end  */}

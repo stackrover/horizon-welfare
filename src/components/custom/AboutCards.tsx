@@ -17,7 +17,9 @@ export function AboutCards({ className }: { className?: string }) {
       isError={isError}
       errorClass="h-[630px]"
       loadingClass="h-[630px]"
-      hidden={serializedData.status !== "active"}
+      hidden={
+        serializedData.status !== "active" || data?.data?.results?.length === 0
+      }
       className={cn(
         "container grid grid-cols-1 gap-8 pt-[100px] mlg:grid-cols-2",
         className,

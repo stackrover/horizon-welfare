@@ -28,7 +28,7 @@ export function EventCardSection({ className }: { className?: string }) {
       isError={isError}
       errorClass="h-[655px]"
       loadingClass="h-[655px]"
-      //   hidden={serializedData.status !== "active"}
+      hidden={data?.data?.results?.length === 0}
       className={cn("mx-auto mt-[100px] max-w-7xl px-4", className)}
     >
       <div className="flex items-center gap-x-5">
