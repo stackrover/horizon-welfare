@@ -77,7 +77,17 @@ export function ProjectDetails() {
           </ProjectDetailSectionWrapper>
 
           <ProjectDetailSectionWrapper title="Contact Details">
-            <ContactDetailsCard />
+            <ContactDetailsCard
+              manager={{
+                managerName: "jj",
+                email: "kk",
+                mobile: "ll",
+                status: "ss",
+                id: 1,
+                projectId: 1,
+                link: "",
+              }}
+            />
           </ProjectDetailSectionWrapper>
         </div>
         {/* about section end  */}
