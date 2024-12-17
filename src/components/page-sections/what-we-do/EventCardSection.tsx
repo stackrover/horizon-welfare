@@ -45,7 +45,7 @@ export function EventCardSection({ className }: { className?: string }) {
                 day={format(new Date(item.createdAt), "dd")}
                 month={format(new Date(item.createdAt), "MMM")}
                 title={item.firstName + item.lastName}
-                url="/"
+                url={`/events/${item.id}`}
               />
             ))
           : null}
