@@ -37,12 +37,12 @@ export default function ResetPassword() {
     router.push("/reset-password/success");
   };
   return (
-    <main>
-      <div className="mx-auto mt-20 grid max-w-[1200px] grid-cols-2 gap-4 rounded-[24px] border border-base-100 bg-base-0 p-16 shadow-lg">
+    <main className="px-4">
+      <div className="mx-auto my-20 grid max-w-[1200px] gap-4 rounded-[24px] border border-base-100 bg-base-0 p-6 shadow-lg md:grid-cols-2 xmd:p-16">
         {/* form section  */}
         <div>
           <div className="h-12 w-12 rounded-full bg-[#C4C4C4]"></div>
-          <h3 className="mt-4 text-[32px] font-medium leading-[48px] text-base-400">
+          <h3 className="mt-4 text-2xl font-medium text-base-400 xmd:text-[32px] xmd:leading-[48px]">
             Set Your New Password
           </h3>
 
@@ -118,15 +118,15 @@ export default function ResetPassword() {
         </div>
 
         {/* logo section  */}
-        <div className="flex flex-col items-center justify-center">
+        <div className="hidden flex-col items-start justify-center md:flex mlg:items-center">
           <Image
             src="/images/logo2.png"
             alt="logo"
             height={198}
             width={359}
-            className="h-[198px] w-[359px]"
+            className="h-[150px] w-fit mlg:h-[198px] mlg:w-[359px]"
           />
-          <h1 className="ml-12 max-w-[359px] text-[40px] leading-[46px] text-primary-light">
+          <h1 className="ml-6 max-w-[359px] text-3xl leading-[46px] text-primary-light mlg:ml-12 mlg:text-[40px]">
             Horizon Welfare Orgainasation
           </h1>
         </div>

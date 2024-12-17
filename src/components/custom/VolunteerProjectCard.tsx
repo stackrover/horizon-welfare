@@ -7,7 +7,7 @@ export function VolunteerProjectCard() {
         Available Volunteering Projects
       </h1>
 
-      <div className="grid grid-cols-3 gap-x-5 gap-y-6">
+      <div className="grid gap-x-5 gap-y-6 md:grid-cols-2 mlg:grid-cols-3">
         <ProjectCard
           className="bg-[url(/images/project-done1.png)]"
           title="100 people need to volunteer food project"

@@ -14,13 +14,13 @@ export const donorNavMenu = [
     icon: IconHeart,
   },
   {
-    id: 2,
+    id: 3,
     title: "Available Subscriptions",
     url: "/donor/monthly-available-subscriptions",
     icon: IconHeart,
   },
   {
-    id: 3,
+    id: 4,
     title: "Transaction History",
     url: "/donor/transactions",
     icon: IconClock,

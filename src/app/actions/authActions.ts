@@ -65,7 +65,7 @@ export const loginAction = async (
 
 // logout handler
 export const handleSignOut = async () => {
-  await signOut();
+  await signOut({ redirectTo: "/login" });
 };
 
 // donor registration handler

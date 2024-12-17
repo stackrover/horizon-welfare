@@ -1,42 +1,56 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
+import { volunteerNavMenu } from "@/constants/volunteerNavMenu";
 import { cn } from "@/lib/utils";
 import { ProfileNavItemProps } from "@/types/types";
-import {
-  IconBell,
-  IconClock,
-  IconHeart,
-  IconSearch,
-  IconSettings,
-} from "@tabler/icons-react";
+import { IconMenu2, IconSearch } from "@tabler/icons-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export function VolunteerProfileNav() {
+  const pathname = usePathname();
   return (
     <nav className="container mt-10 flex items-center justify-between">
-      <ul className="flex items-center gap-3">
-        <ProfileNavItem path="/volunteer/profile">
-          <IconSettings size={24} />
-          <span>Home</span>
-        </ProfileNavItem>
-
-        <ProfileNavItem path="/volunteer/transactions">
-          <IconBell size={24} />
-          <span>Subscription</span>
-        </ProfileNavItem>
-
-        <ProfileNavItem path="/volunteer/transactions">
-          <IconHeart size={24} />
-          <span>All Projects Subscription</span>
-        </ProfileNavItem>
-
-        <ProfileNavItem path="/volunteer/transactions">
-          <IconClock size={24} />
-          <span>Transaction History</span>
-        </ProfileNavItem>
+      {/* hidden on small device  */}
+      <ul className="hidden items-center gap-3 xl:flex">
+        {volunteerNavMenu.map((menu) => (
+          <ProfileNavItem key={menu.id} path={menu.url}>
+            <menu.icon size={24} />
+            <span>{menu.title}</span>
+          </ProfileNavItem>
+        ))}
       </ul>
+
+      {/* hidden on large device  */}
+      <DropdownMenu modal={false}>
+        <DropdownMenuTrigger asChild className="xl:hidden">
+          <Button size="icon">
+            <IconMenu2 size={20} />{" "}
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="start" className="px-2">
+          {volunteerNavMenu.map((menu) => (
+            <Link key={menu.id} href={menu.url}>
+              <DropdownMenuItem
+                data-active={pathname.startsWith(menu.url)}
+                className="my-1 gap-2 px-2.5 py-2 text-base font-semibold text-base-400 transition-all duration-200 ease-in-out data-[active=true]:bg-[#BEF2FF]"
+              >
+                <menu.icon size={24} />
+                <span>{menu.title}</span>
+              </DropdownMenuItem>
+            </Link>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
+
       <div className="relative">
         <Input type="search" placeholder="Search..." className="pl-9" />
         <div className="absolute left-0 top-0 flex h-full items-center justify-center pl-2.5">
