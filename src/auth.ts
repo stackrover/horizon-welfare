@@ -20,14 +20,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const parsedCredentials = loginFormSchema.safeParse(credentials);
 
         if (!parsedCredentials.success) {
-          console.log("validation failed", parsedCredentials.error);
+          // console.log("validation failed", parsedCredentials.error);
           return null;
         }
 
         // get user from api call
         const data = await loginAction(parsedCredentials.data);
-
-        console.log({ data });
 
         if (data.status !== "success") return null;
 

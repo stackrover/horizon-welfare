@@ -1,11 +1,14 @@
 "use client";
 
 import {
+  CancelSubscriptionCard,
   ContactDetailsCard,
   Donation,
   Loader,
   ProjectDetailSectionWrapper,
   RecentContributionCard,
+  SubscriptionCard,
+  VolunteerCard,
 } from "@/components";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,11 +22,13 @@ import {
 import { Project } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
 import { IconFileTypeDoc, IconX } from "@tabler/icons-react";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import SirenIcon from "../../../../../../public/icons/SirenIcon";
 
 export default function ProjectDetailsPage() {
   const { data, isLoading, isError } = useSWR("/project/show/1");
+  const session = useSession();
 
   if (isLoading) {
     return <Loader className="h-screen" />;
@@ -146,10 +151,23 @@ export default function ProjectDetailsPage() {
 
         {/* aside section  */}
         <aside className="sticky top-[128px] flex w-full flex-col gap-y-6 mlg:w-fit mlg:min-w-[380px] xl:min-w-[420px]">
-          <Donation serializedData={serializedData} />
-          <RecentContributionCard
-            recentContributions={serializedData?.lastThreeDonations}
-          />
+          {session?.data?.user?.role === "donor" ? (
+            <>
+              <SubscriptionCard subscribed={true} />
+              <CancelSubscriptionCard />
+            </>
+          ) : session?.data?.user?.role === "volunteer" ? (
+            <>
+              <VolunteerCard subscribed={true} />
+            </>
+          ) : (
+            <>
+              <Donation serializedData={serializedData} />
+              <RecentContributionCard
+                recentContributions={serializedData?.lastThreeDonations}
+              />
+            </>
+          )}
         </aside>
         {/* aside section end  */}
       </section>

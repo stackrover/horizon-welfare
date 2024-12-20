@@ -80,8 +80,6 @@ export default function VolunteerSignup() {
 
     const data = await volunteerRegistrationAction(values);
 
-    console.log(data);
-
     if (data.status === "success") {
       form.reset();
       toast({

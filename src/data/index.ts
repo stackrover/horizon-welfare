@@ -5,6 +5,8 @@ export * from "./about-us/teamMember";
 export * from "./about-us/teamMemberTitle";
 export * from "./common/join-as-a-volunteer-card";
 export * from "./contact-us/content";
+export * from "./donor/donorData";
+export * from "./events/event";
 export * from "./events/eventDetails";
 export * from "./footer/counter";
 export * from "./footer/footerLink";

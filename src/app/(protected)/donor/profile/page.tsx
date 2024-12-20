@@ -1,5 +1,7 @@
 "use client";
 
+import { updateProfileAction } from "@/app/actions/donorActions";
+import { Loader } from "@/components";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -11,26 +13,23 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import axiosInstance from "@/lib/axios";
+import { DonorData } from "@/data";
+import { useSWR } from "@/hooks/use-swr";
 import { donorProfileFormSchema } from "@/schemas/donorProfileUpdateSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   IconCloudUpload,
   IconCurrencyDollar,
+  IconEdit,
   IconX,
 } from "@tabler/icons-react";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React from "react";
 import { useDropzone } from "react-dropzone";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -40,10 +39,14 @@ const formSchema = z.object({
 });
 
 export default function DonorProfile() {
-  const [file, setFile] = React.useState<File[]>([]);
-  const [districts, setDistricts] = React.useState<Record<string, string>[]>(
-    [],
+  const session = useSession();
+  const userId = session?.data?.user?.id;
+  const { data, isLoading, isError } = useSWR(
+    userId ? `/donor/profile/show/${userId}` : null,
   );
+  const [file, setFile] = React.useState<File[]>([]);
+  const [profileImg, setProfileImg] = React.useState<File[]>([]);
+  const [profileData, setProfileData] = React.useState<DonorData>();
 
   const {
     acceptedFiles,
@@ -71,30 +74,71 @@ export default function DonorProfile() {
     defaultValues: {
       f_name: "",
       l_name: "",
-      location: "",
+      address: "",
       gender: "",
-      age: "",
+      age: 0,
       email: "",
-      person: "",
+      nationality: "",
     },
   });
 
-  // get the districts list initial render
   React.useEffect(() => {
-    (async () => {
-      const { data } = await axiosInstance.get(
-        `${process.env.NEXT_PUBLIC_LOCATION_API_URL}/districts`,
-      );
+    const serializedData = !isLoading
+      ? new DonorData(data?.data?.results)
+      : null;
 
-      if (data?.status.code === 200) {
-        setDistricts(data?.data ?? []);
-      }
-    })();
-  }, []);
+    if (serializedData) {
+      // destructuring the data
+      const {
+        uid,
+        balance,
+        bannar_image,
+        profile_image,
+        mobile_number,
+        id,
+        ...restData
+      } = serializedData;
+
+      form.reset(restData);
+      setProfileData(serializedData);
+    }
+  }, [data?.data, isLoading]);
+
+  if (isLoading) {
+    return <Loader className="h-screen" />;
+  }
+
+  console.log({ profileImg });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof donorProfileFormSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof donorProfileFormSchema>) {
+    const formData = new FormData();
+
+    // Loop through the object keys and append them to FormData
+    (Object.keys(values) as (keyof typeof values)[]).forEach((key) => {
+      formData.append(key, values[key].toString());
+    });
+
+    if (file.length > 0) {
+      formData.append("bannar_image", file[0]);
+    }
+
+    if (profileImg.length > 0) {
+      formData.append("profile_image", profileImg[0]);
+    }
+
+    // Call the action handler
+    const response = await updateProfileAction(formData, userId);
+
+    console.log({ response });
+
+    if (response.status === "success") {
+      toast.success(response.message);
+    }
+
+    if (response.status === "error") {
+      toast.error(response.message);
+    }
   }
   return (
     <main>
@@ -116,7 +160,7 @@ export default function DonorProfile() {
                 className="hidden w-[132px] md:flex"
                 type="submit"
               >
-                {form.formState.isSubmitting ? "Loading..." : "Save Settings"}
+                {form.formState.isSubmitting ? "Saving..." : "Save Settings"}
               </Button>
             </div>
 
@@ -135,7 +179,11 @@ export default function DonorProfile() {
                   render={({ field }) => (
                     <FormItem className="col-span-6 sm:col-span-4">
                       <FormControl>
-                        <Input type="text" placeholder="shadcn" {...field} />
+                        <Input
+                          type="text"
+                          placeholder="Type First Name"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -149,7 +197,11 @@ export default function DonorProfile() {
                   render={({ field }) => (
                     <FormItem className="col-span-6 sm:col-span-4">
                       <FormControl>
-                        <Input type="text" placeholder="shadcn" {...field} />
+                        <Input
+                          type="text"
+                          placeholder="Type Last Name"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -168,7 +220,7 @@ export default function DonorProfile() {
                       <FormControl>
                         <Input
                           type="email"
-                          placeholder="test@gmail.com"
+                          placeholder="Type Email Address"
                           {...field}
                         />
                       </FormControl>
@@ -179,20 +231,60 @@ export default function DonorProfile() {
 
                 <div className="col-span-4 hidden font-medium xmd:block"></div>
                 <div className="col-span-12 flex flex-col gap-4 sm:flex-row xmd:col-span-8">
-                  <div className="aspect-square h-[140px] w-[140px] rounded-full bg-base-200"></div>
+                  <div className="relative aspect-square h-[140px] w-[140px] rounded-full bg-base-200">
+                    <Image
+                      src={
+                        profileImg[0]
+                          ? URL.createObjectURL(profileImg[0])
+                          : profileData?.profile_image
+                            ? process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL +
+                              profileData?.profile_image
+                            : "/"
+                      }
+                      alt="profile"
+                      height={140}
+                      width={140}
+                      className="aspect-square h-[140px] w-fit min-w-[140px] rounded-full"
+                    />
+                    {profileImg[0] ? (
+                      <button
+                        type="button"
+                        onClick={() => setProfileImg([])}
+                        className="absolute right-2 top-2 rounded-full bg-destructive p-1 text-base-0"
+                      >
+                        <IconX size={16} />
+                      </button>
+                    ) : null}
+
+                    <label
+                      htmlFor="profile_image"
+                      className="absolute bottom-2.5 right-2.5 cursor-pointer rounded-full bg-secondary p-1.5 text-base-0"
+                    >
+                      <IconEdit size={16} />
+                    </label>
+
+                    <input
+                      type="file"
+                      onChange={(e) =>
+                        setProfileImg(e.target.files ? [e.target.files[0]] : [])
+                      }
+                      className="hidden"
+                      id="profile_image"
+                    />
+                  </div>
 
                   <div className="grid flex-1 grid-cols-12 gap-x-4 gap-y-6">
                     {/* person  */}
-                    <label className="col-span-4">Person</label>
+                    <label className="col-span-4">Nationality</label>
                     <FormField
                       control={form.control}
-                      name="person"
+                      name="nationality"
                       render={({ field }) => (
                         <FormItem className="col-span-8">
                           <FormControl>
                             <Input
                               type="text"
-                              placeholder="shadcn"
+                              placeholder="Type Nationality"
                               {...field}
                             />
                           </FormControl>
@@ -210,9 +302,11 @@ export default function DonorProfile() {
                         <FormItem className="col-span-8">
                           <FormControl>
                             <Input
-                              type="text"
-                              placeholder="shadcn"
+                              type="number"
+                              placeholder="Type Age"
                               {...field}
+                              onChange={(e) => field.onChange(+e.target.value)}
+                              value={+field.value}
                             />
                           </FormControl>
                           <FormMessage />
@@ -231,6 +325,7 @@ export default function DonorProfile() {
                             <RadioGroup
                               onValueChange={field.onChange}
                               defaultValue={field.value}
+                              value={field.value}
                               className="flex flex-col gap-3 md:flex-row"
                             >
                               <FormItem className="flex items-center space-x-2 space-y-0">
@@ -280,28 +375,19 @@ export default function DonorProfile() {
                 </div>
 
                 {/* location and banner image  */}
-                <label className="col-span-4">Location</label>
+                <label className="col-span-4">Address</label>
                 <FormField
                   control={form.control}
-                  name="location"
+                  name="address"
                   render={({ field }) => (
                     <FormItem className="col-span-8">
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select one" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="Dhaka">Dhaka</SelectItem>
-                          <SelectItem value="Barishal">Barishal</SelectItem>
-                          <SelectItem value="Rangpur">Rangpur</SelectItem>
-                        </SelectContent>
-                      </Select>
-
+                      <FormControl>
+                        <Input
+                          type="text"
+                          placeholder="Type Location"
+                          {...field}
+                        />
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -366,7 +452,7 @@ export default function DonorProfile() {
                     type="submit"
                   >
                     {form.formState.isSubmitting
-                      ? "Loading..."
+                      ? "Saving..."
                       : "Save Settings"}
                   </Button>
                 </div>
@@ -376,7 +462,12 @@ export default function DonorProfile() {
               <div className="order-1 col-span-12 xl:order-2 xl:col-span-4">
                 <div className="ml-0 overflow-hidden rounded-xl border shadow-sm xl:ml-4">
                   <Image
-                    src="/images/project-image-6.png"
+                    src={
+                      profileData?.bannar_image
+                        ? process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL +
+                          profileData?.bannar_image
+                        : "/"
+                    }
                     alt="banner"
                     height={200}
                     width={600}
@@ -384,13 +475,26 @@ export default function DonorProfile() {
                   />
                   <div className="p-4">
                     <div className="flex items-center gap-3">
-                      <div className="h-[50px] w-[50px] rounded-full bg-base-200"></div>
+                      <div className="h-[50px] w-[50px] rounded-full bg-base-200">
+                        <Image
+                          src={
+                            profileData?.profile_image
+                              ? process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL +
+                                profileData?.profile_image
+                              : "/"
+                          }
+                          alt="profile"
+                          height={50}
+                          width={50}
+                          className="rounded-full"
+                        />
+                      </div>
                       <div>
                         <h3 className="text-2xl font-semibold leading-8 text-base-400">
-                          Marcus Dutra
+                          {profileData?.f_name} {profileData?.l_name}
                         </h3>
                         <p className="leading-7 text-base-300">
-                          Designer, Rio de Janeiro, Brasil
+                          {profileData?.address}
                         </p>
                       </div>
                     </div>
@@ -399,9 +503,8 @@ export default function DonorProfile() {
 
                     <div className="flex items-center justify-between gap-2">
                       <h4 className="font-medium text-base-300">
-                        Total Donations : 100,000 BDT
+                        Total Donations : {profileData?.balance} BDT
                       </h4>
-                      <h4 className="font-medium text-base-300">GOLD USER</h4>
                     </div>
                   </div>
                 </div>

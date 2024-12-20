@@ -52,6 +52,7 @@ export type EventCardProps = {
   month: string;
   title: string;
   url: string;
+  eventId: number;
 };
 
 // journey summary props
@@ -167,4 +168,10 @@ export type RecentDonationType = {
   uid: number;
   amount: string;
   fName: string;
+};
+
+export type StateType = {
+  message: string | null;
+  status?: string | null;
+  error_type?: string | null;
 };

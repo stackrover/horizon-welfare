@@ -9,7 +9,7 @@ export function Event({ image, date, title, description, id }: EventProps) {
     <div className="group overflow-hidden rounded-[18px] border">
       <div className="h-[200px] overflow-hidden">
         <Image
-          src={image}
+          src={process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL + image}
           alt="Event"
           height={200}
           width={350}

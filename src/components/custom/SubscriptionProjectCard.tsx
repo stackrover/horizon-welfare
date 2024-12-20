@@ -14,7 +14,7 @@ export function SubscriptionProjectCard({
 }: SubscriptionCardProps) {
   return (
     <Link
-      href={"/donor/monthly-available-subscriptions/1"}
+      href={"/projects/details/1"}
       className={cn(
         "flex flex-col gap-4 rounded-md p-4 shadow-[0_4px_18px_0_rgba(75,70,92,0.1)] sm:flex-row sm:items-center sm:justify-between sm:gap-x-2",
         className,

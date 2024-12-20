@@ -48,8 +48,6 @@ export default function DonorSignup() {
 
     const data = await donorRegistrationAction(values);
 
-    console.log(data);
-
     if (data.status === "success") {
       form.reset();
       toast({

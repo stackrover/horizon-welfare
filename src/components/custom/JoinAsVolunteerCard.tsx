@@ -17,8 +17,6 @@ export function JoinAsVolunteerCard() {
 
   const serializedData = new JoinAsVolunteer(_.head(data?.data?.results));
 
-  console.log(serializedData);
-
   return (
     <SectionWrapper
       isLoading={isLoading}

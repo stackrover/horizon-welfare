@@ -18,9 +18,9 @@ export function StoryCard({
         <Image
           src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}${image}`}
           alt="image"
-          height={366}
-          width={435}
-          className="h-fit w-full"
+          height={600}
+          width={800}
+          className="h-[300px] w-full sm:h-[400px] md:h-[500px] xmd:h-[350px] mlg:h-[400px] xl:h-[350px] 2xl:h-[400px] 3xl:h-[500px]"
         />
       </div>
       <div className="absolute bottom-0 left-0 z-10 mx-auto w-full gap-y-8 p-8">

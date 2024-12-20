@@ -1,6 +1,6 @@
 "use client";
 
-import { VolunteerProfileNav, VolunteerProjectCard } from "@/components";
+import { VolunteerProjectCard } from "@/components";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -79,8 +79,6 @@ export default function VolunteerProfile() {
   }
   return (
     <main>
-      <VolunteerProfileNav />
-
       {/* personal info  */}
       <section className="container mt-10">
         <Form {...form}>

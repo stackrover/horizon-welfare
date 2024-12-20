@@ -19,8 +19,6 @@ export default auth((req) => {
   );
   const isAuthRoute = authRoutes.indexOf(req.nextUrl.pathname) !== -1;
 
-  console.log({ isProtectedRoute, auth: req?.auth, isAuthRoute });
-
   if (!req.auth && isProtectedRoute) {
     if (isAuthRoute) {
       return NextResponse.next();

@@ -3,13 +3,13 @@
 import { Loader, SectionWrapper } from "@/components";
 import { EventCard } from "@/components/custom/EventCard";
 import { Separator } from "@/components/ui/separator";
-import { WhatWeDoEventCard } from "@/data";
+import { EventData } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 
 export function EventCardSection({ className }: { className?: string }) {
-  const { data, isLoading, isError } = useSWR("/event/subscriber/list");
+  const { data, isLoading, isError } = useSWR("/what/we/do/page/event/list");
 
   if (isLoading) {
     return <Loader className="h-[655px]" />;
@@ -18,7 +18,7 @@ export function EventCardSection({ className }: { className?: string }) {
   const serializedData =
     data?.data?.results?.length > 0
       ? data?.data?.results?.map(
-          (item: Record<string, unknown>) => new WhatWeDoEventCard(item),
+          (item: Record<string, unknown>) => new EventData(item),
         )
       : [];
 
@@ -39,12 +39,13 @@ export function EventCardSection({ className }: { className?: string }) {
       </div>
       <div className="mt-10 grid gap-5 mlg:grid-cols-2">
         {serializedData.length > 0
-          ? serializedData.map((item: WhatWeDoEventCard) => (
+          ? serializedData.map((item: EventData) => (
               <EventCard
                 key={item.id}
-                day={format(new Date(item.createdAt), "dd")}
-                month={format(new Date(item.createdAt), "MMM")}
-                title={item.firstName + item.lastName}
+                eventId={item.id}
+                day={format(new Date(item.scheduleDate), "dd")}
+                month={format(new Date(item.scheduleDate), "MMM")}
+                title={item.title}
                 url={`/events/${item.id}`}
               />
             ))

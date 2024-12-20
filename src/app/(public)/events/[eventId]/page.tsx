@@ -1,8 +1,9 @@
 "use client";
 
-import { ContactUsForm, Loader } from "@/components";
+import { EventSubscriptionModal, Loader } from "@/components";
 import { SectionWrapper } from "@/components/custom/SectionWrapper";
 import { Button } from "@/components/ui/button";
+import { DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import {
   Drawer,
   DrawerClose,
@@ -16,11 +17,11 @@ import { IconFileTypeDoc, IconX } from "@tabler/icons-react";
 import { format } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
 export default function EventDetails() {
-  const { data, isLoading, isError } = useSWR("/event/show/1");
-
-  console.log(data);
+  const { eventId } = useParams();
+  const { data, isLoading, isError } = useSWR(`/event/show/${eventId}`);
 
   if (isLoading) {
     return <Loader className="h-screen" />;
@@ -169,7 +170,10 @@ export default function EventDetails() {
                     </DrawerTrigger>
                     <DrawerContent className="h-[calc(100vh-50px)]">
                       <DrawerHeader>
-                        <DrawerClose className="absolute right-2 top-2">
+                        <DialogTitle className="hidden">
+                          <DialogDescription></DialogDescription>
+                        </DialogTitle>
+                        <DrawerClose asChild className="absolute right-2 top-2">
                           <Button
                             variant="secondary"
                             size="icon"
@@ -196,7 +200,7 @@ export default function EventDetails() {
           <h2 className="mb-8 text-center text-5xl font-bold leading-[54px] text-base-300">
             Are you coming contact us
           </h2>
-          <ContactUsForm />
+          <EventSubscriptionModal eventId={serializedData.id} />
         </div>
       </SectionWrapper>
     </main>

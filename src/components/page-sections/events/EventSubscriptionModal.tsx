@@ -1,9 +1,8 @@
 "use client";
 
-import { contactUs } from "@/app/actions/commonActions";
+import { subscribeEvent } from "@/app/actions/eventActions";
 import { Button } from "@/components/ui/button";
 import { InputProps } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { StateType } from "@/types/types";
 import React from "react";
@@ -16,34 +15,31 @@ const initialState: StateType = {
   error_type: null,
 };
 
-export function ContactUsForm({ className }: { className?: string }) {
+export function EventSubscriptionModal({ eventId }: { eventId: number }) {
   const formRef = React.useRef<HTMLFormElement>(null);
-  const [state, formAction] = useFormState<typeof initialState, FormData>(
-    contactUs,
-    initialState,
-  );
+  const updatedSubscribeEvent = subscribeEvent.bind(null, eventId);
+  const [state, formAction] = useFormState(updatedSubscribeEvent, initialState);
 
   // show toast message on success or error
   React.useEffect(() => {
     if (state.status === "success") {
       toast.success(state.message);
       if (formRef.current) {
-        formRef.current.reset();
+        // formRef.current.reset();
       }
     } else if (state.status === "error") {
       toast.error(state.message);
     }
   }, [state]);
-
   return (
     <form
       ref={formRef}
       action={formAction}
-      className={cn("grid grid-cols-1 gap-8 sm:grid-cols-2", className)}
+      className="grid grid-cols-1 gap-8 sm:grid-cols-2"
     >
       <div>
         <label
-          htmlFor="contact-us-first-name"
+          htmlFor="event-subscription-first-name"
           className="font-semibold text-gray-400"
         >
           First Name
@@ -51,14 +47,14 @@ export function ContactUsForm({ className }: { className?: string }) {
         <FormInput
           type="text"
           placeholder="Type your first name"
-          name="contact-us-first-name"
-          id="contact-us-first-name"
+          name="fname"
+          id="event-subscription-first-name"
           required
         />
       </div>
       <div>
         <label
-          htmlFor="contact-us-last-name"
+          htmlFor="event-subscription-last-name"
           className="font-semibold text-gray-400"
         >
           Last Name
@@ -66,14 +62,14 @@ export function ContactUsForm({ className }: { className?: string }) {
         <FormInput
           type="text"
           placeholder="Type your last name"
-          name="contact-us-last-name"
-          id="contact-us-last-name"
+          name="lname"
+          id="event-subscription-last-name"
           required
         />
       </div>
       <div>
         <label
-          htmlFor="contact-us-email"
+          htmlFor="event-subscription-email"
           className="font-semibold text-gray-400"
         >
           Email
@@ -81,42 +77,30 @@ export function ContactUsForm({ className }: { className?: string }) {
         <FormInput
           type="email"
           placeholder="Type your email address"
-          name="contact-us-email"
-          id="contact-us-email"
+          name="email"
+          id="event-subscription-email"
           required
         />
       </div>
       <div>
         <label
-          htmlFor="contact-us-subject"
+          htmlFor="event-subscription-mobile"
           className="font-semibold text-gray-400"
         >
-          Subject
+          Mobile
         </label>
         <FormInput
-          type="text"
-          id="contact-us-subject"
-          placeholder="Type your subject"
-          name="contact-us-subject"
+          type="number"
+          minLength={11}
+          maxLength={11}
+          id="event-subscription-mobile"
+          placeholder="Type your mobile number"
+          name="mobile"
           required
+          className="[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
         />
       </div>
 
-      <div className="col-span-full">
-        <label
-          htmlFor="contact-us-message"
-          className="font-semibold text-gray-400"
-        >
-          Message
-        </label>
-        <Textarea
-          id="contact-us-message"
-          name="contact-us-message"
-          rows={4}
-          className="text-base shadow-none focus-visible:ring-primary"
-          required
-        />
-      </div>
       <div className="col-span-full flex justify-center">
         <SubmitButton />
       </div>
@@ -124,12 +108,15 @@ export function ContactUsForm({ className }: { className?: string }) {
   );
 }
 
-const FormInput = ({ type, ...props }: InputProps) => {
+const FormInput = ({ type, className, ...props }: InputProps) => {
   return (
     <input
       type={type}
       {...props}
-      className="h-10 w-full border-b bg-transparent outline-none transition-all focus:border-b focus:border-primary focus:outline-none active:outline-none"
+      className={cn(
+        "h-10 w-full border-b bg-transparent outline-none transition-all focus:border-b focus:border-primary focus:outline-none active:outline-none",
+        className,
+      )}
     />
   );
 };

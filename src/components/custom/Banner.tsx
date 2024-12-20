@@ -5,10 +5,19 @@ import { Button } from "@/components/ui/button";
 import { Hero } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
 import { cn } from "@/lib/utils";
+import { IconX } from "@tabler/icons-react";
 import _ from "lodash";
 import Image from "next/image";
 import Link from "next/link";
 import PlayerIcon from "../../../public/icons/PlayerIcon";
+import VideoPlayer from "../page-sections/VideoPlayer";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTrigger,
+} from "../ui/drawer";
 
 export function Banner({ className }: { className?: string }) {
   const { data, isLoading, isError } = useSWR("/home/hero");
@@ -60,16 +69,34 @@ export function Banner({ className }: { className?: string }) {
             </Button>
           </Link>
 
-          <Link href={serializedData.watchVideoBtLink}>
-            <Button
-              type="button"
-              variant="outline"
-              className="group h-10 w-full gap-x-2 rounded-full px-4 text-base sm:h-[55px] sm:w-fit sm:px-8 sm:text-lg"
-            >
-              <PlayerIcon className="h-6 w-6 fill-primary group-hover:fill-base-0" />
-              <span>{serializedData.watchVideoBtTitle}</span>
-            </Button>
-          </Link>
+          <Drawer>
+            <DrawerTrigger asChild>
+              <Button
+                type="button"
+                variant="outline"
+                className="group h-10 w-fit gap-x-2 rounded-full px-4 text-base sm:h-[55px] sm:px-8 sm:text-lg"
+              >
+                <PlayerIcon className="h-6 w-6 fill-primary group-hover:fill-base-0" />
+                <span>{serializedData.watchVideoBtTitle}</span>
+              </Button>
+            </DrawerTrigger>
+            <DrawerContent className="h-[calc(100vh-50px)]">
+              <DrawerHeader>
+                <DrawerClose className="absolute right-2 top-2">
+                  <Button variant="secondary" size="icon" className="h-7 w-7">
+                    <IconX size={18} />
+                  </Button>
+                </DrawerClose>
+              </DrawerHeader>
+              <div className="flex h-full items-center justify-center bg-black pt-2 sm:pt-4">
+                <VideoPlayer
+                  className="max-w-[1280px] px-2 sm:px-4"
+                  playerHeight="100%"
+                  videoUrl={serializedData.watchVideoBtLink}
+                />
+              </div>
+            </DrawerContent>
+          </Drawer>
         </div>
       </div>
     </SectionWrapper>

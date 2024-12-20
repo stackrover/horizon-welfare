@@ -16,10 +16,7 @@ export function DonationCard({ cardData }: { cardData: ProjectType }) {
   const percentage = totalCollection / (goalAmount / 100);
 
   return (
-    <Link
-      href={`/projects/${cardData.categoryId}/${cardData.id}`}
-      className="group overflow-hidden rounded-xl border shadow"
-    >
+    <div className="group overflow-hidden rounded-xl border shadow">
       <Image
         src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}${cardData.thumbnail}`}
         alt="Donation"
@@ -32,10 +29,15 @@ export function DonationCard({ cardData }: { cardData: ProjectType }) {
         quality={75}
       />
       <div className="flex flex-col gap-y-4 px-4 py-5">
-        <h3 className="text-lg font-semibold text-base-400 xmd:text-xl xmd:leading-8 lg:text-2xl">
-          <TruncateString length={50} separator="">
-            {cardData.title}
-          </TruncateString>
+        <h3 className="inline text-lg font-semibold text-base-400 xmd:text-xl xmd:leading-8 lg:text-2xl">
+          <Link
+            href={`/projects/details/${cardData.id}`}
+            className="hover:text-primary"
+          >
+            <TruncateString length={50} separator="">
+              {cardData.title}
+            </TruncateString>
+          </Link>
         </h3>
         <p className="text-sm font-normal leading-6 text-base-300 xmd:text-base">
           <TruncateString length={70} separator="">
@@ -53,6 +55,6 @@ export function DonationCard({ cardData }: { cardData: ProjectType }) {
           <h4 className="text-sm font-medium xmd:text-base">{percentage}%</h4>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
