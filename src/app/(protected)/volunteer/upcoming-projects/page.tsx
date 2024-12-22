@@ -1,9 +1,8 @@
-import { VolunteerProfileNav, VolunteerProjectCard } from "@/components";
+import { VolunteerProjectCard } from "@/components";
 
 export default function page() {
   return (
     <div>
-      <VolunteerProfileNav />
       <VolunteerProjectCard />
     </div>
   );

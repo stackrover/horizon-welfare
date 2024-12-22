@@ -50,7 +50,7 @@ export default function ZakatCalculatorPage() {
               }
             />
             <InputRow
-              labelText="Property (Other Than Home)"
+              labelText="Property (Other Than Home)"
               tooltipText="Tooltip"
               value="12302"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>

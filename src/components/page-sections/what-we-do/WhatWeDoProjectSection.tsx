@@ -17,8 +17,6 @@ export function WhatWeDoProjectSection({ className }: { className?: string }) {
 
   const serializedData = new WhatWeDoProject(_.head(data?.data?.results));
 
-  console.log(serializedData);
-
   return (
     <SectionWrapper
       isLoading={isLoading}

@@ -12,37 +12,37 @@ export function VolunteerProjectCard() {
           className="bg-[url(/images/project-done1.png)]"
           title="100 people need to volunteer food project"
           description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros."
-          path="/"
+          path="/projects/details/1"
         />
         <ProjectCard
           className="bg-[url(/images/project-done2.png)]"
           title="Weekly excursions"
           description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros."
-          path="/"
+          path="/projects/details/1"
         />
         <ProjectCard
           className="bg-[url(/images/project-done3.png)]"
           title="Monthly public awareness"
           description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros."
-          path="/"
+          path="/projects/details/1"
         />
         <ProjectCard
           className="bg-[url(/images/project-done1.png)]"
           title="Mission smile 1k: Outdoor charity"
           description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros."
-          path="/"
+          path="/projects/details/1"
         />
         <ProjectCard
           className="bg-[url(/images/project-done2.png)]"
           title="Weekly excursions"
           description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros."
-          path="/"
+          path="/projects/details/1"
         />
         <ProjectCard
           className="bg-[url(/images/project-done3.png)]"
           title="Monthly public awareness"
           description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros."
-          path="/"
+          path="/projects/details/1"
         />
       </div>
     </section>

@@ -58,7 +58,10 @@ export async function Navbar() {
           data-session={session?.user?.id ? true : false}
           className="group flex items-center gap-x-2"
         >
-          <Link href="/login" className="">
+          <Link
+            href={session?.user?.role === "donor" ? "/donor/donate" : "/login"}
+            className=""
+          >
             <Button
               variant="outline"
               className="hidden h-[45px] px-6 text-lg 2xl:flex"
@@ -71,21 +74,6 @@ export async function Navbar() {
               Login
             </Button>
           </Link>
-
-          {/* <form action={handleSignOut}>
-            <Button
-              type="submit"
-              className="hidden h-[45px] px-6 text-lg group-data-[session=false]:hidden 2xl:flex"
-            >
-              Logout
-            </Button>
-          </form> */}
-
-          {/* <form action={handleSignOut}>
-            <Button className="mr-2 flex h-10 px-3 group-data-[session=false]:hidden 2xl:mr-0 2xl:h-[45px] 2xl:px-6 2xl:text-lg">
-              Logout
-            </Button>
-          </form> */}
 
           <DropdownMenu>
             <DropdownMenuTrigger

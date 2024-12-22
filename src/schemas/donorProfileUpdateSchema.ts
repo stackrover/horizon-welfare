@@ -10,17 +10,15 @@ export const donorProfileFormSchema = z.object({
   l_name: z.string().min(1, {
     message: "Last name is required.",
   }),
-  location: z.string().min(1, {
-    message: "Select a location.",
+  address: z.string().min(1, {
+    message: "Address is required.",
   }),
-  age: z.string().min(1, {
-    message: "Age is required.",
-  }),
+  age: z.number({ required_error: "Age is required." }),
   gender: z.string().min(1, {
     message: "Choose a gender.",
   }),
-  person: z.string().min(1, {
-    message: "Person is required.",
+  nationality: z.string().min(1, {
+    message: "Nationality is required.",
   }),
   email: z
     .string()

@@ -1,6 +1,7 @@
 import { TruncateString } from "@/components";
 import { BlogCardProps } from "@/types/types";
 import Image from "next/image";
+import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 export function BlogCard({ cardData }: { cardData: BlogCardProps }) {
@@ -23,9 +24,11 @@ export function BlogCard({ cardData }: { cardData: BlogCardProps }) {
           WASH
         </span>
         <h3 className="text-base font-semibold leading-8 text-base-400 sm:text-xl 3xl:text-2xl">
-          <TruncateString length={50} separator="">
-            {cardData.title}
-          </TruncateString>
+          <Link href={`/blogs/1`} className="transition-all hover:text-primary">
+            <TruncateString length={50} separator="">
+              {cardData.title}
+            </TruncateString>
+          </Link>
         </h3>
         <div className="flex items-center justify-between text-[#97989F]">
           <div className="flex items-center gap-x-3 font-medium">

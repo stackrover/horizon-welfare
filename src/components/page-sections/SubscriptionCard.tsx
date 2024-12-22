@@ -15,7 +15,7 @@ export function SubscriptionCard({
   subscribed,
 }: {
   className?: string;
-  subscribed: boolean;
+  subscribed: boolean | undefined | null;
 }) {
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true });
