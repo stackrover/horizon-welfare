@@ -15,14 +15,14 @@ export default async function SingleProjectDetails({
   const token = session?.user?.token;
 
   const dataPromise = getData(`/project/show/${projectId}`, token);
+
+  // check subscription status
   const checkDonorSubscriptionStatus = await getData(
     `/project/subscription/check/${userId}/${projectId}`,
     token,
   );
 
   const subscriptionStatus = checkDonorSubscriptionStatus?.results ?? false;
-
-  console.log({ projectId });
 
   return (
     <Suspense fallback={<Loader className="h-screen" />}>
