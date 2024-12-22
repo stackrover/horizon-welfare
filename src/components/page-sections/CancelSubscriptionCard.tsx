@@ -2,15 +2,12 @@
 
 import { CrossIcon } from "@/assets/icons";
 import { cn } from "@/lib/utils";
-import { useInView } from "framer-motion";
 import React from "react";
-import { ShareIcon } from "../../../public/icons";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 
 export function CancelSubscriptionCard({ className }: { className?: string }) {
   const ref = React.useRef(null);
-  const isInView = useInView(ref, { once: true });
   return (
     <div
       className={cn(
@@ -35,13 +32,6 @@ export function CancelSubscriptionCard({ className }: { className?: string }) {
         <Button className="h-11 w-full gap-2 rounded-full" variant="secondary">
           <span>CANCEL SUBSCRIPTION</span>
           <CrossIcon className="h-[24px] w-[24px]" />
-        </Button>
-        <Button
-          variant="light"
-          className="h-11 w-fit min-w-11 rounded-full"
-          size="icon"
-        >
-          <ShareIcon />
         </Button>
       </div>
     </div>

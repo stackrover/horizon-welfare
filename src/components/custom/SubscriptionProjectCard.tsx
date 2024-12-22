@@ -6,6 +6,7 @@ import Link from "next/link";
 import { TruncateString } from "./TruncateString";
 
 export function SubscriptionProjectCard({
+  projectId,
   imageUrl,
   buttonText,
   title,
@@ -13,8 +14,7 @@ export function SubscriptionProjectCard({
   className,
 }: SubscriptionCardProps) {
   return (
-    <Link
-      href={"/projects/details/1"}
+    <div
       className={cn(
         "flex flex-col gap-4 rounded-md p-4 shadow-[0_4px_18px_0_rgba(75,70,92,0.1)] sm:flex-row sm:items-center sm:justify-between sm:gap-x-2",
         className,
@@ -22,27 +22,34 @@ export function SubscriptionProjectCard({
     >
       <div className="order-2 flex flex-col items-center gap-6 sm:order-1 sm:items-start md:ml-4">
         <div>
-          <h4 className="mb-1 text-center text-lg font-semibold leading-6 text-base-400 sm:text-start">
+          <Link
+            href={`/projects/details/${projectId}`}
+            className="mb-1 text-center text-lg font-semibold leading-6 text-base-400 transition-all duration-150 ease-in-out hover:text-primary sm:text-start"
+          >
             <TruncateString length={30}>{title}</TruncateString>
-          </h4>
-          <p className="text-center text-sm text-base-300 sm:text-start">
-            <TruncateString length={40}>{description}</TruncateString>
+          </Link>
+          <p
+            data-status={description}
+            className="text-center text-sm text-base-300 data-[status=Emergency]:text-destructive data-[status=Regular]:text-primary sm:text-start"
+          >
+            {description}
           </p>
         </div>
-
-        <Button variant="secondary" className="w-fit md:w-full">
-          {buttonText}
-        </Button>
+        <Link href={`/projects/details/${projectId}`}>
+          <Button variant="secondary" className="w-fit md:w-full">
+            {buttonText}
+          </Button>
+        </Link>
       </div>
       <div className="order-1 flex justify-center sm:order-2 sm:block">
         <Image
-          src={imageUrl}
+          src={process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL + imageUrl}
           alt="subscription"
           height={166}
           width={166}
-          className="aspect-square h-[100px] w-[100px] md:h-[166px] md:w-[166px]"
+          className="aspect-square h-[100px] w-[100px] rounded-lg md:h-[166px] md:w-[166px]"
         />
       </div>
-    </Link>
+    </div>
   );
 }

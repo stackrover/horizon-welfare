@@ -107,6 +107,7 @@ export type ProfileNavItemProps = {
 
 // subscription card props
 export type SubscriptionCardProps = {
+  projectId: number | string;
   imageUrl: string;
   buttonText: string;
   title: string;

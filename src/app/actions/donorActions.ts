@@ -2,6 +2,7 @@
 
 import { ERROR_OBJ_FORMAT } from "@/constants/error-obj-format";
 import { fetcher } from "@/lib/fetcher";
+import { revalidatePath } from "next/cache";
 
 export const updateProfileAction = async (
   fd: FormData,
@@ -22,6 +23,10 @@ export const updateProfileAction = async (
     });
 
     const data = await res.json();
+
+    if (data.status === "success") {
+      revalidatePath("/donor/profile", "page");
+    }
 
     return data;
   } catch (error) {

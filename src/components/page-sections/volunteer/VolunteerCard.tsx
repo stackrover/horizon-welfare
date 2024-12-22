@@ -6,16 +6,16 @@ import { IconHeartFilled, IconHourglassLow } from "@tabler/icons-react";
 import { motion, useInView } from "framer-motion";
 import React from "react";
 import CountUp from "react-countup";
-import { HeartIcon, ShareIcon } from "../../../public/icons";
-import { Button } from "../ui/button";
-import { Separator } from "../ui/separator";
+import { HeartIcon, ShareIcon } from "../../../../public/icons";
+import { Button } from "../../ui/button";
+import { Separator } from "../../ui/separator";
 
 export function VolunteerCard({
   className,
   subscribed,
 }: {
   className?: string;
-  subscribed: boolean;
+  subscribed: boolean | undefined | null;
 }) {
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true });
@@ -91,11 +91,16 @@ export function VolunteerCard({
       <Separator />
       <div className="flex items-center justify-center gap-4">
         <Button className="h-11 w-full gap-2 rounded-full" variant="secondary">
-          <span>SUBSCRIBED</span>
           {subscribed ? (
-            <CheckIcon className="h-[24px] w-[24px]" />
+            <>
+              <span>COUNTED</span>
+              <CheckIcon className="h-[24px] w-[24px]" />
+            </>
           ) : (
-            <HeartIcon className="h-[24px] w-[24px]" />
+            <>
+              <span>COUNT ME IN</span>
+              <HeartIcon className="h-[24px] w-[24px]" />
+            </>
           )}
         </Button>
         <Button
