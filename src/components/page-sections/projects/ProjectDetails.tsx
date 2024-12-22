@@ -152,9 +152,7 @@ export function ProjectDetailsPage({
           session={session}
           isSubscribed={isSubscribed}
         />
-        {/* aside section end  */}
       </section>
-      {/* details section end */}
     </main>
   );
 }
