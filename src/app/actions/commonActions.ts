@@ -1,8 +1,8 @@
 "use server";
 
-import { StateType } from "@/components";
 import { ERROR_OBJ_FORMAT } from "@/constants/error-obj-format";
 import axiosInstance from "@/lib/axios";
+import { StateType } from "@/types/types";
 
 // add subscription action handler
 export const subscribe = async (prevState: StateType, formData: FormData) => {
