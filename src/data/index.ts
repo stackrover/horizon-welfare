@@ -7,6 +7,7 @@ export * from "./common/join-as-a-volunteer-card";
 export * from "./contact-us/content";
 export * from "./donor/donorAvailableProject";
 export * from "./donor/donorData";
+export * from "./donor/DonorProject";
 export * from "./donor/donorSubscribedProject";
 export * from "./events/event";
 export * from "./events/eventDetails";

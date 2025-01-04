@@ -107,11 +107,11 @@ export type ProfileNavItemProps = {
 
 // subscription card props
 export type SubscriptionCardProps = {
-  projectId: number | string;
   imageUrl: string;
   buttonText: string;
   title: string;
   description: string;
+  linkUrl: string;
   className?: string;
 };
 
@@ -159,8 +159,8 @@ export type ManagerType = {
   managerName: string;
   email: string;
   mobile: string;
-  link: string;
-  status: string;
+  link?: string;
+  status?: string;
   createdAt?: string;
 };
 

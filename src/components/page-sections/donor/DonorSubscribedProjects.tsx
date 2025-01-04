@@ -16,6 +16,8 @@ export function DonorMonthlySubscribedPackages({
       ? data.results.map((item: any) => new DonorSubscribedProjectsData(item))
       : [];
 
+  console.log(serializedData);
+
   return (
     <main className="container">
       <div className="mt-10 flex flex-col gap-4 md:flex-row md:items-center">
@@ -29,11 +31,11 @@ export function DonorMonthlySubscribedPackages({
           serializedData.map((item: DonorSubscribedProjectsData) => (
             <SubscriptionProjectCard
               key={item.id}
-              projectId={item.projectId}
               title={item.title}
               description={item.isEmergency ? "Emergency" : "Regular"}
               buttonText={"Monthly/" + item.subscriptionRate + "Tk"}
               imageUrl={item.thumbnail}
+              linkUrl={`/donor/monthly-subscriptions/${item.packageId}`}
             />
           ))
         ) : (

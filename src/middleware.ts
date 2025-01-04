@@ -19,6 +19,11 @@ export default auth((req) => {
   );
   const isAuthRoute = authRoutes.indexOf(req.nextUrl.pathname) !== -1;
 
+  if (!req.auth && req.nextUrl.pathname.startsWith("/donor/donate")) {
+    const newUrl = new URL("/login", req.nextUrl.origin);
+    return NextResponse.redirect(newUrl);
+  }
+
   if (!req.auth && isProtectedRoute) {
     if (isAuthRoute) {
       return NextResponse.next();

@@ -24,12 +24,10 @@ export function ProjectDetailsPage({
   session,
   dataPromise,
   projectId,
-  isSubscribed,
 }: {
   session: any;
   dataPromise: Promise<any>;
   projectId: string;
-  isSubscribed: boolean | undefined | null;
 }) {
   const data = React.use(dataPromise);
 
@@ -150,7 +148,6 @@ export function ProjectDetailsPage({
         <ProjectAsideCardSection
           serializedData={serializedData}
           session={session}
-          isSubscribed={isSubscribed}
         />
       </section>
     </main>

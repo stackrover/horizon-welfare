@@ -7,11 +7,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import { donorNavMenu } from "@/constants/donorNavMenu";
 import { cn } from "@/lib/utils";
 import { ProfileNavItemProps } from "@/types/types";
-import { IconMenu2, IconSearch } from "@tabler/icons-react";
+import { IconMenu2 } from "@tabler/icons-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -50,13 +49,6 @@ export function DonorProfileNav() {
           ))}
         </DropdownMenuContent>
       </DropdownMenu>
-
-      <div className="relative">
-        <Input type="search" placeholder="Search..." className="pl-9" />
-        <div className="absolute left-0 top-0 flex h-full items-center justify-center pl-2.5">
-          <IconSearch size={20} className="text-base-300" />
-        </div>
-      </div>
     </nav>
   );
 }

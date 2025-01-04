@@ -16,21 +16,12 @@ export default async function SingleProjectDetails({
 
   const dataPromise = getData(`/project/show/${projectId}`, token);
 
-  // check subscription status
-  const checkDonorSubscriptionStatus = await getData(
-    `/project/subscription/check/${userId}/${projectId}`,
-    token,
-  );
-
-  const subscriptionStatus = checkDonorSubscriptionStatus?.results ?? false;
-
   return (
     <Suspense fallback={<Loader className="h-screen" />}>
       <ProjectDetailsPage
         session={session}
         dataPromise={dataPromise}
         projectId={projectId}
-        isSubscribed={subscriptionStatus}
       />
     </Suspense>
   );
