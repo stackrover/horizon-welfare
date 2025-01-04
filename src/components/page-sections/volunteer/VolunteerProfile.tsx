@@ -77,6 +77,7 @@ export function VolunteerProfile({
     },
   });
 
+  // form instance
   const form = useForm<z.infer<typeof volunteerProfileFormSchema>>({
     resolver: zodResolver(volunteerProfileFormSchema),
     defaultValues: {
@@ -97,6 +98,7 @@ export function VolunteerProfile({
     },
   });
 
+  // load profile data on initial render
   React.useEffect(() => {
     if (serializedData) {
       const fetchData = async () => {
