@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import { Loader, VolunteerProfile } from "@/components";
-import { getDonorProfile } from "@/hooks/getDonorProfile";
+import { getVolunteerProfile } from "@/hooks/get-volunteer-profile";
 import { Suspense } from "react";
 
 export default async function VolunteerProfilePage() {
@@ -8,7 +8,7 @@ export default async function VolunteerProfilePage() {
   const userId = session?.user?.id;
   const token = session?.user?.token;
 
-  const dataPromise = getDonorProfile(userId, token);
+  const dataPromise = getVolunteerProfile(userId, token);
 
   return (
     <Suspense fallback={<Loader className="h-screen" />}>

@@ -6,7 +6,7 @@ import { fetcher } from "@/lib/fetcher";
 import { revalidatePath } from "next/cache";
 
 // donor profile update action handler
-export const updateProfileAction = async (
+export const updateDonorProfileAction = async (
   fd: FormData,
   userId: number | string | undefined,
 ) => {
