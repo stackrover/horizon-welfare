@@ -1,6 +1,6 @@
 "use client";
 
-import { updateProfileAction } from "@/app/actions/donorActions";
+import { updateDonorProfileAction } from "@/app/actions/donorActions";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -115,7 +115,7 @@ export function DonorProfile({
     }
 
     // Call the action handler
-    const response = await updateProfileAction(formData, userId);
+    const response = await updateDonorProfileAction(formData, userId);
 
     console.log({ response });
 

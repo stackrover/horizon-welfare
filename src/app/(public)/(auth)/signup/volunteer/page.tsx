@@ -288,6 +288,7 @@ export default function VolunteerSignup() {
                         disabled={thanas.length === 0}
                         onValueChange={field.onChange}
                         defaultValue={field.value}
+                        value={field.value}
                       >
                         <FormControl className="rounded-xl shadow-none">
                           <SelectTrigger>

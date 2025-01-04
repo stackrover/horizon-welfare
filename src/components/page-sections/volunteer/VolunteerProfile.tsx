@@ -1,6 +1,6 @@
 "use client";
 
-import { updateProfileAction } from "@/app/actions/donorActions";
+import { updateVolunteerProfileAction } from "@/app/actions/volunteerActions";
 import { VolunteerProjectCard } from "@/components";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,7 +21,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import { DonorData } from "@/data";
+import { bloodGroups } from "@/constants/blood-groups";
+import { VolunteerData } from "@/data";
+import { getLocationData } from "@/hooks/get-locations";
 import { volunteerProfileFormSchema } from "@/schemas/volunteerProfileFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IconCloudUpload, IconEdit, IconX } from "@tabler/icons-react";
@@ -40,15 +42,19 @@ export function VolunteerProfile({
   userId: number | string | undefined;
 }) {
   const data = React.use(dataPromise);
-
   const serializedData =
-    data.status === "success" ? new DonorData(data?.results) : null;
-
-  console.log({ data, serializedData });
+    data.status === "success" ? new VolunteerData(data?.results) : null;
 
   const [file, setFile] = React.useState<File[]>([]);
   const [profileImg, setProfileImg] = React.useState<File[]>([]);
-  const [profileData, setProfileData] = React.useState<DonorData>();
+  const [profileData, setProfileData] = React.useState<VolunteerData>();
+  const [divisions, setDivisions] = React.useState<Record<string, string>[]>(
+    [],
+  );
+  const [districts, setDistricts] = React.useState<Record<string, string>[]>(
+    [],
+  );
+  const [thanas, setThanas] = React.useState<string[]>([]);
 
   const {
     acceptedFiles,
@@ -71,18 +77,18 @@ export function VolunteerProfile({
     },
   });
 
+  // form instance
   const form = useForm<z.infer<typeof volunteerProfileFormSchema>>({
     resolver: zodResolver(volunteerProfileFormSchema),
     defaultValues: {
       f_name: "",
       l_name: "",
-      location: "",
       gender: "",
-      age: "",
+      age: 0,
       division: "",
       district: "",
       thana: "",
-      person: "",
+      nationality: "",
       email: "",
       address: "",
       blood_group: "",
@@ -92,21 +98,38 @@ export function VolunteerProfile({
     },
   });
 
+  // load profile data on initial render
   React.useEffect(() => {
     if (serializedData) {
-      // destructuring the data
-      const {
-        uid,
-        balance,
-        bannar_image,
-        profile_image,
-        mobile_number,
-        id,
-        ...restData
-      } = serializedData;
+      const fetchData = async () => {
+        const divisionList = await getLocationData("/divisions");
+        if (divisionList) {
+          setDivisions(divisionList);
+        }
 
-      form.reset();
-      setProfileData(serializedData);
+        const districtList = await getLocationData(
+          `/division/${serializedData.division}`,
+        );
+        if (districtList) {
+          setDistricts(districtList);
+        }
+
+        const thanaList = await getLocationData(
+          `/district/${serializedData.district}`,
+        );
+
+        if (thanaList.length > 0) {
+          setThanas(thanaList[0].upazillas);
+        }
+
+        // destructuring the data
+        const { uid, balance, bannar_image, profile_image, id, ...restData } =
+          serializedData;
+
+        form.reset(restData);
+        setProfileData(serializedData);
+      };
+      fetchData();
     }
   }, [data]);
 
@@ -128,18 +151,44 @@ export function VolunteerProfile({
     }
 
     // Call the action handler
-    const response = await updateProfileAction(formData, userId);
+    const response = await updateVolunteerProfileAction(formData, userId);
 
     console.log({ response });
 
     if (response.status === "success") {
       toast.success(response.message);
+      setFile([]);
+      setProfileImg([]);
     }
 
     if (response.status === "error") {
       toast.error(response.message);
     }
   }
+
+  // division change handler
+  const handleDivisionChange = async (val: string, field: any) => {
+    field.onChange(val);
+    setDistricts([]);
+    setThanas([]);
+    const divisionLIst = await getLocationData(`/division/${val}`);
+    if (divisionLIst) {
+      setDistricts(divisionLIst);
+    }
+    form.setValue("district", "");
+    form.setValue("thana", "");
+  };
+
+  // district change handler
+  const handleDistrictChange = async (val: string, field: any) => {
+    field.onChange(val);
+    setThanas([]);
+    const thanaList = await getLocationData(`/district/${val}`);
+    if (thanaList.length > 0) {
+      setThanas(thanaList[0].upazillas);
+    }
+    form.setValue("thana", "");
+  };
 
   return (
     <main>
@@ -180,7 +229,11 @@ export function VolunteerProfile({
                   render={({ field }) => (
                     <FormItem className="col-span-6 sm:col-span-4">
                       <FormControl>
-                        <Input type="text" placeholder="shadcn" {...field} />
+                        <Input
+                          type="text"
+                          placeholder="First Name"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -194,7 +247,7 @@ export function VolunteerProfile({
                   render={({ field }) => (
                     <FormItem className="col-span-6 sm:col-span-4">
                       <FormControl>
-                        <Input type="text" placeholder="shadcn" {...field} />
+                        <Input type="text" placeholder="Last Name" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -268,16 +321,16 @@ export function VolunteerProfile({
 
                   <div className="grid flex-1 grid-cols-12 gap-x-4 gap-y-6">
                     {/* person  */}
-                    <label className="col-span-4">Person</label>
+                    <label className="col-span-4">Nationality</label>
                     <FormField
                       control={form.control}
-                      name="person"
+                      name="nationality"
                       render={({ field }) => (
                         <FormItem className="col-span-8">
                           <FormControl>
                             <Input
                               type="text"
-                              placeholder="shadcn"
+                              placeholder="Nationality"
                               {...field}
                             />
                           </FormControl>
@@ -295,9 +348,12 @@ export function VolunteerProfile({
                         <FormItem className="col-span-8">
                           <FormControl>
                             <Input
-                              type="text"
-                              placeholder="shadcn"
+                              type="number"
+                              min={0}
+                              placeholder="Type Age"
                               {...field}
+                              onChange={(e) => field.onChange(+e.target.value)}
+                              value={+field.value}
                             />
                           </FormControl>
                           <FormMessage />
@@ -316,6 +372,7 @@ export function VolunteerProfile({
                             <RadioGroup
                               onValueChange={field.onChange}
                               defaultValue={field.value}
+                              value={field.value}
                               className="flex flex-col gap-3 md:flex-row"
                             >
                               <FormItem className="flex items-center space-x-2 space-y-0">
@@ -351,33 +408,7 @@ export function VolunteerProfile({
                   </div>
                 </div>
 
-                {/* location and banner image  */}
-                <label className="col-span-4">Location</label>
-                <FormField
-                  control={form.control}
-                  name="location"
-                  render={({ field }) => (
-                    <FormItem className="col-span-8">
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select one" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="Dhaka">Dhaka</SelectItem>
-                          <SelectItem value="Barishal">Barishal</SelectItem>
-                          <SelectItem value="Rangpur">Rangpur</SelectItem>
-                        </SelectContent>
-                      </Select>
-
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                {/* banner image  */}
 
                 <label className="col-span-12 xmd:col-span-4">
                   Banner Image
@@ -431,8 +462,6 @@ export function VolunteerProfile({
                   </div>
                 </div>
 
-                {/* location  */}
-
                 {/* division  */}
                 <FormField
                   control={form.control}
@@ -441,8 +470,11 @@ export function VolunteerProfile({
                     <FormItem className="col-span-6">
                       <FormLabel>Division</FormLabel>
                       <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
+                        disabled={divisions.length === 0}
+                        onValueChange={(val) =>
+                          handleDivisionChange(val, field)
+                        }
+                        value={field.value}
                       >
                         <FormControl>
                           <SelectTrigger>
@@ -450,9 +482,16 @@ export function VolunteerProfile({
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="Dhaka">Dhaka</SelectItem>
-                          <SelectItem value="Barishal">Barishal</SelectItem>
-                          <SelectItem value="Rangpur">Rangpur</SelectItem>
+                          {divisions.length > 0
+                            ? divisions.map((division, index) => (
+                                <SelectItem
+                                  key={index}
+                                  value={division.division}
+                                >
+                                  {division.division}
+                                </SelectItem>
+                              ))
+                            : null}
                         </SelectContent>
                       </Select>
 
@@ -469,8 +508,11 @@ export function VolunteerProfile({
                     <FormItem className="col-span-6">
                       <FormLabel>District</FormLabel>
                       <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
+                        disabled={districts.length === 0}
+                        onValueChange={(val) =>
+                          handleDistrictChange(val, field)
+                        }
+                        value={field.value}
                       >
                         <FormControl>
                           <SelectTrigger>
@@ -478,9 +520,16 @@ export function VolunteerProfile({
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="Dhaka">Dhaka</SelectItem>
-                          <SelectItem value="Barishal">Barishal</SelectItem>
-                          <SelectItem value="Rangpur">Rangpur</SelectItem>
+                          {districts.length > 0
+                            ? districts.map((district, index) => (
+                                <SelectItem
+                                  key={index}
+                                  value={district.district}
+                                >
+                                  {district.district}
+                                </SelectItem>
+                              ))
+                            : null}
                         </SelectContent>
                       </Select>
 
@@ -497,8 +546,10 @@ export function VolunteerProfile({
                     <FormItem className="col-span-6">
                       <FormLabel>Thana</FormLabel>
                       <Select
+                        disabled={thanas.length === 0}
                         onValueChange={field.onChange}
                         defaultValue={field.value}
+                        value={field.value}
                       >
                         <FormControl>
                           <SelectTrigger>
@@ -506,9 +557,13 @@ export function VolunteerProfile({
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="Dhaka">Dhaka</SelectItem>
-                          <SelectItem value="Barishal">Barishal</SelectItem>
-                          <SelectItem value="Rangpur">Rangpur</SelectItem>
+                          {thanas.length > 0
+                            ? thanas.map((thana, index) => (
+                                <SelectItem key={index} value={thana}>
+                                  {thana}
+                                </SelectItem>
+                              ))
+                            : null}
                         </SelectContent>
                       </Select>
 
@@ -525,7 +580,7 @@ export function VolunteerProfile({
                     <FormItem className="col-span-6">
                       <FormLabel>Address in Details</FormLabel>
                       <FormControl>
-                        <Input type="text" placeholder="shadcn" {...field} />
+                        <Input type="text" placeholder="Address" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -542,6 +597,7 @@ export function VolunteerProfile({
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}
+                        value={field.value}
                       >
                         <FormControl>
                           <SelectTrigger>
@@ -549,9 +605,14 @@ export function VolunteerProfile({
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="Dhaka">Dhaka</SelectItem>
-                          <SelectItem value="Barishal">Barishal</SelectItem>
-                          <SelectItem value="Rangpur">Rangpur</SelectItem>
+                          {bloodGroups.map((bloodGroup) => (
+                            <SelectItem
+                              key={bloodGroup.id}
+                              value={bloodGroup.name}
+                            >
+                              {bloodGroup.name}
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -567,7 +628,11 @@ export function VolunteerProfile({
                     <FormItem className="col-span-6">
                       <FormLabel>Mobile Number</FormLabel>
                       <FormControl>
-                        <Input type="text" placeholder="shadcn" {...field} />
+                        <Input
+                          type="text"
+                          placeholder="01*********"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -582,7 +647,11 @@ export function VolunteerProfile({
                     <FormItem className="col-span-12">
                       <FormLabel>Profession</FormLabel>
                       <FormControl>
-                        <Input type="text" placeholder="shadcn" {...field} />
+                        <Input
+                          type="text"
+                          placeholder="Profession"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -597,7 +666,7 @@ export function VolunteerProfile({
                     <FormItem className="col-span-12">
                       <FormLabel>Education</FormLabel>
                       <FormControl>
-                        <Input type="text" placeholder="shadcn" {...field} />
+                        <Input type="text" placeholder="Education" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -621,7 +690,12 @@ export function VolunteerProfile({
               <div className="order-1 col-span-12 xl:order-2 xl:col-span-4">
                 <div className="sticky top-[130px] ml-0 overflow-hidden rounded-xl border shadow-sm xl:ml-4">
                   <Image
-                    src="/images/project-image-6.png"
+                    src={
+                      profileData?.bannar_image
+                        ? process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL +
+                          profileData?.bannar_image
+                        : "/"
+                    }
                     alt="banner"
                     height={200}
                     width={600}
@@ -645,7 +719,9 @@ export function VolunteerProfile({
                       </div>
                       <div>
                         <h3 className="text-2xl font-semibold leading-8 text-base-400">
-                          Marcus Dutra
+                          {serializedData?.f_name +
+                            " " +
+                            serializedData?.l_name}
                         </h3>
                         <p className="leading-7 text-base-300">Volunteer</p>
                       </div>
