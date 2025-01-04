@@ -16,6 +16,8 @@ export function DonorAvailableProjects({
       ? data.results.map((item: any) => new DonorAvailableProjectData(item))
       : [];
 
+  console.log(data);
+
   return (
     <main className="container">
       <div className="mt-10 flex flex-col gap-4 md:flex-row md:items-center">
@@ -29,7 +31,7 @@ export function DonorAvailableProjects({
           serializedData.map((item: DonorAvailableProjectData) => (
             <SubscriptionProjectCard
               key={item.id}
-              projectId={item.projectId}
+              linkUrl={`/donor/monthly-available-subscriptions/${item.id}`}
               title={item.title}
               description={item.isEmergency ? "Emergency" : "Regular"}
               buttonText={"Monthly/" + item.subscriptionRate + "Tk"}

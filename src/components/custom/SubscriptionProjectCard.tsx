@@ -6,12 +6,12 @@ import Link from "next/link";
 import { TruncateString } from "./TruncateString";
 
 export function SubscriptionProjectCard({
-  projectId,
   imageUrl,
   buttonText,
   title,
   description,
   className,
+  linkUrl,
 }: SubscriptionCardProps) {
   return (
     <div
@@ -23,7 +23,7 @@ export function SubscriptionProjectCard({
       <div className="order-2 flex flex-col items-center gap-6 sm:order-1 sm:items-start md:ml-4">
         <div>
           <Link
-            href={`/projects/details/${projectId}`}
+            href={linkUrl}
             className="mb-1 text-center text-lg font-semibold leading-6 text-base-400 transition-all duration-150 ease-in-out hover:text-primary sm:text-start"
           >
             <TruncateString length={30}>{title}</TruncateString>
@@ -35,7 +35,7 @@ export function SubscriptionProjectCard({
             {description}
           </p>
         </div>
-        <Link href={`/projects/details/${projectId}`}>
+        <Link href={linkUrl}>
           <Button variant="secondary" className="w-fit md:w-full">
             {buttonText}
           </Button>

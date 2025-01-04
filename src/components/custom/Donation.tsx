@@ -4,6 +4,7 @@ import { Project } from "@/data";
 import { cn } from "@/lib/utils";
 import { IconHeartFilled, IconHourglassLow } from "@tabler/icons-react";
 import { motion, useInView } from "framer-motion";
+import Link from "next/link";
 import React from "react";
 import CountUp from "react-countup";
 import { HeartIcon, ShareIcon } from "../../../public/icons";
@@ -110,9 +111,15 @@ export function Donation({
       </div>
       <Separator />
       <div className="flex items-center justify-center gap-4">
-        <Button className="h-11 w-full gap-2 rounded-full" variant="secondary">
-          <span>Donate Now</span>
-          <HeartIcon />
+        <Button
+          asChild
+          className="h-11 w-full gap-2 rounded-full"
+          variant="secondary"
+        >
+          <Link href={`/donor/donate/${serializedData.id}`}>
+            <span>Donate Now</span>
+            <HeartIcon />
+          </Link>
         </Button>
         <Button
           variant="light"
