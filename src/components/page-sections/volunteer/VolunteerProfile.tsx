@@ -131,6 +131,7 @@ export function VolunteerProfile({
       };
       fetchData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   //  Form submit handler.
