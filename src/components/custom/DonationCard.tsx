@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export function DonationCard({ cardData }: { cardData: ProjectType }) {
+  console.log({ cardData });
   const goalAmount = cardData?.goalAmount ? +cardData.goalAmount : 0;
 
   const totalCollection = cardData?.totalCollections
@@ -45,7 +46,10 @@ export function DonationCard({ cardData }: { cardData: ProjectType }) {
           </TruncateString>
         </p>
         <div className="h-1 w-full rounded-full bg-primary/30">
-          <div className="h-full w-2/3 rounded-full bg-primary" />
+          <div
+            style={{ width: `${percentage}%` }}
+            className={`h-full rounded-full bg-primary`}
+          />
         </div>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-x-1 text-sm font-medium xmd:text-base">

@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ProjectCardProps } from "@/types/types";
+import Image from "next/image";
 import Link from "next/link";
 import { TruncateString } from "./TruncateString";
 
@@ -11,6 +12,7 @@ export function ProjectCard({
   description,
   path,
   className,
+  thumbnail,
 }: ProjectCardProps) {
   return (
     <div
@@ -19,6 +21,13 @@ export function ProjectCard({
         className,
       )}
     >
+      <Image
+        src={thumbnail}
+        alt="Project Image"
+        width={300}
+        height={300}
+        className="h-full w-full rounded-[20px]"
+      />
       <div className="absolute left-0 top-0 z-10 flex h-full flex-col justify-between p-6 2xl:p-12">
         <div className="flex flex-col gap-y-4">
           <h4 className="text-2xl font-bold leading-8 text-base-0 xmd:text-[28px] xmd:leading-[42px]">

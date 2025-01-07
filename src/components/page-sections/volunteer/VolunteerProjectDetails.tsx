@@ -2,16 +2,15 @@
 
 import {
   ContactDetailsCard,
-  DonorPackageDetailsAsideCardSection,
   ProjectDetailSectionWrapper,
+  VolunteerPackageDetailsAsideCardSection,
 } from "@/components";
-import { DonorSubscribedProject } from "@/data";
-import _ from "lodash";
+import { VolunteerProjectDetailsData } from "@/data";
 import Image from "next/image";
 import React from "react";
 import SirenIcon from "../../../../public/icons/SirenIcon";
 
-export function DonorPackageDetailsPage({
+export function VolunteerProjectDetails({
   session,
   dataPromise,
   projectId,
@@ -25,9 +24,10 @@ export function DonorPackageDetailsPage({
   const data = React.use(dataPromise);
 
   console.log(data);
+  console.log(Array.isArray(data?.results));
 
   const serializedData = data?.results
-    ? new DonorSubscribedProject(_.head(data?.results))
+    ? new VolunteerProjectDetailsData(data?.results)
     : null;
 
   console.log(serializedData);
@@ -92,9 +92,9 @@ export function DonorPackageDetailsPage({
         {/* about section end  */}
 
         {/* aside section  */}
-        <DonorPackageDetailsAsideCardSection
-          packageId={serializedData?.packageId}
+        <VolunteerPackageDetailsAsideCardSection
           isSubscribed={isSubscribed}
+          detailsData={serializedData}
         />
       </section>
     </main>

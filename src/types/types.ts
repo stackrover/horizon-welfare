@@ -74,6 +74,7 @@ export type ProjectCardProps = {
   description: string;
   path: string;
   className?: string;
+  thumbnail: string;
 };
 
 // special need card props
@@ -140,16 +141,9 @@ export type ProjectType = {
   title: string;
   description: string;
   thumbnail: string;
-  goalAmount: string;
-  collectionDays: number;
-  totalCollections: string;
-  volunteerNeed: number;
-  isEmergency: number;
+  goalAmount: string | number;
+  totalCollections: string | number;
   status: string;
-  createdBy: number;
-  updatedBy: number;
-  createdAt: string;
-  updatedAt: string;
 };
 
 // project manager type

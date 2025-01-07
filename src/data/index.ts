@@ -27,6 +27,7 @@ export * from "./projects/successStories";
 export * from "./video-gallery/hero";
 export * from "./video-gallery/video";
 export * from "./volunteer/volunteer-data";
+export * from "./volunteer/volunteer-details-data";
 export * from "./what-we-do/card";
 export * from "./what-we-do/hero";
 export * from "./what-we-do/kidSection";

@@ -3,7 +3,10 @@ import { VolunteerProjectCard } from "@/components";
 export default function page() {
   return (
     <div>
-      <VolunteerProjectCard />
+      <VolunteerProjectCard
+        title="Upcoming Volunteered Projects "
+        endpoint={`/volunteer/upcoming/project/list`}
+      />
     </div>
   );
 }

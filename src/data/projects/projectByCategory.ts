@@ -15,15 +15,8 @@ export class ProjectByCategory {
     description: string;
     thumbnail: string;
     goalAmount: string;
-    collectionDays: number;
     totalCollections: string;
-    volunteerNeed: number;
-    isEmergency: number;
     status: string;
-    createdBy: number;
-    updatedBy: number;
-    createdAt: string;
-    updatedAt: string;
   }>;
 
   constructor(data: any) {
@@ -44,15 +37,8 @@ export class ProjectByCategory {
         description: project?.description,
         thumbnail: project?.thumbnail,
         goalAmount: project?.goal_amount,
-        collectionDays: project?.collection_days,
         totalCollections: project?.total_collections,
-        volunteerNeed: project?.volunteer_need,
-        isEmergency: project?.is_emergency,
         status: project?.status,
-        createdBy: project?.created_by,
-        updatedBy: project?.updated_by,
-        createdAt: project?.created_at,
-        updatedAt: project?.updated_at,
       })) || [];
   }
 }

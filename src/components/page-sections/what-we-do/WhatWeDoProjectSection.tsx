@@ -1,7 +1,7 @@
 "use client";
 
 import { Loader, ProjectCard, SectionWrapper } from "@/components";
-import { WhatWeDoProject } from "@/data";
+import { ProjectData, WhatWeDoProject } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
 import { cn } from "@/lib/utils";
 import _ from "lodash";
@@ -10,17 +10,28 @@ export function WhatWeDoProjectSection({ className }: { className?: string }) {
   const { data, isLoading, isError } = useSWR(
     "/what/we/do/page/project/title/show",
   );
+  const {
+    data: completedProjects,
+    isLoading: projectLoading,
+    isError: projectError,
+  } = useSWR("/project/list/completed");
 
-  if (isLoading) {
+  if (isLoading || projectLoading) {
     return <Loader className="h-[540px]" />;
   }
 
   const serializedData = new WhatWeDoProject(_.head(data?.data?.results));
+  const projectData =
+    completedProjects?.data?.results?.length > 0
+      ? completedProjects?.data.results.map((d: any) => new ProjectData(d))
+      : [];
+
+  console.log(projectData);
 
   return (
     <SectionWrapper
-      isLoading={isLoading}
-      isError={isError}
+      isLoading={isLoading || projectLoading}
+      isError={isError || projectError}
       errorClass="h-[540px]"
       loadingClass="h-[540px]"
       hidden={
@@ -40,42 +51,19 @@ export function WhatWeDoProjectSection({ className }: { className?: string }) {
         </h1>
       </div>
       <div className="grid gap-x-5 gap-y-6 md:grid-cols-2 lg:grid-cols-3">
-        <ProjectCard
-          className="bg-[url(/images/project-done1.png)]"
-          title="Mission smile 1k: Outdoor charity"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros."
-          path="/"
-        />
-        <ProjectCard
-          className="bg-[url(/images/project-done2.png)]"
-          title="Weekly excursions"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros."
-          path="/"
-        />
-        <ProjectCard
-          className="bg-[url(/images/project-done3.png)]"
-          title="Monthly public awareness"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros."
-          path="/"
-        />
-        <ProjectCard
-          className="bg-[url(/images/project-done1.png)]"
-          title="Mission smile 1k: Outdoor charity"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros."
-          path="/"
-        />
-        <ProjectCard
-          className="bg-[url(/images/project-done2.png)]"
-          title="Weekly excursions"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros."
-          path="/"
-        />
-        <ProjectCard
-          className="bg-[url(/images/project-done3.png)]"
-          title="Monthly public awareness"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros."
-          path="/"
-        />
+        {projectData?.length > 0
+          ? projectData.map((project: ProjectData) => (
+              <ProjectCard
+                key={project.id}
+                thumbnail={
+                  process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL + project.thumbnail
+                }
+                title={project.title}
+                description={project.description}
+                path="#"
+              />
+            ))
+          : null}
       </div>
     </SectionWrapper>
   );

@@ -1,9 +1,16 @@
+import { auth } from "@/auth";
 import { VolunteerProjectCard } from "@/components";
 
-export default function page() {
+export default async function page() {
+  const session = await auth();
+  const userId = session?.user?.id;
+
   return (
     <div>
-      <VolunteerProjectCard />
+      <VolunteerProjectCard
+        title="Volunteered Projects "
+        endpoint={`/volunteer/joined/project/list/${userId}`}
+      />
     </div>
   );
 }

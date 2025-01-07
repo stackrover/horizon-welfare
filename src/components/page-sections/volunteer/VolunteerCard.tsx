@@ -1,11 +1,15 @@
 "use client";
 
+import { projectStatusToggleAction } from "@/app/actions/volunteerActions";
 import { CheckIcon } from "@/assets/icons";
+import { VolunteerProjectDetailsData } from "@/data";
 import { cn } from "@/lib/utils";
 import { IconHeartFilled, IconHourglassLow } from "@tabler/icons-react";
 import { motion, useInView } from "framer-motion";
+import { useRouter } from "next/navigation";
 import React from "react";
 import CountUp from "react-countup";
+import toast from "react-hot-toast";
 import { HeartIcon, ShareIcon } from "../../../../public/icons";
 import { Button } from "../../ui/button";
 import { Separator } from "../../ui/separator";
@@ -13,12 +17,33 @@ import { Separator } from "../../ui/separator";
 export function VolunteerCard({
   className,
   subscribed,
+  detailsData,
 }: {
   className?: string;
   subscribed: boolean | undefined | null;
+  detailsData: VolunteerProjectDetailsData;
 }) {
+  const [loading, setLoading] = React.useState(false);
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true });
+  const router = useRouter();
+
+  const handleSubscription = async () => {
+    setLoading(true);
+    const resp = await projectStatusToggleAction(detailsData.projectId);
+
+    if (resp.status === "success") {
+      toast.success(resp.message);
+      router.replace(`/volunteer/subscribed-projects`);
+    }
+
+    if (resp.status === "error") {
+      toast.error(resp.message);
+    }
+
+    setLoading(false);
+  };
+
   return (
     <div
       className={cn(
@@ -30,7 +55,8 @@ export function VolunteerCard({
         <CountUp
           enableScrollSpy={true}
           scrollSpyOnce={true}
-          end={800}
+          start={0}
+          end={detailsData.totalVolunteers}
           className="text-[40px] font-semibold leading-[64px] text-base-400"
         />
         <span className="text-[40px] font-semibold leading-[64px] text-base-400">
@@ -55,7 +81,8 @@ export function VolunteerCard({
             <CountUp
               enableScrollSpy={true}
               scrollSpyOnce={true}
-              end={1000}
+              start={0}
+              end={detailsData.volunteerNeed}
               className="text-left text-lg font-semibold leading-5 text-base-400"
             />
           </div>
@@ -68,7 +95,8 @@ export function VolunteerCard({
             <CountUp
               enableScrollSpy={true}
               scrollSpyOnce={true}
-              end={200}
+              start={0}
+              end={detailsData.remainingVolunteers}
               className="text-left text-lg font-semibold leading-5 text-base-400"
             />
           </div>
@@ -85,12 +113,16 @@ export function VolunteerCard({
       <div className="flex items-center gap-2">
         <IconHeartFilled fill="red" size={24} />
         <h4 className="text-xl font-medium leading-6 text-base-400">
-          12354 Volunteers
+          {detailsData.totalVolunteers} Volunteers
         </h4>
       </div>
       <Separator />
       <div className="flex items-center justify-center gap-4">
-        <Button className="h-11 w-full gap-2 rounded-full" variant="secondary">
+        <Button
+          onClick={() => (subscribed ? null : handleSubscription())}
+          className="h-11 w-full gap-2 rounded-full"
+          variant="secondary"
+        >
           {subscribed ? (
             <>
               <span>COUNTED</span>
@@ -98,7 +130,7 @@ export function VolunteerCard({
             </>
           ) : (
             <>
-              <span>COUNT ME IN</span>
+              <span>{loading ? "COUNTING..." : "COUNT ME IN"}</span>
               <HeartIcon className="h-[24px] w-[24px]" />
             </>
           )}
