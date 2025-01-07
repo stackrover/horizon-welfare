@@ -95,6 +95,7 @@ export function DonorProfile({
       form.reset(restData);
       setProfileData(serializedData);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   //  Form submit handler.

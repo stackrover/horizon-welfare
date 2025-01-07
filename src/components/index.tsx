@@ -37,7 +37,6 @@ export * from "./custom/OurJourneySummary";
 export * from "./custom/Pagination";
 export * from "./custom/Project";
 export * from "./custom/ProjectCard";
-export * from "./custom/ProjectDetails";
 export * from "./custom/ProjectDetailSectionWrapper";
 export * from "./custom/RecentContributionCard";
 export * from "./custom/SectionWrapper";
