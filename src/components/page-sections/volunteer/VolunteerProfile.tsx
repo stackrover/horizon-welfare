@@ -735,7 +735,10 @@ export function VolunteerProfile({
       </section>
 
       {/* available volunteer projects  */}
-      <VolunteerProjectCard />
+      <VolunteerProjectCard
+        title="Available Volunteering Projects"
+        endpoint={`/volunteer/available/project/list/${userId}`}
+      />
     </main>
   );
 }

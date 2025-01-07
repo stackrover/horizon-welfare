@@ -21,3 +21,43 @@ export class SingleProject {
     this.updatedAt = data.updated_at;
   }
 }
+
+export class ProjectData2 {
+  id: number;
+  categoryId: number;
+  title: string;
+  description: string;
+  thumbnail: string;
+  goalAmount: number;
+  totalCollections: number;
+  status: string;
+
+  constructor(data: any) {
+    this.id = data.id;
+    this.categoryId = data.category_id;
+    this.title = data.title;
+    this.description = data.description;
+    this.thumbnail = data.thumbnail;
+    this.goalAmount = parseFloat(data.goal_amount);
+    this.totalCollections = parseFloat(data.total_collection);
+    this.status = data.status;
+  }
+}
+
+export class ProjectData {
+  id: number;
+  categoryId: number;
+  title: string;
+  description: string;
+  thumbnail: string;
+  status: string;
+
+  constructor(data: any) {
+    this.id = data.id;
+    this.categoryId = data.category_id;
+    this.title = data.title;
+    this.description = data.description;
+    this.thumbnail = data.thumbnail;
+    this.status = data.status;
+  }
+}
