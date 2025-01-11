@@ -59,7 +59,7 @@ export async function Navbar() {
           className="group flex items-center gap-x-2"
         >
           <Link
-            href={session?.user?.role === "donor" ? "/donor/donate" : "/login"}
+            href={session?.user?.role === "donor" ? "/projects" : "/login"}
             className=""
           >
             <Button
@@ -136,7 +136,13 @@ export async function Navbar() {
                   variant="secondary"
                   className="mr-2 mt-2 flex h-10 w-full px-3 2xl:hidden"
                 >
-                  <Link href="/projects">Donate Now</Link>
+                  <Link
+                    href={
+                      session?.user?.role === "donor" ? "/projects" : "/login"
+                    }
+                  >
+                    Donate Now
+                  </Link>
                 </Button>
               </div>
             </SheetContent>

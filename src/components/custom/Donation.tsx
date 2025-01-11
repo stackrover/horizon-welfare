@@ -14,9 +14,11 @@ import { Separator } from "../ui/separator";
 export function Donation({
   className,
   serializedData,
+  session,
 }: {
   className?: string;
   serializedData: Project;
+  session: any;
 }) {
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true });
@@ -48,6 +50,7 @@ export function Donation({
         <CountUp
           enableScrollSpy={true}
           scrollSpyOnce={true}
+          start={0}
           end={totalCollection}
           className="text-3xl font-semibold leading-[64px] text-base-400 md:text-[40px]"
         />
@@ -74,6 +77,7 @@ export function Donation({
             <CountUp
               enableScrollSpy={true}
               scrollSpyOnce={true}
+              start={0}
               end={goalAmount}
               className="text-left text-lg font-semibold leading-5 text-base-400"
             />
@@ -91,6 +95,7 @@ export function Donation({
             <CountUp
               enableScrollSpy={true}
               scrollSpyOnce={true}
+              start={0}
               end={remainingAmount}
               className="text-left text-lg font-semibold leading-5 text-base-400"
             />
@@ -116,10 +121,22 @@ export function Donation({
           className="h-11 w-full gap-2 rounded-full"
           variant="secondary"
         >
-          <Link href={`/donor/donate/${serializedData.id}`}>
-            <span>Donate Now</span>
-            <HeartIcon />
-          </Link>
+          {!session ? (
+            <Link href={`/login`}>
+              <span>Donate Now</span>
+              <HeartIcon />
+            </Link>
+          ) : session?.user?.role === "volunteer" ? (
+            <button disabled>
+              <span>Donate Now</span>
+              <HeartIcon />
+            </button>
+          ) : (
+            <Link href={`/donor/donate/${serializedData.id}`}>
+              <span>Donate Now</span>
+              <HeartIcon />
+            </Link>
+          )}
         </Button>
         <Button
           variant="light"

@@ -30,8 +30,6 @@ export function DonorPackageDetailsPage({
     ? new DonorSubscribedProject(_.head(data?.results))
     : null;
 
-  console.log(serializedData);
-
   if (!serializedData) {
     return (
       <div>
@@ -93,7 +91,7 @@ export function DonorPackageDetailsPage({
 
         {/* aside section  */}
         <DonorPackageDetailsAsideCardSection
-          packageId={serializedData?.packageId}
+          serializedData={serializedData}
           isSubscribed={isSubscribed}
         />
       </section>

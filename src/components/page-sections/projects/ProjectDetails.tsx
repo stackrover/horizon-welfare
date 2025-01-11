@@ -33,7 +33,7 @@ export function ProjectDetailsPage({
 
   const serializedData = new Project(data?.results);
 
-  console.log({ session });
+  console.log({ data, serializedData });
 
   return (
     <main>
