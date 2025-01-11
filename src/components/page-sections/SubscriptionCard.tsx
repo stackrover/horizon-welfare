@@ -1,7 +1,8 @@
 "use client";
 
-import { projectSubscriptionAction } from "@/app/actions/donorActions";
+import { donateAction } from "@/app/actions/donorActions";
 import { CheckIcon } from "@/assets/icons";
+import { DonorAvailableProject, DonorSubscribedProject } from "@/data";
 import { cn } from "@/lib/utils";
 import { IconHeartFilled } from "@tabler/icons-react";
 import { motion, useInView } from "framer-motion";
@@ -16,11 +17,11 @@ import { Separator } from "../ui/separator";
 export function SubscriptionCard({
   className,
   subscribed,
-  packageId,
+  serializedData,
 }: {
   className?: string;
   subscribed: boolean | undefined | null;
-  packageId: number | string;
+  serializedData: DonorSubscribedProject | DonorAvailableProject;
 }) {
   const [loading, setLoading] = React.useState(false);
   const ref = React.useRef(null);
@@ -30,14 +31,19 @@ export function SubscriptionCard({
   // handle project subscription
   const handleSubscription = async () => {
     setLoading(true);
-    const resp = await projectSubscriptionAction(packageId);
+
+    const resp = await donateAction({
+      projectId: serializedData.projectId,
+      packageId: serializedData.packageId,
+      isSubscriptionMoney: "yes",
+      totalAmount: Number(serializedData.subscriptionRate),
+    });
 
     if (resp.status === "success") {
-      toast.success(resp.message);
-      router.replace(`/donor/monthly-subscriptions`);
+      window.location.href = resp.checkoutUrl;
     }
 
-    if (resp.status === "error") {
+    if (resp.status === "error" && resp.error_type === "general") {
       toast.error(resp.message);
     }
 
@@ -109,13 +115,13 @@ export function SubscriptionCard({
       <Separator />
       <div className="flex items-center justify-center gap-4">
         <Button
-          onClick={() => (subscribed ? null : handleSubscription())}
+          onClick={handleSubscription}
           className="h-11 w-full gap-2 rounded-full"
           variant="secondary"
         >
           {subscribed ? (
             <>
-              <span>SUBSCRIBED</span>
+              <span>{loading ? "DONATION PAYING..." : "DONATION PAY"}</span>
               <CheckIcon className="h-[24px] w-[24px]" />
             </>
           ) : (

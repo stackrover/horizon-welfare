@@ -93,7 +93,7 @@ export function DonorAvailablePackageDetailsPage({
 
         {/* aside section  */}
         <DonorPackageDetailsAsideCardSection
-          packageId={serializedData?.packageId}
+          serializedData={serializedData}
           isSubscribed={isSubscribed}
         />
       </section>

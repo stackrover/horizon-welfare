@@ -74,3 +74,49 @@ export const projectSubscriptionAction = async (
     return { ...ERROR_OBJ_FORMAT, error: error };
   }
 };
+
+// donation action handler
+export const donateAction = async ({
+  projectId,
+  totalAmount,
+  isSubscriptionMoney,
+  packageId,
+}: {
+  projectId: number | string | undefined | null;
+  totalAmount: number;
+  isSubscriptionMoney: "yes" | "no";
+  packageId?: number | string | undefined | null;
+}) => {
+  const controller = new AbortController();
+  const session = await auth();
+
+  // return error if user is not authenticated
+  if (!session?.user?.token) {
+    return { ...ERROR_OBJ_FORMAT, message: "Unauthorized" };
+  }
+
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/pay`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${session?.user?.token}`,
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        totalAmount,
+        uid: session.user.id,
+        projectId,
+        isSubscriptionMoney,
+        packageId,
+      }),
+      signal: controller.signal,
+    });
+
+    const data = await res.json();
+
+    return data;
+  } catch (error) {
+    return { ...ERROR_OBJ_FORMAT, error: error };
+  }
+};

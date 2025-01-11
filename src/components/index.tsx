@@ -75,6 +75,7 @@ export * from "./page-sections/media-center/MediaCenterHeroSection";
 export * from "./page-sections/projects/PackageHeroSection";
 export * from "./page-sections/projects/ProjectAsideCardSection";
 export * from "./page-sections/projects/ProjectDetails";
+export * from "./page-sections/projects/ProjectDonationPage";
 export * from "./page-sections/projects/ProjectList";
 export * from "./page-sections/projects/ProjectsSection";
 export * from "./page-sections/projects/SuccessStoriesSection";

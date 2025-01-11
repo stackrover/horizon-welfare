@@ -34,7 +34,9 @@ export function DonationSection() {
         <Input placeholder="Amount" className="w-full" />
 
         {/* donation button  */}
-        <Button className="col-span-2 md:col-span-1">Donate Now</Button>
+        <Button type="button" className="col-span-2 md:col-span-1">
+          Donate Now
+        </Button>
       </div>
     </section>
   );
