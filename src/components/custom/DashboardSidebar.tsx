@@ -70,9 +70,8 @@ export function DashboardSiebar() {
             <li key={child.id}>
               <SidebarLink
                 key={child.id}
-                id={child.id}
                 title={child.title}
-                url={`/dashboard${item.prefix ? `/${item.prefix}` : ""}/${child.pathname}`}
+                url={`/admin/dashboard${item.prefix ? `${item.prefix}` : ""}${child.pathname}`}
               />
             </li>
           ))}
