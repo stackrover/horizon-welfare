@@ -42,6 +42,7 @@ export default auth((req) => {
       staff: "/admin/dashboard",
       donor: "/donor/profile",
       volunteer: "/volunteer/profile",
+      admin: "/admin/dashboard",
     };
 
     if (authRoutes.indexOf(req.nextUrl.pathname) !== -1) {
@@ -53,6 +54,7 @@ export default auth((req) => {
       staff: ["donor", "volunteer"],
       donor: ["volunteer", "staff"],
       volunteer: ["donor", "staff"],
+      admin: ["donor", "staff", "volunteer"],
     };
 
     if (
