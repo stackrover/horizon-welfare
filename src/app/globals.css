@@ -67,7 +67,7 @@ body {
     @apply border-border;
   }
   body {
-    @apply h-screen w-screen overflow-y-auto overflow-x-hidden bg-background text-foreground;
+    @apply h-screen w-screen overflow-x-hidden overflow-y-scroll bg-background text-foreground;
   }
 }
 
