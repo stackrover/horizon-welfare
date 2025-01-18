@@ -1,3 +1,5 @@
 {
-  "cSpell.words": ["Thanas", "upazillas", "Zakat"]
+  "cSpell.words": ["Thanas", "upazillas", "Zakat"],
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.updateImportsOnFileMove.enabled": "always"
 }

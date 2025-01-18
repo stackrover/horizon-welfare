@@ -13,7 +13,7 @@ const authRoutes = [
 
 export default auth((req) => {
   // validate protected routes
-  const protectedRoles = ["donor", "volunteer", "staff"];
+  const protectedRoles = ["donor", "volunteer", "admin"];
   const isProtectedRoute = protectedRoles.some((role) =>
     req.nextUrl.pathname.startsWith(`/${role}`),
   );
@@ -39,9 +39,9 @@ export default auth((req) => {
     const { role } = req.auth.user;
 
     const redirectMap: { [key: string]: string } = {
-      staff: "/admin/dashboard",
       donor: "/donor/profile",
       volunteer: "/volunteer/profile",
+      admin: "/admin/dashboard",
     };
 
     if (authRoutes.indexOf(req.nextUrl.pathname) !== -1) {
@@ -50,9 +50,9 @@ export default auth((req) => {
     }
 
     const roleProtectedRoutes: { [key: string]: string[] } = {
-      staff: ["donor", "volunteer"],
-      donor: ["volunteer", "staff"],
-      volunteer: ["donor", "staff"],
+      donor: ["volunteer", "admin"],
+      volunteer: ["donor", "admin"],
+      admin: ["donor", "volunteer"],
     };
 
     if (

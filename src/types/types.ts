@@ -170,3 +170,67 @@ export type StateType = {
   status?: string | null;
   error_type?: string | null;
 };
+
+export type HeroSectionData = {
+  id: number;
+  title: string;
+  description: string;
+  donate_now_bt_title: string;
+  donate_now_bt_link: string;
+  watch_video_bt_title: string;
+  watch_video_bt_link: string;
+  image: string;
+  status: string;
+  updated_by: number;
+  created_at: string;
+  updated_at: string;
+};
+
+// home page service card
+export type HomePageServiceCardData = {
+  id: number;
+  title_1: string;
+  description_1: string;
+  image_1: string;
+  title_2: string;
+  description_2: string;
+  image_2: string;
+  title_3: string;
+  description_3: string;
+  image_3: string;
+  title_4: string;
+  description_4: string;
+  image_4: string;
+  status: string;
+  updated_by: number;
+  created_at: string;
+  updated_at: string;
+};
+
+// home page  gallery image
+export type HomePageGalleryData = {
+  id: number;
+  title: string;
+  video_title: string;
+  video_link: string;
+  image_title_1: string;
+  image_1: string;
+  image_title_2: string;
+  image_2: string;
+  image_title_3: string;
+  image_3: string;
+  image_title_4: string;
+  image_4: string;
+  image_title_5: string;
+  image_5: string;
+  image_title_6: string;
+  image_6: string;
+  image_title_7: string;
+  image_7: string;
+  image_title_8: string;
+  image_8: string;
+  status: string;
+  updated_by: number;
+  created_at: string;
+  updated_at: string;
+};

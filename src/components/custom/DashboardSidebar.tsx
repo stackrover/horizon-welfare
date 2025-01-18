@@ -43,7 +43,7 @@ const sidebarItems = [
 
 export function DashboardSiebar() {
   return (
-    <div className="h-screen w-72 border-r bg-white">
+    <div className="sticky inset-y-0 top-0 h-screen w-72 border-r bg-white">
       {/* Logo */}
       <div className="px-4 py-2">
         <Image
@@ -70,9 +70,8 @@ export function DashboardSiebar() {
             <li key={child.id}>
               <SidebarLink
                 key={child.id}
-                id={child.id}
                 title={child.title}
-                url={`/dashboard${item.prefix ? `/${item.prefix}` : ""}/${child.pathname}`}
+                url={`/admin/dashboard${item.prefix ? `${item.prefix}` : ""}${child.pathname}`}
               />
             </li>
           ))}
