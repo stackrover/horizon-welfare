@@ -1,26 +1,20 @@
 "use client";
 
-import saveHeroSectionData from "@/app/actions/admin/pages/home";
+import { saveHeroSectionData } from "@/app/actions/admin/pages/home";
 import SubmitButton from "@/components/custom/SubmitButton";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import axiosInstance from "@/lib/axios";
 import { head } from "lodash";
 import React from "react";
 import { useFormState } from "react-dom";
 import { toast } from "react-hot-toast";
 import { match } from "ts-pattern";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Select, SelectTrigger, SelectValue } from "../../../ui/select";
 
 export function HeroSection({ dataPromise }: { dataPromise: Promise<any> }) {
   const data = React.use(dataPromise);
 
   const hero = head(data.results) as Record<string, string>;
-
-  console.log({ hero });
 
   const [state, action] = useFormState(saveHeroSectionData, null);
 
@@ -88,7 +82,7 @@ export function HeroSection({ dataPromise }: { dataPromise: Promise<any> }) {
 
   return (
     <section className="rounded-xl bg-white p-6 py-4">
-      <h3 className="mb-6 text-lg"> Hero section </h3>
+      <h3 className="mb-6 text-lg font-bold"> Hero section </h3>
       <form action={action} className="space-y-4">
         {formFields.map((field) => (
           <div key={field.name} className="space-y-2">
