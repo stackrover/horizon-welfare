@@ -1,26 +1,26 @@
 "use client";
 
-import { updateServiceSectionData } from "@/app/actions/admin/pages/home";
+import { updateGallerySectionData } from "@/app/actions/admin/pages/home";
 import { Label } from "@/components//ui/label";
 import InputField from "@/components/forms/InputField";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Form } from "@/components/ui/form";
-import { getImageURL } from "@/lib/utils";
-import { HomePageServiceCardData } from "@/types/types";
-import { head } from "lodash";
-import React from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "react-hot-toast";
 import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Form } from "@/components/ui/form";
+import { getImageURL } from "@/lib/utils";
+import { HomePageGalleryData, HomePageServiceCardData } from "@/types/types";
+import { head } from "lodash";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 
 export function GallerySection({ dataPromise }: { dataPromise: Promise<any> }) {
   const data = React.use(dataPromise);
-  const editData = head(data.results) as HomePageServiceCardData;
+  const editData = head(data.results) as HomePageGalleryData;
 
   // form fields
   const formFields = [
@@ -127,15 +127,6 @@ export function GallerySection({ dataPromise }: { dataPromise: Promise<any> }) {
       type: "file",
       className: "w-96 h-96",
     },
-    {
-      label: "Status",
-      name: "status",
-      type: "select",
-      options: [
-        { label: "Active", value: "active" },
-        { label: "Inactive", value: "inactive" },
-      ],
-    },
   ];
 
   const form = useForm({
@@ -145,6 +136,10 @@ export function GallerySection({ dataPromise }: { dataPromise: Promise<any> }) {
       image_2: undefined,
       image_3: undefined,
       image_4: undefined,
+      image_5: undefined,
+      image_6: undefined,
+      image_7: undefined,
+      image_8: undefined,
     },
   });
 
@@ -154,7 +149,7 @@ export function GallerySection({ dataPromise }: { dataPromise: Promise<any> }) {
       fd.append(key, values[key] || "");
     });
 
-    const res = await updateServiceSectionData(fd);
+    const res = await updateGallerySectionData(fd);
     if (res.status === "success") {
       toast.success(res.message);
     } else {
@@ -198,7 +193,7 @@ export function GallerySection({ dataPromise }: { dataPromise: Promise<any> }) {
                   field.type === "file"
                     ? getImageURL(
                         editData?.[
-                          field.name as keyof HomePageServiceCardData
+                          field.name as keyof HomePageGalleryData
                         ] as string,
                       )
                     : ""

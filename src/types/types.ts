@@ -171,6 +171,21 @@ export type StateType = {
   error_type?: string | null;
 };
 
+export type HeroSectionData = {
+  id: number;
+  title: string;
+  description: string;
+  donate_now_bt_title: string;
+  donate_now_bt_link: string;
+  watch_video_bt_title: string;
+  watch_video_bt_link: string;
+  image: string;
+  status: string;
+  updated_by: number;
+  created_at: string;
+  updated_at: string;
+};
+
 // home page service card
 export type HomePageServiceCardData = {
   id: number;
