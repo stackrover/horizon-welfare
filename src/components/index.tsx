@@ -66,6 +66,7 @@ export * from "./page-sections/donor/DonorPackageDetailsPage";
 export * from "./page-sections/donor/DonorProfile";
 export * from "./page-sections/donor/DonorProfileNav";
 export * from "./page-sections/donor/DonorSubscribedProjects";
+export * from "./page-sections/donor/DonorTransactions";
 export * from "./page-sections/events/Event";
 export * from "./page-sections/events/Events";
 export * from "./page-sections/events/EventsHeroSection";

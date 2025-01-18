@@ -13,6 +13,8 @@ export class DonorSubscribedProject {
   description: string;
   isEmergency: number;
   thumbnail: string;
+  totalSubscribers: number;
+  subscriberGoal: number;
   managers: Array<{
     id: number;
     projectId: number;
@@ -36,6 +38,8 @@ export class DonorSubscribedProject {
     this.description = data.package?.project?.description || "";
     this.isEmergency = data.package?.project?.is_emergency || 0;
     this.thumbnail = data.package?.project?.thumbnail || "";
+    this.subscriberGoal = data.package?.project?.subscriber_goal || 0;
+    this.totalSubscribers = data?.total_subscribers || 0;
     this.managers =
       data.package?.project?.managers?.map((manager: any) => ({
         id: manager.id,
@@ -56,6 +60,8 @@ export class DonorAvailableProject {
   description: string;
   isEmergency: number;
   thumbnail: string;
+  totalSubscribers: number;
+  subscriberGoal: number;
   managers: Array<{
     id: number;
     projectId: number;
@@ -70,9 +76,11 @@ export class DonorAvailableProject {
     this.title = data?.project?.title;
     this.description = data?.project?.description;
     this.isEmergency = data?.project?.is_emergency;
+    this.subscriberGoal = data?.project?.subscriber_goal || 0;
     this.thumbnail = data?.project?.thumbnail;
     this.projectId = data?.project_id;
     this.subscriptionRate = data?.subscription_rate;
+    this.totalSubscribers = data?.total_subscribers || 0;
     this.managers =
       data?.project?.managers?.map((manager: any) => ({
         id: manager.id,

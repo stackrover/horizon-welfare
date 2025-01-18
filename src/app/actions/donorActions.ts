@@ -81,11 +81,13 @@ export const donateAction = async ({
   totalAmount,
   isSubscriptionMoney,
   packageId,
+  currency,
 }: {
   projectId: number | string | undefined | null;
   totalAmount: number;
   isSubscriptionMoney: "yes" | "no";
   packageId?: number | string | undefined | null;
+  currency: string;
 }) => {
   const controller = new AbortController();
   const session = await auth();
@@ -109,6 +111,7 @@ export const donateAction = async ({
         projectId,
         isSubscriptionMoney,
         packageId,
+        currency,
       }),
       signal: controller.signal,
     });

@@ -19,7 +19,7 @@ import { DebouncedInput } from "./DebouncedInput";
 import { fuzzyFilter } from "./fuzzyFilter";
 
 type DataTableProps = {
-  data: Person[];
+  data: any[];
   columns: ColumnDef<Person>[];
   elements?: React.ReactNode;
 };
@@ -64,9 +64,10 @@ export default function DataTable({ data, columns, elements }: DataTableProps) {
       <div className="mb-4 flex flex-col items-start gap-2 md:flex-row md:items-center md:justify-between">
         <div>{elements ? elements : null}</div>
         <DebouncedInput
+          type="search"
           value={globalFilter ?? ""}
           onChange={(value) => setGlobalFilter(String(value))}
-          className="font-lg border-block max-w-[300px] border p-2 shadow"
+          className="font-lg border-block max-w-[300px] border px-3 py-2 shadow"
           placeholder="Search transactions"
         />
       </div>
@@ -149,7 +150,7 @@ export default function DataTable({ data, columns, elements }: DataTableProps) {
           to{" "}
           {table.getState().pagination.pageSize *
             table.getState().pagination.pageIndex +
-            +table.getState().pagination.pageSize}{" "}
+            +table.getRowCount()}{" "}
           of {table.getRowCount()} entries
         </h4>
         <Pagination
