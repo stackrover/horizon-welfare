@@ -10,7 +10,8 @@
     "lint": "next lint",
     "format": "prettier --check --ignore-path .gitignore .",
     "format:fix": "prettier --write --ignore-path .gitignore .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "serve": "NODE_ENV=production node --max-old-space-size=4096 server.mjs"
   },
   "dependencies": {
     "@bangladeshi/bangladesh-address": "^1.0.5",
