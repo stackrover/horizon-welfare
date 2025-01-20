@@ -1,5 +1,3 @@
-import { IconEdit } from "@tabler/icons-react";
-import React from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,6 +9,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { IconEdit } from "@tabler/icons-react";
+import React from "react";
 import { useFormWrapper } from "./FormWrapper";
 import InputField from "./InputField";
 
@@ -27,14 +27,12 @@ export default function EditableContent({
   children?: React.ReactNode;
   type?: "text" | "textarea" | "image" | (string & {});
 }) {
-  const [showEditModal, setShowEditModal] = React.useState(false);
-
   const formCtx = useFormWrapper();
 
   if (!editable) return children || content;
 
   return (
-    <Dialog open={showEditModal} onOpenChange={setShowEditModal}>
+    <Dialog>
       <div className="group relative w-full select-none border border-transparent py-1.5 text-inherit hover:border-black/20">
         {children || content}
 
@@ -70,9 +68,9 @@ export default function EditableContent({
             </Button>
           </DialogClose>
           <Button
+            disabled={formCtx.form.formState.isSubmitting}
             onClick={() => {
               formCtx.onSubmit();
-              setShowEditModal(false);
             }}
           >
             {formCtx.form.formState.isSubmitting ? "Processing..." : "Save"}

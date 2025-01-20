@@ -56,7 +56,7 @@ export default auth((req) => {
     };
 
     if (
-      roleProtectedRoutes[role].some((d) =>
+      roleProtectedRoutes[role]?.some((d) =>
         req.nextUrl.pathname.split("/").includes(d),
       )
     ) {

@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  ContactUsForm,
-  EventCardSection,
-  WhatWeDoHeroSection,
-  WhatWeDoKidSection,
-  WhatWeDoProjectSection,
-} from "@/components";
+import { WhatWeDoHeroSection, WhatWeDoKidSection } from "@/components";
 
 export default function WhatWeDo() {
   return (
@@ -16,7 +10,7 @@ export default function WhatWeDo() {
       {/* what we do section end */}
 
       {/* kids special needs section  */}
-      <WhatWeDoKidSection />
+      <WhatWeDoKidSection editable />
       {/* kids special needs section end */}
     </section>
   );
