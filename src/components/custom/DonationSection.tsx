@@ -31,7 +31,7 @@ export function DonationSection() {
         ))}
 
         {/* amount */}
-        <Input placeholder="Amount" className="w-full" />
+        <Input min={10} placeholder="Amount" className="w-full" />
 
         {/* donation button  */}
         <Button type="button" className="col-span-2 md:col-span-1">

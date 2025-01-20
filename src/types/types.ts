@@ -1,3 +1,5 @@
+import { WhatWeDoKid, WhatWeDoKidEnum } from "../data";
+
 // news card props
 export type NewsCardProps = {
   title: string;
@@ -82,6 +84,11 @@ export type SpecialNeedCardProps = {
   iconUrl: string;
   title: string;
   text: string;
+  serializedData: WhatWeDoKid;
+  editable: boolean;
+  descInputName: keyof typeof WhatWeDoKidEnum;
+  titleInputName: keyof typeof WhatWeDoKidEnum;
+  imageInputName: keyof typeof WhatWeDoKidEnum;
 };
 
 // summary card props

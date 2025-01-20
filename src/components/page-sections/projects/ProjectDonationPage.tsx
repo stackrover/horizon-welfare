@@ -37,6 +37,7 @@ export function ProjectDonation({
       projectId,
       isSubscriptionMoney: "no",
       totalAmount: amount,
+      currency: "BDT",
     });
 
     if (resp.status === "success") {

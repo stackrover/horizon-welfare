@@ -7,9 +7,10 @@ import { useSWR } from "@/hooks/use-swr";
 import { cn, getImageURL } from "@/lib/utils";
 import _ from "lodash";
 import Image from "next/image";
+import toast from "react-hot-toast";
 import EditableContent from "../../forms/EditableContent";
 import FormWrapper from "../../forms/FormWrapper";
-import toast from "react-hot-toast";
+
 
 export function WhatWeDoHeroSection({
   className,
@@ -37,15 +38,12 @@ export function WhatWeDoHeroSection({
       onSubmit={async (values) => {
         toast.promise(serializedData.updateData(values), {
           loading: "Loading...",
-          success: (res) => res.message,
+          success: (res) => {
+            refresh();
+            return res.message;
+          },
           error: (res) => res.message,
         });
-
-        // const res = await serializedData.updateData(values);
-        // if (res.status === "success") {
-        //   toast.success(res.message);
-        //   refresh();
-        // }
       }}
     >
       <SectionWrapper

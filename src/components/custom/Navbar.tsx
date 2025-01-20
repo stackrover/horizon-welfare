@@ -30,7 +30,7 @@ export async function Navbar() {
       case "volunteer":
         return "/volunteer/profile";
       case "staff":
-        return "/adminpanel/dashboard";
+        return "/admin/dashboard";
       default:
         return "";
     }

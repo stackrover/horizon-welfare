@@ -41,6 +41,8 @@ export function DonorProfile({
   const serializedData =
     data.status === "success" ? new DonorData(data?.results) : null;
 
+  console.log(serializedData);
+
   const [file, setFile] = React.useState<File[]>([]);
   const [profileImg, setProfileImg] = React.useState<File[]>([]);
   const [profileData, setProfileData] = React.useState<DonorData>();
@@ -351,17 +353,18 @@ export function DonorProfile({
                 </div>
 
                 {/* last donation  */}
-                <div className="col-span-full mt-10">
-                  <div className="flex w-full items-center gap-4 rounded-lg bg-[#DEF8FF] px-4">
-                    <div className="left-0 top-0 flex h-[46px] w-fit min-w-[46px] items-center justify-center rounded-full outline outline-[6px] outline-[#8EE7FF]">
-                      <IconCurrencyDollar size={24} />
+                {serializedData?.lastDonation ? (
+                  <div className="col-span-full mt-10">
+                    <div className="flex w-full items-center gap-4 rounded-lg bg-[#DEF8FF] px-4">
+                      <div className="left-0 top-0 flex h-[46px] w-fit min-w-[46px] items-center justify-center rounded-full outline outline-[6px] outline-[#8EE7FF]">
+                        <IconCurrencyDollar size={24} />
+                      </div>
+                      <h3 className="py-2 text-base font-semibold leading-7 text-base-400 xmd:text-lg">
+                        {`Your Last Donated Amount Was ${serializedData?.lastDonation} ${serializedData?.currency} at ${serializedData.lastDonationDate}`}
+                      </h3>
                     </div>
-                    <h3 className="py-2 text-base font-semibold leading-7 text-base-400 xmd:text-lg">
-                      Your Last Donated Amount Was 12,980 BDT at Wednesday 12
-                      january
-                    </h3>
                   </div>
-                </div>
+                ) : null}
 
                 {/* location and banner image  */}
                 <label className="col-span-4">Address</label>
@@ -492,7 +495,7 @@ export function DonorProfile({
 
                     <div className="flex items-center justify-between gap-2">
                       <h4 className="font-medium text-base-300">
-                        Total Donations : {profileData?.balance} BDT
+                        Total Donations : {profileData?.totalDonations} BDT
                       </h4>
                     </div>
                   </div>

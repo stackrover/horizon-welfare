@@ -37,6 +37,7 @@ export function SubscriptionCard({
       packageId: serializedData.packageId,
       isSubscriptionMoney: "yes",
       totalAmount: Number(serializedData.subscriptionRate),
+      currency: "BDT",
     });
 
     if (resp.status === "success") {
@@ -50,6 +51,8 @@ export function SubscriptionCard({
     setLoading(false);
   };
 
+  console.log(serializedData);
+
   return (
     <div
       className={cn(
@@ -61,7 +64,8 @@ export function SubscriptionCard({
         <CountUp
           enableScrollSpy={true}
           scrollSpyOnce={true}
-          end={800}
+          start={0}
+          end={serializedData.totalSubscribers}
           className="text-[40px] font-semibold leading-[64px] text-base-400"
         />
         <span className="text-[40px] font-semibold leading-[64px] text-base-400">
@@ -72,9 +76,15 @@ export function SubscriptionCard({
         <motion.div
           ref={ref}
           initial={{ width: "0%" }}
-          animate={isInView ? { width: "50%" } : {}}
+          animate={
+            isInView
+              ? {
+                  width: `${(serializedData.totalSubscribers / serializedData.subscriberGoal) * 100}%`,
+                }
+              : {}
+          }
           transition={{ delay: 0.1, type: "ease-in-out" }}
-          className="h-full w-[20%] rounded-full bg-primary"
+          className="h-full rounded-full bg-primary"
         />
       </div>
       <div className="flex items-center justify-between">
@@ -86,7 +96,8 @@ export function SubscriptionCard({
             <CountUp
               enableScrollSpy={true}
               scrollSpyOnce={true}
-              end={1000}
+              start={0}
+              end={serializedData.subscriberGoal}
               className="text-left text-lg font-semibold leading-5 text-base-400"
             />
           </div>
@@ -99,7 +110,11 @@ export function SubscriptionCard({
             <CountUp
               enableScrollSpy={true}
               scrollSpyOnce={true}
-              end={200}
+              start={0}
+              end={
+                serializedData.subscriberGoal -
+                  serializedData.totalSubscribers || 0
+              }
               className="text-left text-lg font-semibold leading-5 text-base-400"
             />
           </div>
@@ -109,7 +124,7 @@ export function SubscriptionCard({
       <div className="flex items-center gap-2">
         <IconHeartFilled fill="red" size={24} />
         <h4 className="text-xl font-medium leading-6 text-base-400">
-          12354 Contributors
+          {serializedData.totalSubscribers} Contributors
         </h4>
       </div>
       <Separator />
