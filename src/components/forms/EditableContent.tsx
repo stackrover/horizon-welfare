@@ -1,3 +1,6 @@
+import { IconEdit } from "@tabler/icons-react";
+import React from "react";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -9,8 +12,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { IconEdit } from "@tabler/icons-react";
-import React from "react";
 import { useFormWrapper } from "./FormWrapper";
 import InputField from "./InputField";
 
@@ -27,12 +28,14 @@ export default function EditableContent({
   children?: React.ReactNode;
   type?: "text" | "textarea" | "image" | (string & {});
 }) {
+
   const formCtx = useFormWrapper();
 
   if (!editable) return children || content;
 
   return (
     <Dialog>
+
       <div className="group relative w-full select-none border border-transparent py-1.5 text-inherit hover:border-black/20">
         {children || content}
 
