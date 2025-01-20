@@ -21,6 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${plusJakartaSans.className} antialiased`}>
+        <Toaster />
         <SessionProvider>
           <Children>{children}</Children>
         </SessionProvider>
