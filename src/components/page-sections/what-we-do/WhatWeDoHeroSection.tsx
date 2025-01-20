@@ -11,7 +11,6 @@ import toast from "react-hot-toast";
 import EditableContent from "../../forms/EditableContent";
 import FormWrapper from "../../forms/FormWrapper";
 
-
 export function WhatWeDoHeroSection({
   className,
   editable = false,

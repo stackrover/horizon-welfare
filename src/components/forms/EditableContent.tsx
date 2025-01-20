@@ -28,14 +28,12 @@ export default function EditableContent({
   children?: React.ReactNode;
   type?: "text" | "textarea" | "image" | (string & {});
 }) {
-
   const formCtx = useFormWrapper();
 
   if (!editable) return children || content;
 
   return (
     <Dialog>
-
       <div className="group relative w-full select-none border border-transparent py-1.5 text-inherit hover:border-black/20">
         {children || content}
 
