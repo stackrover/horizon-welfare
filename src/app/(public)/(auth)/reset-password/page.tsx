@@ -39,14 +39,11 @@ export default function ResetPassword() {
   });
 
   const onSubmit = async (values: z.infer<typeof resetPasswordFormSchema>) => {
-    console.log(values);
     if (values.honey_pot) {
       return toast.error("Yey! You are a bot");
     }
 
     const resp = await passwordResetAction(values);
-
-    console.log(resp);
 
     if (resp.status === "success") {
       toast.success("Password reset successfully!");

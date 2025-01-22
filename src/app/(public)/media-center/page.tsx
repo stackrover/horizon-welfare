@@ -1,10 +1,9 @@
 import {
-  BlogCard,
+  Blogs,
   MediaCenterBannerSection,
   MediaCenterHeroSection,
   NewsletterSection,
 } from "@/components";
-import { blogData } from "@/constants/blogData";
 
 export default function MediaCenter() {
   return (
@@ -33,11 +32,7 @@ export default function MediaCenter() {
       {/* newsletter subscription section end */}
 
       {/* blog post section  */}
-      <section className="mx-4 mt-[100px] grid grid-cols-1 gap-4 gap-x-6 gap-y-8 md:mx-10 xmd:grid-cols-2 xl:grid-cols-3 3xl:grid-cols-4 3xl:gap-6">
-        {Array.from({ length: 12 }).map((_, index) => (
-          <BlogCard key={index} cardData={blogData} />
-        ))}
-      </section>
+      <Blogs />
       {/* blog post section end */}
     </main>
   );
