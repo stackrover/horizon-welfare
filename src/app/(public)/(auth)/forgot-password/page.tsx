@@ -18,6 +18,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { forgotPasswordFormSchema } from "@/schemas/forgotPasswordFormSchema";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { sendPasswordResetEmailAction } from "../../../actions/authActions";
 
 export default function ForgotPassword() {
   const router = useRouter();
@@ -26,13 +28,34 @@ export default function ForgotPassword() {
     resolver: zodResolver(forgotPasswordFormSchema),
     defaultValues: {
       email: "",
+      honey_pot: "",
     },
   });
 
-  const onSubmit = (values: z.infer<typeof forgotPasswordFormSchema>) => {
+  const onSubmit = async (values: z.infer<typeof forgotPasswordFormSchema>) => {
     console.log(values);
-    router.push("/forgot-password/email-sent");
+    if (values.honey_pot) {
+      return toast.error("Yey! You are a bot");
+    }
+
+    const resp = await sendPasswordResetEmailAction(values);
+
+    console.log(resp);
+
+    if (resp.status === "success") {
+      toast.success("Password reset link sent successfully");
+      router.push("/forgot-password/email-sent");
+    }
+
+    if (resp.status === "error") {
+      if (resp.error_type === "general") {
+        toast.error(resp.message);
+      } else {
+        toast.error("Something went wrong! Please try again later.");
+      }
+    }
   };
+
   return (
     <main className="px-4">
       <div className="mx-auto my-20 grid max-w-[1200px] gap-4 rounded-[24px] border border-base-100 bg-base-0 p-6 shadow-lg md:grid-cols-2 xmd:p-16">
@@ -50,6 +73,28 @@ export default function ForgotPassword() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
+                    <FormLabel className="text-base-300">
+                      Email address
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        className="rounded-xl shadow-none"
+                        type="email"
+                        placeholder="test@example.com"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* honeypot  */}
+              <FormField
+                control={form.control}
+                name="honey_pot"
+                render={({ field }) => (
+                  <FormItem className="hidden">
                     <FormLabel className="text-base-300">
                       Email address
                     </FormLabel>

@@ -6,9 +6,12 @@ import { loginFormSchema } from "@/schemas/loginFromSchema";
 import { volunteerRegistrationFormSchema } from "@/schemas/volunteerRegistrationFormSchema";
 import { AuthError } from "next-auth";
 import { z } from "zod";
+import { forgotPasswordFormSchema } from "../../schemas/forgotPasswordFormSchema";
+import { resetPasswordFormSchema } from "../../schemas/resetPasswordFormSchema";
 
 const errorState = {
   status: "error",
+  error_type: "general",
   message: "Something went wrong! Please try again later.",
 };
 
@@ -103,6 +106,58 @@ export const volunteerRegistrationAction = async (
   try {
     const jsonResponse = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/volunteer/register`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(restData),
+      },
+    );
+
+    const response = await jsonResponse.json();
+
+    return response;
+  } catch (error) {
+    return errorState;
+  }
+};
+
+// reset password email link sender handler
+export const sendPasswordResetEmailAction = async (
+  values: z.infer<typeof forgotPasswordFormSchema>,
+) => {
+  const { honey_pot, ...restData } = values;
+  try {
+    const jsonResponse = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/send/reset/password/link`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(restData),
+      },
+    );
+
+    const response = await jsonResponse.json();
+
+    return response;
+  } catch (error) {
+    return errorState;
+  }
+};
+
+// reset password email link sender handler
+export const passwordResetAction = async (
+  values: z.infer<typeof resetPasswordFormSchema>,
+) => {
+  const { honey_pot, ...restData } = values;
+  try {
+    const jsonResponse = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/reset/password`,
       {
         method: "POST",
         headers: {
