@@ -18,7 +18,7 @@ export function SingleBlogPage({ dataPromise }: { dataPromise: Promise<any> }) {
         WASH PROJECT
       </h4>
       <h1 className="mt-4 text-3xl font-semibold leading-10 text-base-400 md:text-4xl">
-        Installation of water pump in Rangpur Update and Brefing
+        Installation of water pump i n Rangpur Update and Brefing
       </h1>
       <div className="mt-6 flex items-center gap-2">
         <IconUserCircle size={28} className="rounded-full text-base-300" />
