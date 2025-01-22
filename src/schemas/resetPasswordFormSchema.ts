@@ -5,7 +5,8 @@ const regex =
 
 export const resetPasswordFormSchema = z
   .object({
-    password: z
+    token: z.string(),
+    new_password: z
       .string()
       .min(1, {
         message: "Password is required.",
@@ -14,14 +15,15 @@ export const resetPasswordFormSchema = z
         message:
           "Password must contain at least 6 characters, 1 uppercase, 1 lowercase, 2 digits & 2 special characters!",
       }),
-    confirm_password: z.string(),
+    new_password_confirmation: z.string(),
+    honey_pot: z.string().optional(),
   })
   .superRefine((schema, context) => {
-    if (schema.password !== schema.confirm_password) {
+    if (schema.new_password !== schema.new_password_confirmation) {
       context.addIssue({
         code: z.ZodIssueCode.custom,
         message: "Password do not match!",
-        path: ["confirm_password"],
+        path: ["new_password_confirmation"],
       });
     }
   });

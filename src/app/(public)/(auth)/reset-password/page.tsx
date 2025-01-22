@@ -17,25 +17,51 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { resetPasswordFormSchema } from "@/schemas/resetPasswordFormSchema";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
+import toast from "react-hot-toast";
+import { passwordResetAction } from "../../../actions/authActions";
 
 export default function ResetPassword() {
   const [isShown, setIsShown] = React.useState<boolean>(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
 
   const form = useForm<z.infer<typeof resetPasswordFormSchema>>({
     resolver: zodResolver(resetPasswordFormSchema),
     defaultValues: {
-      password: "",
-      confirm_password: "",
+      token: token || "",
+      new_password: "",
+      new_password_confirmation: "",
+      honey_pot: "",
     },
   });
 
-  const onSubmit = (values: z.infer<typeof resetPasswordFormSchema>) => {
+  const onSubmit = async (values: z.infer<typeof resetPasswordFormSchema>) => {
     console.log(values);
-    router.push("/reset-password/success");
+    if (values.honey_pot) {
+      return toast.error("Yey! You are a bot");
+    }
+
+    const resp = await passwordResetAction(values);
+
+    console.log(resp);
+
+    if (resp.status === "success") {
+      toast.success("Password reset successfully!");
+      router.push("/reset-password/success");
+    }
+
+    if (resp.status === "error") {
+      if (resp.error_type === "general") {
+        toast.error(resp.message);
+      } else {
+        toast.error("Something went wrong! Please try again later.");
+      }
+    }
   };
+
   return (
     <main className="px-4">
       <div className="mx-auto my-20 grid max-w-[1200px] gap-4 rounded-[24px] border border-base-100 bg-base-0 p-6 shadow-lg md:grid-cols-2 xmd:p-16">
@@ -52,7 +78,7 @@ export default function ResetPassword() {
                 {/* password  */}
                 <FormField
                   control={form.control}
-                  name="password"
+                  name="new_password"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-base-300">Password</FormLabel>
@@ -72,7 +98,7 @@ export default function ResetPassword() {
                 {/* confirm password  */}
                 <FormField
                   control={form.control}
-                  name="confirm_password"
+                  name="new_password_confirmation"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-base-300">
@@ -83,6 +109,28 @@ export default function ResetPassword() {
                           type={isShown ? "text" : "password"}
                           className="rounded-xl shadow-none"
                           placeholder="******"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* honeypot  */}
+                <FormField
+                  control={form.control}
+                  name="honey_pot"
+                  render={({ field }) => (
+                    <FormItem className="hidden">
+                      <FormLabel className="text-base-300">
+                        Email address
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          className="rounded-xl shadow-none"
+                          type="email"
+                          placeholder="test@example.com"
                           {...field}
                         />
                       </FormControl>
