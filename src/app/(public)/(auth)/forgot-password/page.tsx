@@ -33,14 +33,11 @@ export default function ForgotPassword() {
   });
 
   const onSubmit = async (values: z.infer<typeof forgotPasswordFormSchema>) => {
-    console.log(values);
     if (values.honey_pot) {
       return toast.error("Yey! You are a bot");
     }
 
     const resp = await sendPasswordResetEmailAction(values);
-
-    console.log(resp);
 
     if (resp.status === "success") {
       toast.success("Password reset link sent successfully");
