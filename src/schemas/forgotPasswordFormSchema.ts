@@ -7,4 +7,5 @@ export const forgotPasswordFormSchema = z.object({
       message: "Email is required.",
     })
     .email(),
+  honey_pot: z.string().optional(),
 });
