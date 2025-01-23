@@ -3,6 +3,8 @@ export * from "./about-us/content";
 export * from "./about-us/journey";
 export * from "./about-us/teamMember";
 export * from "./about-us/teamMemberTitle";
+export * from "./blogs/blog";
+export * from "./blogs/blog-details";
 export * from "./common/join-as-a-volunteer-card";
 export * from "./contact-us/content";
 export * from "./donor/donorAvailableProject";
