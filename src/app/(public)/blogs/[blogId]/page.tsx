@@ -15,5 +15,24 @@ export default async function BlogDetails({
 
   const dataPromise = getData(`/blog/show/${blogId}`, token);
 
-  return <SingleBlogPage dataPromise={dataPromise} />;
+  return <SingleBlogPage dataPromise={dataPromise} auth={session} />;
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { blogId: string };
+}) {
+  const session = await auth();
+  const blogId = params.blogId;
+
+  const userId = session?.user?.id;
+  const token = session?.user?.token;
+
+  const data = await getData(`/blog/show/${blogId}`, token);
+  return {
+    title: `${data?.results?.title} | ${data?.results?.category_title} | Blogs | Horizon Welfare`,
+    description:
+      "Learn about Horizon Welfare's mission to uplift underprivileged urban communities. Discover our initiatives, values, and how we strive to create lasting change through collective efforts.",
+  };
 }

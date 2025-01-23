@@ -26,3 +26,21 @@ export default async function SingleProjectDetails({
     </Suspense>
   );
 }
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { projectId: string };
+}) {
+  const projectId = params.projectId;
+  const session = await auth();
+  const token = session?.user?.token;
+
+  const data = await getData(`/project/show/${projectId}`, token);
+
+  return {
+    title: `${data?.results?.title} | Projects | Horizon Welfare`,
+    description:
+      "Learn about Horizon Welfare's mission to uplift underprivileged urban communities. Discover our initiatives, values, and how we strive to create lasting change through collective efforts.",
+  };
+}

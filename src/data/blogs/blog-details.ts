@@ -1,5 +1,12 @@
 import { format, parseISO } from "date-fns";
 
+export type Comment = {
+  id: number;
+  author_name: string;
+  comment_text: string;
+  created_at: string;
+};
+
 export class BlogDetail {
   id: number;
   title: string;
@@ -9,12 +16,7 @@ export class BlogDetail {
   description: string;
   author_name: string;
   status: string;
-  comments: Array<{
-    id: number;
-    author_name: string;
-    comment_text: string;
-    created_at: string;
-  }>;
+  comments: Comment[];
   created_at: string;
 
   constructor(data: any) {
