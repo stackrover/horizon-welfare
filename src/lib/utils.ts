@@ -11,7 +11,7 @@ export const getImageURL = (src?: string): string => {
   if (!src) return "";
 
   // Remove leading slash if it exists
-  const normalizedSrc = src.startsWith("/") ? src.slice(1) : src;
+  const normalizedSrc = src.replace(/^\/+/, "");
 
   return `${config.get("api.staticDataUrl")}/${normalizedSrc}`;
 };
