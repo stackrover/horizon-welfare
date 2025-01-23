@@ -15,7 +15,7 @@ export default function Volunteers() {
       {/* project section end  */}
 
       {/* success stories section  */}
-      {/* <SuccessStoriesSection /> */}
+      <SuccessStoriesSection editable />
       {/* success stories section  */}
 
       {/* project section  */}

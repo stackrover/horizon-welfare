@@ -8,7 +8,13 @@ import { useSWR } from "@/hooks/use-swr";
 import { cn } from "@/lib/utils";
 import _ from "lodash";
 
-export function SuccessStoriesSection({ className }: { className?: string }) {
+export function SuccessStoriesSection({
+  editable = false,
+  className,
+}: {
+  editable?: boolean;
+  className?: string;
+}) {
   const { data, isLoading, isError } = useSWR(
     "/donate/page/success/story/show",
   );
