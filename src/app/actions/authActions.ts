@@ -33,6 +33,7 @@ export const singInWithCredentials = async (
           return {
             message: "Invalid credentials!",
             status: "error",
+            errors: error,
           };
         default:
           return errorState;

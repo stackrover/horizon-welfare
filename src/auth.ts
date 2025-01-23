@@ -27,6 +27,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         // get user from api call
         const data = await loginAction(parsedCredentials.data);
 
+        console.log({ data_from_auth: data });
+
         if (data.status !== "success") return null;
 
         user = {
