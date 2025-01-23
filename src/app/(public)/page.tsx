@@ -1,7 +1,7 @@
 import {
   AboutCards,
   Banner,
-  BlogSection,
+  Blogs,
   DonationSection,
   NgoProjectSection,
   WatchOurGallerySection,
@@ -14,7 +14,7 @@ export default function Home() {
       <DonationSection />
       <NgoProjectSection />
       <AboutCards />
-      <BlogSection />
+      <Blogs url="/blog/list/latest" />
       <WatchOurGallerySection />
     </main>
   );

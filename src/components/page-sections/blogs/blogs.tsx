@@ -6,8 +6,8 @@ import { BlogCard } from "../../custom/BlogCard";
 import { Loader } from "../../custom/Loader";
 import { SectionWrapper } from "../../custom/SectionWrapper";
 
-export function Blogs() {
-  const { data, isLoading, isError } = useSWR("/blog/list/all");
+export function Blogs({ url }: { url: string }) {
+  const { data, isLoading, isError } = useSWR(url);
 
   if (isLoading) {
     return <Loader className="h-[540px]" />;

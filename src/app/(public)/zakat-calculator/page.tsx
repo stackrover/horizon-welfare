@@ -11,20 +11,20 @@ export default function ZakatCalculatorPage() {
     <main>
       <Banner />
       <section className="container mt-20">
-        <h5 className="mb-4 text-center text-xl font-medium leading-5">
+        <h5 className="mb-4 text-center text-base font-medium leading-8 sm:text-lg xmd:text-xl">
           Why Give your Zakat with Horizon Welfare?
         </h5>
-        <h5 className="mb-4 text-center text-xl font-medium leading-5">
+        <h5 className="mb-4 text-center text-base font-medium leading-8 sm:text-lg xmd:text-xl">
           We have been distributing your Zakat since 1993, giving us vital
           experience of optimising our programs so we can deliver maximium
           impact at a mimium cost.
         </h5>
-        <h5 className="mb-4 text-center text-xl font-medium leading-5">
+        <h5 className="mb-4 text-center text-base font-medium leading-8 sm:text-lg xmd:text-xl">
           Our Zakat projects are scholar approved, and delivered in 30 countries
           by local experts, ensuring your zakat reaches the most needy and makes
           the biggest impact around the globe.
         </h5>
-        <h5 className="mb-4 text-center text-xl font-medium leading-5">
+        <h5 className="mb-4 text-center text-base font-medium leading-8 sm:text-lg xmd:text-xl">
           Whether you need to pay your Zakat on gold and silver, cash or
           property, our handy tool can be used to easily calculate and pay your
           Zakat.

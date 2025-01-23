@@ -32,7 +32,7 @@ export default function MediaCenter() {
       {/* newsletter subscription section end */}
 
       {/* blog post section  */}
-      <Blogs />
+      <Blogs url="/blog/list/all" />
       {/* blog post section end */}
     </main>
   );
