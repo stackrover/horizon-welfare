@@ -17,7 +17,45 @@ export async function updateVolunteerPageHeroSectionData(formData: FormData) {
   formData.append("updated_by", session?.user?.id as string);
 
   try {
-    const res = await fetcher("/what/we/do/page/kid/update", {
+    const res = await fetcher("/donate/page/hero/update", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${session?.user?.token}`,
+      },
+      body: formData,
+      signal: controller.signal,
+    });
+
+    const data = await res.json();
+
+    if (data.status === "success") {
+      revalidatePath("/admin/dashboard/pages/volunteers", "page");
+    }
+
+    return data;
+  } catch (error) {
+    return { ...ERROR_OBJ_FORMAT, error: error };
+  }
+}
+
+// volunteer project update
+export async function updateVolunteerProjectSectionData(
+  formData: FormData,
+  id: number,
+) {
+  const controller = new AbortController();
+  const session = await auth();
+
+  // return error if user is not authenticated
+  if (!session?.user?.token) {
+    return { ...ERROR_OBJ_FORMAT, message: "Unauthorized" };
+  }
+
+  formData.append("updated_by", session?.user?.id as string);
+
+  try {
+    const res = await fetcher(`/project/category/update/${id}`, {
       method: "POST",
       headers: {
         Accept: "application/json",

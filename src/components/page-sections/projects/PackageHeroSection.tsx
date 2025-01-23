@@ -11,9 +11,18 @@ import _ from "lodash";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import FormWrapper from "@/components/forms/FormWrapper";
+import Link from "next/link";
 
-export function PackageHeroSection({ className }: { className?: string }) {
-  const { data, isLoading, isError } = useSWR("/donate/page/hero/show");
+export function PackageHeroSection({
+  editable = false,
+  className,
+}: {
+  editable?: boolean;
+  className?: string;
+}) {
+  const { data, isLoading, isError, refresh } = useSWR(
+    "/donate/page/hero/show",
+  );
 
   if (isLoading) {
     return <Loader className="h-[540px]" />;
@@ -31,6 +40,10 @@ export function PackageHeroSection({ className }: { className?: string }) {
         const res = await serializedData.updateData(values);
         if (res.status === "success") {
           toast.success(res.message);
+          refresh();
+        } else {
+          console.log({ res });
+          toast.error(res.message);
         }
       }}
     >
@@ -52,7 +65,7 @@ export function PackageHeroSection({ className }: { className?: string }) {
                 name={serializedData.getInputName("title")}
                 content={serializedData.title}
                 type="text"
-                editable
+                editable={editable}
               />
             </h4>
             <h1 className="mb-6 text-3xl font-bold text-base-400 @4xl:mb-10 @4xl:text-5xl @5xl:text-[56px] @5xl:leading-[68px]">
@@ -60,7 +73,7 @@ export function PackageHeroSection({ className }: { className?: string }) {
                 name={serializedData.getInputName("focusTitle")}
                 content={serializedData.focusTitle}
                 type="text"
-                editable
+                editable={editable}
               />
             </h1>
 
@@ -68,7 +81,7 @@ export function PackageHeroSection({ className }: { className?: string }) {
               name={serializedData.getInputName("description")}
               content={serializedData.description}
               type="text"
-              editable
+              editable={editable}
             >
               <p className="mb-4 text-base leading-[26px] text-base-300">
                 {serializedData.description}
@@ -78,23 +91,28 @@ export function PackageHeroSection({ className }: { className?: string }) {
               type="text"
               name={serializedData.getInputName("btnLink")}
               content={serializedData.btnLink}
-              editable
+              editable={editable}
               className="w-fit"
             >
               <Button className="rounded-sm" asChild>
-                <EditableContent
-                  name={serializedData.getInputName("btnTitle")}
-                  type="text"
-                  content={serializedData.btnTitle}
-                  editable
-                />
+                <Link
+                  href={serializedData.btnLink}
+                  onClick={(e) => editable && e.preventDefault()}
+                >
+                  <EditableContent
+                    name={serializedData.getInputName("btnTitle")}
+                    type="text"
+                    content={serializedData.btnTitle}
+                    editable={editable}
+                  />
+                </Link>
               </Button>
             </EditableContent>
           </div>
           <div className="flex justify-end">
             <EditableContent
               type="file"
-              editable
+              editable={editable}
               name={serializedData.getInputName("image")}
               content={getImageURL(serializedData.image)}
             >

@@ -9,9 +9,9 @@ import {
 export default function Volunteers() {
   return (
     <section className="p-8">
-      <PackageHeroSection />
+      <PackageHeroSection editable />
       {/* project section */}
-      {/* <ProjectsSection /> */}
+      <ProjectsSection editable />
       {/* project section end  */}
 
       {/* success stories section  */}
