@@ -1,5 +1,6 @@
 import Cross from "@/../../public/images/cross.svg";
 import { Button } from "@/components/ui/button";
+import { config } from "@/utils/config";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -34,4 +35,12 @@ export default function ProjectDonationCancelled({
       </section>
     </main>
   );
+}
+
+export async function generateMetadata() {
+  return {
+    title: `Payment Canceled - ${config.get("app.name")}`,
+    description:
+      "Learn about Horizon Welfare's mission to uplift underprivileged urban communities. Discover our initiatives, values, and how we strive to create lasting change through collective efforts.",
+  };
 }

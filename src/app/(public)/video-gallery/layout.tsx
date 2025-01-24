@@ -1,6 +1,6 @@
+import { config } from "@/utils/config";
 import { Metadata } from "next";
 import React from "react";
-import { config } from "../../../utils/config";
 
 export const metadata: Metadata = {
   title: `Video Gallery - ${config.get("app.name")} | Empowering Underprivileged Communities`,

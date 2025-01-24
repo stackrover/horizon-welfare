@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import { Loader, ProjectDetailsPage } from "@/components";
 import { getData } from "@/hooks/get-data";
+import { config } from "@/utils/config";
 import { Suspense } from "react";
 
 export default async function SingleProjectDetails({
@@ -39,7 +40,7 @@ export async function generateMetadata({
   const data = await getData(`/project/show/${projectId}`, token);
 
   return {
-    title: `${data?.results?.title} | Projects | Horizon Welfare`,
+    title: `${data?.results?.title} | Projects | ${config.get("app.name")}`,
     description:
       "Learn about Horizon Welfare's mission to uplift underprivileged urban communities. Discover our initiatives, values, and how we strive to create lasting change through collective efforts.",
   };

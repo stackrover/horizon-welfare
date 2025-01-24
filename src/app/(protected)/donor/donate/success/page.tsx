@@ -1,5 +1,6 @@
 import Signboard from "@/../../public/images/signboard.png";
 import { Button } from "@/components/ui/button";
+import { config } from "@/utils/config";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -35,4 +36,12 @@ export default function ProjectDonationSuccess({
       </section>
     </main>
   );
+}
+
+export async function generateMetadata() {
+  return {
+    title: `Payment Success - ${config.get("app.name")}`,
+    description:
+      "Learn about Horizon Welfare's mission to uplift underprivileged urban communities. Discover our initiatives, values, and how we strive to create lasting change through collective efforts.",
+  };
 }

@@ -1,5 +1,5 @@
-import React from "react";
 import { Button } from "@/components/ui/button";
+import { config } from "@/utils/config";
 import Link from "next/link";
 
 export default function NotFoundPage() {
@@ -19,4 +19,12 @@ export default function NotFoundPage() {
       </div>
     </div>
   );
+}
+
+export async function generateMetadata() {
+  return {
+    title: `Page Not Found - ${config.get("app.name")} | Empowering Underprivileged Communities`,
+    description:
+      "Learn about Horizon Welfare's mission to uplift underprivileged urban communities. Discover our initiatives, values, and how we strive to create lasting change through collective efforts.",
+  };
 }
