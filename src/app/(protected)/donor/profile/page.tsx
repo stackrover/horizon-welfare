@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import { DonorProfile, Loader } from "@/components";
 import { getDonorProfile } from "@/hooks/getDonorProfile";
+import { config } from "@/utils/config";
 import { Suspense } from "react";
 
 export default async function DonorProfilePage() {
@@ -15,4 +16,12 @@ export default async function DonorProfilePage() {
       <DonorProfile dataPromise={dataPromise} userId={userId} />;
     </Suspense>
   );
+}
+
+export async function generateMetadata() {
+  return {
+    title: `Donor Profile - ${config.get("app.name")}`,
+    description:
+      "Learn about Horizon Welfare's mission to uplift underprivileged urban communities. Discover our initiatives, values, and how we strive to create lasting change through collective efforts.",
+  };
 }

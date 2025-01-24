@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import { DonorPackageDetailsPage, Loader } from "@/components";
 import { getData } from "@/hooks/get-data";
+import { config } from "@/utils/config";
 import { Suspense } from "react";
 
 export default async function DonorSubscribedProjectDetails({
@@ -37,4 +38,25 @@ export default async function DonorSubscribedProjectDetails({
       />
     </Suspense>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { packageId: string };
+}) {
+  const packageId = params.packageId;
+  const session = await auth();
+  const token = session?.user?.token;
+
+  const data = await getData(
+    `/donar/subscription/active/show/${session?.user?.id}/${packageId}`,
+    token,
+  );
+
+  return {
+    title: `${data?.results?.title} - ${config.get("app.name")}`,
+    description:
+      "Learn about Horizon Welfare's mission to uplift underprivileged urban communities. Discover our initiatives, values, and how we strive to create lasting change through collective efforts.",
+  };
 }

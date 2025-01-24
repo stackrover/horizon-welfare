@@ -1,9 +1,9 @@
+import { config } from "@/utils/config";
 import { Metadata } from "next";
 import React from "react";
 
 export const metadata: Metadata = {
-  title:
-    "Contact Us - Horizon Welfare | Empowering Underprivileged Communities",
+  title: `Contact Us - ${config.get("app.name")} | Empowering Underprivileged Communities`,
   description:
     "Get in touch with Horizon Welfare to learn more about our mission and how you can help. Reach out for inquiries, partnerships, or support in creating a positive impact for underprivileged urban communities.",
 };

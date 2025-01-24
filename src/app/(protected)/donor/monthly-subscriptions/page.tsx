@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import { DonorMonthlySubscribedPackages, Loader } from "@/components";
 import { getDonorSubscribedProjects } from "@/hooks/get-donor-subscribed-projects";
+import { config } from "@/utils/config";
 import { Suspense } from "react";
 
 export default async function MonthlySubscription() {
@@ -20,4 +21,12 @@ export default async function MonthlySubscription() {
       />
     </Suspense>
   );
+}
+
+export async function generateMetadata() {
+  return {
+    title: `Monthly Subscriptions - ${config.get("app.name")}`,
+    description:
+      "Learn about Horizon Welfare's mission to uplift underprivileged urban communities. Discover our initiatives, values, and how we strive to create lasting change through collective efforts.",
+  };
 }
