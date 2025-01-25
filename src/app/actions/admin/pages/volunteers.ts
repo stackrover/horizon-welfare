@@ -76,3 +76,38 @@ export async function updateVolunteerProjectSectionData(
     return { ...ERROR_OBJ_FORMAT, error: error };
   }
 }
+
+// update success stories
+export async function updateSuccessStories(formData: FormData) {
+  const controller = new AbortController();
+  const session = await auth();
+
+  // return error if user is not authenticated
+  if (!session?.user?.token) {
+    return { ...ERROR_OBJ_FORMAT, message: "Unauthorized" };
+  }
+
+  formData.append("updated_by", session?.user?.id as string);
+
+  try {
+    const res = await fetcher("/donate/page/success/story/update", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${session?.user?.token}`,
+      },
+      body: formData,
+      signal: controller.signal,
+    });
+
+    const data = await res.json();
+
+    if (data.status === "success") {
+      revalidatePath("/admin/dashboard/pages/volunteers", "page");
+    }
+
+    return data;
+  } catch (error) {
+    return { ...ERROR_OBJ_FORMAT, error: error };
+  }
+}

@@ -30,9 +30,10 @@ export default function ZakatCalculatorPage() {
           Zakat.
         </h5>
       </section>
-      <section className="container mt-20 grid grid-cols-12 gap-16">
-        <div className="col-span-7">
-          <div className="flex flex-col gap-y-4 bg-base-0 px-8 py-6 shadow">
+
+      <section className="container mt-20 grid grid-cols-12 gap-y-8 px-3 sm:px-4 md:gap-16">
+        <div className="col-span-12 2xl:col-span-7">
+          <div className="flex flex-col gap-y-4 bg-base-0 px-3 py-6 shadow sm:px-8">
             <InputRow
               labelText="Cash at Home/Bank"
               tooltipText="Tooltip"
@@ -99,7 +100,7 @@ export default function ZakatCalculatorPage() {
             />
           </div>
 
-          <div className="mt-6 flex flex-col gap-y-4 bg-base-0 px-8 py-6 shadow">
+          <div className="mt-6 flex flex-col gap-y-4 bg-base-0 px-3 py-6 shadow sm:px-8">
             <InputRow
               labelText="Unpaid Debts"
               tooltipText="Tooltip"
@@ -116,17 +117,18 @@ export default function ZakatCalculatorPage() {
                 console.log(e.target.value)
               }
             />
-            <div className="mt-4 flex h-[88px] items-center justify-between rounded-md border-2 border-primary-light px-10">
-              <h2 className="text-[30px] font-extrabold text-primary-light">
+            <div className="mt-4 flex flex-wrap justify-between rounded-md border-2 border-primary-light px-2.5 sm:items-center md:h-[88px] md:px-10">
+              <h2 className="text-xl font-extrabold text-primary-light md:text-[30px]">
                 Zakatable amount
               </h2>
-              <h2 className="text-[30px] font-extrabold text-primary-light">
+              <h2 className="whitespace-nowrap text-xl font-extrabold text-primary-light md:text-[30px]">
                 39,000 Tk
               </h2>
             </div>
           </div>
         </div>
-        <div className="col-span-5 h-fit rounded-xl border">
+
+        <div className="col-span-12 h-fit rounded-xl border 2xl:col-span-5">
           <Image
             src="/images/donation.png"
             alt="zakat"
@@ -135,10 +137,10 @@ export default function ZakatCalculatorPage() {
             width={600}
           />
           <div className="p-4">
-            <h3 className="text-2xl font-semibold leading-8 text-base-400">
+            <h3 className="whitespace-nowrap text-lg font-semibold text-base-400 lg:text-2xl lg:leading-8">
               Gold Nisab : $ 600,000(87.48g)
             </h3>
-            <h3 className="mt-2 text-2xl font-semibold leading-8 text-base-400">
+            <h3 className="mt-2 whitespace-nowrap text-lg font-semibold text-base-400 lg:text-2xl lg:leading-8">
               Silver Nisab : $ 467 (612.36g)
             </h3>
             <Separator className="my-4 h-1 bg-primary-light" />
@@ -146,15 +148,15 @@ export default function ZakatCalculatorPage() {
               Your Zakat Summary
             </h3>
             <div className="my-8 px-6">
-              <h3 className="flex items-center justify-between text-2xl font-semibold leading-8 text-base-400">
+              <h3 className="flex items-center justify-between text-lg font-semibold leading-8 text-base-400 lg:text-2xl">
                 <span>Total Assets:</span>
                 <span>999 Tk</span>
               </h3>
-              <h3 className="flex items-center justify-between text-2xl font-semibold leading-8 text-base-400">
+              <h3 className="flex items-center justify-between text-lg font-semibold leading-8 text-base-400 lg:text-2xl">
                 <span>Less Total Liabilities:</span>
                 <span>0 Tk</span>
               </h3>
-              <h3 className="flex items-center justify-between text-2xl font-semibold leading-8 text-base-400">
+              <h3 className="flex items-center justify-between text-lg font-semibold leading-8 text-base-400 lg:text-2xl">
                 <span>Equals Total Zakatable:</span>
                 <span>999 Tk</span>
               </h3>
@@ -162,12 +164,12 @@ export default function ZakatCalculatorPage() {
 
             <Separator className="h-1 bg-primary-light" />
 
-            <h3 className="mt-2 flex items-center justify-between px-6 text-2xl font-semibold leading-8 text-base-400">
+            <h3 className="mt-2 flex items-center justify-between px-6 text-lg font-semibold leading-8 text-base-400 lg:text-2xl">
               <span>Zakat to Pay:</span>
               <span>999 Tk</span>
             </h3>
 
-            <Button className="mt-6 h-[75px] w-full text-[32px] font-semibold">
+            <Button className="mt-6 h-[75px] w-full text-lg font-semibold lg:text-[32px]">
               Pay Your Zakat Now
             </Button>
           </div>

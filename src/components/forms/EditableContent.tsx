@@ -27,7 +27,7 @@ export default function EditableContent({
   content: string;
   editable?: boolean;
   children?: React.ReactNode;
-  type?: "text" | "textarea" | "image" | (string & {});
+  type?: "text" | "textarea" | "image" | "file" | "blogSelection";
   className?: string;
 }) {
   const formCtx = useFormWrapper();
