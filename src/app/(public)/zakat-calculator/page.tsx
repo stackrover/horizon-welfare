@@ -27,7 +27,7 @@ export default function ZakatCalculatorPage() {
         <h5 className="mb-4 text-center text-base font-medium leading-8 sm:text-lg xmd:text-xl">
           Whether you need to pay your Zakat on gold and silver, cash or
           property, our handy tool can be used to easily calculate and pay your
-          Zakat.
+          Zakat.~
         </h5>
       </section>
 
@@ -132,7 +132,7 @@ export default function ZakatCalculatorPage() {
           <Image
             src="/images/donation.png"
             alt="zakat"
-            className="h-[175px] w-full rounded-t-xl"
+            className="h-auto w-full rounded-t-xl"
             height={175}
             width={600}
           />
