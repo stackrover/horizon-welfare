@@ -27,12 +27,12 @@ export default function ZakatCalculatorPage() {
         <h5 className="mb-4 text-center text-base font-medium leading-8 sm:text-lg xmd:text-xl">
           Whether you need to pay your Zakat on gold and silver, cash or
           property, our handy tool can be used to easily calculate and pay your
-          Zakat.
+          Zakat.~
         </h5>
       </section>
-      <section className="container mt-20 grid grid-cols-12 gap-16">
-        <div className="col-span-7">
-          <div className="flex flex-col gap-y-4 bg-base-0 px-8 py-6 shadow">
+      <section className="container mt-20 grid w-full grid-cols-12 gap-16">
+        <div className="col-span-12 2xl:col-span-7">
+          <div className="flex w-full flex-col gap-y-4 bg-base-0 px-8 py-6 shadow">
             <InputRow
               labelText="Cash at Home/Bank"
               tooltipText="Tooltip"
@@ -126,19 +126,20 @@ export default function ZakatCalculatorPage() {
             </div>
           </div>
         </div>
-        <div className="col-span-5 h-fit rounded-xl border">
+
+        <div className="col-span-12 h-fit rounded-xl border 2xl:col-span-5">
           <Image
             src="/images/donation.png"
             alt="zakat"
-            className="h-[175px] w-full rounded-t-xl"
+            className="h-auto w-full rounded-t-xl"
             height={175}
             width={600}
           />
           <div className="p-4">
-            <h3 className="text-2xl font-semibold leading-8 text-base-400">
+            <h3 className="text-lg font-semibold leading-8 text-base-400 2xl:text-2xl">
               Gold Nisab : $ 600,000(87.48g)
             </h3>
-            <h3 className="mt-2 text-2xl font-semibold leading-8 text-base-400">
+            <h3 className="mt-2 text-lg font-semibold leading-8 text-base-400 2xl:text-2xl">
               Silver Nisab : $ 467 (612.36g)
             </h3>
             <Separator className="my-4 h-1 bg-primary-light" />
@@ -146,15 +147,15 @@ export default function ZakatCalculatorPage() {
               Your Zakat Summary
             </h3>
             <div className="my-8 px-6">
-              <h3 className="flex items-center justify-between text-2xl font-semibold leading-8 text-base-400">
+              <h3 className="flex items-center justify-between text-lg font-semibold leading-8 text-base-400 2xl:text-2xl">
                 <span>Total Assets:</span>
                 <span>999 Tk</span>
               </h3>
-              <h3 className="flex items-center justify-between text-2xl font-semibold leading-8 text-base-400">
+              <h3 className="flex items-center justify-between text-lg font-semibold leading-8 text-base-400 2xl:text-2xl">
                 <span>Less Total Liabilities:</span>
                 <span>0 Tk</span>
               </h3>
-              <h3 className="flex items-center justify-between text-2xl font-semibold leading-8 text-base-400">
+              <h3 className="flex items-center justify-between text-lg font-semibold leading-8 text-base-400 2xl:text-2xl">
                 <span>Equals Total Zakatable:</span>
                 <span>999 Tk</span>
               </h3>
@@ -162,12 +163,12 @@ export default function ZakatCalculatorPage() {
 
             <Separator className="h-1 bg-primary-light" />
 
-            <h3 className="mt-2 flex items-center justify-between px-6 text-2xl font-semibold leading-8 text-base-400">
+            <h3 className="mt-2 flex items-center justify-between px-6 text-lg font-semibold leading-8 text-base-400 2xl:text-2xl">
               <span>Zakat to Pay:</span>
               <span>999 Tk</span>
             </h3>
 
-            <Button className="mt-6 h-[75px] w-full text-[32px] font-semibold">
+            <Button className="mt-6 h-14 w-full text-2xl font-semibold 2xl:h-[75px] 2xl:text-[32px]">
               Pay Your Zakat Now
             </Button>
           </div>
