@@ -23,7 +23,7 @@ export function InputRow({
       <Label htmlFor="" className="flex-1 text-xl font-bold text-base-400">
         {labelText}
       </Label>
-      <div className="flex w-fit min-w-[350px] items-center bg-[#F3F3F3]">
+      <div className="flex w-full max-w-[350px] items-center bg-[#F3F3F3]">
         <h3 className="flex h-10 w-[72px] items-center justify-center bg-gradient-to-r from-primary-light to-primary font-bold text-base-0">
           TK
         </h3>
