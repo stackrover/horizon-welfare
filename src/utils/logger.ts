@@ -50,7 +50,7 @@ const createCustomLogger = ({
 const logger = createCustomLogger({
   filename: "app",
   level: "info",
-  logToConsole: false,
+  logToConsole: process.env.NODE_ENV !== "production",
 });
 
 export default logger;
