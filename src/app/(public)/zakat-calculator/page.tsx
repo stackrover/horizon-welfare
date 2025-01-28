@@ -148,7 +148,6 @@ export default function ZakatCalculatorPage() {
               Your Zakat Summary
             </h3>
             <div className="my-8 px-6">
-
               <h3 className="flex items-center justify-between text-lg font-semibold leading-8 text-base-400 lg:text-2xl">
                 <span>Total Assets:</span>
                 <span>999 Tk</span>
