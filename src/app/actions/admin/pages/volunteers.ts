@@ -85,6 +85,8 @@ export async function updateSuccessStories(formData: FormData) {
   const controller = new AbortController();
   const session = await auth();
 
+  logger.error("This is a test error message");
+
   // return error if user is not authenticated
   if (!session?.user?.token) {
     logger.error("Unauthorized");
@@ -108,6 +110,8 @@ export async function updateSuccessStories(formData: FormData) {
 
     if (data.status === "success") {
       revalidatePath("/admin/dashboard/pages/volunteers", "page");
+    } else {
+      logger.error(data.message);
     }
 
     return data;
