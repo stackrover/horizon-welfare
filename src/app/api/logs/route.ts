@@ -8,7 +8,7 @@ export async function GET() {
   try {
     // Check if the log file exists
     if (!fs.existsSync(logFilePath)) {
-      return Response.json({ message: "Log file not found" });
+      return Response.json({ log: null, message: "Log file not found" });
     }
 
     // Read the log file
@@ -18,7 +18,7 @@ export async function GET() {
     return Response.json({ log: logData });
   } catch (error) {
     console.error("Error reading log file:", error);
-    return Response.json({ error: "Error reading log file" });
+    return Response.json({ log: null, error: "Error reading log file" });
   }
 }
 
@@ -35,11 +35,14 @@ export async function POST() {
 
     // Return a success response
     return Response.json(
-      { message: "Log file cleared successfully" },
+      { log: null, message: "Log file cleared successfully" },
       { status: 200 },
     );
   } catch (error) {
     console.error("Error clearing log file:", error);
-    return Response.json({ error: "Error clearing log file" }, { status: 500 });
+    return Response.json(
+      { log: null, error: "Error clearing log file" },
+      { status: 500 },
+    );
   }
 }

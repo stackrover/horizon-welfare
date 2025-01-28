@@ -112,6 +112,7 @@ export async function updateSuccessStories(formData: FormData) {
 
     return data;
   } catch (error) {
+    console.log({ error: error });
     return { ...ERROR_OBJ_FORMAT, error: error };
   }
 }
