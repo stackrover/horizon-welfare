@@ -12,6 +12,7 @@ import Image from "next/image";
 import toast from "react-hot-toast";
 import FormWrapper from "@/components/forms/FormWrapper";
 import Link from "next/link";
+import { config } from "@/utils/config";
 
 export function PackageHeroSection({
   editable = false,
@@ -20,6 +21,11 @@ export function PackageHeroSection({
   editable?: boolean;
   className?: string;
 }) {
+  console.log({
+    config: config.get("app.url"),
+    env: process.env["NEXT_PUBLIC_APP_URL"],
+  });
+
   const { data, isLoading, isError, refresh } = useSWR(
     "/donate/page/hero/show",
   );

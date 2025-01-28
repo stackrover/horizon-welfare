@@ -5,8 +5,13 @@ import {
   ProjectsSection,
   SuccessStoriesSection,
 } from "@/components";
+import logger from "@/utils/logger";
 
 export default function Volunteers() {
+  logger.error("Erro: Rendering Volunteers page...");
+  logger.info("Info: Rendering Volunteers page...");
+  logger.warn("Warning: Rendering Volunteers page...");
+
   return (
     <section className="p-8">
       <PackageHeroSection editable />

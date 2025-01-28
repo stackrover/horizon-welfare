@@ -83,6 +83,7 @@
     "tailwindcss-animate": "^1.0.7",
     "ts-pattern": "^5.5.0",
     "vaul": "^0.9.4",
+    "winston": "^3.17.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {

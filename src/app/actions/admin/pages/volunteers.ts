@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import { ERROR_OBJ_FORMAT } from "@/constants/error-obj-format";
 import { fetcher } from "@/lib/fetcher";
 import { revalidatePath } from "next/cache";
+import logger from "@/utils/logger";
 
 export async function updateVolunteerPageHeroSectionData(formData: FormData) {
   const controller = new AbortController();
@@ -35,6 +36,8 @@ export async function updateVolunteerPageHeroSectionData(formData: FormData) {
 
     return data;
   } catch (error) {
+    console.log({ error });
+    logger.error("error: ", error);
     return { ...ERROR_OBJ_FORMAT, error: error };
   }
 }
