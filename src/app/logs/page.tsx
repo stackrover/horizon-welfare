@@ -1,7 +1,11 @@
+"use client";
+
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { config } from "@/utils/config";
 import { ClearLog } from "./ClearLog";
+import useSWR from "swr";
+import axios from "axios";
 
 interface LogEntry {
   time: string;
@@ -9,16 +13,17 @@ interface LogEntry {
   message: string;
 }
 
-export default async function LoggerDetails() {
-  const res = await fetch(`${config.get("app.url")}/api/logs`, {
-    next: { tags: ["APP_LOGS"] },
-    cache: "no-cache",
-  });
+const fetcher = (url: string) => axios.get(url);
 
-  const data = await res.json();
+export default function LoggerDetails() {
+  const { data, isLoading } = useSWR(
+    `${config.get("app.url")}/api/logs`,
+    fetcher,
+  );
 
   const parseLogs = (log: string): LogEntry[] => {
     const logEntries: LogEntry[] = [];
+    if (!log) return [];
 
     // Split logs by lines and parse each log entry
     const lines = log.split("\n");
@@ -26,9 +31,9 @@ export default async function LoggerDetails() {
       const match = line.match(/^(\S+ \S+) \[(\w+)\]: (.+)/);
       if (match) {
         logEntries.push({
-          time: match[1], // Extracted time (e.g., 2025-01-28 12:34:56)
-          type: match[2], // Extracted log level (e.g., info, error)
-          message: match[3], // Extracted message (e.g., User fetched successfully)
+          time: match[1],
+          type: match[2],
+          message: match[3],
         });
       }
     });
@@ -39,7 +44,7 @@ export default async function LoggerDetails() {
     );
   };
 
-  const logs = parseLogs(data.log);
+  const logs = parseLogs(data?.data?.log);
 
   return (
     <div className="p-10">
@@ -48,6 +53,7 @@ export default async function LoggerDetails() {
         <ClearLog />
       </div>
 
+      {isLoading && "Loading..."}
       {logs.length > 0 ? (
         <div className="flex h-full flex-col overflow-hidden border">
           {/* Header Row */}
