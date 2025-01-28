@@ -2,14 +2,14 @@
 
 import { Loader, SectionWrapper } from "@/components";
 import { StoryCard } from "@/components/custom/StoryCard";
+import EditableContent from "@/components/forms/EditableContent";
+import FormWrapper from "@/components/forms/FormWrapper";
 import { Button } from "@/components/ui/button";
 import { SuccessStories } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
 import { cn } from "@/lib/utils";
 import _ from "lodash";
-import FormWrapper from "../../forms/FormWrapper";
 import toast from "react-hot-toast";
-import EditableContent from "../../forms/EditableContent";
 
 export function SuccessStoriesSection({
   editable = false,

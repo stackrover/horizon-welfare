@@ -87,6 +87,7 @@ export async function updateSuccessStories(formData: FormData) {
 
   // return error if user is not authenticated
   if (!session?.user?.token) {
+    logger.error("Unauthorized");
     return { ...ERROR_OBJ_FORMAT, message: "Unauthorized" };
   }
 

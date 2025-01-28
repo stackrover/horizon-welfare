@@ -1,16 +1,14 @@
 import fs from "fs";
 import path from "path";
-import type { NextApiRequest, NextApiResponse } from "next";
-import { revalidatePath, revalidateTag } from "next/cache";
 
 // Path to the log file you want to read
 const logFilePath = path.join(process.cwd(), "logs/app.log");
 
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
+export async function GET() {
   try {
     // Check if the log file exists
     if (!fs.existsSync(logFilePath)) {
-      return res.status(404).json({ message: "Log file not found" });
+      return Response.json({ message: "Log file not found" });
     }
 
     // Read the log file
@@ -25,7 +23,7 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
 }
 
 // POST request to clear the log file
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
+export async function POST() {
   try {
     // Check if the log file exists
     if (!fs.existsSync(logFilePath)) {

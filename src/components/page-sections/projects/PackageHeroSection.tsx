@@ -21,11 +21,6 @@ export function PackageHeroSection({
   editable?: boolean;
   className?: string;
 }) {
-  console.log({
-    config: config.get("app.url"),
-    env: process.env["NEXT_PUBLIC_APP_URL"],
-  });
-
   const { data, isLoading, isError, refresh } = useSWR(
     "/donate/page/hero/show",
   );
