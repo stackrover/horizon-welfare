@@ -14,6 +14,7 @@
 # next.js
 /.next/
 /out/
+/logs/
 
 # production
 /build
@@ -25,7 +26,7 @@
 # debug
 npm-debug.log*
 yarn-debug.log*
-yarn-error.log*
+yarn-eror.log*
 
 # local env files
 .env*.local
