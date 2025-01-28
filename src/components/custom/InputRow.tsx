@@ -26,7 +26,9 @@ export function InputRow({
       >
         {labelText}
       </Label>
+
       <div className="flex items-center bg-[#F3F3F3]">
+
         <h3 className="flex h-10 w-[72px] items-center justify-center bg-gradient-to-r from-primary-light to-primary font-bold text-base-0">
           TK
         </h3>
