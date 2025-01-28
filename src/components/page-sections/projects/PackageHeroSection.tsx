@@ -43,7 +43,6 @@ export function PackageHeroSection({
           toast.success(res.message);
           refresh();
         } else {
-          console.log({ res });
           toast.error(res.message);
         }
       }}
