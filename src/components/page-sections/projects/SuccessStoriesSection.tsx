@@ -18,7 +18,7 @@ export function SuccessStoriesSection({
   editable?: boolean;
   className?: string;
 }) {
-  const { data, isLoading, isError } = useSWR(
+  const { data, isLoading, isError, refresh } = useSWR(
     "/donate/page/success/story/show",
   );
 
@@ -34,18 +34,17 @@ export function SuccessStoriesSection({
     <FormWrapper
       defaultValues={{
         ...serializedData.getFormData(),
-        story_1: serializedData?.story1?.id,
+        story_1: serializedData?.story1?.id?.toString(),
         story_2: serializedData?.story2?.id?.toString(),
-        story_3: serializedData?.story3?.id,
-        story_4: serializedData?.story4?.id,
-        story_5: serializedData?.story5?.id,
+        story_3: serializedData?.story3?.id?.toString(),
+        story_4: serializedData?.story4?.id?.toString(),
+        story_5: serializedData?.story5?.id?.toString(),
       }}
       onSubmit={async (values: any) => {
         const res = await serializedData.updateData(values);
 
-        console.log({ values });
-
         if (res.status === "success") {
+          refresh();
           toast.success(res.message);
         } else toast.error(res.message);
       }}
