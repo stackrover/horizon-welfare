@@ -6,6 +6,7 @@ import { match } from "ts-pattern";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Textarea } from "../ui/textarea";
 import UploadImage from "./UploadImage";
+import { BlogSelection } from "./BlogSelection";
 
 interface FormFieldProps extends UseControllerProps {
   label?: string;
@@ -55,6 +56,10 @@ export default function InputField({
               </Label>
             ))}
           </RadioGroup>
+        ))
+
+        .with("blogSelection", () => (
+          <BlogSelection value={field.value} onSelect={field.onChange} />
         ))
 
         .with("number", () => (

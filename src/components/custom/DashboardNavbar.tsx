@@ -16,7 +16,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar";
 
 export function DashboardNavbar() {
   return (
-    <div className="sticky inset-x-0 left-0 top-0 flex h-16 flex-row items-center border-b bg-white px-6">
+    <div className="sticky inset-x-0 left-0 top-0 z-50 flex h-16 flex-row items-center border-b bg-white px-6">
       <div className="ml-auto flex items-center gap-x-5">
         <Button size="icon" variant="ghost">
           <IconBell />

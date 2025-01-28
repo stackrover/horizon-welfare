@@ -6,10 +6,7 @@ import {
 } from "@/components/page-sections/admin";
 import { getData } from "@/hooks/get-data";
 import { Loader } from "@/components";
-import {
-  Accordion,
-  AccordionItem,
-} from "../../../../../../components/ui/accordion";
+import { Accordion } from "@/components/ui/accordion";
 
 export default function DashboardHomeHeroSection() {
   // hero section data

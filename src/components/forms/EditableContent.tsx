@@ -1,6 +1,3 @@
-import { IconEdit } from "@tabler/icons-react";
-import React from "react";
-
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,8 +9,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { IconEdit } from "@tabler/icons-react";
+import React from "react";
 import { useFormWrapper } from "./FormWrapper";
 import InputField from "./InputField";
+import { cn } from "@/lib/utils";
 
 export default function EditableContent({
   name = "",
@@ -21,12 +21,14 @@ export default function EditableContent({
   editable = false,
   type = "text",
   children,
+  className,
 }: {
   name: string;
   content: string;
   editable?: boolean;
   children?: React.ReactNode;
-  type?: "text" | "textarea" | "image" | (string & {});
+  type?: "text" | "textarea" | "image" | "file" | "blogSelection";
+  className?: string;
 }) {
   const formCtx = useFormWrapper();
 
@@ -34,7 +36,12 @@ export default function EditableContent({
 
   return (
     <Dialog>
-      <div className="group relative w-full select-none border border-transparent py-1.5 text-inherit hover:border-black/20">
+      <div
+        className={cn(
+          "group relative w-full select-none border border-transparent py-1.5 text-inherit hover:border-black/20",
+          className,
+        )}
+      >
         {children || content}
 
         <DialogTrigger asChild>
