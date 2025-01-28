@@ -5,7 +5,7 @@ const getEnv = (key: string, initialValue?: string | number) => {
 export const config = {
   app: {
     name: getEnv("NEXT_PUBLIC_APP_NAME", "Horizon Welfare"),
-    url: getEnv("NEXT_PUBLIC_APP_URL", "http://localhost:3000"),
+    url: getEnv("NEXT_PUBLIC_APP_URL", "https://horizonwelfare.org/"),
   },
 
   auth: {
@@ -13,10 +13,13 @@ export const config = {
   },
 
   api: {
-    url: getEnv("NEXT_PUBLIC_BACKEND_URL", "http://localhost:8000/api/v1"),
+    url: getEnv(
+      "NEXT_PUBLIC_BACKEND_URL",
+      "https://backend.horizonwelfare.org/api/v1",
+    ),
     staticDataUrl: getEnv(
       "NEXT_PUBLIC_BACKEND_IMAGE_URL",
-      "http://localhost:8000",
+      "https://backend.horizonwelfare.org/public",
     ),
     location: getEnv("NEXT_PUBLIC_LOCATION_API_URL"),
   },

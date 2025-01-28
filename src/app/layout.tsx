@@ -19,6 +19,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  console.log({
+    app: config.get("app"),
+    serv: config.get("api"),
+    auth: config.get("auth"),
+  });
   return (
     <html lang="en">
       <body className={`${plusJakartaSans.className} antialiased`}>
