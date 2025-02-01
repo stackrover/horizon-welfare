@@ -26,7 +26,6 @@ export const singInWithCredentials = async (
       redirectTo: "/login",
     });
   } catch (error) {
-    console.log({ error });
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":

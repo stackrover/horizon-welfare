@@ -155,8 +155,14 @@ export default function ResetPassword() {
                 </label>
               </div>
 
-              <Button type="submit" className="mt-8 rounded-full">
-                Reset Password
+              <Button
+                disabled={form.formState.isSubmitting}
+                type="submit"
+                className="mt-8 rounded-full"
+              >
+                {form.formState.isSubmitting
+                  ? "Processing..."
+                  : "Reset Password"}
               </Button>
             </form>
           </Form>

@@ -112,8 +112,14 @@ export default function ForgotPassword() {
                 <Link href="/login" className="underline underline-offset-2">
                   Login instead
                 </Link>
-                <Button type="submit" className="rounded-full">
-                  Send Reset Link
+                <Button
+                  disabled={form.formState.isSubmitting}
+                  type="submit"
+                  className="rounded-full"
+                >
+                  {form.formState.isSubmitting
+                    ? "Processing..."
+                    : "Send Reset Link"}
                 </Button>
               </div>
             </form>
