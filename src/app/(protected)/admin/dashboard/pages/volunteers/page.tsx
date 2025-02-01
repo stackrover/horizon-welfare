@@ -19,7 +19,7 @@ export default function Volunteers() {
       {/* success stories section  */}
 
       {/* join as volunteer section  */}
-      <JoinAsVolunteerCard />
+      <JoinAsVolunteerCard editable />
       {/* join as volunteer section end */}
     </section>
   );

@@ -1,15 +1,17 @@
+import { updateDonorCtaBanner } from "@/app/actions/admin/pages/volunteers";
+
 enum nameEnum {
   id = "id",
   title = "title",
   image = "image",
-  volunteerBtnTitle = "volunteerBtnTitle",
-  volunteerBtnLink = "volunteerBtnLink",
-  donateBtnTitle = "donateBtnTitle",
-  donateBtnLink = "donateBtnLink",
+  volunteerBtnTitle = "volunteer_btn_title",
+  volunteerBtnLink = "volunteer_btn_link",
+  donateBtnTitle = "donate_btn_title",
+  donateBtnLink = "donate_btn_link",
   status = "status",
-  updatedBy = "updatedBy",
-  createdAt = "createdAt",
-  updatedAt = "updatedAt",
+  updatedBy = "updated_by",
+  createdAt = "created_at",
+  updatedAt = "updated_at",
 }
 
 export class JoinAsVolunteer {
@@ -63,6 +65,6 @@ export class JoinAsVolunteer {
       }
     });
 
-    // return updateWhatWeDoHero(fd);
+    return updateDonorCtaBanner(fd);
   }
 }

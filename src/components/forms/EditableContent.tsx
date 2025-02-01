@@ -48,7 +48,7 @@ export default function EditableContent({
           <Button
             size="icon"
             variant="link"
-            className="absolute right-0 top-0 z-20 hidden h-fit w-fit border bg-white p-1.5 shadow !outline-none group-hover:block"
+            className="absolute right-0 top-0 z-50 hidden h-fit w-fit border bg-white p-1.5 shadow !outline-none group-hover:block"
           >
             <IconEdit size={20} strokeWidth={2} />
           </Button>
