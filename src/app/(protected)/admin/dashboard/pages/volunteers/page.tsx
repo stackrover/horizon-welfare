@@ -18,12 +18,8 @@ export default function Volunteers() {
       <SuccessStoriesSection editable />
       {/* success stories section  */}
 
-      {/* project section  */}
-      {/* <ProjectList /> */}
-      {/* project section end */}
-
       {/* join as volunteer section  */}
-      {/* <JoinAsVolunteerCard /> */}
+      <JoinAsVolunteerCard />
       {/* join as volunteer section end */}
     </section>
   );

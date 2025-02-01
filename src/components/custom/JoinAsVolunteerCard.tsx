@@ -7,8 +7,10 @@ import { useSWR } from "@/hooks/use-swr";
 import _ from "lodash";
 import Image from "next/image";
 import Link from "next/link";
+import EditableContent from "../forms/EditableContent";
+import { getImageURL } from "../../lib/utils";
 
-export function JoinAsVolunteerCard() {
+export function JoinAsVolunteerCard({ editable }: { editable?: boolean }) {
   const { data, isLoading, isError } = useSWR("/volunteer/cta/show");
 
   if (isLoading) {
@@ -29,13 +31,19 @@ export function JoinAsVolunteerCard() {
       className={`relative mx-4 mt-[100px] h-[384px] max-w-7xl overflow-hidden rounded-[20px] bg-cover bg-center before:absolute before:left-0 before:top-0 before:h-full before:w-full before:rounded-[20px] before:bg-black/50 before:content-[''] 2xl:mx-auto`}
     >
       <div>
-        <Image
-          src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}${serializedData.image}`}
-          alt="Join as a volunteer"
-          height={300}
-          width={1200}
-          className="h-[384px] w-full min-w-[1200px]"
-        />
+        <EditableContent
+          type="file"
+          content={getImageURL(serializedData.image)}
+          editable={editable}
+        >
+          <Image
+            src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}${serializedData.image}`}
+            alt="Join as a volunteer"
+            height={300}
+            width={1200}
+            className="h-[384px] w-full min-w-[1200px]"
+          />
+        </EditableContent>
       </div>
       <div className="absolute left-0 top-0 z-10 mx-auto flex h-full w-full flex-col items-center justify-center gap-y-8 p-8">
         <h4 className="max-w-[900px] text-center text-2xl font-bold text-base-0 xmd:text-3xl mlg:text-4xl lg:leading-[58px] xl:text-5xl">
