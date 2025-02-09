@@ -1,13 +1,5 @@
 import { User } from "@/data/users/User";
 
-type Project = {
-  id: number;
-  title: string;
-  description: string;
-  thumbnail: string;
-  goalAmount: string;
-};
-
 export class Transaction {
   readonly id: number;
   readonly trxId: string;
@@ -32,13 +24,13 @@ export class Transaction {
     this.amount = data?.amount;
     this.currency = data?.currency;
     this.paymentId = data?.payment_id;
-    this.subscriptionMoneyStatus = data?.is_subcription_money;
-    this.trxStatus = data?.transaction_id;
+    this.subscriptionMoneyStatus = data?.is_subscription_money;
+    this.trxStatus = data?.transaction_status;
     this.status = data?.status;
     this.createdAt = data?.created_at;
     this.updatedAt = data?.updated_at;
-    this.donor = data?.donor;
-    this.project = data?.project;
+    this.donor = new User(data?.donor);
+    this.project = new Project(data?.project);
   }
 
   getId(): number {
@@ -77,11 +69,53 @@ export class Transaction {
     return this.status;
   }
 
+  getDonor(): User {
+    return this.donor;
+  }
+
+  getProject(): Project {
+    return this.project;
+  }
+
   getCreationDate(): string {
     return this.createdAt;
   }
 
   getUpdateDate(): string {
     return this.createdAt;
+  }
+}
+
+class Project {
+  id: number;
+  title: string;
+  description: string;
+  thumbnail: string;
+  goalAmount: string;
+
+  constructor(data: Record<string, any>) {
+    this.id = data?.id;
+    this.title = data?.title;
+    this.description = data?.description;
+    this.thumbnail = data?.thumbnail;
+    this.goalAmount = data?.goalAmount;
+  }
+
+  getId(): number {
+    return this.id;
+  }
+
+  getTitle(): string {
+    return this.title;
+  }
+  getDescription(): string {
+    return this.description;
+  }
+  getThumbnail(): string {
+    return this.thumbnail;
+  }
+
+  getGoalAmount(): string {
+    return this.goalAmount;
   }
 }
