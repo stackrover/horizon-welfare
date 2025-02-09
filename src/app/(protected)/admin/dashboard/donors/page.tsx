@@ -1,9 +1,8 @@
 "use client";
 
-import React from "react";
-import { useSWR } from "@/hooks/use-swr";
 import DataTable from "@/components/data-table/Table";
 import { User } from "@/data/users/User";
+import { useSWR } from "@/hooks/use-swr";
 import _ from "lodash";
 
 export default function Donors() {
