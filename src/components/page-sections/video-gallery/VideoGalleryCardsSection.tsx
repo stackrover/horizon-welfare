@@ -3,7 +3,6 @@
 import { Loader, SectionWrapper } from "@/components";
 import { Video } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
-import { IconPlus } from "@tabler/icons-react";
 import dynamic from "next/dynamic";
 import AddVideo from "./AddVideo";
 
@@ -45,6 +44,7 @@ export function VideoGalleryCardsSection({
               key={video.id}
               videoUrl={video.youtubeLink}
               title={video.title}
+              editable={editable}
             />
           ))
         : null}
