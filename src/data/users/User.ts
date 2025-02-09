@@ -8,6 +8,12 @@ enum UserStatus {
   Pending = "pending",
 }
 
+enum UserRole {
+  Donor = "donor",
+  Volunteer = "volunteer",
+  Admin = "admin",
+}
+
 // Zod schema for data validation
 const UserSchema = z.object({
   id: z.number(),
@@ -18,6 +24,10 @@ const UserSchema = z.object({
   status: z
     .enum([UserStatus.Active, UserStatus.Inactive, UserStatus.Pending])
     .default(UserStatus.Pending),
+
+  base_role: z
+    .enum([UserRole.Admin, UserRole.Volunteer, UserRole.Donor])
+    .default(UserRole.Volunteer),
   email_verified_at: z.string().nullable(),
   created_at: z.string(),
   updated_at: z.string(),
@@ -33,6 +43,7 @@ export class User {
   readonly email: string;
   readonly mobile: string;
   readonly status: UserStatus;
+  readonly role: UserRole;
   readonly verified: boolean;
   readonly createdAt: string;
   readonly updatedAt: string;
@@ -51,6 +62,7 @@ export class User {
     this.email = parsedData.email;
     this.mobile = parsedData.mobile_number;
     this.status = parsedData.status;
+    this.role = parsedData.base_role;
     this.verified = Boolean(parsedData.email_verified_at);
     this.createdAt = this.formatDate(parsedData.created_at);
     this.updatedAt = this.formatDate(parsedData.updated_at);
@@ -91,6 +103,10 @@ export class User {
     return this.status;
   }
 
+  getRole(): UserRole {
+    return this.role;
+  }
+
   isVerified(): boolean {
     return this.verified;
   }
@@ -116,6 +132,7 @@ export class User {
       email: this.email,
       mobile_number: this.mobile,
       status: this.status,
+      base_role: this.role,
       created_at: this.createdAt,
       updated_at: this.updatedAt,
     };
