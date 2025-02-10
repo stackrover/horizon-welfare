@@ -16,7 +16,7 @@ import { getImageURL } from "@/lib/utils";
 import { IconEye, IconX } from "@tabler/icons-react";
 import _ from "lodash";
 import Image from "next/image";
-import TransactionDetail from "../transaction/TransactionDetails";
+import Link from "next/link";
 
 export default function DonorProfileDrawer({ donor }: { donor: DonorData }) {
   return (
@@ -120,14 +120,15 @@ export default function DonorProfileDrawer({ donor }: { donor: DonorData }) {
           {donor.getDonations()?.map((trx) => (
             <div
               key={trx.getId()}
-              className="flex gap-1.5 text-[13px] text-gray-600 odd:bg-neutral-100 [&_div]:px-4 [&_div]:py-2"
+              className="flex gap-1.5 text-sm text-gray-600 odd:bg-neutral-100 [&_div]:px-4 [&_div]:py-2"
             >
-              <div className="flex flex-1 items-center">
-                <TransactionDetail
-                  trx={trx}
-                  showIcon={false}
-                  className="m-0 h-auto px-0 py-0 text-[13px] font-normal text-inherit hover:underline"
-                />
+              <div className="line-clamp-1 flex-1">
+                <Link
+                  href={`/admin/dashboard/transactions?trxId=${trx.getTrxId()}`}
+                  className="hover:underline"
+                >
+                  {trx.getTrxId()}
+                </Link>
               </div>
               <div className="whitespace-nowrap text-right font-semibold">{`${trx.getAmount()} ${trx.getCurrency()}`}</div>
             </div>
