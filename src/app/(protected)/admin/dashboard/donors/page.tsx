@@ -33,6 +33,13 @@ export default function Donors() {
               accessorFn: (row) => row.getName(),
               cell: (i) => i.getValue(),
             },
+
+            {
+              id: "gender",
+              header: "Gender",
+              accessorFn: (row) => row.getGender(),
+              cell: (i) => _.startCase(i.getValue() as string),
+            },
             {
               id: "mobile",
               header: "Mobile",
@@ -44,6 +51,24 @@ export default function Donors() {
               header: "Email",
               accessorFn: (row) => row.getEmail(),
               cell: (i) => i.getValue(),
+            },
+
+            {
+              id: "nationality",
+              header: "Nationality",
+              accessorFn: (row) => row.getNationality(),
+              cell: (i) => i.getValue(),
+            },
+
+            {
+              id: "donate",
+              header: "Donate",
+              accessorFn: (row) => row.getTotalDonation(),
+              cell: (i) => (
+                <strong className="whitespace-nowrap font-bold">
+                  {`${i.getValue()} ${i.row.original?.getCurrency()}`}
+                </strong>
+              ),
             },
 
             {
