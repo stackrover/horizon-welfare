@@ -1,14 +1,13 @@
 "use client";
 
 import DataTable from "@/components/data-table/Table";
-import { User } from "@/data/users/User";
+import DonorProfileDrawer from "@/components/page-sections/admin/donor/ProfilePreviewDrawer";
+import { DonorData } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
 import _ from "lodash";
 
 export default function Donors() {
-  const { data } = useSWR("/users/list", {
-    userType: "donor",
-  });
+  const { data } = useSWR("/donor/profile/list");
 
   return (
     <section className="grid grid-cols-12 gap-6 p-6">
@@ -17,8 +16,10 @@ export default function Donors() {
       </div>
 
       <div className="col-span-12 rounded-xl bg-white p-6">
-        <DataTable<User>
-          data={data?.data?.results?.map((user: any) => new User(user)) || []}
+        <DataTable<DonorData>
+          data={
+            data?.data?.results?.map((user: any) => new DonorData(user)) || []
+          }
           columns={[
             {
               id: "id",
@@ -60,17 +61,9 @@ export default function Donors() {
             },
 
             {
-              id: "isVerified",
-              header: "Account v.status",
-              accessorFn: (row) => row.isVerified(),
-              cell: (i) => (
-                <span
-                  data-isVerified={i.getValue()}
-                  className="rounded-sm border px-2 py-0.5 text-xs data-[isVerified=false]:border-red-300 data-[isVerified=true]:border-green-300 data-[isVerified=false]:bg-red-100 data-[isVerified=true]:bg-green-100 data-[isVerified=false]:text-red-500 data-[isVerified=true]:text-green-500"
-                >
-                  {i.getValue() ? "Verified" : "Not Verified"}
-                </span>
-              ),
+              id: "actions",
+              header: "Action",
+              cell: ({ row }) => <DonorProfileDrawer donor={row.original} />,
             },
           ]}
         />

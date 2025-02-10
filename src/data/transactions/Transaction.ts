@@ -1,4 +1,5 @@
 import { User } from "@/data/users/User";
+import { format } from "date-fns";
 
 export class Transaction {
   readonly id: number;
@@ -10,10 +11,10 @@ export class Transaction {
   readonly subscriptionMoneyStatus: NonNullable<"yes" | "no">;
   readonly trxStatus: NonNullable<"completed" | "pending" | "cancelled">;
   readonly status: NonNullable<"completed" | "pending" | "cancelled">;
-  readonly createdAt: string;
-  readonly updatedAt: string;
+  readonly createdAt: Date;
+  readonly updatedAt: Date;
   readonly project: Project;
-  readonly donor: User;
+  readonly donor: User | null;
   readonly original: Record<string, any>;
 
   constructor(data: Record<string, any>) {
@@ -27,9 +28,9 @@ export class Transaction {
     this.subscriptionMoneyStatus = data?.is_subscription_money;
     this.trxStatus = data?.transaction_status;
     this.status = data?.status;
-    this.createdAt = data?.created_at;
-    this.updatedAt = data?.updated_at;
-    this.donor = new User(data?.donor);
+    this.createdAt = new Date(data?.created_at);
+    this.updatedAt = new Date(data?.updated_at);
+    this.donor = data?.donor ? new User(data?.donor) : null;
     this.project = new Project(data?.project);
   }
 
@@ -69,7 +70,7 @@ export class Transaction {
     return this.status;
   }
 
-  getDonor(): User {
+  getDonor(): User | null {
     return this.donor;
   }
 
@@ -78,11 +79,11 @@ export class Transaction {
   }
 
   getCreationDate(): string {
-    return this.createdAt;
+    return format(this.createdAt, "MMM dd, yyyy h:mm a");
   }
 
   getUpdateDate(): string {
-    return this.createdAt;
+    return format(this.updatedAt, "MMM dd, yyyy h:mm a");
   }
 }
 

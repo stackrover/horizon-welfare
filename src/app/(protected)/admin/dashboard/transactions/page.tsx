@@ -1,17 +1,13 @@
 "use client";
 
 import DataTable from "@/components/data-table/Table";
-import { Button } from "@/components/ui/button";
+import TransactionDetail from "@/components/page-sections/admin/transaction/TransactionDetails";
 import { Transaction } from "@/data/transactions/Transaction";
 import { useSWR } from "@/hooks/use-swr";
-import { IconEye } from "@tabler/icons-react";
 import _ from "lodash";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 export default function Transactions() {
   const { data } = useSWR("/donor/donations");
-  const pathname = usePathname();
 
   return (
     <section className="grid grid-cols-12 gap-6 p-6">
@@ -79,21 +75,7 @@ export default function Transactions() {
               header: "action",
               enableSorting: false,
               cell: (i) => {
-                return (
-                  <div className="flex items-center">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="opacity-50 hover:opacity-100"
-                      title="View"
-                      asChild
-                    >
-                      <Link href={`${pathname}/${i.row.original?.getId()}`}>
-                        <IconEye />
-                      </Link>
-                    </Button>
-                  </div>
-                );
+                return <TransactionDetail trx={i.row.original} />;
               },
             },
           ]}
