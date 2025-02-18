@@ -14,17 +14,20 @@ import {
 import React from "react";
 
 import { Pagination } from "@/components";
-import { Person } from "@/lib/makeData";
 import { DebouncedInput } from "./DebouncedInput";
 import { fuzzyFilter } from "./fuzzyFilter";
 
-type DataTableProps = {
-  data: any[];
-  columns: ColumnDef<Person>[];
+type DataTableProps<T> = {
+  data: T[];
+  columns: ColumnDef<T>[];
   elements?: React.ReactNode;
 };
 
-export default function DataTable({ data, columns, elements }: DataTableProps) {
+export default function DataTable<T>({
+  data,
+  columns,
+  elements,
+}: DataTableProps<T>) {
   const [globalFilter, setGlobalFilter] = React.useState("");
   const [pagination, setPagination] = React.useState<PaginationState>({
     pageIndex: 0,
@@ -68,7 +71,7 @@ export default function DataTable({ data, columns, elements }: DataTableProps) {
           value={globalFilter ?? ""}
           onChange={(value) => setGlobalFilter(String(value))}
           className="font-lg border-block max-w-[300px] border px-3 py-2 shadow"
-          placeholder="Search transactions"
+          placeholder="Search..."
         />
       </div>
 
@@ -101,11 +104,11 @@ export default function DataTable({ data, columns, elements }: DataTableProps) {
                           <div className="flex flex-col">
                             <IconChevronUp
                               className={`-mb-[3px] md:-mb-0 ${(header.column.getIsSorted() as string) === "asc" ? "text-base-400" : "text-base-400/30"}`}
-                              size={16}
+                              size={14}
                             />
                             <IconChevronDown
                               className={`-mt-[3px] md:-mb-0 ${(header.column.getIsSorted() as string) === "desc" ? "text-base-400" : "text-base-400/30"}`}
-                              size={16}
+                              size={14}
                             />
                           </div>
                         ) : null}
@@ -119,13 +122,16 @@ export default function DataTable({ data, columns, elements }: DataTableProps) {
           <tbody>
             {table.getRowModel().rows.map((row) => {
               return (
-                <tr key={row.id}>
+                <tr
+                  key={row.id}
+                  className="even:bg-neutral-50 hover:bg-neutral-100"
+                >
                   {row.getVisibleCells().map((cell) => {
                     return (
                       <td
                         key={cell.id}
                         style={{ width: cell.column.getSize() }}
-                        className="h-10 border-y px-5 text-[10px] font-semibold leading-[22px] text-[#4B465C] md:h-[60px] md:text-[15px]"
+                        className="border-y px-5 py-2 text-[10px] leading-[22px] text-[#4B465C] md:text-[15px]"
                       >
                         {flexRender(
                           cell.column.columnDef.cell,

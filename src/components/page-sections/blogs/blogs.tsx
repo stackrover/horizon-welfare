@@ -1,12 +1,12 @@
 "use client";
 
-import { Blog } from "../../../data";
-import { useSWR } from "../../../hooks/use-swr";
-import { BlogCard } from "../../custom/BlogCard";
-import { Loader } from "../../custom/Loader";
-import { SectionWrapper } from "../../custom/SectionWrapper";
+import { BlogCard } from "@/components/custom/BlogCard";
+import { Loader } from "@/components/custom/Loader";
+import { SectionWrapper } from "@/components/custom/SectionWrapper";
+import { Blog } from "@/data";
+import { useSWR } from "@/hooks/use-swr";
 
-export function Blogs({ url }: { url: string }) {
+export function Blogs({ url }: { url: string; editable?: boolean }) {
   const { data, isLoading, isError } = useSWR(url);
 
   if (isLoading) {
@@ -18,7 +18,6 @@ export function Blogs({ url }: { url: string }) {
       ? data?.data.results.map((d: any) => new Blog(d))
       : [];
 
-  console.log(serializedData);
   return (
     <SectionWrapper
       isLoading={isLoading}

@@ -4,6 +4,7 @@ import { Loader, SectionWrapper } from "@/components";
 import { Video } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
 import dynamic from "next/dynamic";
+import AddVideo from "./AddVideo";
 
 const VideoCard = dynamic(
   () => import("@/components/custom/VideoCard").then((mod) => mod.VideoCard),
@@ -12,7 +13,11 @@ const VideoCard = dynamic(
   },
 );
 
-export function VideoGalleryCardsSection() {
+export function VideoGalleryCardsSection({
+  editable = false,
+}: {
+  editable?: boolean;
+}) {
   const { data, isLoading, isError } = useSWR("/video/page/video/list");
 
   if (isLoading) {
@@ -39,9 +44,12 @@ export function VideoGalleryCardsSection() {
               key={video.id}
               videoUrl={video.youtubeLink}
               title={video.title}
+              editable={editable}
             />
           ))
         : null}
+
+      {editable && <AddVideo />}
     </SectionWrapper>
   );
 }

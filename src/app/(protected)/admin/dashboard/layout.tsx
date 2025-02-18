@@ -13,7 +13,7 @@ export default function DashboardLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <div className="grid grid-cols-[288px_1fr] bg-[#F5F6FA]">
+    <div className="flex flex-row">
       <DashboardSiebar />
       <div className="flex-1">
         <DashboardNavbar />

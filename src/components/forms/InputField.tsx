@@ -5,8 +5,9 @@ import { useController, UseControllerProps } from "react-hook-form";
 import { match } from "ts-pattern";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Textarea } from "../ui/textarea";
-import UploadImage from "./UploadImage";
 import { BlogSelection } from "./BlogSelection";
+import TextEditor from "./TextEditor";
+import UploadImage from "./UploadImage";
 
 interface FormFieldProps extends UseControllerProps {
   label?: string;
@@ -38,6 +39,15 @@ export default function InputField({
       )}
       {match(props.type)
         .with("textarea", () => <Textarea {...field} className={className} />)
+        .with("textEditor", () => (
+          <TextEditor
+            value={field.value}
+            onValueChange={field.onChange}
+            placeholder={props.placeholder}
+            className={className}
+          />
+        ))
+
         // file
         .with("file", () => (
           <UploadImage className={className} {...props} {...field} />
