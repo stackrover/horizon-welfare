@@ -31,6 +31,15 @@ export default function SelectBlogCategory({
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<BlogCategory>();
 
+  const { data, isLoading } = useSWR("/blog/category/list");
+
+  useEffect(() => {
+    if (!data || isLoading || !value) return;
+    const current = data?.data?.results?.find((d: any) => d.id === +value);
+    setSelected(new BlogCategory(current));
+    onSelectChange(new BlogCategory(current));
+  }, [value, data, isLoading]);
+
   const handleSelectChange = (cat: BlogCategory) => {
     setSelected(cat);
     onSelectChange(cat);
@@ -49,9 +58,11 @@ export default function SelectBlogCategory({
       </PopoverTrigger>
       <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
         <BlogCategoryList
+          data={data?.data?.results || []}
           value={value}
           onSelectChange={handleSelectChange}
           onClose={() => setOpen(false)}
+          isLoading={isLoading}
         />
       </PopoverContent>
     </Popover>
@@ -62,16 +73,13 @@ const BlogCategoryList = ({
   value,
   onSelectChange,
   onClose,
-}: PropsType & { onClose: VoidFunction }) => {
-  const { data, isLoading } = useSWR("/blog/category/list");
-
-  useEffect(() => {
-    if (!data || !isLoading || !value) return;
-
-    const current = data?.data?.results?.find((d: any) => d.id === +value);
-    onSelectChange(current);
-  }, [value, data, isLoading]);
-
+  isLoading,
+  data,
+}: PropsType & {
+  isLoading?: boolean;
+  data: Record<string, any>[];
+  onClose: VoidFunction;
+}) => {
   return (
     <Command>
       <CommandInput />
@@ -83,8 +91,8 @@ const BlogCategoryList = ({
         )}
         <CommandGroup>
           {!isLoading &&
-            data?.data?.results?.length &&
-            data?.data?.results
+            data?.length &&
+            data
               ?.map((d: any) => new BlogCategory(d))
               .map((cat: BlogCategory) => (
                 <CommandItem

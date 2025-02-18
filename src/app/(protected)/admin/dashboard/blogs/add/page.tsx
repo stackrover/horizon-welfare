@@ -18,7 +18,9 @@ import { useEffect } from "react";
 import _ from "lodash";
 import { useSession } from "next-auth/react";
 import SelectBlogCategory from "@/components/forms/SelectBlogCategory";
-import { BlogCategory } from "../../../../../../data/blogs/blog-category";
+import { BlogCategory } from "@/data/blogs/blog-category";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const schema = z.object({
   title: z.string({ required_error: "Blog title is required" }),
@@ -34,6 +36,7 @@ type TFormData = z.infer<typeof schema>;
 
 export default function BlogDetails() {
   const auth = useSession();
+  const router = useRouter();
 
   // form instance
   const form = useForm<TFormData>({
@@ -62,11 +65,14 @@ export default function BlogDetails() {
       }
     });
 
-    console.log({ formData });
-
     try {
       const response = await addBlog(fd);
-      console.log({ response });
+      if (response.status === "success") {
+        toast.success(response.message);
+        router.push("/admin/dashboard/blogs");
+      } else {
+        toast.error(response.message);
+      }
     } catch (error) {
       console.log({ error });
     }
@@ -177,7 +183,7 @@ export default function BlogDetails() {
 
               <div className="flex items-center justify-end">
                 <Button type="submit" className="mt-6 w-[180px] @5xl:w-full">
-                  Save
+                  {form.formState.isSubmitting ? "Loading..." : "Save"}
                 </Button>
               </div>
             </div>
