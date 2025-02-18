@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useSWR } from "@/hooks/use-swr";
 import { Blog } from "@/data";
 import DataTable from "@/components/data-table/Table";
-import { IconEye } from "@tabler/icons-react";
+import { IconEdit, IconEye } from "@tabler/icons-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -80,15 +80,16 @@ export default function Blogs() {
               id: "actions",
               header: "actions",
               cell: ({ row }) => (
-                <div>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="bg-slate-200 hover:bg-slate-300"
-                    asChild
-                  >
-                    <Link href={`${pathname}/${row.original?.slug}/edit`}>
+                <div className="flex items-center">
+                  <Button variant="ghost" size="icon" asChild>
+                    <Link href={`/blogs/${row.original?.slug}`}>
                       <IconEye />
+                    </Link>
+                  </Button>
+
+                  <Button variant="ghost" size="icon" asChild>
+                    <Link href={`${pathname}/${row.original?.slug}/edit`}>
+                      <IconEdit />
                     </Link>
                   </Button>
                 </div>
