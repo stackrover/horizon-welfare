@@ -26,7 +26,10 @@ export default function RootLayout({
   });
   return (
     <html lang="en">
-      <body className={`${plusJakartaSans.className} antialiased`}>
+      <body
+        className={`!${plusJakartaSans.className} antialiased`}
+        style={plusJakartaSans.style}
+      >
         <Toaster />
         <SessionProvider>
           <Children>{children}</Children>

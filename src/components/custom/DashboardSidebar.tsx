@@ -10,8 +10,8 @@ const sidebarItems = [
       { id: "dashboard", title: "Dashboard", pathname: "/" },
       { id: "transactions", title: "Transactions", pathname: "/transactions" },
       { id: "donors", title: "Donors", pathname: "/donors" },
-      { id: "campagin", title: "Campaign", pathname: "/campaign" },
       { id: "volunteers", title: "Volunteers", pathname: "/volunteers" },
+      { id: "blogs", title: "Blogs", pathname: "/blogs" },
     ],
   },
   {

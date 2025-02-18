@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { Comment } from "../../../data";
+import { Comment } from "@/data/blogs/comment";
 import { SingleComment } from "../../custom/SingleComment";
 import { Button } from "../../ui/button";
 import { Input } from "../../ui/input";
@@ -12,7 +12,7 @@ export function BlogComments({
   comments,
   auth,
 }: {
-  comments: Comment[];
+  comments: Comment[] | null;
   auth: any;
 }) {
   const router = useRouter();
@@ -75,14 +75,14 @@ export function BlogComments({
       </div>
 
       <div className="mt-6 space-y-4">
-        {comments.length > 0
+        {comments && comments?.length > 0
           ? comments.map((comment) => (
               <SingleComment
-                key={comment.id}
+                key={comment.getId()}
                 image="/images/user.png"
-                name={comment.author_name}
-                date={comment.created_at}
-                comment={comment.comment_text}
+                name={comment.getAuthorName()}
+                date={comment.getCreatedAt()}
+                comment={comment.getCommentText()}
               />
             ))
           : "No comments yet"}
