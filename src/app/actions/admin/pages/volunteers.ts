@@ -36,8 +36,9 @@ export async function updateVolunteerPageHeroSectionData(formData: FormData) {
 
     return data;
   } catch (error) {
-    console.log({ error });
-    logger.error("error: ", error);
+    if (error && typeof error === "object" && "message" in error) {
+      logger.error(error?.message);
+    }
     return { ...ERROR_OBJ_FORMAT, error: error };
   }
 }
@@ -76,6 +77,9 @@ export async function updateVolunteerProjectSectionData(
 
     return data;
   } catch (error) {
+    if (error && typeof error === "object" && "message" in error) {
+      logger.error(error?.message);
+    }
     return { ...ERROR_OBJ_FORMAT, error: error };
   }
 }
@@ -85,11 +89,8 @@ export async function updateSuccessStories(formData: FormData) {
   const controller = new AbortController();
   const session = await auth();
 
-  logger.error("This is a test error message");
-
   // return error if user is not authenticated
   if (!session?.user?.token) {
-    logger.error("Unauthorized");
     return { ...ERROR_OBJ_FORMAT, message: "Unauthorized" };
   }
 
@@ -110,13 +111,49 @@ export async function updateSuccessStories(formData: FormData) {
 
     if (data.status === "success") {
       revalidatePath("/admin/dashboard/pages/volunteers", "page");
-    } else {
-      logger.error(data.message);
     }
-
     return data;
   } catch (error) {
-    console.log({ error: error });
+    if (error && typeof error === "object" && "message" in error) {
+      logger.error(error?.message);
+    }
+    return { ...ERROR_OBJ_FORMAT, error: error };
+  }
+}
+
+// update donor cta button and images
+export async function updateDonorCtaBanner(formData: FormData) {
+  const controller = new AbortController();
+  const session = await auth();
+
+  // return error if user is not authenticated
+  if (!session?.user?.token) {
+    return { ...ERROR_OBJ_FORMAT, message: "Unauthorized" };
+  }
+
+  formData.append("updated_by", session?.user?.id as string);
+
+  try {
+    const res = await fetcher("/volunteer/cta/update", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${session?.user?.token}`,
+      },
+      body: formData,
+      signal: controller.signal,
+    });
+
+    const data = await res.json();
+
+    if (data.status === "success") {
+      revalidatePath("/admin/dashboard/pages/volunteers", "page");
+    }
+    return data;
+  } catch (error) {
+    if (error && typeof error === "object" && "message" in error) {
+      logger.error(error?.message);
+    }
     return { ...ERROR_OBJ_FORMAT, error: error };
   }
 }

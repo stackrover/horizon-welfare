@@ -1,4 +1,7 @@
 import { format, parseISO } from "date-fns";
+import { Transaction } from "../transactions/Transaction";
+
+type Status = NonNullable<"active" | "inactive" | "pending">;
 
 export class DonorData {
   id: number;
@@ -10,6 +13,7 @@ export class DonorData {
   nationality: string;
   profile_image: any;
   bannar_image: any;
+  status: Status = "pending";
   f_name: string;
   l_name: string;
   email: string;
@@ -18,6 +22,10 @@ export class DonorData {
   lastDonation: string;
   lastDonationDate: string;
   currency: string;
+  donations: {
+    transactions: Transaction[] | null;
+    totalDonation: number | 0;
+  };
 
   constructor(data: any) {
     this.id = data.id;
@@ -34,10 +42,101 @@ export class DonorData {
     this.bannar_image = data.bannar_image;
     this.f_name = data.user.f_name;
     this.l_name = data.user.l_name;
+    this.status = data.user.status;
     this.email = data.user.email;
     this.mobile_number = data.user.mobile_number;
     this.lastDonationDate = data?.lastDonationDate
       ? format(parseISO(data?.lastDonationDate), "EEEE dd MMMM")
       : "";
+    this.donations = {
+      totalDonation: data?.donations?.totalDonation || 0,
+      transactions: data?.donations?.transactions
+        ? data?.donations?.transactions?.map((trx: any) => new Transaction(trx))
+        : null,
+    };
+  }
+
+  getId(): number {
+    return this.id;
+  }
+
+  getName(): string {
+    return `${this.f_name} ${this.l_name}`;
+  }
+
+  getUid(): number {
+    return this.uid;
+  }
+
+  getStatus(): Status {
+    return this.status;
+  }
+
+  getBalance(): string {
+    return this.balance;
+  }
+
+  getAge(): number {
+    return this.age;
+  }
+
+  getGender(): string {
+    return this.gender;
+  }
+
+  getAddress(): string {
+    return this.address;
+  }
+
+  getNationality(): string {
+    return this.nationality;
+  }
+
+  getProfileImage(): any {
+    return this.profile_image;
+  }
+
+  getBannarImage(): any {
+    return this.bannar_image;
+  }
+
+  getFirstName(): string {
+    return this.f_name;
+  }
+
+  getLastName(): string {
+    return this.l_name;
+  }
+
+  getEmail(): string {
+    return this.email;
+  }
+
+  getMobile(): string {
+    return this.mobile_number;
+  }
+
+  getTotalDonations(): string {
+    return this.totalDonations;
+  }
+
+  getLastDonation(): string {
+    return this.lastDonation;
+  }
+
+  getLastDonationDate(): string {
+    return this.lastDonationDate;
+  }
+
+  getCurrency(): string {
+    return this.currency;
+  }
+
+  getDonations(): Transaction[] | null {
+    return this.donations.transactions;
+  }
+
+  getTotalDonation(): number {
+    return this.donations.totalDonation;
   }
 }

@@ -273,3 +273,11 @@ body {
   transform: rotate(330deg) translate(0, -130%);
   animation-delay: -0.1s;
 }
+
+/* Rich editor */
+
+.quill {
+  & > .ql-container > .ql-editor {
+    @apply min-h-[300px] text-sm;
+  }
+}

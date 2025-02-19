@@ -1,9 +1,9 @@
 import { TruncateString } from "@/components";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Blog } from "@/data";
+import { getImageURL } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { Blog } from "../../data";
-import { getImageURL } from "../../lib/utils";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 export function BlogCard({ blog }: { blog: Blog }) {
   return (

@@ -19,11 +19,9 @@ export const BlogSelection = ({
 }) => {
   const { data, isLoading } = useSWR("/blog/list/all");
 
-  console.log({ value });
-
   return (
     <Command>
-      <CommandInput />
+      <CommandInput placeholder="Search..." />
       <CommandList>
         {isLoading && <CommandLoading> Loading...</CommandLoading>}
         <CommandEmpty>No results found.</CommandEmpty>
@@ -32,7 +30,7 @@ export const BlogSelection = ({
             data-active={item.id === +value}
             key={item.id}
             value={item.id?.toString()}
-            className="group border-b border-gray-200 data-[active=true]:bg-primary"
+            className="group border-b border-gray-200 data-[active=true]:!bg-primary"
             onSelect={(val) => onSelect(val)}
           >
             <div className="grid grid-cols-[48px_1fr] gap-2">
