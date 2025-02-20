@@ -3,7 +3,17 @@ import { CubeBoxIcon } from "@/components/icons";
 import { ChartIcon } from "@/components/icons/ChartIcon";
 import { TimeRepeat } from "@/components/icons/TimeRepeat";
 import { UserGroupIcon } from "@/components/icons/UserGroupIcon";
+import dynamic from "next/dynamic";
 import _ from "lodash";
+import { Suspense } from "react";
+
+const DonationOverviewCharts = dynamic(
+  () =>
+    import(
+      "@/components/page-sections/admin/dashboard/DonationOverviewCharts"
+    ).then((mod) => mod.DonationOverviewCharts),
+  { ssr: false },
+);
 
 const overviews = [
   {
@@ -41,18 +51,29 @@ export default function Dashboard() {
       </h1>
 
       {/* Statistic cards */}
-      <div className="grid grid-cols-12 gap-9">
+      <div className="mb-5 grid grid-cols-12 gap-5 @container">
         {_.map(overviews, (o, i) => (
           <DashboardOverviewCard
             key={i}
             title={o.title}
             value={o.value}
             Icon={o.icon}
-            className="col-span-3"
+            className="col-span-12 @sm:col-span-6 @3xl:col-span-4 @5xl:col-span-3"
             iconClass={o.iconClass}
           />
         ))}
       </div>
+
+      <div className="grid grid-cols-12 gap-5 @container">
+        {/* Total Donations */}
+        <div className="col-span-12 @4xl:col-span-6">
+          <Suspense fallback={<div> Loading... </div>}>
+            <DonationOverviewCharts />
+          </Suspense>
+        </div>
+      </div>
+
+      {/* Recent Transactions */}
     </section>
   );
 }
