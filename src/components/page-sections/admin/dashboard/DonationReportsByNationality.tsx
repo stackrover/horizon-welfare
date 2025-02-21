@@ -32,7 +32,7 @@ const COLORS = [
 const RADIAN = Math.PI / 180;
 
 export default function DonationReportByNationality() {
-  const { data, isLoading } = useSWR("/donations/reports/nationality");
+  const { data, isLoading } = useSWR("/reports/donations/nationality-graph");
 
   return (
     <Card className="rounded-xl bg-white">
@@ -134,7 +134,6 @@ const CustomizedTooltip = <TValue extends ValueType, TName extends NameType>({
   payload,
   label,
 }: TooltipProps<TValue, TName>) => {
-  console.log({ active, payload, label });
   if (active && payload && payload.length) {
     return (
       <div className="rounded-md border bg-white p-4">

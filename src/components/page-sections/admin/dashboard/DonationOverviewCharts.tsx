@@ -55,7 +55,7 @@ const formatNumber = (num: number) => {
 export const DonationOverviewCharts = () => {
   const [period, setPeriod] = React.useState("last_30_days");
 
-  const { data, isLoading } = useSWR("/donations/reports", { period });
+  const { data, isLoading } = useSWR("/reports/donations-graph", { period });
 
   return (
     <Card className="rounded-xl bg-white">

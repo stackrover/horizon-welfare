@@ -22,6 +22,7 @@ export const useSWR = (
   options?: SWRConfiguration,
 ) => {
   const sp = new URLSearchParams(validQueryObj(query || {}));
+
   const { data, error, isLoading, mutate } = useSWRInstance(
     `${url}?${sp.toString()}`,
     fetcher,
