@@ -122,12 +122,10 @@ const BarChartGraph = ({ data }: { data: Record<string, any>[] }) => {
           )}
         />
         <Bar
-          dataKey="BDT"
+          dataKey="total_amount"
           fill="hsl(var(--primary))"
           name="BDT (Bangladeshi Taka)"
         />
-        <Bar dataKey="USD" fill="#9ae600" name="USD (US Dollar)" />
-        <Bar dataKey="Others" fill="#7c86ff" name="Other Currencies" />
       </BarChart>
     </ResponsiveContainer>
   );
@@ -138,7 +136,6 @@ const CustomizedTooltip = <TValue extends ValueType, TName extends NameType>({
   payload,
   label,
 }: TooltipProps<TValue, TName>) => {
-  console.log({ active, payload, label });
   if (active && payload && payload.length) {
     return (
       <div className="rounded-md border bg-white p-4">
