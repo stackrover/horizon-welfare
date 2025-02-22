@@ -86,7 +86,7 @@ export default function DataTable<T>({
                       key={header.id}
                       colSpan={header.colSpan}
                       style={{ position: "relative", width: header.getSize() }}
-                      className="h-12 border-y px-5 text-left text-[11px] font-semibold uppercase leading-[15px] text-[#4B465C] md:text-[13px]"
+                      className="h-12 whitespace-nowrap border-y px-5 text-left text-[11px] font-semibold uppercase leading-[15px] text-[#4B465C] md:text-[13px]"
                     >
                       <div
                         {...{
