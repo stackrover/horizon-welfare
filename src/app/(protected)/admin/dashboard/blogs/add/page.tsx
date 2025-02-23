@@ -84,7 +84,7 @@ export default function BlogDetails() {
     if (title && !form.getValues("slug")) {
       form.setValue("slug", _.kebabCase(title));
     }
-  }, [title]);
+  }, [title, form]);
 
   return (
     <div className="flex-1 p-6 @container">
