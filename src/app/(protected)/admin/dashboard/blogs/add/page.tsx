@@ -65,16 +65,12 @@ export default function BlogDetails() {
       }
     });
 
-    try {
-      const response = await addBlog(fd);
-      if (response.status === "success") {
-        toast.success(response.message);
-        router.push("/admin/dashboard/blogs");
-      } else {
-        toast.error(response.message);
-      }
-    } catch (error) {
-      console.log({ error });
+    const response = await addBlog(fd);
+    if (response.status === "success") {
+      toast.success(response.message);
+      router.push("/admin/dashboard/blogs");
+    } else {
+      toast.error(response.message);
     }
   };
 
@@ -84,16 +80,12 @@ export default function BlogDetails() {
     if (title && !form.getValues("slug")) {
       form.setValue("slug", _.kebabCase(title));
     }
-  }, [title]);
+  }, [title, form]);
 
   return (
     <div className="flex-1 p-6 @container">
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit, (error) =>
-            console.log({ error }),
-          )}
-        >
+        <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-y-6 @5xl:flex-row @5xl:gap-x-6">
             <div className="flex h-fit flex-1 flex-col space-y-6 rounded-xl border bg-white px-6 py-4">
               <InputField
@@ -147,7 +139,6 @@ export default function BlogDetails() {
                         value={field.value || "active"}
                         onValueChange={(value) => {
                           field.onChange(value);
-                          console.log({ value });
                         }}
                       >
                         <SelectTrigger>

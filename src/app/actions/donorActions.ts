@@ -55,8 +55,6 @@ export const projectSubscriptionAction = async (
 
   const donorId = session?.user?.id;
 
-  console.log({ donorId, packageId });
-
   try {
     const res = await fetcher(`/project/subscription/${donorId}/${packageId}`, {
       method: "POST",

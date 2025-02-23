@@ -17,7 +17,7 @@ import { BlogCategory } from "@/data/blogs/blog-category";
 import { useSWR } from "@/hooks/use-swr";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import { CommandLoading } from "cmdk";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 type PropsType = {
   value: number | string;
@@ -33,12 +33,17 @@ export default function SelectBlogCategory({
 
   const { data, isLoading } = useSWR("/blog/category/list");
 
-  useEffect(() => {
+  const updateDefaultValues = useCallback(() => {
     if (!data || isLoading || !value) return;
     const current = data?.data?.results?.find((d: any) => d.id === +value);
     setSelected(new BlogCategory(current));
     onSelectChange(new BlogCategory(current));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, data, isLoading]);
+
+  useEffect(() => {
+    updateDefaultValues();
+  }, [updateDefaultValues]);
 
   const handleSelectChange = (cat: BlogCategory) => {
     setSelected(cat);

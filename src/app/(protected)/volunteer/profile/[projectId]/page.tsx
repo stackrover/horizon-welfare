@@ -17,8 +17,6 @@ export default async function AvailableProjectDetailsPage({
 
   const dataPromise = getData(`/volunteer/project/show/${projectId}`, token);
 
-  console.log({ projectId, userId });
-
   // check subscription status
   const checkDonorSubscriptionStatus = await getData(
     `/volunteer/subscription/check/${userId}/${projectId}`,

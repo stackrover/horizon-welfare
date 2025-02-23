@@ -36,7 +36,7 @@ export async function updateVolunteerPageHeroSectionData(formData: FormData) {
 
     return data;
   } catch (error) {
-    if (error && typeof error === "object" && "message" in error) {
+    if (error && typeof error === "object" && "message" in error && window) {
       logger.error(error?.message);
     }
     return { ...ERROR_OBJ_FORMAT, error: error };
@@ -77,7 +77,7 @@ export async function updateVolunteerProjectSectionData(
 
     return data;
   } catch (error) {
-    if (error && typeof error === "object" && "message" in error) {
+    if (error && typeof error === "object" && "message" in error && window) {
       logger.error(error?.message);
     }
     return { ...ERROR_OBJ_FORMAT, error: error };
@@ -114,7 +114,7 @@ export async function updateSuccessStories(formData: FormData) {
     }
     return data;
   } catch (error) {
-    if (error && typeof error === "object" && "message" in error) {
+    if (error && typeof error === "object" && "message" in error && window) {
       logger.error(error?.message);
     }
     return { ...ERROR_OBJ_FORMAT, error: error };
@@ -151,7 +151,7 @@ export async function updateDonorCtaBanner(formData: FormData) {
     }
     return data;
   } catch (error) {
-    if (error && typeof error === "object" && "message" in error) {
+    if (error && typeof error === "object" && "message" in error && window) {
       logger.error(error?.message);
     }
     return { ...ERROR_OBJ_FORMAT, error: error };

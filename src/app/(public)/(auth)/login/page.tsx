@@ -39,8 +39,6 @@ export default function Login() {
     try {
       const result = await singInWithCredentials(values);
 
-      console.log({ loginResult: result });
-
       if (result?.status === "error") {
         setError(result.message);
       }

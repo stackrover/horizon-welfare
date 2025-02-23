@@ -71,9 +71,10 @@ export default function BlogDetails() {
         category_id: d?.category_id,
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading, data]);
 
-  // handle form submittion
+  // handle form submission
   const onSubmit = async (formData: TFormData) => {
     const fd = new FormData();
 
@@ -157,7 +158,6 @@ export default function BlogDetails() {
                         value={field.value || "active"}
                         onValueChange={(value) => {
                           field.onChange(value);
-                          console.log({ value });
                         }}
                       >
                         <SelectTrigger>

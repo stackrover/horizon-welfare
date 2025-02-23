@@ -40,7 +40,7 @@ export function SubscriptionCard({
       currency: "BDT",
     });
 
-    if (resp.status === "success") {
+    if (resp.status === "success" && window) {
       window.location.href = resp.checkoutUrl;
     }
 
@@ -50,8 +50,6 @@ export function SubscriptionCard({
 
     setLoading(false);
   };
-
-  console.log(serializedData);
 
   return (
     <div

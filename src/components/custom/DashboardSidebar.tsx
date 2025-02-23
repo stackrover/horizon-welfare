@@ -7,7 +7,8 @@ const sidebarItems = [
     id: "overviews",
     title: "",
     childrens: [
-      { id: "dashboard", title: "Dashboard", pathname: "/" },
+      { id: "dashboard", title: "Dashboard", pathname: "" },
+      { id: "campaigns", title: "Campaigns", pathname: "/campaigns" },
       { id: "transactions", title: "Transactions", pathname: "/transactions" },
       { id: "donors", title: "Donors", pathname: "/donors" },
       { id: "volunteers", title: "Volunteers", pathname: "/volunteers" },

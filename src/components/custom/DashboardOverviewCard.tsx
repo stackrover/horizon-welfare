@@ -24,10 +24,10 @@ export function DashboardOverviewCard({
         className,
       )}
     >
-      <h5 className="mb-[19.6px] text-xl font-bold leading-[26px] text-foreground/70">
+      <h5 className="text-base font-semibold leading-[26px] text-foreground/70">
         {title}
       </h5>
-      <h1 className="text-[33.6px] font-bold leading-[45.83px] tracking-[1.2px] text-foreground">
+      <h1 className="text-2xl font-bold leading-[45.83px] tracking-[1.2px] text-foreground">
         {value}
       </h1>
       <div

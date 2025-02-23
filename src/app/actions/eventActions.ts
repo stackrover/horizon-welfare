@@ -15,16 +15,6 @@ export const subscribeEvent = async (
   try {
     formData.append("event_id", eventId.toString());
 
-    // const response = await axiosInstance.post(
-    //   "/event/subscriber/add",
-    //   formData,
-    //   {
-    //     signal: controller.signal,
-    //   },
-    // );
-
-    console.log({ formData });
-
     const res = await fetcher("/event/subscriber/add", {
       method: "POST",
       headers: {

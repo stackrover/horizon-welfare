@@ -7,7 +7,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 export function DonationCard({ cardData }: { cardData: ProjectType }) {
-  console.log({ cardData });
   const goalAmount = cardData?.goalAmount ? +cardData.goalAmount : 0;
 
   const totalCollection = cardData?.totalCollections

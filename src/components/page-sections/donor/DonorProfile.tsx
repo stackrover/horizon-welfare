@@ -41,8 +41,6 @@ export function DonorProfile({
   const serializedData =
     data.status === "success" ? new DonorData(data?.results) : null;
 
-  console.log(serializedData);
-
   const [file, setFile] = React.useState<File[]>([]);
   const [profileImg, setProfileImg] = React.useState<File[]>([]);
   const [profileData, setProfileData] = React.useState<DonorData>();
@@ -119,8 +117,6 @@ export function DonorProfile({
 
     // Call the action handler
     const response = await updateDonorProfileAction(formData, userId);
-
-    console.log({ response });
 
     if (response.status === "success") {
       toast.success(response.message);

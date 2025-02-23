@@ -16,8 +16,6 @@ export function DonorMonthlySubscribedPackages({
       ? data.results.map((item: any) => new DonorSubscribedProjectsData(item))
       : [];
 
-  console.log(serializedData);
-
   return (
     <main className="container">
       <div className="mt-10 flex flex-col gap-4 md:flex-row md:items-center">

@@ -8,6 +8,13 @@ import { Textarea } from "../ui/textarea";
 import { BlogSelection } from "./BlogSelection";
 import TextEditor from "./TextEditor";
 import UploadImage from "./UploadImage";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 interface FormFieldProps extends UseControllerProps {
   label?: string;
@@ -38,7 +45,14 @@ export default function InputField({
         </Label>
       )}
       {match(props.type)
-        .with("textarea", () => <Textarea {...field} className={className} />)
+        .with("textarea", () => (
+          <Textarea
+            {...field}
+            placeholder={props?.placeholder}
+            className={className}
+          />
+        ))
+
         .with("textEditor", () => (
           <TextEditor
             value={field.value}
@@ -83,6 +97,24 @@ export default function InputField({
             )}
             onFocus={(e) => e.target.select()}
           />
+        ))
+
+        .with("select", () => (
+          <Select
+            value={field.value?.toString()}
+            onValueChange={field.onChange}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder={props.placeholder} />
+            </SelectTrigger>
+            <SelectContent>
+              {props?.options?.map((opt) => (
+                <SelectItem key={opt.value} value={opt.value}>
+                  {opt.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         ))
 
         // native type

@@ -23,8 +23,6 @@ export function EventDetails() {
   const { eventId } = useParams();
   const { data, isLoading, isError } = useSWR(`/event/show/${eventId}`);
 
-  console.log(data);
-
   if (isLoading) {
     return <Loader className="h-screen" />;
   }

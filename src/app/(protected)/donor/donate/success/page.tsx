@@ -10,7 +10,6 @@ export default function ProjectDonationSuccess({
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const { trxId } = searchParams;
-  console.log(trxId);
   return (
     <main>
       <section className="flex h-[calc(100vh-250px)] flex-col items-center justify-center gap-y-4 px-4 md:gap-y-6">

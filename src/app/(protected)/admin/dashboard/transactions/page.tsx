@@ -2,11 +2,11 @@
 
 import DataTable from "@/components/data-table/Table";
 import TransactionDetail from "@/components/page-sections/admin/transaction/TransactionDetails";
+import { Button } from "@/components/ui/button";
 import { Transaction } from "@/data/transactions/Transaction";
 import { useSWR } from "@/hooks/use-swr";
 import _ from "lodash";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Button } from "../../../../../components/ui/button";
 
 export default function Transactions() {
   const { data, isLoading } = useSWR("/donor/donations");

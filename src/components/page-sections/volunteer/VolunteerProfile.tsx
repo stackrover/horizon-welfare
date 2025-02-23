@@ -154,8 +154,6 @@ export function VolunteerProfile({
     // Call the action handler
     const response = await updateVolunteerProfileAction(formData, userId);
 
-    console.log({ response });
-
     if (response.status === "success") {
       toast.success(response.message);
       setFile([]);
