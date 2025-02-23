@@ -33,8 +33,6 @@ export function ProjectDetailsPage({
 
   const serializedData = new Project(data?.results);
 
-  console.log({ data, serializedData });
-
   return (
     <main>
       {/* image gallery section  */}

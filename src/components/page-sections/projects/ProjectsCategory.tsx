@@ -20,7 +20,6 @@ export function ProjectsByCategory() {
     `/project/category/show/${params.projectCategory}`,
   );
 
-  console.log(data?.data);
   if (isLoading) {
     return <Loader className="h-[540px]" />;
   }

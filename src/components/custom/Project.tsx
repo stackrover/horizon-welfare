@@ -34,7 +34,6 @@ export function Project({
           toast.success(res.message);
           refresh();
         } else {
-          console.log({ res });
           toast.error(res.message);
         }
       }}

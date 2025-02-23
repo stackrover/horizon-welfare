@@ -55,8 +55,6 @@ export const projectStatusToggleAction = async (
 
   const volunteerId = session?.user?.id;
 
-  console.log({ volunteerId, packageId });
-
   try {
     const res = await fetcher(
       `/volunteer/toggle/joining/status/${volunteerId}/${packageId}`,

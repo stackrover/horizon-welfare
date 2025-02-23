@@ -16,8 +16,6 @@ export function NgoProjectSection() {
       ? data?.data.results.map((d: any) => new ProjectData2(d))
       : [];
 
-  console.log(serializedData);
-
   return (
     <SectionWrapper
       isLoading={isLoading}

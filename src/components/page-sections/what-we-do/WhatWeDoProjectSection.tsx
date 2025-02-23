@@ -26,8 +26,6 @@ export function WhatWeDoProjectSection({ className }: { className?: string }) {
       ? completedProjects?.data.results.map((d: any) => new ProjectData(d))
       : [];
 
-  console.log(projectData);
-
   return (
     <SectionWrapper
       isLoading={isLoading || projectLoading}

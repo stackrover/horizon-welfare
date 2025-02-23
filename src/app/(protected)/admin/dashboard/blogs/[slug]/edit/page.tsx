@@ -158,7 +158,6 @@ export default function BlogDetails() {
                         value={field.value || "active"}
                         onValueChange={(value) => {
                           field.onChange(value);
-                          console.log({ value });
                         }}
                       >
                         <SelectTrigger>

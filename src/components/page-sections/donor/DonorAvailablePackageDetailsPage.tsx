@@ -23,14 +23,9 @@ export function DonorAvailablePackageDetailsPage({
 }) {
   const data = React.use(dataPromise);
 
-  console.log(data);
-  console.log(Array.isArray(data?.results));
-
   const serializedData = data?.results
     ? new DonorAvailableProject(data?.results)
     : null;
-
-  console.log(serializedData);
 
   if (!serializedData) {
     return (

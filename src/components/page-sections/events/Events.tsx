@@ -16,8 +16,6 @@ export function Events() {
       ? data?.data.results.map((item: any) => new EventData(item))
       : [];
 
-  console.log(serializedData);
-
   return (
     <SectionWrapper
       isLoading={isLoading}

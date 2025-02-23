@@ -24,8 +24,6 @@ export function DonorPackageDetailsPage({
 }) {
   const data = React.use(dataPromise);
 
-  console.log(data);
-
   const serializedData = data?.results
     ? new DonorSubscribedProject(_.head(data?.results))
     : null;

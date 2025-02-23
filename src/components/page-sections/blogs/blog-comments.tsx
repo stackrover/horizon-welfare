@@ -35,8 +35,6 @@ export function BlogComments({
 
     // Ignore submission if honeypot field is filled (spam prevention)
     if (honeyPot) return;
-
-    console.log(comment, honeyPot);
   };
 
   return (

@@ -16,8 +16,6 @@ export function DonorAvailableProjects({
       ? data.results.map((item: any) => new DonorAvailableProjectData(item))
       : [];
 
-  console.log(data);
-
   return (
     <main className="container">
       <div className="mt-10 flex flex-col gap-4 md:flex-row md:items-center">

@@ -39,7 +39,9 @@ const OVERVIEWS = [
 export const DashboardStatistics = () => {
   const { data, isLoading } = useSWR("/reports/dashboard-statistics");
 
-  console.log({ data });
+  if (isLoading) {
+    return <div className="py-5 text-center"> Loading... </div>;
+  }
 
   return (
     <div className="mb-5 grid grid-cols-12 gap-5 @container">
