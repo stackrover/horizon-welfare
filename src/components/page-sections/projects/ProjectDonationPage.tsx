@@ -24,8 +24,6 @@ export function ProjectDonation({
 
   const serializedData = new Project(data?.results);
 
-  console.log({ session });
-
   const handleDonation = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -40,7 +38,7 @@ export function ProjectDonation({
       currency: "BDT",
     });
 
-    if (resp.status === "success") {
+    if (resp.status === "success" && window) {
       window.location.href = resp.checkoutUrl;
     }
   };

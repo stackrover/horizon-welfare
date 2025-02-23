@@ -115,7 +115,7 @@ export function DonorTransactions({
     }
   }, [date?.from, date?.to, serializedData]);
 
-  const columns: ColumnDef<Person>[] = React.useMemo(
+  const columns: ColumnDef<DonorTransaction>[] = React.useMemo(
     () => [
       {
         accessorKey: "createdAt",
@@ -203,7 +203,7 @@ export function DonorTransactions({
       </h1>
       <DataTable
         data={tableData}
-        columns={columns}
+        columns={columns as any}
         elements={
           <div className="flex items-center gap-2">
             <Popover>
