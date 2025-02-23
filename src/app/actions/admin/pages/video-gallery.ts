@@ -36,7 +36,7 @@ export async function updateVideoGallaryHero(formData: FormData) {
     }
     return data;
   } catch (error) {
-    if (error && typeof error === "object" && "message" in error) {
+    if (error && typeof error === "object" && "message" in error && window) {
       logger.error(error?.message);
     }
     return { ...ERROR_OBJ_FORMAT, error: error };
@@ -69,7 +69,7 @@ export async function addNewVideoOnGallery(formData: FormData) {
     revalidatePath("/admin/dashboard/pages/media-center", "page");
     return data;
   } catch (error) {
-    if (error && typeof error === "object" && "message" in error) {
+    if (error && typeof error === "object" && "message" in error && window) {
       logger.error(error?.message);
     }
     return { ...ERROR_OBJ_FORMAT, error: error };

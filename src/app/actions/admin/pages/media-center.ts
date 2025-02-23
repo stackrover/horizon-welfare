@@ -36,7 +36,7 @@ export async function updateMediaPageHeroSection(formData: FormData) {
     }
     return data;
   } catch (error) {
-    if (error && typeof error === "object" && "message" in error) {
+    if (error && typeof error === "object" && "message" in error && window) {
       logger.error(error?.message);
     }
     return { ...ERROR_OBJ_FORMAT, error: error };
@@ -73,7 +73,7 @@ export async function updateMediaPageCTASection(formData: FormData) {
     }
     return data;
   } catch (error) {
-    if (error && typeof error === "object" && "message" in error) {
+    if (error && typeof error === "object" && "message" in error && window) {
       logger.error(error?.message);
     }
     return { ...ERROR_OBJ_FORMAT, error: error };
