@@ -4,7 +4,6 @@ import { auth } from "@/auth";
 import { ERROR_OBJ_FORMAT } from "@/constants/error-obj-format";
 import { fetcher } from "@/lib/fetcher";
 import { revalidatePath } from "next/cache";
-import logger from "@/utils/logger";
 
 export async function updateVolunteerPageHeroSectionData(formData: FormData) {
   const controller = new AbortController();
@@ -36,9 +35,6 @@ export async function updateVolunteerPageHeroSectionData(formData: FormData) {
 
     return data;
   } catch (error) {
-    if (error && typeof error === "object" && "message" in error && window) {
-      logger.error(error?.message);
-    }
     return { ...ERROR_OBJ_FORMAT, error: error };
   }
 }
@@ -77,9 +73,6 @@ export async function updateVolunteerProjectSectionData(
 
     return data;
   } catch (error) {
-    if (error && typeof error === "object" && "message" in error && window) {
-      logger.error(error?.message);
-    }
     return { ...ERROR_OBJ_FORMAT, error: error };
   }
 }
@@ -114,9 +107,6 @@ export async function updateSuccessStories(formData: FormData) {
     }
     return data;
   } catch (error) {
-    if (error && typeof error === "object" && "message" in error && window) {
-      logger.error(error?.message);
-    }
     return { ...ERROR_OBJ_FORMAT, error: error };
   }
 }
@@ -151,9 +141,6 @@ export async function updateDonorCtaBanner(formData: FormData) {
     }
     return data;
   } catch (error) {
-    if (error && typeof error === "object" && "message" in error && window) {
-      logger.error(error?.message);
-    }
     return { ...ERROR_OBJ_FORMAT, error: error };
   }
 }

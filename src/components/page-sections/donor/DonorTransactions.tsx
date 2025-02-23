@@ -7,7 +7,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Person } from "@/lib/makeData";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import {
   IconCopy,

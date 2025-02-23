@@ -124,7 +124,7 @@ export function ServiceSection({ dataPromise }: { dataPromise: Promise<any> }) {
           <Label className="flex cursor-pointer items-center gap-2">
             <Checkbox
               defaultChecked={form.getValues("status") === "active"}
-              onCheckedChange={(checked) => {
+              onCheckedChange={(checked: any) => {
                 if (checked) {
                   form.setValue("status", "active");
                 } else {

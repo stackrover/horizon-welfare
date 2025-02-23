@@ -4,7 +4,6 @@ import { auth } from "@/auth";
 import { ERROR_OBJ_FORMAT } from "@/constants/error-obj-format";
 import { fetcher } from "@/lib/fetcher";
 import { revalidatePath } from "next/cache";
-import logger from "@/utils/logger";
 
 // Update media center page hero section data
 export async function updateMediaPageHeroSection(formData: FormData) {
@@ -36,9 +35,6 @@ export async function updateMediaPageHeroSection(formData: FormData) {
     }
     return data;
   } catch (error) {
-    if (error && typeof error === "object" && "message" in error && window) {
-      logger.error(error?.message);
-    }
     return { ...ERROR_OBJ_FORMAT, error: error };
   }
 }
@@ -73,9 +69,6 @@ export async function updateMediaPageCTASection(formData: FormData) {
     }
     return data;
   } catch (error) {
-    if (error && typeof error === "object" && "message" in error && window) {
-      logger.error(error?.message);
-    }
     return { ...ERROR_OBJ_FORMAT, error: error };
   }
 }
