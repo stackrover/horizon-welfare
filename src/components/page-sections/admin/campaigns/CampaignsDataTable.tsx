@@ -1,9 +1,12 @@
 "use client";
 
-import React from "react";
-import { useSWR } from "@/hooks/use-swr";
 import DataTable from "@/components/data-table/Table";
+import { Button } from "@/components/ui/button";
+import { useSWR } from "@/hooks/use-swr";
+import { TrashIcon } from "@radix-ui/react-icons";
 import { addDays, format } from "date-fns";
+import _ from "lodash";
+import { Trash2 } from "lucide-react";
 
 export const CampaignsDataTable = () => {
   const { data, isLoading } = useSWR("/project/list-details");
@@ -72,7 +75,14 @@ export const CampaignsDataTable = () => {
             id: "status",
             header: "Status",
             accessorKey: "status",
-            cell: (info) => info.getValue(),
+            cell: (info) => (
+              <span
+                data-status={info.getValue()}
+                className="rounded px-2 py-0.5 text-xs font-medium data-[status=active]:bg-green-100 data-[status=inactive]:bg-red-100 data-[status=pending]:bg-orange-100 data-[status=active]:text-green-500 data-[status=inactive]:text-red-500 data-[status=pending]:text-orange-500"
+              >
+                {_.startCase((info.getValue() as string) || "")}
+              </span>
+            ),
           },
         ]}
       />
