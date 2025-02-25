@@ -17,6 +17,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
+import { CreateCategory } from "@/components/custom/CreateCategory";
 
 type ProjectFormData = z.infer<typeof projectSchema>;
 
@@ -133,10 +134,14 @@ export default function AddCampaign() {
                       <FormLabel className="text-sm font-medium text-gray-500">
                         Category
                       </FormLabel>
-                      <SelectProjectCategory
-                        value={field.value}
-                        onSelectChange={field.onChange}
-                      />
+                      <div className="flex items-center gap-4">
+                        <SelectProjectCategory
+                          value={field.value}
+                          onSelectChange={field.onChange}
+                        />
+
+                        <CreateCategory />
+                      </div>
                       <FormMessage />
                     </FormItem>
                   )}
