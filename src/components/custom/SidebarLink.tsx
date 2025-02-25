@@ -15,7 +15,9 @@ export function SidebarLink({ title, url, className }: SidebarLinkProps) {
 
   return (
     <Link
-      data-active={pathname === url}
+      data-active={
+        url === "/admin/dashboard" ? pathname === url : pathname.startsWith(url)
+      }
       href={url}
       className={cn(
         'group relative mb-1 block w-full px-3 text-base font-semibold before:absolute before:inset-y-0 before:left-0 before:top-0 before:w-1 before:rounded-r-md before:content-[""] data-[active="true"]:before:bg-primary active:[&>span]:bg-primary/50',

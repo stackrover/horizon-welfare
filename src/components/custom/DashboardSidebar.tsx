@@ -35,16 +35,13 @@ const sidebarItems = [
   {
     id: "site-management",
     title: "",
-    childrens: [
-      { id: "settings", title: "Settings", pathname: "/settings" },
-      { id: "logout", title: "Logout", pathname: "/logout" },
-    ],
+    childrens: [{ id: "settings", title: "Settings", pathname: "/settings" }],
   },
 ];
 
 export function DashboardSiebar() {
   return (
-    <div className="sticky inset-y-0 top-0 h-screen w-72 border-r bg-white">
+    <div className="sticky inset-y-0 top-0 z-10 h-screen w-72 border-r bg-white">
       {/* Logo */}
       <div className="px-4 py-2">
         <Image
