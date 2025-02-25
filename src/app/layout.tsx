@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { Toaster } from "react-hot-toast";
+import AppProvider from "../providers/Provider";
 import "./globals.css";
 
 const plusJakartaSans = Plus_Jakarta_Sans({ subsets: ["latin"] });
@@ -25,12 +26,14 @@ export default function RootLayout({
         className={`!${plusJakartaSans.className} antialiased`}
         style={plusJakartaSans.style}
       >
-        <Toaster />
-        <SessionProvider>
-          <Children>{children}</Children>
-        </SessionProvider>
-        <Toaster />
-        <ShadCnToaster />
+        <AppProvider>
+          <Toaster />
+          <SessionProvider>
+            <Children>{children}</Children>
+          </SessionProvider>
+          <Toaster />
+          <ShadCnToaster />
+        </AppProvider>
       </body>
     </html>
   );
