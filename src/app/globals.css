@@ -41,7 +41,7 @@
 
 @media only screen and (min-width: 768px) {
   html,
-  body {
+  tody {
     --removed-body-scroll-bar-width: 15px !important;
   }
 
