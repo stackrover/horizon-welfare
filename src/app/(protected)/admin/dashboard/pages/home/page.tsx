@@ -8,41 +8,32 @@ import { getData } from "@/hooks/get-data";
 import { Loader } from "@/components";
 import { Accordion } from "@/components/ui/accordion";
 
-export default function DashboardHomeHeroSection() {
-  // hero section data
-  const heroSectionData = getData("/home/hero", null, {
-    next: { tags: ["hello"] },
-  });
+async function fetchSectionsData() {
+  const [heroSectionData, serviceSectionData, galleriesSectionData] =
+    await Promise.all([
+      getData("/home/hero", null, { next: { tags: ["hello"] } }),
+      getData("/home/service", null, { next: { tags: ["homeSerivce"] } }),
+      getData("/home/gallery", null, { next: { tags: ["galleriesSection"] } }),
+    ]);
 
-  // service section data
-  const serviceSectionData = getData("/home/service", null, {
-    next: { tags: ["homeSerivce"] },
-  });
+  return { heroSectionData, serviceSectionData, galleriesSectionData };
+}
 
-  // gallery section data
-  const galleriesSectionData = getData("/home/gallery", null, {
-    next: { tags: ["homeSerivce"] },
-  });
+export default async function DashboardHomeHeroSection() {
+  const { heroSectionData, serviceSectionData, galleriesSectionData } =
+    await fetchSectionsData();
 
   return (
     <section className="space-y-6 p-6">
       <h1 className="text-2xl font-bold"> Home page </h1>
 
-      <Accordion type="multiple" className="flex flex-col space-y-6">
-        <Suspense fallback={<Loader />}>
-          <HeroSection dataPromise={heroSectionData} />
-        </Suspense>
-
-        {/* Service section */}
-        <Suspense fallback={<Loader />}>
-          <ServiceSection dataPromise={serviceSectionData} />
-        </Suspense>
-
-        {/* Gallery section */}
-        <Suspense fallback={<Loader />}>
-          <GallerySection dataPromise={galleriesSectionData} />
-        </Suspense>
-      </Accordion>
+      <Suspense fallback={<Loader />}>
+        <Accordion type="multiple" className="flex flex-col space-y-6">
+          <HeroSection data={heroSectionData} />
+          <ServiceSection data={serviceSectionData} />
+          <GallerySection data={galleriesSectionData} />
+        </Accordion>
+      </Suspense>
     </section>
   );
 }

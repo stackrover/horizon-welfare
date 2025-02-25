@@ -12,16 +12,13 @@ import { Label } from "@/components/ui/label";
 import { getImageURL } from "@/lib/utils";
 import { HeroSectionData } from "@/types/types";
 import { head } from "lodash";
-import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 
-export function HeroSection({ dataPromise }: { dataPromise: Promise<any> }) {
-  const data = React.use(dataPromise);
-
-  const editData = head(data.results) as HeroSectionData;
+export function HeroSection({ data }: { data: any }) {
+  const editData = head(data?.results) as HeroSectionData;
 
   // form fields
   const formFields = [
@@ -92,7 +89,7 @@ export function HeroSection({ dataPromise }: { dataPromise: Promise<any> }) {
           <Label className="flex cursor-pointer items-center gap-2">
             <Checkbox
               defaultChecked={form.getValues("status") === "active"}
-              onCheckedChange={(checked) => {
+              onCheckedChange={(checked: any) => {
                 if (checked) {
                   form.setValue("status", "active");
                 } else {

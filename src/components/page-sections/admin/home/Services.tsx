@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { getImageURL } from "@/lib/utils";
 import { head } from "lodash";
-import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -18,8 +17,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-export function ServiceSection({ dataPromise }: { dataPromise: Promise<any> }) {
-  const data = React.use(dataPromise);
+export function ServiceSection({ data }: { data: any }) {
   const serviceData = head(data.results) as HomePageServiceCardData;
 
   // form fields
@@ -124,7 +122,7 @@ export function ServiceSection({ dataPromise }: { dataPromise: Promise<any> }) {
           <Label className="flex cursor-pointer items-center gap-2">
             <Checkbox
               defaultChecked={form.getValues("status") === "active"}
-              onCheckedChange={(checked) => {
+              onCheckedChange={(checked: any) => {
                 if (checked) {
                   form.setValue("status", "active");
                 } else {

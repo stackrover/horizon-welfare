@@ -14,12 +14,11 @@ import { Form } from "@/components/ui/form";
 import { getImageURL } from "@/lib/utils";
 import { HomePageGalleryData, HomePageServiceCardData } from "@/types/types";
 import { head } from "lodash";
-import React from "react";
+
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
-export function GallerySection({ dataPromise }: { dataPromise: Promise<any> }) {
-  const data = React.use(dataPromise);
+export function GallerySection({ data }: { data: any }) {
   const editData = head(data.results) as HomePageGalleryData;
 
   // form fields
@@ -168,7 +167,7 @@ export function GallerySection({ dataPromise }: { dataPromise: Promise<any> }) {
           <Label className="flex cursor-pointer items-center gap-2 space-y-0">
             <Checkbox
               defaultChecked={form.getValues("status") === "active"}
-              onCheckedChange={(checked) => {
+              onCheckedChange={(checked: any) => {
                 if (checked) {
                   form.setValue("status", "active");
                 } else {
