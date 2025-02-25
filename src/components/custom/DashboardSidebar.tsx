@@ -13,6 +13,7 @@ const sidebarItems = [
       { id: "donors", title: "Donors", pathname: "/donors" },
       { id: "volunteers", title: "Volunteers", pathname: "/volunteers" },
       { id: "blogs", title: "Blogs", pathname: "/blogs" },
+      { id: "events", title: "Events", pathname: "/events" },
     ],
   },
   {
@@ -22,14 +23,16 @@ const sidebarItems = [
     childrens: [
       { id: "home", title: "Home", pathname: "/home" },
       { id: "what-we-do", title: "What we do", pathname: "/what-we-do" },
-      { id: "volunteers", title: "Volunteers", pathname: "/volunteers" },
       { id: "media-center", title: "Media center", pathname: "/media-center" },
       { id: "donate-now", title: "Donate now", pathname: "/donate-now" },
+      { id: "events", title: "Events", pathname: "/events" },
       {
         id: "video-gallery",
         title: "Video gallery",
         pathname: "/video-gallery",
       },
+      { id: "contact-us", title: "Contact us", pathname: "/contact-us" },
+      { id: "about-us", title: "About us", pathname: "/about-us" },
     ],
   },
   {
