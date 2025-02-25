@@ -1,6 +1,9 @@
+"use client";
+
+import dynamic from "next/dynamic";
 import * as React from "react";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 type TextEditorProps = {
   value: string;
@@ -16,10 +19,12 @@ export default function TextEditor({
   ...props
 }: TextEditorProps) {
   return (
-    <ReactQuill
-      value={value}
-      onChange={onValueChange}
-      placeholder={props?.placeholder || ""}
-    />
+    <React.Suspense fallback={<div>Loading...</div>}>
+      <ReactQuill
+        value={value}
+        onChange={onValueChange}
+        placeholder={props?.placeholder || ""}
+      />
+    </React.Suspense>
   );
 }
