@@ -1,20 +1,18 @@
 "use client";
 
 import DataTable from "@/components/data-table/Table";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { EventDetail } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
-import { Plus } from "lucide-react";
-import Link from "next/link";
-import { getImageURL } from "../../../../../lib/utils";
-import Image from "next/image";
+import { getImageURL } from "@/lib/utils";
 import _ from "lodash";
-import { Badge } from "../../../../../components/ui/badge";
+import { Plus } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Events() {
   const { data, isLoading } = useSWR("/event/list/all");
-
-  console.log({ data });
 
   if (isLoading) {
     return <div className="py-20 text-center"> Loading... </div>;
@@ -24,8 +22,6 @@ export default function Events() {
     (event: any) => new EventDetail(event),
   ) as EventDetail[];
 
-  console.log({ events });
-
   return (
     <section className="grid grid-cols-12 gap-4 p-6">
       {/* Page header */}
@@ -34,7 +30,7 @@ export default function Events() {
         <div className="flex w-full items-center justify-between gap-4">
           <h2 className="text-2xl font-bold"> Events </h2>
           <Button asChild className="gap-2">
-            <Link href="/">
+            <Link href="/admin/dashboard/events/add">
               <Plus size={18} />
               <span> Event </span>
             </Link>
@@ -131,6 +127,7 @@ export default function Events() {
               id: "status",
               header: "Status",
               accessorKey: "status",
+              enableSorting: false,
               cell: (i) => (
                 <Badge
                   variant={
