@@ -46,9 +46,9 @@ export const SelectProject = ({
                 </SelectItem>
               ))
               .otherwise(() =>
-                projects.map((category) => (
-                  <SelectItem key={category.id} value={category.id?.toString()}>
-                    {category.title}
+                projects.map((project) => (
+                  <SelectItem key={project.id} value={project.id?.toString()}>
+                    {project.title}
                   </SelectItem>
                 )),
               ),
