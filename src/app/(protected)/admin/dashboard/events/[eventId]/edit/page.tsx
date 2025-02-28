@@ -20,8 +20,6 @@ export default function EditEvent() {
 
   const { data, isLoading } = useSWR(`/event/show/${params.eventId}`);
 
-  console.log({ data, isLoading });
-
   // Function to handle form submission
   const onSubmit = async (fd: EventFormData, form: UseFormReturn) => {
     const formData = new FormData();
