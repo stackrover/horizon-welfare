@@ -7,6 +7,10 @@ import { EventCreateSchema } from "@/schemas/eventSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { createEvent } from "@/app/actions/admin/events";
+import toast from "react-hot-toast";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type EventFormData = z.infer<typeof EventCreateSchema>;
 
@@ -31,14 +35,26 @@ const EventFormFields = [
   {
     group: "group2",
     items: [
-      { name: "schedule_date", type: "text", label: "Schedule date" },
-      { name: "schedule_time", type: "text", label: "Schedule time" },
+      {
+        name: "schedule_date",
+        type: "date",
+        label: "Schedule date",
+      },
+      {
+        name: "schedule_time",
+        type: "time",
+        label: "Schedule time",
+        className: "w-full appearance-none",
+      },
       { name: "description", type: "textEditor", label: "Description" },
     ],
   },
 ];
 
 export default function AddNewEvent() {
+  const router = useRouter();
+
+  // Form hook
   const form = useForm<EventFormData>({
     resolver: zodResolver(EventCreateSchema),
     defaultValues: {
@@ -52,19 +68,37 @@ export default function AddNewEvent() {
       zoom_link: "",
       schedule_date: "",
       schedule_time: "",
+      status: "upcoming",
     },
   });
 
-  const onSubmit = (fd: EventFormData) => {
-    console.log({ fd });
+  // Function to handle form submission
+  const onSubmit = async (fd: EventFormData) => {
+    const formData = new FormData();
+    Object.entries(fd).forEach(([key, value]) => {
+      formData.append(key, value || "");
+    });
+
+    const res = await createEvent(formData);
+
+    if (res.status === "success") {
+      toast.success(res.message);
+      form.reset();
+      router.push("/admin/dashboard/events");
+    } else {
+      toast.error(res.message);
+    }
   };
 
   return (
     <div className="w-full p-6">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="mb-6">
+          <div className="mb-6 flex items-center justify-between gap-4">
             <h1 className="text-2xl font-bold"> Create event </h1>
+            <Button asChild>
+              <Link href="/admin/dashboard/events"> Back </Link>
+            </Button>
           </div>
           <div className="grid grid-cols-12 gap-x-6 gap-y-4 @container">
             {EventFormFields.map((group) => (

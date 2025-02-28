@@ -3,7 +3,7 @@ import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { useController, UseControllerProps } from "react-hook-form";
 import { match } from "ts-pattern";
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "../ui/textarea";
 import { BlogSelection } from "./BlogSelection";
 import TextEditor from "./TextEditor";
@@ -16,6 +16,7 @@ import {
   SelectValue,
 } from "../ui/select";
 import { SelectProject } from "./SelectProject";
+import DatePicker from "./DatePicker";
 
 interface FormFieldProps extends UseControllerProps {
   label?: string;
@@ -121,12 +122,19 @@ export default function InputField({
           </Select>
         ))
 
+        .with("date", () => (
+          <DatePicker
+            value={field.value}
+            onChange={field.onChange}
+            format="yyyy-MM-dd"
+          />
+        ))
+
         // native type
         .with(
           "text",
           "email",
           "password",
-          "date",
           "tel",
           "url",
           "search",

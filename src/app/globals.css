@@ -282,3 +282,16 @@ body {
 .ql-container {
   max-height: calc(100% - 50px) !important;
 }
+
+input[type="time"] {
+  position: relative;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+  color: #999;
+  position: absolute;
+  z-index: 0;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+}

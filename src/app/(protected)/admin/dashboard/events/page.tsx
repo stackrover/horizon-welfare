@@ -1,18 +1,20 @@
 "use client";
 
 import DataTable from "@/components/data-table/Table";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { EventDetail } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
 import { getImageURL } from "@/lib/utils";
-import _ from "lodash";
+import { format } from "date-fns";
 import { Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import UpdateEventStatus from "@/components/forms/UpdateEventStatus";
+import { IconEdit, IconEye } from "@tabler/icons-react";
+import EventDeleteButton from "@/components/forms/EventDeleteButton";
 
 export default function Events() {
-  const { data, isLoading } = useSWR("/event/list/all");
+  const { data, isLoading, refresh } = useSWR("/event/list/all");
 
   if (isLoading) {
     return <div className="py-20 text-center"> Loading... </div>;
@@ -52,7 +54,8 @@ export default function Events() {
             {
               id: "scheduleDate",
               header: "Schedule Date",
-              accessorFn: (row) => `${row.scheduleDate} ${row.scheduleTime}`,
+              accessorFn: (row) =>
+                `${row.scheduleDate} ${format(new Date(row.scheduleDate), "hh:mm a")}`,
               cell: (i) => i.getValue(),
             },
             {
@@ -129,24 +132,48 @@ export default function Events() {
               accessorKey: "status",
               enableSorting: false,
               cell: (i) => (
-                <Badge
-                  variant={
-                    {
-                      active: "info",
-                      pending: "warning",
-                      completed: "success",
-                      cancelled: "error",
-                    }[
-                      i.getValue() as
-                        | "active"
-                        | "pending"
-                        | "completed"
-                        | "cancelled"
-                    ] as any
-                  }
-                >
-                  {_.startCase(i.getValue() as string)}
-                </Badge>
+                <UpdateEventStatus event={i.row.original} refresh={refresh} />
+              ),
+            },
+
+            {
+              id: "action",
+              header: "Action",
+              enableSorting: false,
+              cell: ({ row }) => (
+                <div className="flex items-center gap-0.5">
+                  {/* Preview button */}
+                  <Button
+                    asChild
+                    variant="ghost"
+                    size="icon"
+                    className="text-gray-500"
+                  >
+                    <Link href={`/events/${row.original.id}`}>
+                      <IconEye />
+                    </Link>
+                  </Button>
+
+                  {/* Edit button */}
+                  <Button
+                    asChild
+                    variant="ghost"
+                    size="icon"
+                    className="text-gray-500"
+                  >
+                    <Link
+                      href={`/admin/dashboard/events/${row.original.id}/edit`}
+                    >
+                      <IconEdit />
+                    </Link>
+                  </Button>
+
+                  {/* Delete button */}
+                  <EventDeleteButton
+                    eventId={row.original.id}
+                    refresh={refresh}
+                  />
+                </div>
               ),
             },
           ]}
