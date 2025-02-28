@@ -15,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { SelectProject } from "./SelectProject";
 
 interface FormFieldProps extends UseControllerProps {
   label?: string;
@@ -84,6 +85,9 @@ export default function InputField({
 
         .with("blogSelection", () => (
           <BlogSelection value={field.value} onSelect={field.onChange} />
+        ))
+        .with("selectProject", () => (
+          <SelectProject value={field.value} onSelectChange={field.onChange} />
         ))
 
         .with("number", () => (

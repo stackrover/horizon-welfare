@@ -1,12 +1,12 @@
 "use client";
 
 import InputField from "@/components/forms/InputField";
+import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { EventCreateSchema } from "@/schemas/eventSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "../../../../../../components/ui/button";
 
 type EventFormData = z.infer<typeof EventCreateSchema>;
 
@@ -20,7 +20,7 @@ const EventFormFields = [
         label: "Thumbnail",
         className: "border-black/20",
       },
-      { name: "project_id", type: "text", label: "Project" },
+      { name: "project_id", type: "selectProject", label: "Project" },
       { name: "title", type: "text", label: "Title" },
       { name: "location", type: "text", label: "Location" },
       { name: "map_link", type: "url", label: "Map link" },
