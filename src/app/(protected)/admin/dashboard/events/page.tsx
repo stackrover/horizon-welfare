@@ -48,14 +48,19 @@ export default function Events() {
               id: "eventId",
               header: "#",
               accessorKey: "id",
+              maxSize: 120,
               cell: (i) => i.getValue(),
             },
 
             {
               id: "scheduleDate",
               header: "Schedule Date",
-              accessorFn: (row) =>
-                `${row.scheduleDate} ${format(new Date(row.scheduleDate), "hh:mm a")}`,
+              accessorFn: (row) => (
+                <span>
+                  {row.scheduleDate} <br />
+                  {format(new Date(row.scheduleDate), "hh:mm a")}
+                </span>
+              ),
               cell: (i) => i.getValue(),
             },
             {

@@ -1,3 +1,20 @@
+enum nameEnum {
+  id = "id",
+  title = "title",
+  focusTitle = "focus_title",
+  description = "description",
+  mobileNumber = "mobile_number",
+  phoneNumber = "phone_number",
+  email = "email",
+  headOfficeAddress = "head_office_address",
+  branchOfficeAddress = "branch_office_address",
+  mapLink = "map_link",
+  status = "status",
+  updatedBy = "updated_by",
+  createdAt = "created_at",
+  updatedAt = "updated_at",
+}
+
 export class ContactUsContent {
   id: number;
   title: string;
@@ -14,6 +31,8 @@ export class ContactUsContent {
   createdAt: string;
   updatedAt: string;
 
+  original: any;
+
   constructor(data: any) {
     this.id = data.id;
     this.title = data.title;
@@ -29,5 +48,15 @@ export class ContactUsContent {
     this.updatedBy = data.updated_by;
     this.createdAt = data.created_at;
     this.updatedAt = data.updated_at;
+
+    this.original = data;
+  }
+
+  getFormData() {
+    return this.original;
+  }
+
+  getInputName(name: keyof typeof nameEnum): string {
+    return nameEnum[name];
   }
 }
