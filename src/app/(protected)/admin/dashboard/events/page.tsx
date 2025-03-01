@@ -42,7 +42,7 @@ export default function Events() {
 
       <div className="col-span-12">
         <DataTable
-          data={events}
+          data={events || []}
           columns={[
             {
               id: "eventId",
