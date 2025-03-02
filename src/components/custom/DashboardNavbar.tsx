@@ -1,10 +1,6 @@
-import {
-  IconBell,
-  IconChevronDown,
-  IconLogout2,
-  IconSettings,
-  IconUser,
-} from "@tabler/icons-react";
+import { IconBell, IconChevronDown, IconLogout } from "@tabler/icons-react";
+import { handleSignOut } from "../../app/actions/authActions";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import {
   DropdownMenu,
@@ -12,7 +8,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar";
 
 export function DashboardNavbar() {
   return (
@@ -23,7 +18,7 @@ export function DashboardNavbar() {
         </Button>
 
         {/* Profile dropdown */}
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
           <DropdownMenuTrigger className="flex items-center gap-6 text-left">
             <div className="flex items-center gap-2">
               <Avatar className="">
@@ -39,16 +34,20 @@ export function DashboardNavbar() {
             <IconChevronDown size={16} />
           </DropdownMenuTrigger>
           <DropdownMenuContent className="min-w-[var(--radix-dropdown-menu-trigger-width)]">
-            <DropdownMenuItem className="flex flex-row items-center gap-1.5">
+            {/* <DropdownMenuItem className="flex flex-row items-center gap-1.5">
               <IconUser size={17} /> Profile
-            </DropdownMenuItem>
-            <DropdownMenuItem className="flex flex-row items-center gap-1.5">
+            </DropdownMenuItem> */}
+            {/* <DropdownMenuItem className="flex flex-row items-center gap-1.5">
               <IconSettings size={17} /> Settings
-            </DropdownMenuItem>
-            <DropdownMenuItem className="flex flex-row items-center gap-1.5">
-              <IconLogout2 size={17} />
-              Logout
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
+            <form action={handleSignOut}>
+              <button type="submit" className="w-full">
+                <DropdownMenuItem className="gap-x-2 py-2 font-semibold text-base-300">
+                  <IconLogout size={20} />
+                  <span>Logout</span>
+                </DropdownMenuItem>
+              </button>
+            </form>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

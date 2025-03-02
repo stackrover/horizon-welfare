@@ -1,6 +1,7 @@
-import Image from "next/image";
-import _ from "lodash";
 import { SidebarLink } from "@/components";
+import _ from "lodash";
+import Image from "next/image";
+import { handleSignOut } from "../../app/actions/authActions";
 
 const sidebarItems = [
   {
@@ -36,7 +37,7 @@ const sidebarItems = [
     id: "site-management",
     title: "",
     childrens: [
-      { id: "settings", title: "Settings", pathname: "/settings" },
+      // { id: "settings", title: "Settings", pathname: "/settings" },
       { id: "logout", title: "Logout", pathname: "/logout" },
     ],
   },
@@ -67,15 +68,31 @@ export function DashboardSiebar() {
               {_.toUpper(item.title)}
             </li>
           ) : null}
-          {_.map(item.childrens, (child) => (
-            <li key={child.id}>
-              <SidebarLink
-                key={child.id}
-                title={child.title}
-                url={`/admin/dashboard${item.prefix ? `${item.prefix}` : ""}${child.pathname}`}
-              />
-            </li>
-          ))}
+          {_.map(item.childrens, (child) =>
+            child.title === "Logout" ? (
+              <li key={child.id} className="w-full">
+                <form
+                  action={handleSignOut}
+                  className="mb-1 block w-full px-3 text-base font-semibold"
+                >
+                  <button
+                    type="submit"
+                    className="flex w-full items-center justify-start rounded-md px-4 py-2 hover:bg-primary/30"
+                  >
+                    Logout
+                  </button>
+                </form>
+              </li>
+            ) : (
+              <li key={child.id}>
+                <SidebarLink
+                  key={child.id}
+                  title={child.title}
+                  url={`/admin/dashboard${item.prefix ? `${item.prefix}` : ""}${child.pathname}`}
+                />
+              </li>
+            ),
+          )}
         </ul>
       ))}
     </div>
