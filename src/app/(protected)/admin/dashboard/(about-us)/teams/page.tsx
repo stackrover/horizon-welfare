@@ -1,7 +1,6 @@
 "use client";
 
 import DataTable from "@/components/data-table/Table";
-import TeamMemberAddButton from "@/components/page-sections/admin/teams/TeamMemberAddButton";
 import { Button } from "@/components/ui/button";
 import { TeamMember } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
@@ -12,6 +11,11 @@ import {
   IconBrandTwitter,
 } from "@tabler/icons-react";
 import Image from "next/image";
+import {
+  TeamMemberAddButton,
+  TeamMemberDataEditButton,
+  TeamMemberDeleteButton,
+} from "@/components/page-sections/admin";
 
 export default function OurTeams() {
   const { data, isLoading, refresh } = useSWR("/about/page/team/member/list");
@@ -106,6 +110,23 @@ export default function OurTeams() {
                       </a>
                     </Button>
                   ))}
+                </div>
+              ),
+            },
+            {
+              id: "action",
+              header: "Action",
+              enableSorting: false,
+              cell: ({ row }) => (
+                <div className="flex items-center">
+                  <TeamMemberDataEditButton
+                    refresh={refresh}
+                    editData={row.original}
+                  />
+                  <TeamMemberDeleteButton
+                    refresh={refresh}
+                    deleteItem={row.original}
+                  />
                 </div>
               ),
             },

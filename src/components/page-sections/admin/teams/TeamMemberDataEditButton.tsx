@@ -1,6 +1,6 @@
 "use client";
 
-import { addTeamMember } from "@/app/actions/admin/teams";
+import { editTeamMember } from "@/app/actions/admin/teams";
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
@@ -12,17 +12,23 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { teamMemberEntryFormSchema } from "@/schemas/teamMemberFormSchema";
-import { IconX } from "@tabler/icons-react";
-import { Plus } from "lucide-react";
+import { teamMemberUpdateFormSchema } from "@/schemas/teamMemberFormSchema";
+import { IconEdit, IconX } from "@tabler/icons-react";
 import { UseFormReturn } from "react-hook-form";
 import toast from "react-hot-toast";
 import TeamEntryForm from "./TeamEntryForm";
+import { TeamMember } from "@/data";
 
-export function TeamMemberAddButton({ refresh }: { refresh: VoidFunction }) {
+export function TeamMemberDataEditButton({
+  editData,
+  refresh,
+}: {
+  editData: TeamMember;
+  refresh: VoidFunction;
+}) {
   const onSubmit = async (formData: FormData, form: UseFormReturn) => {
     try {
-      const res = await addTeamMember(formData);
+      const res = await editTeamMember(formData, editData.id);
       if (res.status === "success") {
         toast.success(res.message);
         form.reset();
@@ -36,15 +42,18 @@ export function TeamMemberAddButton({ refresh }: { refresh: VoidFunction }) {
   return (
     <Drawer direction="right">
       <DrawerTrigger asChild>
-        <Button>
-          <Plus />
-          <span> Team member </span>
+        <Button
+          size="icon"
+          variant="ghost"
+          className="text-gray-500 hover:bg-neutral-200"
+        >
+          <IconEdit size={20} />
         </Button>
       </DrawerTrigger>
 
       <DrawerContent className="inset-x-auto inset-y-0 right-0 m-4 w-full max-w-[400px] rounded-md after:!bg-transparent">
         <DrawerHeader className="flex items-center justify-between border-b">
-          <DrawerTitle> Add team member </DrawerTitle>
+          <DrawerTitle> Edit team member </DrawerTitle>
           <DrawerDescription className="hidden" />
           <DrawerClose asChild>
             <Button size="icon" variant="ghost" className="size-9">
@@ -56,7 +65,16 @@ export function TeamMemberAddButton({ refresh }: { refresh: VoidFunction }) {
         <ScrollArea className="h-full flex-1 p-4">
           <TeamEntryForm
             onSubmit={onSubmit as any}
-            formSchema={teamMemberEntryFormSchema}
+            formSchema={teamMemberUpdateFormSchema}
+            defaultValues={{
+              name: editData.name,
+              position: editData.position,
+              facebook_link: editData.facebookLink,
+              twitter_link: editData.twitterLink,
+              linkedin_link: editData.linkedinLink,
+              status: editData.status,
+            }}
+            preview={editData.image}
           />
         </ScrollArea>
       </DrawerContent>

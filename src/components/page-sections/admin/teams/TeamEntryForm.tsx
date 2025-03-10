@@ -67,14 +67,17 @@ const formDefaultValues = {
 export default function TeamEntryForm<T extends z.ZodType<any, any>>({
   formSchema,
   onSubmit,
-  defaultValues = formDefaultValues,
+  defaultValues,
   preview,
 }: TeamEntryFormProps<T>) {
   type TeamEntryFormData = z.infer<typeof formSchema>;
 
   const form = useForm<TeamEntryFormData>({
     resolver: zodResolver(formSchema),
-    defaultValues,
+    defaultValues: {
+      ...formDefaultValues,
+      ...defaultValues,
+    },
   });
 
   const handleSubmit = async (values: TeamEntryFormData) => {
