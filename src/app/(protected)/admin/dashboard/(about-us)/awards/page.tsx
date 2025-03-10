@@ -7,7 +7,7 @@ import { useSWR } from "@/hooks/use-swr";
 import { getImageURL } from "@/lib/utils";
 import Image from "next/image";
 import AwardEditButton from "@/components/page-sections/admin/awards/AwardEditButton";
-import AwardDeleteButton from "../../../../../../components/page-sections/admin/awards/AwardDeleteButton";
+import AwardDeleteButton from "@/components/page-sections/admin/awards/AwardDeleteButton";
 
 export default function Awards() {
   const { data, isLoading, refresh } = useSWR("/about/page/award/list");

@@ -45,7 +45,7 @@ const sidebarItems = [
       {
         id: "teams",
         title: "Our teams",
-        pathname: "/our-teams",
+        pathname: "/teams",
       },
 
       {
