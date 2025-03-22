@@ -7,6 +7,10 @@ import { useSWR } from "@/hooks/use-swr";
 import { getImageURL } from "@/lib/utils";
 import _ from "lodash";
 import Image from "next/image";
+import {
+  PartnerAddButton,
+  PartnerDeleteButton,
+} from "@/components/page-sections/admin";
 
 export default function OurPartners() {
   const { data, isLoading, refresh } = useSWR("/partner/list");
@@ -21,6 +25,7 @@ export default function OurPartners() {
     <div className="grid grid-cols-12 gap-4 p-6">
       <div className="col-span-12 flex items-center justify-between gap-4">
         <h1 className="text-3xl font-bold"> Partners </h1>
+        <PartnerAddButton refresh={refresh} />
       </div>
 
       <div className="col-span-12">
@@ -73,6 +78,17 @@ export default function OurPartners() {
                 >
                   {_.startCase(i.getValue() as string)}
                 </Badge>
+              ),
+            },
+
+            {
+              id: "action",
+              header: "Action",
+              enableSorting: false,
+              cell: ({ row }) => (
+                <div className="flex items-center">
+                  <PartnerDeleteButton id={row.original.id} refresh={refresh} />
+                </div>
               ),
             },
           ]}
