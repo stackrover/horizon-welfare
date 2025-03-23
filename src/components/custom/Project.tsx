@@ -48,7 +48,7 @@ export function Project({
             className="w-fit"
           >
             <Image
-              src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}${project.icon}`}
+              src={`${getImageURL(project.icon)}`}
               alt="project image"
               width={120}
               height={120}

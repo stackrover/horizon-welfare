@@ -84,7 +84,7 @@ export function EventDetails() {
             allowFullScreen={true}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-          ></iframe>
+          />
 
           <div className="col-span-4">
             <h4 className="mb-4 text-2xl font-bold text-base-400">Location</h4>

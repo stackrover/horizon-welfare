@@ -147,7 +147,7 @@ export default function Login() {
                     type="submit"
                     className="mt-2 w-full rounded-full"
                   >
-                    {form.formState.isSubmitting ? "Loading..." : "Sing in"}
+                    {form.formState.isSubmitting ? "Loading..." : "Sign in"}
                   </Button>
                 </form>
               </Form>

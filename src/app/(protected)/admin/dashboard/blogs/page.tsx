@@ -8,6 +8,7 @@ import DataTable from "@/components/data-table/Table";
 import { IconEdit, IconEye } from "@tabler/icons-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Plus, PlusIcon } from "lucide-react";
 
 export default function Blogs() {
   const pathname = usePathname();
@@ -37,14 +38,17 @@ export default function Blogs() {
 
   return (
     <section className="p-6">
-      <div className="flex items-center justify-between gap-4">
+      <div className="mb-4 flex items-center justify-between gap-4">
         <h1 className="text-2xl font-bold">Blogs</h1>
         <Button asChild>
-          <Link href={`${pathname}/add`}>Blog</Link>
+          <Link href={`${pathname}/add`}>
+            <PlusIcon size={18} />
+            Blog
+          </Link>
         </Button>
       </div>
 
-      <div>
+      <div className="rounded-md border bg-white p-6">
         <DataTable<Blog>
           data={blogs || []}
           columns={[

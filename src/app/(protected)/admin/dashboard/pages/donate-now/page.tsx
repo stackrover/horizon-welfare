@@ -1,7 +1,6 @@
 import {
   JoinAsVolunteerCard,
   PackageHeroSection,
-  ProjectList,
   ProjectsSection,
   SuccessStoriesSection,
 } from "@/components";

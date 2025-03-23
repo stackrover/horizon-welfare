@@ -9,6 +9,7 @@ export class AwardSection {
   updatedBy: number;
   createdAt: string;
   updatedAt: string;
+  original: any;
 
   constructor(data: any) {
     this.id = data.id;
@@ -21,5 +22,11 @@ export class AwardSection {
     this.updatedBy = data.updated_by;
     this.createdAt = data.created_at;
     this.updatedAt = data.updated_at;
+
+    this.original = data;
+  }
+
+  getOriginal() {
+    return this.original;
   }
 }

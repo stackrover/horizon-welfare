@@ -18,7 +18,9 @@ export function VideoGalleryCardsSection({
 }: {
   editable?: boolean;
 }) {
-  const { data, isLoading, isError } = useSWR("/video/page/video/list");
+  const { data, isLoading, isError, refresh } = useSWR(
+    "/video/page/video/list",
+  );
 
   if (isLoading) {
     return <Loader className="h-screen" />;
@@ -42,9 +44,11 @@ export function VideoGalleryCardsSection({
         ? serializedData.map((video: Video) => (
             <VideoCard
               key={video.id}
+              id={video.id}
               videoUrl={video.youtubeLink}
               title={video.title}
               editable={editable}
+              refresh={refresh}
             />
           ))
         : null}
