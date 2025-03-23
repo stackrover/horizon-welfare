@@ -100,7 +100,9 @@ export default function DataTable<T>({
                           header.column.columnDef.header,
                           header.getContext(),
                         )}
-                        {header.column.id !== "actions" ? (
+
+                        {header.column.getCanSort() &&
+                        header.column.id !== "actions" ? (
                           <div className="flex flex-col">
                             <IconChevronUp
                               className={`-mb-[3px] md:-mb-0 ${(header.column.getIsSorted() as string) === "asc" ? "text-base-400" : "text-base-400/30"}`}

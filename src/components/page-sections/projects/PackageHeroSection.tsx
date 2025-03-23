@@ -3,16 +3,15 @@
 import { Loader } from "@/components/custom/Loader";
 import { SectionWrapper } from "@/components/custom/SectionWrapper";
 import EditableContent from "@/components/forms/EditableContent";
+import FormWrapper from "@/components/forms/FormWrapper";
 import { Button } from "@/components/ui/button";
 import { ProjectHeroSection } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
 import { cn, getImageURL } from "@/lib/utils";
 import _ from "lodash";
 import Image from "next/image";
-import toast from "react-hot-toast";
-import FormWrapper from "@/components/forms/FormWrapper";
 import Link from "next/link";
-import { config } from "@/utils/config";
+import toast from "react-hot-toast";
 
 export function PackageHeroSection({
   editable = false,

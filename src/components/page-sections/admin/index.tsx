@@ -2,3 +2,8 @@ export * from "./campaigns/CampaignsDataTable";
 export * from "./home/Gallery";
 export * from "./home/hero";
 export * from "./home/Services";
+export * from "./partner/PartnerAddButton";
+export * from "./partner/PartnerDeleteButton";
+export * from "./teams/TeamMemberAddButton";
+export * from "./teams/TeamMemberDataEditButton";
+export * from "./teams/TeamMemberDeleteButton";

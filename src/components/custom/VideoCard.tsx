@@ -1,24 +1,47 @@
 "use client";
 
+import { UpdateVideoOnGallery } from "@/app/actions/admin/pages/video-gallery";
 import { VideoCardProps } from "@/types/types";
+import toast from "react-hot-toast";
 import ReactPlayer from "react-player";
-import FormWrapper from "../forms/FormWrapper";
 import EditableContent from "../forms/EditableContent";
+import FormWrapper from "../forms/FormWrapper";
 
 export function VideoCard({
+  id,
   videoUrl,
   title,
   editable = false,
-}: VideoCardProps & { editable?: boolean }) {
+  refresh,
+}: VideoCardProps & {
+  id: string | number;
+  editable?: boolean;
+  refresh?: VoidFunction;
+}) {
   return (
     <FormWrapper
       defaultValues={{
         title: title,
         youtube_link: videoUrl,
       }}
-      onSubmit={(values) => {
-        // TODO: Need to implement this function
-        console.log({ values });
+      onSubmit={async (values) => {
+        const fd = new FormData();
+
+        Object.keys(values).forEach((key) =>
+          fd.append(key, values[key as typeof values] || ""),
+        );
+
+        try {
+          const res = await UpdateVideoOnGallery(fd, id);
+          if (res.status !== "success") {
+            throw new Error(res.message);
+          }
+
+          toast.success(res.message);
+          refresh?.();
+        } catch (error: any) {
+          toast.error(error.message);
+        }
       }}
     >
       <div className="flex flex-col gap-y-4">

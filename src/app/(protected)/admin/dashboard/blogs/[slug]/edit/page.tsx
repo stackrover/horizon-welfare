@@ -108,7 +108,7 @@ export default function BlogDetails() {
   const blog = new Blog(data?.data?.results);
 
   return (
-    <div className="flex-1 p-6">
+    <div className="flex-1 p-6 @container">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-y-6 @5xl:flex-row @5xl:gap-x-6">

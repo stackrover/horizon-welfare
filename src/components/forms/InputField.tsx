@@ -3,7 +3,7 @@ import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { useController, UseControllerProps } from "react-hook-form";
 import { match } from "ts-pattern";
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "../ui/textarea";
 import { BlogSelection } from "./BlogSelection";
 import TextEditor from "./TextEditor";
@@ -15,6 +15,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { SelectProject } from "./SelectProject";
+import DatePicker from "./DatePicker";
 
 interface FormFieldProps extends UseControllerProps {
   label?: string;
@@ -85,6 +87,9 @@ export default function InputField({
         .with("blogSelection", () => (
           <BlogSelection value={field.value} onSelect={field.onChange} />
         ))
+        .with("selectProject", () => (
+          <SelectProject value={field.value} onSelectChange={field.onChange} />
+        ))
 
         .with("number", () => (
           <Input
@@ -117,12 +122,19 @@ export default function InputField({
           </Select>
         ))
 
+        .with("date", () => (
+          <DatePicker
+            value={field.value}
+            onChange={field.onChange}
+            format="yyyy-MM-dd"
+          />
+        ))
+
         // native type
         .with(
           "text",
           "email",
           "password",
-          "date",
           "tel",
           "url",
           "search",
@@ -133,6 +145,7 @@ export default function InputField({
               id={field.name}
               type={props.type}
               placeholder={props.placeholder}
+              {...(props.type === "time" ? { format: "HH:mm" } : {})}
               {...field}
               className={cn(
                 fieldState.error ? "border-red-500 focus:ring-red-500" : "",
