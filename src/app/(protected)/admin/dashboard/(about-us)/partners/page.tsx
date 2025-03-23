@@ -87,7 +87,10 @@ export default function OurPartners() {
               enableSorting: false,
               cell: ({ row }) => (
                 <div className="flex items-center">
-                  <PartnerDeleteButton id={row.original.id} refresh={refresh} />
+                  <PartnerDeleteButton
+                    deleteItem={row.original}
+                    refresh={refresh}
+                  />
                 </div>
               ),
             },

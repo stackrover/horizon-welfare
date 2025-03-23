@@ -145,7 +145,7 @@ export default function InputField({
               id={field.name}
               type={props.type}
               placeholder={props.placeholder}
-              {...(props.type === "time" ? { format: "HH:mm:ss" } : {})}
+              {...(props.type === "time" ? { format: "HH:mm" } : {})}
               {...field}
               className={cn(
                 fieldState.error ? "border-red-500 focus:ring-red-500" : "",

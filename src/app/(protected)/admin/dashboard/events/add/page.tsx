@@ -17,6 +17,8 @@ export default function AddNewEvent() {
 
   // Function to handle form submission
   const onSubmit = async (fd: EventFormData, form: UseFormReturn) => {
+    console.log({ fd });
+
     const formData = new FormData();
     Object.entries(fd).forEach(([key, value]) => {
       formData.append(key, value || "");
