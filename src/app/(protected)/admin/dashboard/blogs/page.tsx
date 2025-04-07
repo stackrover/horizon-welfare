@@ -1,14 +1,13 @@
 "use client";
 
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { useSWR } from "@/hooks/use-swr";
-import { Blog } from "@/data";
 import DataTable from "@/components/data-table/Table";
+import { Button } from "@/components/ui/button";
+import { Blog } from "@/data";
+import { useSWR } from "@/hooks/use-swr";
 import { IconEdit, IconEye } from "@tabler/icons-react";
+import { PlusIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Plus, PlusIcon } from "lucide-react";
 
 export default function Blogs() {
   const pathname = usePathname();
