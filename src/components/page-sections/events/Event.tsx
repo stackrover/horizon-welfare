@@ -3,13 +3,14 @@ import { EventProps } from "@/types/types";
 import { format } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
+import { getImageURL } from "../../../lib/utils";
 
 export function Event({ image, date, title, description, id }: EventProps) {
   return (
     <div className="group overflow-hidden rounded-[18px] border">
       <div className="h-[200px] overflow-hidden">
         <Image
-          src={process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL + image}
+          src={getImageURL(image)}
           alt="Event"
           height={200}
           width={350}

@@ -18,6 +18,7 @@ import { format } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { getImageURL } from "../../../lib/utils";
 
 export function EventDetails() {
   const { eventId } = useParams();
@@ -28,26 +29,6 @@ export function EventDetails() {
   }
 
   const serializedData = new EventDetail(data?.data?.results);
-
-  const formattedContent = serializedData?.description?.split("\r\n").reduce(
-    (acc: { type: string; text: string }[], line) => {
-      if (line.startsWith("—")) {
-        // Add bullet points
-        acc.push({ type: "bullet", text: line.replace("—", "").trim() });
-      } else if (line.includes(":") && !line.startsWith("   ")) {
-        // Add headers (like "Panelists:")
-        acc.push({ type: "header", text: line.trim() });
-      } else if (line.startsWith("   ")) {
-        // Add descriptions for panelists
-        acc.push({ type: "description", text: line.trim() });
-      } else if (line) {
-        // Add general paragraphs
-        acc.push({ type: "paragraph", text: line.trim() });
-      }
-      return acc;
-    },
-    [] as { type: string; text: string }[],
-  );
 
   return (
     <main className="mx-auto max-w-[992px]">
@@ -68,7 +49,7 @@ export function EventDetails() {
             : ""}
         </h4>
         <Image
-          src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}${serializedData.thumbnail}`}
+          src={getImageURL(serializedData.thumbnail)}
           alt="Event"
           height={360}
           width={992}
@@ -125,38 +106,10 @@ export function EventDetails() {
           </div>
         </div>
 
-        <div className="mt-10 space-y-4 text-base-400">
-          {formattedContent?.length > 0
-            ? formattedContent.map((item, index) => {
-                switch (item.type) {
-                  case "bullet":
-                    return (
-                      <p
-                        key={index}
-                        className="pl-4 before:pr-2 before:content-['•']"
-                      >
-                        {item.text}
-                      </p>
-                    );
-                  case "header":
-                    return (
-                      <h3 key={index} className="mt-4 font-bold">
-                        {item.text}
-                      </h3>
-                    );
-                  case "description":
-                    return (
-                      <p key={index} className="pl-8">
-                        {item.text}
-                      </p>
-                    );
-                  case "paragraph":
-                  default:
-                    return <p key={index}>{item.text}</p>;
-                }
-              })
-            : null}
-        </div>
+        <div
+          className="mt-10 space-y-4 text-base-400"
+          dangerouslySetInnerHTML={{ __html: serializedData.description }}
+        ></div>
 
         <div className="mt-10 flex flex-col gap-6">
           <h5 className="text-lg font-bold">Documents</h5>
@@ -185,9 +138,9 @@ export function EventDetails() {
                       </DrawerHeader>
                       <div className="h-full">
                         <iframe
-                          src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}${doc?.link}`}
+                          src={getImageURL(doc?.link)}
                           className="h-full w-full border-0"
-                        ></iframe>
+                        />
                       </div>
                     </DrawerContent>
                   </Drawer>

@@ -21,6 +21,7 @@ export const EventCreateSchema = z.object({
   schedule_date: z.string().date(),
   schedule_time: z.string({ required_error: "Event time is required." }),
   status: z.enum(["upcoming", "active", "completed", "cancelled", "pending"]),
+  documents: z.array(z.instanceof(File)).optional(),
 });
 
 export const EventUpdateSchema = z.object({
@@ -44,4 +45,5 @@ export const EventUpdateSchema = z.object({
   schedule_date: z.string().date(),
   schedule_time: z.string({ required_error: "Event time is required." }),
   status: z.enum(["upcoming", "active", "completed", "cancelled", "pending"]),
+  documents: z.array(z.instanceof(File)).optional(),
 });

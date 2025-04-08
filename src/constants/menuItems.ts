@@ -1,4 +1,6 @@
-export const menuItems = [
+import { Session } from "next-auth";
+
+export const menuItems = (auth: Session | null) => [
   {
     id: 1,
     name: "Home",
@@ -9,17 +11,10 @@ export const menuItems = [
     name: "Services",
     path: "/service",
     submenu: [
-      { name: "Service 1", path: "#" },
-      { name: "Service 2", path: "#" },
-    ],
-  },
-  {
-    id: 3,
-    name: "Join Us",
-    path: "/join-us",
-    submenu: [
-      { name: "As a donor", path: "/signup/donor" },
-      { name: "As a volunteer", path: "/signup/volunteer" },
+      { name: "What We Do", path: "/what-we-do" },
+      { name: "Media Center", path: "/media-center" },
+      { name: "Video Gallery", path: "/video-gallery" },
+      { name: "Events", path: "/Events" },
     ],
   },
   {
@@ -36,5 +31,16 @@ export const menuItems = [
     id: 6,
     name: "About Us",
     path: "/about-us",
+  },
+  {
+    id: 3,
+    name: auth?.user?.id ? "Pay Zakat" : "Join Us",
+    path: auth?.user?.id ? "/zakat-calculator" : "/login",
+    submenu: auth?.user?.id
+      ? null
+      : [
+          { name: "As a donor", path: "/signup/donor" },
+          { name: "As a volunteer", path: "/signup/volunteer" },
+        ],
   },
 ];

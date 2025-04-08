@@ -10,6 +10,7 @@ import _ from "lodash";
 import Image from "next/image";
 import React from "react";
 import SirenIcon from "../../../../public/icons/SirenIcon";
+import { getImageURL } from "../../../lib/utils";
 
 export function DonorPackageDetailsPage({
   session,
@@ -55,7 +56,7 @@ export function DonorPackageDetailsPage({
 
         <div className="mt-10 flex items-start gap-2">
           <Image
-            src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}${serializedData.thumbnail}`}
+            src={getImageURL(serializedData.thumbnail)}
             alt="project image"
             width={1800}
             height={600}

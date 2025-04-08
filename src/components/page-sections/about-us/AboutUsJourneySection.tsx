@@ -3,7 +3,7 @@
 import { Loader, OurJourneySummary, SectionWrapper } from "@/components";
 import { AboutUsJourney } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
-import { cn } from "@/lib/utils";
+import { cn, getImageURL } from "@/lib/utils";
 import _ from "lodash";
 import Image from "next/image";
 
@@ -56,7 +56,7 @@ export function AboutUsJourneySection({ className }: { className?: string }) {
         </div>
       </div>
       <Image
-        src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image}`}
+        src={getImageURL(serializedData.image)}
         alt="Money-raising"
         height={350}
         width={612}

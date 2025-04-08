@@ -3,7 +3,7 @@
 import { SectionWrapper } from "@/components";
 import { Gallery } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
-import { cn } from "@/lib/utils";
+import { cn, getImageURL } from "@/lib/utils";
 import _ from "lodash";
 import Image from "next/image";
 import VideoPlayer from "../page-sections/VideoPlayer";
@@ -30,7 +30,7 @@ export function WatchOurGallerySection({ className }: { className?: string }) {
       <div className="grid h-fit w-full grid-cols-12 items-center justify-center gap-4 px-4 md:px-10">
         <div className="col-span-12 grid grid-cols-2 gap-4 3xl:col-span-4">
           <Image
-            src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image1}`}
+            src={getImageURL(serializedData.image1)}
             alt={serializedData.imageTitle1}
             className="h-fit w-full rounded-lg"
             width={450}
@@ -40,7 +40,7 @@ export function WatchOurGallerySection({ className }: { className?: string }) {
             placeholder="blur"
           />
           <Image
-            src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image2}`}
+            src={getImageURL(serializedData.image2)}
             alt={serializedData.imageTitle2}
             className="h-fit w-full rounded-lg"
             width={450}
@@ -50,7 +50,7 @@ export function WatchOurGallerySection({ className }: { className?: string }) {
             placeholder="blur"
           />
           <Image
-            src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image3}`}
+            src={getImageURL(serializedData.image3)}
             alt={serializedData.imageTitle3}
             className="h-fit w-full rounded-lg"
             width={450}
@@ -61,7 +61,7 @@ export function WatchOurGallerySection({ className }: { className?: string }) {
           />
 
           <Image
-            src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image4}`}
+            src={getImageURL(serializedData.image4)}
             alt={serializedData.imageTitle4}
             className="h-fit w-full rounded-lg"
             width={450}
@@ -82,7 +82,7 @@ export function WatchOurGallerySection({ className }: { className?: string }) {
 
         <div className="col-span-12 grid grid-cols-2 gap-4 3xl:col-span-4">
           <Image
-            src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image5}`}
+            src={getImageURL(serializedData.image5)}
             alt={serializedData.imageTitle5}
             className="h-fit w-full rounded-lg"
             width={450}
@@ -92,7 +92,7 @@ export function WatchOurGallerySection({ className }: { className?: string }) {
             placeholder="blur"
           />
           <Image
-            src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image6}`}
+            src={getImageURL(serializedData.image6)}
             alt={serializedData.imageTitle6}
             className="h-fit w-full rounded-lg"
             width={450}
@@ -102,7 +102,7 @@ export function WatchOurGallerySection({ className }: { className?: string }) {
             placeholder="blur"
           />
           <Image
-            src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image7}`}
+            src={getImageURL(serializedData.image7)}
             alt={serializedData.imageTitle7}
             className="h-fit w-full rounded-lg"
             width={450}
@@ -112,7 +112,7 @@ export function WatchOurGallerySection({ className }: { className?: string }) {
             placeholder="blur"
           />
           <Image
-            src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image8}`}
+            src={getImageURL(serializedData.image8)}
             alt={serializedData.imageTitle8}
             className="h-fit w-full rounded-lg"
             width={450}

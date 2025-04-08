@@ -126,3 +126,32 @@ export async function deleteEvent(eventId: string) {
     return { ...ERROR_OBJ_FORMAT, error: error };
   }
 }
+
+// delete event document
+export async function deleteEventDocument(eventId: number) {
+  const controller = new AbortController();
+  const session = await auth();
+
+  // return error if user is not authenticated
+  if (!session?.user?.token) {
+    return { ...ERROR_OBJ_FORMAT, message: "Unauthorized" };
+  }
+
+  try {
+    const res = await fetcher(`/event/document/delete/${eventId}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session?.user?.token}`,
+      },
+      signal: controller.signal,
+    });
+
+    const data = await res.json();
+
+    return data;
+  } catch (error) {
+    return { ...ERROR_OBJ_FORMAT, error: error };
+  }
+}

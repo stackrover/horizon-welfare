@@ -11,6 +11,7 @@ import { ProjectByCategory } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
 import Image from "next/image";
 import { useParams, usePathname } from "next/navigation";
+import { getImageURL } from "../../../lib/utils";
 
 export function ProjectsByCategory() {
   const pathname = usePathname();
@@ -46,7 +47,7 @@ export function ProjectsByCategory() {
             className={`relative flex h-[100px] w-[300px] items-center justify-between rounded-lg bg-cover bg-center before:absolute before:left-0 before:top-0 before:h-full before:w-full before:rounded-[20px] before:bg-black/50 before:content-[''] md:w-[434px] mlg:h-[130px]`}
           >
             <Image
-              src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}${serializedData.icon}`}
+              src={getImageURL(serializedData.icon)}
               alt="Join as a volunteer"
               height={130}
               width={434}

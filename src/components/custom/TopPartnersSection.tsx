@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/carousel";
 import { Partner } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
-import { cn } from "@/lib/utils";
+import { cn, getImageURL } from "@/lib/utils";
 import AutoScroll from "embla-carousel-auto-scroll";
 import Image from "next/image";
 
@@ -54,7 +54,7 @@ export function TopPartnersSection({ className }: { className?: string }) {
             {serializedData?.map((item: any) => (
               <CarouselItem key={item.id} className="md:basis-1/2 lg:basis-1/6">
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${item.logo}`}
+                  src={getImageURL(item.logo)}
                   alt="img"
                   height={56}
                   width={300}

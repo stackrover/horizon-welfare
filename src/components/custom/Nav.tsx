@@ -9,16 +9,22 @@ import {
 import { menuItems } from "@/constants/menuItems";
 import { cn } from "@/lib/utils";
 import { IconChevronDown } from "@tabler/icons-react";
+import { Session } from "next-auth";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export function Nav({ className }: { className?: string }) {
+export function Nav({
+  className,
+  auth,
+}: {
+  className?: string;
+  auth: Session | null;
+}) {
   const pathname = usePathname();
-
   return (
     <nav className={cn("", className)}>
       <ul className="flex flex-col items-stretch gap-y-1 2xl:flex-row 2xl:items-center 2xl:gap-x-2">
-        {menuItems.map((menu) =>
+        {menuItems(auth).map((menu) =>
           !menu?.submenu ? (
             <li
               key={menu.id}
@@ -46,11 +52,15 @@ export function Nav({ className }: { className?: string }) {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
                   align="start"
-                  className="w-72"
+                  className="w-40 sm:w-60"
                   sideOffset={8}
                 >
                   {menu.submenu?.map((submenu, index) => (
-                    <DropdownMenuItem key={index} asChild className="text-lg">
+                    <DropdownMenuItem
+                      key={index}
+                      asChild
+                      className="cursor-pointer px-4 text-lg"
+                    >
                       <Link
                         href={submenu.path}
                         className="text-base font-normal"

@@ -29,10 +29,10 @@ export async function Navbar() {
         return "/donor/profile";
       case "volunteer":
         return "/volunteer/profile";
-      case "staff":
+      case "admin":
         return "/admin/dashboard";
       default:
-        return "";
+        return "/";
     }
   };
 
@@ -41,27 +41,24 @@ export async function Navbar() {
       <div className="mx-auto flex h-full max-w-[1520px] items-center justify-between px-4">
         {/* logo section  */}
 
-        <button>
+        <Link href="/">
           <Logo
             className=""
             imageClass="2xl:h-[73px] h-[60px] w-fit 2xl:w-[132px]"
             textClass="2xl:text-2xl text-xl text-start leading-5 2xl:leading-6 sm:block hidden"
             logo="/img/footer/logo.png"
           />
-        </button>
+        </Link>
 
         {/* nav section  */}
-        <Nav className="hidden 2xl:flex" />
+        <Nav auth={session} className="hidden 2xl:flex" />
 
         {/* button section  */}
         <div
           data-session={session?.user?.id ? true : false}
           className="group flex items-center gap-x-2"
         >
-          <Link
-            href={session?.user?.role === "donor" ? "/projects" : "/login"}
-            className=""
-          >
+          <Link href="/projects" className="">
             <Button
               variant="outline"
               className="hidden h-[45px] px-6 text-lg 2xl:flex"
@@ -131,7 +128,7 @@ export async function Navbar() {
                 <SheetDescription />
               </SheetHeader>
               <div>
-                <Nav />
+                <Nav auth={session} />
                 <Button
                   variant="secondary"
                   className="mr-2 mt-2 flex h-10 w-full px-3 2xl:hidden"

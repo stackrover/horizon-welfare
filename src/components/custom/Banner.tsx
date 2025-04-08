@@ -4,7 +4,7 @@ import { SectionWrapper } from "@/components";
 import { Button } from "@/components/ui/button";
 import { Hero } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
-import { cn } from "@/lib/utils";
+import { cn, getImageURL } from "@/lib/utils";
 import { IconX } from "@tabler/icons-react";
 import _ from "lodash";
 import Image from "next/image";
@@ -37,7 +37,7 @@ export function Banner({ className }: { className?: string }) {
     >
       <div className="h-[800px] w-full overflow-hidden">
         <Image
-          src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.image}`}
+          src={getImageURL(serializedData.image)}
           alt="Banner"
           className="h-[808px] max-h-[808px] min-w-[1800px]"
           width={1800}

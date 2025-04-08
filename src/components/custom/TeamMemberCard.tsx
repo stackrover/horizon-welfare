@@ -2,6 +2,7 @@ import { TeamMember } from "@/data";
 import Image from "next/image";
 import Link from "next/link";
 import { FacebookIcon, LinkedinIcon, TwitterIcon } from "../../../public/icons";
+import { getImageURL } from "../../lib/utils";
 
 interface TeamMemberCardProps {
   item: TeamMember;
@@ -11,7 +12,7 @@ export function TeamMemberCard({ item }: TeamMemberCardProps) {
   return (
     <div className="flex w-full flex-col items-center gap-y-4">
       <Image
-        src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${item.image}`}
+        src={getImageURL(item.image)}
         alt={item.name}
         height={320}
         width={296}

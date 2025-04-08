@@ -5,6 +5,7 @@ import { useSWR } from "@/hooks/use-swr";
 import _ from "lodash";
 import Image from "next/image";
 import Link from "next/link";
+import { getImageURL } from "../../lib/utils";
 import { Separator } from "../ui/separator";
 import { FooterMenuItems } from "./FooterMenuItems";
 import { Loader } from "./Loader";
@@ -34,7 +35,7 @@ export function BottomFooter() {
       {/* footer payment method section  */}
       <div className="my-10 flex justify-center">
         <Image
-          src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${serializedData.footerPaymentImg}`}
+          src={getImageURL(serializedData.footerPaymentImg)}
           alt="Payment Method"
           height={107}
           width={975}
