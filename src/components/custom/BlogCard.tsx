@@ -26,7 +26,7 @@ export function BlogCard({ blog }: { blog: Blog }) {
         </span>
         <h3 className="text-base font-semibold leading-8 text-base-400 sm:text-xl 3xl:text-2xl">
           <Link
-            href={`/blogs/${blog.id}`}
+            href={`/blogs/${blog.slug}`}
             className="transition-all hover:text-primary"
           >
             <TruncateString length={50} separator="">

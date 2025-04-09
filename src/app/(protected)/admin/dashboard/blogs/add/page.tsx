@@ -1,7 +1,10 @@
 "use client";
 
+import { addBlog } from "@/app/actions/admin/blogs";
 import InputField from "@/components/forms/InputField";
+import SelectBlogCategory from "@/components/forms/SelectBlogCategory";
 import { Button } from "@/components/ui/button";
+import { Dialog } from "@/components/ui/dialog";
 import { Form, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import {
   Select,
@@ -10,17 +13,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { BlogCategory } from "@/data/blogs/blog-category";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { addBlog } from "@/app/actions/admin/blogs";
-import { useEffect } from "react";
+import { IconPlus } from "@tabler/icons-react";
 import _ from "lodash";
 import { useSession } from "next-auth/react";
-import SelectBlogCategory from "@/components/forms/SelectBlogCategory";
-import { BlogCategory } from "@/data/blogs/blog-category";
-import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { z } from "zod";
+import BlogCategoryForm from "../../../../../../components/page-sections/admin/blogs/BlogCategoryForm";
+import { useSWR } from "../../../../../../hooks/use-swr";
 
 const schema = z.object({
   title: z.string({ required_error: "Blog title is required" }),
@@ -35,8 +39,11 @@ const schema = z.object({
 type TFormData = z.infer<typeof schema>;
 
 export default function BlogDetails() {
+  const [open, setOpen] = React.useState(false);
   const auth = useSession();
   const router = useRouter();
+
+  const { data, isLoading, refresh } = useSWR("/blog/category/list");
 
   // form instance
   const form = useForm<TFormData>({
@@ -132,9 +139,7 @@ export default function BlogDetails() {
                   name="status"
                   render={({ field }) => (
                     <FormItem className="flex-1">
-                      <FormLabel> Status</FormLabel>
-                      {field.value}
-
+                      <FormLabel>Status</FormLabel>
                       <Select
                         value={field.value || "active"}
                         onValueChange={(value) => {
@@ -158,14 +163,24 @@ export default function BlogDetails() {
                   name="category_id"
                   render={({ field }) => (
                     <FormItem className="flex-1">
-                      <FormLabel> Category </FormLabel>
-                      {field.value}
-
+                      <div className="flex items-center justify-between">
+                        <FormLabel> Category </FormLabel>
+                        <button
+                          onClick={() => setOpen(true)}
+                          type="button"
+                          className="rounded-md bg-primary-light p-1 text-base-0 hover:bg-primary"
+                        >
+                          <IconPlus size={18} />
+                        </button>
+                      </div>
                       <SelectBlogCategory
                         value={field.value}
                         onSelectChange={(cat: BlogCategory) =>
                           field.onChange(cat.getId().toString())
                         }
+                        data={data}
+                        isLoading={isLoading}
+                        refresh={refresh}
                       />
                     </FormItem>
                   )}
@@ -181,6 +196,10 @@ export default function BlogDetails() {
           </div>
         </form>
       </Form>
+
+      <Dialog open={open} onOpenChange={(op) => setOpen(op)}>
+        <BlogCategoryForm refresh={refresh} />
+      </Dialog>
     </div>
   );
 }

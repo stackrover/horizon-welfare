@@ -1,7 +1,12 @@
 "use client";
 
+import {
+  deleteEventDocument,
+  deleteEventImage,
+} from "@/app/actions/admin/events";
 import InputField from "@/components/forms/InputField";
 import { Button } from "@/components/ui/button";
+import { DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import {
   Drawer,
   DrawerClose,
@@ -14,12 +19,11 @@ import { Input } from "@/components/ui/input";
 import { getImageURL } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IconFileTypePdf, IconLoader2, IconX } from "@tabler/icons-react";
+import Image from "next/image";
 import React from "react";
 import { Path, PathValue, useForm, UseFormReturn } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
-import { deleteEventDocument } from "../../../../app/actions/admin/events";
-import { DialogDescription, DialogTitle } from "../../../ui/dialog";
 
 const EventFormFields = [
   {
@@ -64,6 +68,7 @@ type EventFormProps<T extends z.ZodType<any, any>> = {
   defaultValues?: any;
   preview?: string;
   documents?: any[];
+  images?: any[];
   refresh: () => void;
 };
 
@@ -80,6 +85,7 @@ const formDefaultValues = {
   schedule_time: "",
   status: "upcoming",
   documents: [],
+  images: [],
 };
 
 export default function EventForm<T extends z.ZodType<any, any>>({
@@ -89,6 +95,7 @@ export default function EventForm<T extends z.ZodType<any, any>>({
   preview,
   documents,
   refresh,
+  images,
 }: EventFormProps<T>) {
   const [documentDeleteLoading, setDocumentDeleteLoading] =
     React.useState(false);
@@ -104,6 +111,7 @@ export default function EventForm<T extends z.ZodType<any, any>>({
     await onSubmit(values, form);
   };
 
+  // function to delete document
   const handleDocumentDelete = async (id: number) => {
     const confirm = window.confirm(
       "Are you sure you want to delete this document?",
@@ -113,6 +121,27 @@ export default function EventForm<T extends z.ZodType<any, any>>({
 
     setDocumentDeleteLoading(true);
     const res = await deleteEventDocument(id);
+    if (res.status === "success") {
+      toast.success(res.message);
+      form.reset();
+      refresh();
+    } else {
+      toast.error(res.message);
+    }
+    setDocumentDeleteLoading(false);
+    setSelectedId(null);
+  };
+
+  // function to delete image
+  const handleImageDelete = async (id: number) => {
+    const confirm = window.confirm(
+      "Are you sure you want to delete this document?",
+    );
+    if (!confirm) return;
+    setSelectedId(id);
+
+    setDocumentDeleteLoading(true);
+    const res = await deleteEventImage(id);
     if (res.status === "success") {
       toast.success(res.message);
       form.reset();
@@ -145,6 +174,57 @@ export default function EventForm<T extends z.ZodType<any, any>>({
             </div>
           ))}
         </div>
+
+        <div className="mt-4">
+          <label className="mb-1 block font-medium" htmlFor="images">
+            Event Images (.png, .jpg, .jpeg)
+          </label>
+          <Input
+            type="file"
+            name="images"
+            id="images"
+            multiple
+            className="block w-full rounded border p-2"
+            onChange={(e) => {
+              form.setValue(
+                "images" as Path<z.infer<T>>,
+                Array.from(e.target.files || []) as PathValue<
+                  z.infer<T>,
+                  Path<z.infer<T>>
+                >,
+              );
+            }}
+            accept="image/png, image/jpeg, image/jpg"
+          />
+        </div>
+
+        {images && images.length > 0 ? (
+          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 xmd:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-6 3xl:grid-cols-8">
+            {images.map((doc) => (
+              <div key={doc?.id} className="relative">
+                <Image
+                  src={getImageURL(doc.link)}
+                  alt="Event"
+                  height={360}
+                  width={992}
+                  className="aspect-video w-full"
+                />
+                <button
+                  onClick={() => handleImageDelete(doc?.id)}
+                  disabled={documentDeleteLoading}
+                  type="button"
+                  className="absolute -right-1 -top-1 cursor-pointer rounded-full bg-destructive p-1 text-base-0"
+                >
+                  {documentDeleteLoading && doc?.id === selectedId ? (
+                    <IconLoader2 size={18} className="animate-spin" />
+                  ) : (
+                    <IconX size={18} />
+                  )}
+                </button>
+              </div>
+            ))}
+          </div>
+        ) : null}
 
         <div className="mt-4">
           <label className="mb-1 block font-medium" htmlFor="documents">

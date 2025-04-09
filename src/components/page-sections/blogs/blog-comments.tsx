@@ -1,9 +1,11 @@
 "use client";
 
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import React from "react";
 import { Comment } from "@/data/blogs/comment";
+import Image from "next/image";
+import { useParams, useRouter } from "next/navigation";
+import React from "react";
+import toast from "react-hot-toast";
+import { addBlogComment } from "../../../app/actions/admin/blogs";
 import { SingleComment } from "../../custom/SingleComment";
 import { Button } from "../../ui/button";
 import { Input } from "../../ui/input";
@@ -11,11 +13,15 @@ import { Input } from "../../ui/input";
 export function BlogComments({
   comments,
   auth,
+  blogId,
 }: {
   comments: Comment[] | null;
   auth: any;
+  blogId: number;
 }) {
+  const [loading, setLoading] = React.useState(false);
   const router = useRouter();
+  const { slug } = useParams();
 
   const handleCommentSubmission = async (
     e: React.FormEvent<HTMLFormElement>,
@@ -28,13 +34,25 @@ export function BlogComments({
       return;
     }
 
-    // Extract form elements
-    const formData = new FormData(e.currentTarget);
-    const comment = formData.get("comment") as string;
-    const honeyPot = formData.get("honeyPot") as string;
+    setLoading(true);
 
-    // Ignore submission if honeypot field is filled (spam prevention)
-    if (honeyPot) return;
+    const formData = new FormData(e.currentTarget);
+    formData.append("blog_id", blogId.toString());
+    formData.append("author_name", auth?.user?.name);
+
+    const response = await addBlogComment(formData, slug as string);
+
+    if (response.status === "success") {
+      toast.success(response.message);
+      const commentInput = document.getElementById(
+        "comment_text",
+      ) as HTMLInputElement;
+      if (commentInput) commentInput.value = "";
+    } else {
+      toast.error(response.message);
+    }
+
+    setLoading(false);
   };
 
   return (
@@ -53,21 +71,19 @@ export function BlogComments({
         >
           <Input
             type="text"
-            name="comment"
+            required
+            name="comment_text"
+            id="comment_text"
             className="border-none shadow-none focus-visible:ring-0"
             placeholder="Add a comment"
           />
-          <Input
-            type="text"
-            name="honeyPot"
-            className="hidden"
-            placeholder="Add a comment"
-          />
+
           <Button
+            disabled={loading}
             type="submit"
             className="rounded-full from-blue-600 to-blue-600 hover:from-blue-700 hover:to-blue-700"
           >
-            Post
+            {loading ? "Posting..." : "Post"}
           </Button>
         </form>
       </div>

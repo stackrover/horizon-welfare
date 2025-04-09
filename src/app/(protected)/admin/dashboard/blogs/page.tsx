@@ -1,6 +1,7 @@
 "use client";
 
 import DataTable from "@/components/data-table/Table";
+import BlogDeleteButton from "@/components/forms/BlogDeleteButton";
 import { Button } from "@/components/ui/button";
 import { Blog } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
@@ -8,10 +9,11 @@ import { IconEdit, IconEye } from "@tabler/icons-react";
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import BlogCommentList from "../../../../../components/page-sections/admin/blogs/BlogComments";
 
 export default function Blogs() {
   const pathname = usePathname();
-  const { data, isLoading, isError } = useSWR("/blog/list/all");
+  const { data, isLoading, isError, refresh } = useSWR("/blog/list/all");
 
   if (isError) {
     return (
@@ -95,6 +97,14 @@ export default function Blogs() {
                       <IconEdit />
                     </Link>
                   </Button>
+
+                  {/* Delete button */}
+                  <BlogDeleteButton
+                    blogId={row.original.id}
+                    refresh={refresh}
+                  />
+
+                  <BlogCommentList blogId={row.original.id} />
                 </div>
               ),
             },

@@ -31,7 +31,7 @@ export function EventDetails() {
   const serializedData = new EventDetail(data?.data?.results);
 
   return (
-    <main className="mx-auto max-w-[992px]">
+    <main className="mx-auto max-w-[992px] px-4">
       <SectionWrapper
         isLoading={isLoading}
         isError={isError}
@@ -40,34 +40,39 @@ export function EventDetails() {
         className="mt-20"
         hidden={data?.data?.results?.length === 0}
       >
-        <h1 className="mb-2 text-5xl font-bold leading-[54px] text-base-400">
+        <h2 className="mb-2 text-3xl font-bold text-base-400 md:text-4xl md:leading-[54px] xl:text-5xl">
           {serializedData.title}
-        </h1>
-        <h4 className="mb-8 text-2xl font-semibold leading-10 text-base-300">
-          {serializedData.createdAt
-            ? format(new Date(serializedData.createdAt), "EEEE, dd MMMM yyyy")
-            : ""}
-        </h4>
+        </h2>
+        <div className="mb-6 flex items-center gap-4">
+          <h4 className="text-base font-semibold leading-10 text-base-300 md:text-xl xl:text-2xl">
+            {serializedData.createdAt
+              ? format(new Date(serializedData.createdAt), "EEEE, dd MMMM yyyy")
+              : ""}
+          </h4>
+          <p className="inline-block rounded-md bg-primary-light px-4 py-1.5 text-sm font-medium capitalize text-base-400">
+            {serializedData.status}
+          </p>
+        </div>
         <Image
           src={getImageURL(serializedData.thumbnail)}
           alt="Event"
           height={360}
           width={992}
-          className="h-[360px] w-full"
+          className="aspect-video w-full"
         />
 
-        <div className="mt-10 grid h-[252px] grid-cols-12 gap-8">
+        <div className="mt-10 grid grid-cols-12 gap-8">
           <iframe
             src={serializedData.mapLink}
-            width="800"
-            height="252"
-            className="col-span-8 h-full w-full"
+            width={800}
+            height={300}
+            className="col-span-12 h-full w-full mlg:col-span-8"
             allowFullScreen={true}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
           />
 
-          <div className="col-span-4">
+          <div className="col-span-12 mlg:col-span-4">
             <h4 className="mb-4 text-2xl font-bold text-base-400">Location</h4>
             <p className="mb-6 text-base text-base-300">
               {serializedData.location}
@@ -106,6 +111,24 @@ export function EventDetails() {
           </div>
         </div>
 
+        <div className="mt-10 flex flex-col gap-6">
+          <h5 className="text-lg font-bold">Images</h5>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+            {serializedData?.images?.length > 0
+              ? serializedData.images.map((doc) => (
+                  <Image
+                    key={doc.id}
+                    src={getImageURL(doc.link)}
+                    alt="Event"
+                    height={360}
+                    width={992}
+                    className="aspect-video w-full"
+                  />
+                ))
+              : null}
+          </div>
+        </div>
+
         <div
           className="mt-10 space-y-4 text-base-400"
           dangerouslySetInnerHTML={{ __html: serializedData.description }}
@@ -113,7 +136,6 @@ export function EventDetails() {
 
         <div className="mt-10 flex flex-col gap-6">
           <h5 className="text-lg font-bold">Documents</h5>
-
           <div className="grid grid-cols-3 gap-4">
             {serializedData?.documents?.length > 0
               ? serializedData.documents.map((doc) => (

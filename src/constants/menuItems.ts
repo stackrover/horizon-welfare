@@ -14,7 +14,7 @@ export const menuItems = (auth: Session | null) => [
       { name: "What We Do", path: "/what-we-do" },
       { name: "Media Center", path: "/media-center" },
       { name: "Video Gallery", path: "/video-gallery" },
-      { name: "Events", path: "/Events" },
+      { name: "Events", path: "/events" },
     ],
   },
   {

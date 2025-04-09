@@ -29,6 +29,12 @@ export default function EditEvent() {
             formData.append("documents[]", file);
           }
         });
+      } else if (key === "images" && Array.isArray(value)) {
+        value.forEach((file) => {
+          if (file instanceof File) {
+            formData.append("images[]", file);
+          }
+        });
       } else {
         formData.append(key, value as any);
       }
@@ -76,9 +82,11 @@ export default function EditEvent() {
           schedule_time: event.scheduleTime || "",
           status: event.status,
           documents: [],
+          images: [],
         }}
         preview={event.thumbnail}
         documents={event.documents || []}
+        images={event.images || []}
         refresh={refresh}
       />
     </div>

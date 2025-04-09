@@ -56,7 +56,7 @@ export function SingleBlogPage({
       {/* others text section here  */}
 
       {/* comments section - auth required to comment */}
-      <BlogComments auth={auth} comments={blog.getComment()} />
+      <BlogComments auth={auth} blogId={blog.id} comments={blog.getComment()} />
     </main>
   );
 }
