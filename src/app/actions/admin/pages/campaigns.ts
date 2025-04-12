@@ -35,6 +35,38 @@ export async function addNewProject(formData: FormData) {
   }
 }
 
+
+export async function updateProject(formData: FormData, id: number) {
+  const controller = new AbortController();
+  const session = await auth();
+
+  // return error if user is not authenticated
+  if (!session?.user?.token) {
+    return { ...ERROR_OBJ_FORMAT, message: "Unauthorized" };
+  }
+
+  formData.append("updated_by", session?.user?.id as string);
+  formData.append("created_by", session?.user?.id as string);
+
+  try {
+    const res = await fetcher(`/project/update/${id}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${session?.user?.token}`,
+      },
+      body: formData,
+      signal: controller.signal,
+    });
+
+    const data = await res.json();
+
+    return data;
+  } catch (error) {
+    return { ...ERROR_OBJ_FORMAT, error: error };
+  }
+}
+
 export async function createNewCategory(formData: FormData) {
   const controller = new AbortController();
   const session = await auth();
@@ -55,6 +87,93 @@ export async function createNewCategory(formData: FormData) {
         Authorization: `Bearer ${session?.user?.token}`,
       },
       body: formData,
+      signal: controller.signal,
+    });
+
+    const data = await res.json();
+
+    return data;
+  } catch (error) {
+    return { ...ERROR_OBJ_FORMAT, error: error };
+  }
+}
+
+export async function deleteProject(id: number) {
+  const controller = new AbortController();
+  const session = await auth();
+
+  // return error if user is not authenticated
+  if (!session?.user?.token) {
+    return { ...ERROR_OBJ_FORMAT, message: "Unauthorized" };
+  }
+
+  try {
+    const res = await fetcher(`/project/delete/${id}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${session?.user?.token}`,
+      },
+      signal: controller.signal,
+    });
+
+    const data = await res.json();
+
+    return data;
+  } catch (error) {
+    return { ...ERROR_OBJ_FORMAT, error: error };
+  }
+}
+
+
+
+// delete event document
+export async function deleteProjectDocument(projectId: number) {
+  const controller = new AbortController();
+  const session = await auth();
+
+  // return error if user is not authenticated
+  if (!session?.user?.token) {
+    return { ...ERROR_OBJ_FORMAT, message: "Unauthorized" };
+  }
+
+  try {
+    const res = await fetcher(`/project/document/delete/${projectId}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session?.user?.token}`,
+      },
+      signal: controller.signal,
+    });
+
+    const data = await res.json();
+
+    return data;
+  } catch (error) {
+    return { ...ERROR_OBJ_FORMAT, error: error };
+  }
+}
+
+// delete event image
+export async function deleteProjectImage(projectId: number) {
+  const controller = new AbortController();
+  const session = await auth();
+
+  // return error if user is not authenticated
+  if (!session?.user?.token) {
+    return { ...ERROR_OBJ_FORMAT, message: "Unauthorized" };
+  }
+
+  try {
+    const res = await fetcher(`/project/image/delete/${projectId}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session?.user?.token}`,
+      },
       signal: controller.signal,
     });
 

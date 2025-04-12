@@ -91,15 +91,15 @@ export function BlogComments({
       <div className="mt-6 space-y-4">
         {comments && comments?.length > 0
           ? comments.map((comment) => (
-              <SingleComment
-                key={comment.getId()}
-                image="/images/user.png"
-                name={comment.getAuthorName()}
-                date={comment.getCreatedAt()}
-                comment={comment.getCommentText()}
-              />
-            ))
-          : "No comments yet"}
+            <SingleComment
+              key={comment.getId()}
+              image="/images/user.png"
+              name={comment.getAuthorName()}
+              date={comment.getCreatedAt()}
+              comment={comment.getCommentText()}
+            />
+          ))
+          : <p className="text-center">No comments yet</p>}
       </div>
     </section>
   );

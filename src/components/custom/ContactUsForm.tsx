@@ -23,6 +23,8 @@ export function ContactUsForm({ className }: { className?: string }) {
     initialState,
   );
 
+  console.log(state)
+
   // show toast message on success or error
   React.useEffect(() => {
     if (state.status === "success") {
@@ -31,7 +33,8 @@ export function ContactUsForm({ className }: { className?: string }) {
         formRef.current.reset();
       }
     } else if (state.status === "error") {
-      toast.error(state.message);
+      // toast.error(state.message);
+      console.log(state)
     }
   }, [state]);
 

@@ -42,6 +42,7 @@ export * from "./custom/SectionWrapper";
 export * from "./custom/SidebarLink";
 export * from "./custom/SingleComment";
 export * from "./custom/SocialIcon";
+export * from "./custom/SocialIconSection";
 export * from "./custom/SpecialNeedCard";
 export * from "./custom/StoryCard";
 export * from "./custom/SubscriptionProjectCard";
@@ -97,3 +98,4 @@ export * from "./page-sections/what-we-do/EventCardSection";
 export * from "./page-sections/what-we-do/WhatWeDoHeroSection";
 export * from "./page-sections/what-we-do/WhatWeDoKidSection";
 export * from "./page-sections/what-we-do/WhatWeDoProjectSection";
+

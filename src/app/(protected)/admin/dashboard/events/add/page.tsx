@@ -35,15 +35,17 @@ export default function AddNewEvent() {
         formData.append(key, value as any);
       }
     });
+    try {
+      const res = await createEvent(formData);
 
-    const res = await createEvent(formData);
-
-    if (res.status === "success") {
-      toast.success(res.message);
-      form.reset();
-      router.push("/admin/dashboard/events");
-    } else {
-      toast.error(res.message);
+      if (res.status === "success") {
+        toast.success(res.message);
+        router.push("/admin/dashboard/events");
+      } else {
+        toast.error(res.message);
+      }
+    } catch (error) {
+      toast.error("Something went wrong. Please try again.");
     }
   };
 
@@ -56,7 +58,7 @@ export default function AddNewEvent() {
         </Button>
       </div>
       <EventForm
-        refresh={() => {}}
+        refresh={() => { }}
         formSchema={EventCreateSchema}
         onSubmit={onSubmit as any}
       />

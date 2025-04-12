@@ -9,11 +9,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 import { IconEdit } from "@tabler/icons-react";
 import React from "react";
 import { useFormWrapper } from "./FormWrapper";
 import InputField from "./InputField";
-import { cn } from "@/lib/utils";
 
 export default function EditableContent({
   name = "",

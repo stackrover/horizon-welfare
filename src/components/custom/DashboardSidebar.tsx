@@ -10,6 +10,7 @@ const sidebarItems = [
     childrens: [
       { id: "dashboard", title: "Dashboard", pathname: "" },
       { id: "campaigns", title: "Campaigns", pathname: "/campaigns" },
+      { id: "packages", title: "Subscription Packages", pathname: "/packages" },
       { id: "transactions", title: "Transactions", pathname: "/transactions" },
       { id: "donors", title: "Donors", pathname: "/donors" },
       { id: "volunteers", title: "Volunteers", pathname: "/volunteers" },
@@ -26,6 +27,7 @@ const sidebarItems = [
       { id: "what-we-do", title: "What we do", pathname: "/what-we-do" },
       { id: "media-center", title: "Media center", pathname: "/media-center" },
       { id: "donate-now", title: "Donate now", pathname: "/donate-now" },
+      { id: "contact-us", title: "Contact Us", pathname: "/contact-us" },
       {
         id: "video-gallery",
         title: "Video gallery",

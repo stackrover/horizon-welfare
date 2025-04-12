@@ -1,7 +1,9 @@
 "use client";
 
+import { TruncateString } from "@/components";
 import DataTable from "@/components/data-table/Table";
 import BlogDeleteButton from "@/components/forms/BlogDeleteButton";
+import BlogCommentList from "@/components/page-sections/admin/blogs/BlogComments";
 import { Button } from "@/components/ui/button";
 import { Blog } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
@@ -9,7 +11,6 @@ import { IconEdit, IconEye } from "@tabler/icons-react";
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import BlogCommentList from "../../../../../components/page-sections/admin/blogs/BlogComments";
 
 export default function Blogs() {
   const pathname = usePathname();
@@ -64,7 +65,7 @@ export default function Blogs() {
               id: "title",
               accessorFn: (r) => r.getTitle(),
               header: "Title",
-              cell: (i) => i.getValue(),
+              cell: (i) => <TruncateString length={30}>{i.getValue() as string}</TruncateString>,
             },
 
             {

@@ -4,13 +4,12 @@ import { Loader, SectionWrapper } from "@/components";
 import { Button } from "@/components/ui/button";
 import { JoinAsVolunteer } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
-import _ from "lodash";
-import Image from "next/image";
-import Link from "next/link";
-import EditableContent from "../forms/EditableContent";
 import { getImageURL } from "@/lib/utils";
-import FormWrapper from "../forms/FormWrapper";
+import _ from "lodash";
+import Link from "next/link";
 import toast from "react-hot-toast";
+import EditableContent from "../forms/EditableContent";
+import FormWrapper from "../forms/FormWrapper";
 
 export function JoinAsVolunteerCard({ editable }: { editable?: boolean }) {
   const { data, isLoading, isError, refresh } = useSWR("/volunteer/cta/show");
@@ -62,7 +61,7 @@ export function JoinAsVolunteerCard({ editable }: { editable?: boolean }) {
             }}
           >
             <div className="mx-auto flex h-[384px] w-full flex-col items-center justify-center gap-y-8 p-8">
-              <h4 className="max-w-[900px] text-center text-2xl font-bold text-base-0 xmd:text-3xl mlg:text-4xl lg:leading-[58px] xl:text-5xl">
+              <h4 className="max-w-[900px] z-20 text-center text-2xl font-bold text-base-0 xmd:text-3xl mlg:text-4xl lg:leading-[58px] xl:text-5xl">
                 <EditableContent
                   type="text"
                   name={serializedData.getInputName("title")}
@@ -70,7 +69,7 @@ export function JoinAsVolunteerCard({ editable }: { editable?: boolean }) {
                   editable={editable}
                 />
               </h4>
-              <div className="flex flex-wrap items-center justify-center gap-4">
+              <div className="flex z-20 flex-wrap items-center justify-center gap-4">
                 <EditableContent
                   type="text"
                   name={serializedData.getInputName("volunteerBtnLink")}

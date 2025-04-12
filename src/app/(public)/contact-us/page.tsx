@@ -116,7 +116,7 @@ export default function ContactUs() {
             src={serializedData.mapLink}
             width="600"
             height="450"
-            style={{ border: 0, width: "100%" }}
+            style={{ border: 1, width: "100%" }}
             allowFullScreen={true}
             loading="lazy"
           ></iframe>

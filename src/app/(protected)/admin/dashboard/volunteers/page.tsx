@@ -1,12 +1,21 @@
 "use client";
 
 import DataTable from "@/components/data-table/Table";
+import UserDeleteButton from "@/components/forms/UserDeleteButton";
+import UserStatusChangeButton from "@/components/forms/UserStatusChangeButton";
+import UserDetailsDrawer from "@/components/page-sections/admin/user/UserDetails";
+import { Button } from "@/components/ui/button";
 import { User } from "@/data/users/User";
 import { useSWR } from "@/hooks/use-swr";
+import { IconEye } from "@tabler/icons-react";
 import _ from "lodash";
+import React from "react";
 
 export default function Volunteers() {
-  const { data } = useSWR("/users/list", {
+  const [selectedId, setSelectedId] = React.useState<number>(0);
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const { data, refresh } = useSWR("/users/list", {
     userType: "volunteer",
   });
 
@@ -44,7 +53,6 @@ export default function Volunteers() {
               accessorFn: (row) => row.getEmail(),
               cell: (i) => i.getValue(),
             },
-
             {
               id: "accountStatus",
               header: "Account status",
@@ -72,9 +80,43 @@ export default function Volunteers() {
                 </span>
               ),
             },
+
+            {
+              id: "action",
+              header: "Action",
+              enableSorting: false,
+              cell: ({ row }) => (
+                <div className="flex items-center gap-0.5">
+                  <Button
+                    type="button"
+                    onClick={() => { setIsOpen(true); setSelectedId(row.original.id) }}
+                    variant="ghost"
+                    size="icon"
+                    className="text-gray-500 hover:text-gray-900"
+                  >
+                    <IconEye />
+                  </Button>
+
+                  {/* status change button */}
+                  <UserStatusChangeButton
+                    userId={row.original.id}
+                    refresh={refresh}
+                    status={row.original.getPanelAccess()}
+                  />
+
+                  {/* Delete button */}
+                  <UserDeleteButton
+                    userId={row.original.id}
+                    refresh={refresh}
+                  />
+                </div>
+              ),
+            },
           ]}
         />
       </div>
+
+      <UserDetailsDrawer userId={selectedId} isOpen={isOpen} setIsOpen={setIsOpen} />
     </section>
   );
 }
