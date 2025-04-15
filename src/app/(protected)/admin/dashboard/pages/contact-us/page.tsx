@@ -10,7 +10,9 @@ import _ from "lodash";
 import toast from "react-hot-toast";
 
 export default function ContactUs() {
-  const { data, isLoading, isError, refresh } = useSWR("/contact/us/page/content/show");
+  const { data, isLoading, isError, refresh } = useSWR(
+    "/contact/us/page/content/show",
+  );
 
   if (isLoading) {
     return <Loader className="h-[800px]" />;
@@ -30,7 +32,7 @@ export default function ContactUs() {
         toast.promise(contactInfo.updateData(values), {
           loading: "Loading...",
           success: (res) => {
-            console.log(res)
+            console.log(res);
             refresh();
             return res.message;
           },

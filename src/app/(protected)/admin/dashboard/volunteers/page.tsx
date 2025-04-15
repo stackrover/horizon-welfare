@@ -12,7 +12,7 @@ import _ from "lodash";
 import React from "react";
 
 export default function Volunteers() {
-  const [selectedId, setSelectedId] = React.useState<number>(0);
+  const [selectedId, setSelectedId] = React.useState<number | null>(null);
   const [isOpen, setIsOpen] = React.useState(false);
 
   const { data, refresh } = useSWR("/users/list", {
@@ -89,7 +89,10 @@ export default function Volunteers() {
                 <div className="flex items-center gap-0.5">
                   <Button
                     type="button"
-                    onClick={() => { setIsOpen(true); setSelectedId(row.original.id) }}
+                    onClick={() => {
+                      setIsOpen(true);
+                      setSelectedId(row.original.id);
+                    }}
                     variant="ghost"
                     size="icon"
                     className="text-gray-500 hover:text-gray-900"
@@ -116,7 +119,11 @@ export default function Volunteers() {
         />
       </div>
 
-      <UserDetailsDrawer userId={selectedId} isOpen={isOpen} setIsOpen={setIsOpen} />
+      <UserDetailsDrawer
+        userId={selectedId}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
     </section>
   );
 }

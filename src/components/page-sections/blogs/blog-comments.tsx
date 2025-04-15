@@ -89,8 +89,8 @@ export function BlogComments({
       </div>
 
       <div className="mt-6 space-y-4">
-        {comments && comments?.length > 0
-          ? comments.map((comment) => (
+        {comments && comments?.length > 0 ? (
+          comments.map((comment) => (
             <SingleComment
               key={comment.getId()}
               image="/images/user.png"
@@ -99,7 +99,9 @@ export function BlogComments({
               comment={comment.getCommentText()}
             />
           ))
-          : <p className="text-center">No comments yet</p>}
+        ) : (
+          <p className="text-center">No comments yet</p>
+        )}
       </div>
     </section>
   );

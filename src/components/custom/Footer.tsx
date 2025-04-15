@@ -4,7 +4,7 @@ import {
   BottomFooter,
   NewsletterSection,
   SocialIconSection,
-  TopPartnersSection
+  TopPartnersSection,
 } from "@/components";
 import dynamic from "next/dynamic";
 

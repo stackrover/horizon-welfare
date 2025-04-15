@@ -35,7 +35,6 @@ export async function addNewProject(formData: FormData) {
   }
 }
 
-
 export async function updateProject(formData: FormData, id: number) {
   const controller = new AbortController();
   const session = await auth();
@@ -124,8 +123,6 @@ export async function deleteProject(id: number) {
     return { ...ERROR_OBJ_FORMAT, error: error };
   }
 }
-
-
 
 // delete event document
 export async function deleteProjectDocument(projectId: number) {

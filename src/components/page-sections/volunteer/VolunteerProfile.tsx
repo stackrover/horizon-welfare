@@ -45,7 +45,7 @@ export function VolunteerProfile({
   const serializedData =
     data.status === "success" ? new VolunteerData(data?.results) : null;
 
-  console.log(data)
+  console.log(data);
 
   const [file, setFile] = React.useState<File[]>([]);
   const [profileImg, setProfileImg] = React.useState<File[]>([]);
@@ -145,7 +145,7 @@ export function VolunteerProfile({
       if (values[key]) {
         formData.append(key, values[key].toString());
       } else {
-        formData.append(key, '');
+        formData.append(key, "");
       }
     });
 
@@ -160,7 +160,7 @@ export function VolunteerProfile({
     // Call the action handler
     const response = await updateVolunteerProfileAction(formData, userId);
 
-    console.log(response)
+    console.log(response);
 
     if (response.status === "success") {
       toast.success(response.message);
@@ -291,7 +291,7 @@ export function VolunteerProfile({
                           ? URL.createObjectURL(profileImg[0])
                           : profileData?.profile_image
                             ? process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL +
-                            profileData?.profile_image
+                              profileData?.profile_image
                             : "/"
                       }
                       alt="profile"
@@ -491,13 +491,13 @@ export function VolunteerProfile({
                         <SelectContent>
                           {divisions?.length
                             ? divisions.map((division, index) => (
-                              <SelectItem
-                                key={index}
-                                value={division.division}
-                              >
-                                {division.division}
-                              </SelectItem>
-                            ))
+                                <SelectItem
+                                  key={index}
+                                  value={division.division}
+                                >
+                                  {division.division}
+                                </SelectItem>
+                              ))
                             : null}
                         </SelectContent>
                       </Select>
@@ -529,13 +529,13 @@ export function VolunteerProfile({
                         <SelectContent>
                           {districts?.length
                             ? districts.map((district, index) => (
-                              <SelectItem
-                                key={index}
-                                value={district.district}
-                              >
-                                {district.district}
-                              </SelectItem>
-                            ))
+                                <SelectItem
+                                  key={index}
+                                  value={district.district}
+                                >
+                                  {district.district}
+                                </SelectItem>
+                              ))
                             : null}
                         </SelectContent>
                       </Select>
@@ -566,10 +566,10 @@ export function VolunteerProfile({
                         <SelectContent>
                           {thanas?.length
                             ? thanas.map((thana, index) => (
-                              <SelectItem key={index} value={thana}>
-                                {thana}
-                              </SelectItem>
-                            ))
+                                <SelectItem key={index} value={thana}>
+                                  {thana}
+                                </SelectItem>
+                              ))
                             : null}
                         </SelectContent>
                       </Select>
@@ -700,7 +700,7 @@ export function VolunteerProfile({
                     src={
                       profileData?.bannar_image
                         ? process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL +
-                        profileData?.bannar_image
+                          profileData?.bannar_image
                         : "/"
                     }
                     alt="banner"
@@ -715,7 +715,7 @@ export function VolunteerProfile({
                           src={
                             profileData?.profile_image
                               ? process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL +
-                              profileData?.profile_image
+                                profileData?.profile_image
                               : "/"
                           }
                           alt="profile"

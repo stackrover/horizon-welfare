@@ -41,7 +41,7 @@ export default function PackageEditButton({
       if (typeof value === "number") {
         fd.append(typedKey, value.toString()); // Convert number to string
       } else {
-        fd.append(typedKey, value as string || "");
+        fd.append(typedKey, (value as string) || "");
       }
     });
 

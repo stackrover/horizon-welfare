@@ -19,11 +19,18 @@ import PackageForm from "./PackageForm";
 
 type TFormData = z.infer<typeof packageAddFormSchema>;
 
-export default function PackageAddButton({ refresh }: { refresh: VoidFunction }) {
-  const handleAddPackageData = async (values: TFormData, form: UseFormReturn) => {
+export default function PackageAddButton({
+  refresh,
+}: {
+  refresh: VoidFunction;
+}) {
+  const handleAddPackageData = async (
+    values: TFormData,
+    form: UseFormReturn,
+  ) => {
     const fd = new FormData();
 
-    console.log(values)
+    console.log(values);
 
     Object.keys(values).forEach((key) => {
       const typedKey = key as keyof TFormData;
@@ -33,7 +40,7 @@ export default function PackageAddButton({ refresh }: { refresh: VoidFunction })
       if (typeof value === "number") {
         fd.append(typedKey, value.toString()); // Convert number to string
       } else {
-        fd.append(typedKey, value as string || "");
+        fd.append(typedKey, (value as string) || "");
       }
     });
 

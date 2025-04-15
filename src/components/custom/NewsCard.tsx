@@ -17,10 +17,7 @@ export function NewsCard({ title, date, description, image }: NewsCardProps) {
           {title}
         </h3>
         <h5 className="text-sm font-bold leading-[20px] text-base-300">
-          {date ? format(
-            new Date(date),
-            "dd'th' MMM yyyy",
-          ) : ''}
+          {date ? format(new Date(date), "dd'th' MMM yyyy") : ""}
         </h5>
         <h5 className="text-base font-normal leading-[25px] text-base-300">
           {description}

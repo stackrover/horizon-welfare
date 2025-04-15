@@ -3,6 +3,7 @@
 import { addBlog } from "@/app/actions/admin/blogs";
 import InputField from "@/components/forms/InputField";
 import SelectBlogCategory from "@/components/forms/SelectBlogCategory";
+import BlogCategoryForm from "@/components/page-sections/admin/blogs/BlogCategoryForm";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { Form, FormField, FormItem, FormLabel } from "@/components/ui/form";
@@ -14,6 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { BlogCategory } from "@/data/blogs/blog-category";
+import { useSWR } from "@/hooks/use-swr";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IconPlus } from "@tabler/icons-react";
 import _ from "lodash";
@@ -23,8 +25,6 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
-import BlogCategoryForm from "../../../../../../components/page-sections/admin/blogs/BlogCategoryForm";
-import { useSWR } from "../../../../../../hooks/use-swr";
 
 const schema = z.object({
   title: z.string({ required_error: "Blog title is required" }),

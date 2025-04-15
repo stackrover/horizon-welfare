@@ -58,7 +58,7 @@ export default function AddNewEvent() {
         </Button>
       </div>
       <EventForm
-        refresh={() => { }}
+        refresh={() => {}}
         formSchema={EventCreateSchema}
         onSubmit={onSubmit as any}
       />

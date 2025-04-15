@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { TruncateString } from "@/components";
 import DataTable from "@/components/data-table/Table";
@@ -11,9 +11,11 @@ import _ from "lodash";
 
 export default function Packages() {
   const { data, isLoading, refresh } = useSWR("/subscription/package/list");
-  const campaignProjects: Package[] = data?.data?.results?.map((d: any) => new Package(d));
+  const campaignProjects: Package[] = data?.data?.results?.map(
+    (d: any) => new Package(d),
+  );
 
-  console.log(campaignProjects)
+  console.log(campaignProjects);
 
   if (isLoading) {
     return <div className="py-6"> Loading... </div>;
@@ -21,7 +23,7 @@ export default function Packages() {
   return (
     <section className="grid grid-cols-12 gap-6 p-6">
       <div className="col-span-12 flex items-center justify-between">
-        <h1 className="text-[38.4px] font-bold leading-[52.38px] tracking-[-0.14px]">
+        <h1 className="text-3xl font-bold leading-[52.38px] tracking-[-0.14px]">
           Subscription Packages
         </h1>
         <PackageAddButton refresh={refresh} />
@@ -41,7 +43,11 @@ export default function Packages() {
               id: "title",
               header: "Project title",
               accessorKey: "title",
-              cell: (i) => <TruncateString length={30}>{i.getValue() as string}</TruncateString>,
+              cell: (i) => (
+                <TruncateString length={30}>
+                  {i.getValue() as string}
+                </TruncateString>
+              ),
             },
             {
               id: "subscription_rate",
@@ -68,7 +74,10 @@ export default function Packages() {
               enableSorting: false,
               cell: ({ row }) => (
                 <div className="flex items-center">
-                  <PackageEditButton editData={row.original} refresh={refresh} />
+                  <PackageEditButton
+                    editData={row.original}
+                    refresh={refresh}
+                  />
                   <PackageDeleteButton
                     packageId={row.original.id}
                     refresh={refresh}

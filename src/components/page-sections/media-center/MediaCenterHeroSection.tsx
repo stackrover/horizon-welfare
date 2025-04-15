@@ -19,7 +19,7 @@ export function MediaCenterHeroSection({
 }) {
   const { data, isLoading, isError, refresh } = useSWR("/media/page/hero/show");
 
-  console.log(data)
+  console.log(data);
 
   if (isLoading) {
     return <Loader className="h-[800px]" />;

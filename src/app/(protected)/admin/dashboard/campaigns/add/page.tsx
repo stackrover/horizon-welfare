@@ -37,14 +37,14 @@ export default function AddCampaign() {
           }
         });
       } else {
-        fd.append(typedKey, value as string || "");
+        fd.append(typedKey, (value as string) || "");
       }
     });
 
     try {
       const res = await addNewProject(fd);
 
-      console.log(res)
+      console.log(res);
 
       if (res.status === "success") {
         toast.success(res.message);
@@ -58,6 +58,10 @@ export default function AddCampaign() {
   };
 
   return (
-    <CampaignForm formSchema={projectCreateSchema} onSubmit={onSubmit} refresh={() => { }} />
+    <CampaignForm
+      formSchema={projectCreateSchema}
+      onSubmit={onSubmit}
+      refresh={() => {}}
+    />
   );
 }

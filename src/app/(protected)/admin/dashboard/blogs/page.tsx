@@ -7,12 +7,15 @@ import BlogCommentList from "@/components/page-sections/admin/blogs/BlogComments
 import { Button } from "@/components/ui/button";
 import { Blog } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
-import { IconEdit, IconEye } from "@tabler/icons-react";
+import { IconEdit, IconEye, IconMessage } from "@tabler/icons-react";
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import React from "react";
 
 export default function Blogs() {
+  const [selectedId, setSelectedId] = React.useState<number | null>(null);
+  const [isOpen, setIsOpen] = React.useState(false);
   const pathname = usePathname();
   const { data, isLoading, isError, refresh } = useSWR("/blog/list/all");
 
@@ -65,7 +68,11 @@ export default function Blogs() {
               id: "title",
               accessorFn: (r) => r.getTitle(),
               header: "Title",
-              cell: (i) => <TruncateString length={30}>{i.getValue() as string}</TruncateString>,
+              cell: (i) => (
+                <TruncateString length={30}>
+                  {i.getValue() as string}
+                </TruncateString>
+              ),
             },
 
             {
@@ -105,13 +112,30 @@ export default function Blogs() {
                     refresh={refresh}
                   />
 
-                  <BlogCommentList blogId={row.original.id} />
+                  {/* <BlogCommentList blogId={row.original.id} /> */}
+                  <Button
+                    type="button"
+                    onClick={() => {
+                      setIsOpen(true);
+                      setSelectedId(row.original.id);
+                    }}
+                    variant="ghost"
+                    size="icon"
+                    className="text-gray-500 hover:text-gray-900"
+                  >
+                    <IconMessage />
+                  </Button>
                 </div>
               ),
             },
           ]}
         />
       </div>
+      <BlogCommentList
+        blogId={selectedId}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
     </section>
   );
 }

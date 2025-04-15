@@ -38,7 +38,7 @@ export const contactUs = async (prevState: StateType, formData: FormData) => {
 
     return data;
   } catch (error) {
-    console.log({ error_from_action: error })
+    console.log({ error_from_action: error });
     return { ...ERROR_OBJ_FORMAT };
   }
 };

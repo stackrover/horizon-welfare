@@ -17,7 +17,7 @@ export default function PackageDeleteButton({
 
   const handleDeleteAward = async () => {
     const confirm = window.confirm(
-      "Are you sure you want to delete this package? This action cannot be undone."
+      "Are you sure you want to delete this package? This action cannot be undone.",
     );
 
     if (!confirm) return;
@@ -35,9 +35,17 @@ export default function PackageDeleteButton({
   };
 
   return (
-    <Button disabled={loading} size="icon" variant="ghost" onClick={handleDeleteAward}>
-      {loading ? <IconLoader2 className="animate-spin" size={20} /> :
-        <IconTrash size={20} />}
+    <Button
+      disabled={loading}
+      size="icon"
+      variant="ghost"
+      onClick={handleDeleteAward}
+    >
+      {loading ? (
+        <IconLoader2 className="animate-spin" size={20} />
+      ) : (
+        <IconTrash size={20} />
+      )}
     </Button>
   );
 }

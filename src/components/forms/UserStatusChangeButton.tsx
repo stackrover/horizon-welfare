@@ -19,7 +19,7 @@ export default function UserStatusChangeButton({
 
   const handleStatusChange = async (panelAccess: string) => {
     const confirm = window.confirm(
-      `Are you sure you want to ${panelAccess === 'yes' ? 'inactive' : 'active'} this user?`,
+      `Are you sure you want to ${panelAccess === "yes" ? "inactive" : "active"} this user?`,
     );
     if (!confirm) return;
 
@@ -41,15 +41,17 @@ export default function UserStatusChangeButton({
 
   return (
     <div>
-      {status === 'yes' ? <Button
-        variant="ghost"
-        disabled={loading}
-        size="icon"
-        className="text-gray-500 hover:text-red-500"
-        onClick={() => handleStatusChange(status)}
-      >
-        {loading ? <IconLoader2 className="animate-spin" /> : <IconBan />}
-      </Button> :
+      {status === "yes" ? (
+        <Button
+          variant="ghost"
+          disabled={loading}
+          size="icon"
+          className="text-gray-500 hover:text-red-500"
+          onClick={() => handleStatusChange(status)}
+        >
+          {loading ? <IconLoader2 className="animate-spin" /> : <IconBan />}
+        </Button>
+      ) : (
         <Button
           disabled={loading}
           variant="ghost"
@@ -57,8 +59,13 @@ export default function UserStatusChangeButton({
           className="text-gray-500 hover:text-green-600"
           onClick={() => handleStatusChange(status)}
         >
-          {loading ? <IconLoader2 className="animate-spin" /> : <IconCircleCheck />}
-        </Button>}
+          {loading ? (
+            <IconLoader2 className="animate-spin" />
+          ) : (
+            <IconCircleCheck />
+          )}
+        </Button>
+      )}
     </div>
   );
 }

@@ -7,14 +7,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Person } from "@/lib/makeData";
 import { CalendarIcon } from "@radix-ui/react-icons";
-import {
-  IconCopy,
-  IconDots,
-  IconDownload,
-  IconFilterX,
-} from "@tabler/icons-react";
+import { IconDots, IconDownload, IconFilterX } from "@tabler/icons-react";
 import { ColumnDef } from "@tanstack/react-table";
 import { endOfDay, format, isWithinInterval, parse } from "date-fns";
 import dynamic from "next/dynamic";
@@ -31,6 +25,8 @@ import {
 } from "@/components/ui/popover";
 import { DonorTransaction } from "@/data/donor/donorTransaction";
 import { cn } from "@/lib/utils";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import DonationReceiptPDF from "../../custom/DonationReceiptPDF";
 
 const DataTable = dynamic(() => import("@/components/data-table/Table"), {
   loading: () => <Loader className="h-[600px]" />,
@@ -43,6 +39,14 @@ export function DonorTransactions({
   dataPromise: Promise<any>;
 }) {
   const data = React.use(dataPromise);
+  const pdf_data = {
+    date: new Date().toLocaleDateString(),
+    trxId: "TRX123456789",
+    projectName: "Ramadan Food Drive",
+    amount: 5000,
+    status: "Paid",
+    paymentMethod: "SSLCommerz",
+  };
 
   const serializedData = React.useMemo(
     () =>
@@ -162,14 +166,13 @@ export function DonorTransactions({
       {
         id: "actions",
         header: "Actions",
-        cell: (info) => (
+        cell: ({ row }) => (
           <div className="flex justify-center">
             <DropdownMenu modal={false}>
               <DropdownMenuTrigger
                 asChild
                 disabled={
-                  ["completed", "failed"].indexOf(info.row.original.status) ===
-                  -1
+                  ["completed", "failed"].indexOf(row.original.status) === -1
                 }
               >
                 <button className="outline-none">
@@ -180,12 +183,34 @@ export function DonorTransactions({
                 <DropdownMenuGroup>
                   <DropdownMenuItem className="gap-2 text-base-300 focus:cursor-pointer">
                     <IconDownload size={18} />
-                    <span>Download Receipt</span>
+                    <div>
+                      <PDFDownloadLink
+                        document={
+                          <DonationReceiptPDF
+                            amount={row.original.amount}
+                            date={row.original.createdAt}
+                            paymentMethod={row.original.paymentMethod}
+                            projectName={row.original.projectTitle}
+                            status={
+                              row.original.status === "completed"
+                                ? "Paid"
+                                : row.original.status
+                            }
+                            trxId={row.original.trxId}
+                          />
+                        }
+                        fileName={`Donation-Receipt-${pdf_data.trxId}.pdf`}
+                      >
+                        {({ loading }) =>
+                          loading ? "Generating PDF..." : "Download Receipt PDF"
+                        }
+                      </PDFDownloadLink>
+                    </div>
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="gap-2 text-base-300 focus:cursor-pointer">
+                  {/* <DropdownMenuItem className="gap-2 text-base-300 focus:cursor-pointer">
                     <IconCopy size={18} />
                     <span>Copy Trx ID</span>
-                  </DropdownMenuItem>
+                  </DropdownMenuItem> */}
                 </DropdownMenuGroup>
               </DropdownMenuContent>
             </DropdownMenu>

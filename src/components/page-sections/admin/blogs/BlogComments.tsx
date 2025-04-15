@@ -1,6 +1,9 @@
 "use client";
 
-import { Loader } from "@/components";
+import {
+  deleteBlogComment,
+  updateBlogComment,
+} from "@/app/actions/admin/blogs";
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
@@ -9,7 +12,6 @@ import {
   DrawerDescription,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
 } from "@/components/ui/drawer";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
@@ -22,35 +24,24 @@ import {
 } from "@/components/ui/select";
 import { BlogComment } from "@/data/blogs/blog-comment";
 import { useSWR } from "@/hooks/use-swr";
-import {
-  IconLoader2,
-  IconMessage,
-  IconTrash,
-  IconX,
-} from "@tabler/icons-react";
+import { IconLoader2, IconTrash, IconX } from "@tabler/icons-react";
 import React from "react";
 import toast from "react-hot-toast";
-import {
-  deleteBlogComment,
-  updateBlogComment,
-} from "../../../../app/actions/admin/blogs";
 
 export default function BlogCommentList({
   blogId,
   className,
-  showIcon = true,
+  isOpen = false,
+  setIsOpen,
 }: {
-  blogId: number;
+  blogId: number | null;
   className?: string;
-  showIcon?: boolean;
+  isOpen?: boolean;
+  setIsOpen?: (isOpen: boolean) => void;
 }) {
   const [loading, setLoading] = React.useState(false);
   const [selectedId, setSelectedId] = React.useState<number | null>(null);
   const { data, isLoading, refresh } = useSWR(`/blog/comment/list/${blogId}`);
-
-  if (isLoading) {
-    return <Loader />;
-  }
 
   const blogData =
     data?.data?.results?.length > 0
@@ -101,15 +92,7 @@ export default function BlogCommentList({
   };
 
   return (
-    <Drawer direction="right">
-      <DrawerTrigger asChild>
-        {showIcon ? (
-          <Button variant="ghost" size="icon">
-            <IconMessage />
-          </Button>
-        ) : null}
-      </DrawerTrigger>
-
+    <Drawer direction="right" open={isOpen} onOpenChange={setIsOpen}>
       <DrawerContent className="inset-x-auto inset-y-0 right-0 m-3 w-full max-w-[450px] rounded-xl bg-background after:!bg-transparent">
         <DrawerHeader className="relative">
           <DrawerTitle> Comments </DrawerTitle>
@@ -123,7 +106,9 @@ export default function BlogCommentList({
         </DrawerHeader>
 
         <ScrollArea className="w-full p-4">
-          {blogData.length > 0 ? (
+          {loading ? (
+            <p className="text-center">Loading...</p>
+          ) : blogData.length > 0 ? (
             blogData.map((comment: BlogComment) => (
               <div
                 key={comment.id}

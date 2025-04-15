@@ -16,6 +16,7 @@ const sidebarItems = [
       { id: "volunteers", title: "Volunteers", pathname: "/volunteers" },
       { id: "blogs", title: "Blogs", pathname: "/blogs" },
       { id: "events", title: "Events", pathname: "/events" },
+      { id: "messages", title: "Messages", pathname: "/messages" },
     ],
   },
   {

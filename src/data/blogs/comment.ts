@@ -10,7 +10,12 @@ export class Comment {
     this.id = data?.id;
     this.authorName = data?.author_name;
     this.commentText = data?.comment_text;
-    this.createdAt = data?.created_at ? format(parse(data.created_at, "yyyy-MM-dd HH:mm:ss", new Date()), "dd/MM/yyyy, hh:mm a") : '';
+    this.createdAt = data?.created_at
+      ? format(
+          parse(data.created_at, "yyyy-MM-dd HH:mm:ss", new Date()),
+          "dd/MM/yyyy, hh:mm a",
+        )
+      : "";
   }
 
   getId(): number {

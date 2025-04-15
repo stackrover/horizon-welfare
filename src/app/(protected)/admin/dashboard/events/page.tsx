@@ -83,7 +83,11 @@ export default function Events() {
               id: "eventTitle",
               header: "Title",
               accessorKey: "title",
-              cell: (i) => <TruncateString length={30}>{i.getValue() as string}</TruncateString>,
+              cell: (i) => (
+                <TruncateString length={30}>
+                  {i.getValue() as string}
+                </TruncateString>
+              ),
             },
 
             {
@@ -91,7 +95,11 @@ export default function Events() {
               header: "location",
               accessorKey: "location",
               enableSorting: false,
-              cell: (i) => <TruncateString length={40}>{i.getValue() as string}</TruncateString>,
+              cell: (i) => (
+                <TruncateString length={40}>
+                  {i.getValue() as string}
+                </TruncateString>
+              ),
             },
 
             {

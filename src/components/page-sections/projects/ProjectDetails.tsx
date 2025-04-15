@@ -34,7 +34,11 @@ export function ProjectDetailsPage({
 
   const serializedData = new Project(data?.results);
 
-  return !data ? <main className="h-[500px] w-full flex justify-center items-center"><h4 className="text-2xl font-semibold text-base-400">No Data Found!</h4></main> : (
+  return !data ? (
+    <main className="flex h-[500px] w-full items-center justify-center">
+      <h4 className="text-2xl font-semibold text-base-400">No Data Found!</h4>
+    </main>
+  ) : (
     <main>
       {/* image gallery section  */}
       <section className="container mt-[60px]">
@@ -67,15 +71,15 @@ export function ProjectDetailsPage({
           <div className="grid gap-4 sm:grid-cols-2 xmd:grid-cols-3 xl:grid-cols-4">
             {serializedData?.images?.length > 0
               ? serializedData.images.map((img) => (
-                <Image
-                  key={img.id}
-                  src={getImageURL(img.link)}
-                  alt={img.title}
-                  width={356}
-                  height={246}
-                  className="h-[150px] w-full sm:h-[120px] md:h-[140px] mlg:h-[180px] 2xl:h-[200px]"
-                />
-              ))
+                  <Image
+                    key={img.id}
+                    src={getImageURL(img.link)}
+                    alt={img.title}
+                    width={356}
+                    height={246}
+                    className="h-[150px] w-full sm:h-[120px] md:h-[140px] mlg:h-[180px] 2xl:h-[200px]"
+                  />
+                ))
               : null}
           </div>
         </ProjectDetailSectionWrapper>
@@ -97,35 +101,35 @@ export function ProjectDetailsPage({
               <div className="grid grid-cols-3 gap-4">
                 {serializedData.documents.length > 0
                   ? serializedData.documents.map((doc) => (
-                    <Drawer key={doc.id}>
-                      <DrawerTrigger className="flex aspect-square w-full items-center justify-center rounded-md bg-base-50 text-base-300 shadow-sm hover:bg-base-100">
-                        <IconFileTypeDoc size={32} />
-                      </DrawerTrigger>
-                      <DrawerContent className="h-[calc(100vh-50px)]">
-                        <DrawerHeader>
-                          <DrawerTitle className="hidden">hello</DrawerTitle>
-                          <DrawerClose
-                            asChild
-                            className="absolute right-2 top-2"
-                          >
-                            <Button
-                              variant="secondary"
-                              size="icon"
-                              className="h-7 w-7"
+                      <Drawer key={doc.id}>
+                        <DrawerTrigger className="flex aspect-square w-full items-center justify-center rounded-md bg-base-50 text-base-300 shadow-sm hover:bg-base-100">
+                          <IconFileTypeDoc size={32} />
+                        </DrawerTrigger>
+                        <DrawerContent className="h-[calc(100vh-50px)]">
+                          <DrawerHeader>
+                            <DrawerTitle className="hidden">hello</DrawerTitle>
+                            <DrawerClose
+                              asChild
+                              className="absolute right-2 top-2"
                             >
-                              <IconX size={18} />
-                            </Button>
-                          </DrawerClose>
-                        </DrawerHeader>
-                        <div className="h-full">
-                          <iframe
-                            src={getImageURL(doc.link)}
-                            className="h-full w-full border-0"
-                          ></iframe>
-                        </div>
-                      </DrawerContent>
-                    </Drawer>
-                  ))
+                              <Button
+                                variant="secondary"
+                                size="icon"
+                                className="h-7 w-7"
+                              >
+                                <IconX size={18} />
+                              </Button>
+                            </DrawerClose>
+                          </DrawerHeader>
+                          <div className="h-full">
+                            <iframe
+                              src={getImageURL(doc.link)}
+                              className="h-full w-full border-0"
+                            ></iframe>
+                          </div>
+                        </DrawerContent>
+                      </Drawer>
+                    ))
                   : null}
               </div>
             </div>
@@ -134,10 +138,10 @@ export function ProjectDetailsPage({
           <ProjectDetailSectionWrapper title="Contact Details">
             {serializedData?.managers?.length > 0
               ? serializedData.managers.map((manager) => {
-                return (
-                  <ContactDetailsCard key={manager.id} manager={manager} />
-                );
-              })
+                  return (
+                    <ContactDetailsCard key={manager.id} manager={manager} />
+                  );
+                })
               : null}
           </ProjectDetailSectionWrapper>
         </div>

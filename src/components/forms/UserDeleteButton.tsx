@@ -16,9 +16,7 @@ export default function UserDeleteButton({
   const [loading, setLoading] = React.useState(false);
 
   const handleDelete = async () => {
-    const confirm = window.confirm(
-      `Are you sure you want to  this user?`,
-    );
+    const confirm = window.confirm(`Are you sure you want to  this user?`);
     if (!confirm) return;
 
     setLoading(true);

@@ -98,4 +98,3 @@ export * from "./page-sections/what-we-do/EventCardSection";
 export * from "./page-sections/what-we-do/WhatWeDoHeroSection";
 export * from "./page-sections/what-we-do/WhatWeDoKidSection";
 export * from "./page-sections/what-we-do/WhatWeDoProjectSection";
-

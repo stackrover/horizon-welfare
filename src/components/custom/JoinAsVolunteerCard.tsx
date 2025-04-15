@@ -61,7 +61,7 @@ export function JoinAsVolunteerCard({ editable }: { editable?: boolean }) {
             }}
           >
             <div className="mx-auto flex h-[384px] w-full flex-col items-center justify-center gap-y-8 p-8">
-              <h4 className="max-w-[900px] z-20 text-center text-2xl font-bold text-base-0 xmd:text-3xl mlg:text-4xl lg:leading-[58px] xl:text-5xl">
+              <h4 className="z-20 max-w-[900px] text-center text-2xl font-bold text-base-0 xmd:text-3xl mlg:text-4xl lg:leading-[58px] xl:text-5xl">
                 <EditableContent
                   type="text"
                   name={serializedData.getInputName("title")}
@@ -69,7 +69,7 @@ export function JoinAsVolunteerCard({ editable }: { editable?: boolean }) {
                   editable={editable}
                 />
               </h4>
-              <div className="flex z-20 flex-wrap items-center justify-center gap-4">
+              <div className="z-20 flex flex-wrap items-center justify-center gap-4">
                 <EditableContent
                   type="text"
                   name={serializedData.getInputName("volunteerBtnLink")}

@@ -33,7 +33,11 @@ export const CampaignsDataTable = () => {
             id: "title",
             header: "Project title",
             accessorKey: "title",
-            cell: (i) => <TruncateString length={30}>{i.getValue() as string}</TruncateString>,
+            cell: (i) => (
+              <TruncateString length={30}>
+                {i.getValue() as string}
+              </TruncateString>
+            ),
           },
           {
             id: "category",
