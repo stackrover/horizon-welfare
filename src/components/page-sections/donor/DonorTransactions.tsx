@@ -39,14 +39,6 @@ export function DonorTransactions({
   dataPromise: Promise<any>;
 }) {
   const data = React.use(dataPromise);
-  const pdf_data = {
-    date: new Date().toLocaleDateString(),
-    trxId: "TRX123456789",
-    projectName: "Ramadan Food Drive",
-    amount: 5000,
-    status: "Paid",
-    paymentMethod: "SSLCommerz",
-  };
 
   const serializedData = React.useMemo(
     () =>
@@ -199,7 +191,7 @@ export function DonorTransactions({
                             trxId={row.original.trxId}
                           />
                         }
-                        fileName={`Donation-Receipt-${pdf_data.trxId}.pdf`}
+                        fileName={`Donation-Receipt-${row.original.trxId}.pdf`}
                       >
                         {({ loading }) =>
                           loading ? "Generating PDF..." : "Download Receipt PDF"
