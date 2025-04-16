@@ -10,12 +10,7 @@ import { Separator } from "@/components/ui/separator";
 import { ContactUsContent } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
 import _ from "lodash";
-import Link from "next/link";
-import {
-  FacebookIcon,
-  LinkedinIcon,
-  TwitterIcon,
-} from "../../../../public/icons";
+import ContactUsSocialIcons from "../../../components/custom/ContactUsSocialIcons";
 
 export default function ContactUs() {
   const { data, isLoading, isError } = useSWR("/contact/us/page/content/show");
@@ -84,17 +79,7 @@ export default function ContactUs() {
                   {serializedData.branchOfficeAddress}
                 </h5>
               </div>
-              <div className="flex items-center gap-x-5">
-                <Link href={"/"}>
-                  <FacebookIcon fill="#ffffff" />
-                </Link>
-                <Link href={"/"}>
-                  <TwitterIcon fill="#ffffff" />
-                </Link>
-                <Link href={"/"}>
-                  <LinkedinIcon fill="#ffffff" />
-                </Link>
-              </div>
+              <ContactUsSocialIcons />
             </div>
           </div>
         </section>
