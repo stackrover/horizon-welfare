@@ -18,8 +18,11 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
-export function GallerySection({ dataPromise }: { dataPromise: Promise<any> }) {
-  const data = React.use(dataPromise);
+export function GallerySection<T extends Record<string, any>>({
+  data,
+}: {
+  data: T;
+}) {
   const editData = head(data.results) as HomePageGalleryData;
 
   // form fields

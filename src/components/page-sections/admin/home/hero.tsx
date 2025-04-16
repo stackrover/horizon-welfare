@@ -18,9 +18,11 @@ import { toast } from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 
-export function HeroSection({ dataPromise }: { dataPromise: Promise<any> }) {
-  const data = React.use(dataPromise);
-
+export function HeroSection<T extends Record<string, any>>({
+  data,
+}: {
+  data: T;
+}) {
   const editData = head(data.results) as HeroSectionData;
 
   // form fields

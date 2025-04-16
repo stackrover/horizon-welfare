@@ -18,8 +18,11 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-export function ServiceSection({ dataPromise }: { dataPromise: Promise<any> }) {
-  const data = React.use(dataPromise);
+export function ServiceSection<T extends Record<string, any>>({
+  data,
+}: {
+  data: T;
+}) {
   const serviceData = head(data.results) as HomePageServiceCardData;
 
   // form fields

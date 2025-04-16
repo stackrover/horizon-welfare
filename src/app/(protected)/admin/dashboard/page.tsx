@@ -4,7 +4,7 @@ import { Suspense } from "react";
 
 const RecentTransactons = dynamic(
   () => import("@/components/page-sections/admin/dashboard/RecentTransactions"),
-  { ssr: false },
+  { ssr: false, loading: () => <div> Loading... </div> },
 );
 
 const DonationOverviewCharts = dynamic(
@@ -12,7 +12,7 @@ const DonationOverviewCharts = dynamic(
     import(
       "@/components/page-sections/admin/dashboard/DonationOverviewCharts"
     ).then((mod) => mod.DonationOverviewCharts),
-  { ssr: false },
+  { ssr: false, loading: () => <div> Loading... </div> },
 );
 
 const DonationByNationalityPieCharts = dynamic(
@@ -20,7 +20,7 @@ const DonationByNationalityPieCharts = dynamic(
     import(
       "@/components/page-sections/admin/dashboard/DonationReportsByNationality"
     ),
-  { ssr: false },
+  { ssr: false, loading: () => <div> Loading... </div> },
 );
 
 export default function Dashboard() {
@@ -36,13 +36,13 @@ export default function Dashboard() {
       <div className="mb-5 grid grid-cols-12 items-stretch gap-5 @container">
         {/* Total Donations */}
         <div className="col-span-12 @4xl:col-span-8">
-          <Suspense fallback={<div> Loading... </div>}>
+          <Suspense>
             <DonationOverviewCharts />
           </Suspense>
         </div>
 
         <div className="col-span-12 @4xl:col-span-4">
-          <Suspense fallback={<div> Loading... </div>}>
+          <Suspense>
             <DonationByNationalityPieCharts />
           </Suspense>
         </div>
@@ -52,7 +52,7 @@ export default function Dashboard() {
       <div className="mb-5 grid grid-cols-12 gap-5 @container">
         {/* Total Donations */}
         <div className="col-span-12">
-          <Suspense fallback={<div> Loading... </div>}>
+          <Suspense>
             <RecentTransactons />
           </Suspense>
         </div>
