@@ -29,6 +29,7 @@ const sidebarItems = [
       { id: "media-center", title: "Media center", pathname: "/media-center" },
       { id: "donate-now", title: "Donate now", pathname: "/donate-now" },
       { id: "contact-us", title: "Contact Us", pathname: "/contact-us" },
+      { id: "about-us", title: "About Us", pathname: "/about-us" },
       {
         id: "video-gallery",
         title: "Video gallery",

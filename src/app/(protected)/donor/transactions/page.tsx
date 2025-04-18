@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
-import { DonorTransactions, Loader } from "@/components";
+import { Loader } from "@/components";
+import DonorTransactions from "@/components/page-sections/donor/DonorTransactions";
 import { getData } from "@/hooks/get-data";
 import { config } from "@/utils/config";
 import { Suspense } from "react";

@@ -5,6 +5,7 @@ import { Banner, InputRow } from "@/components";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
+import { zakatDonationSchema } from "@/schemas/zakatFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import React from "react";
@@ -63,32 +64,6 @@ const FORM_FIELDS = [
   },
 ];
 
-export const zakatDonationSchema = z.object({
-  cash: z.coerce.number().min(1, "Amount must be greater than 0"),
-  goldAndSilver: z.coerce.number().min(1, "Amount must be greater than 0"),
-  property: z.coerce.number().min(1, "Amount must be greater than 0"),
-  pension: z.coerce.number().min(1, "Amount must be greater than 0"),
-  shares: z.coerce.number().min(1, "Amount must be greater than 0"),
-  investments: z.coerce.number().min(1, "Amount must be greater than 0"),
-  owedMoney: z.coerce.number().min(1, "Amount must be greater than 0"),
-  businessValue: z.coerce.number().min(1, "Amount must be greater than 0"),
-  unpaidDebts: z.coerce.number().min(1, "Amount must be greater than 0"),
-  businessDebt: z.coerce.number().min(1, "Amount must be greater than 0"),
-});
-
-const formDefaultValues = {
-  cash: 0,
-  goldAndSilver: 0,
-  property: 0,
-  pension: 0,
-  shares: 0,
-  investments: 0,
-  owedMoney: 0,
-  businessValue: 0,
-  unpaidDebts: 0,
-  businessDebt: 0,
-};
-
 type FormData = z.infer<typeof zakatDonationSchema>;
 
 export default function ZakatCalculatorPage() {
@@ -101,10 +76,19 @@ export default function ZakatCalculatorPage() {
 
   const form = useForm<FormData>({
     resolver: zodResolver(zakatDonationSchema),
-    defaultValues: formDefaultValues,
+    defaultValues: {
+      cash: 0,
+      goldAndSilver: 0,
+      property: 0,
+      pension: 0,
+      shares: 0,
+      investments: 0,
+      owedMoney: 0,
+      businessValue: 0,
+      unpaidDebts: 0,
+      businessDebt: 0,
+    },
   });
-
-  console.log({ zakatToPay, zakatableAmount });
 
   React.useEffect(() => {
     const subscription = form.watch((values) => {
@@ -133,7 +117,7 @@ export default function ZakatCalculatorPage() {
 
   const handleSubmit = async (formData: FormData) => {
     const resp = await donateAction({
-      projectId: 100000,
+      projectId: 2,
       isSubscriptionMoney: "no",
       totalAmount: zakatToPay,
       currency: "BDT",

@@ -1,3 +1,23 @@
+import { updateAboutUsOurJourneySection } from "@/app/actions/admin/pages/about-us";
+
+enum nameEnum {
+  id = "id",
+  title = "title",
+  focusTitle = "focus_title",
+  description = "description",
+  image = "image",
+  donationTitle = "donation_title",
+  donationCount = "donation_count",
+  volunteerTitle = "volunteer_title",
+  volunteerCount = "volunteer_count",
+  homeTitle = "home_title",
+  homeCount = "home_count",
+  status = "status",
+  updatedBy = "updated_by",
+  createdAt = "created_at",
+  updatedAt = "updated_at",
+}
+
 export class AboutUsJourney {
   id: number;
   title: string;
@@ -14,6 +34,7 @@ export class AboutUsJourney {
   updatedBy: number;
   createdAt: string;
   updatedAt: string;
+  formData: any;
 
   constructor(data: any) {
     this.id = data.id;
@@ -31,5 +52,32 @@ export class AboutUsJourney {
     this.updatedBy = data.updated_by;
     this.createdAt = data.created_at;
     this.updatedAt = data.updated_at;
+
+    this.formData = data;
+  }
+
+  getFormData() {
+    return this.formData;
+  }
+
+  getInputName(name: keyof typeof nameEnum): string {
+    return nameEnum[name];
+  }
+
+  async updateData(formData: Record<string, string | Blob>) {
+    // Create a new FormData instance
+    const fd = new FormData();
+
+    // FormData object
+    Object.keys(formData).forEach((key) => {
+      const value = formData[key];
+      if (typeof value === "string" || value instanceof Blob) {
+        fd.append(key, value);
+      } else {
+        fd.append(key, "");
+      }
+    });
+
+    return updateAboutUsOurJourneySection(fd);
   }
 }

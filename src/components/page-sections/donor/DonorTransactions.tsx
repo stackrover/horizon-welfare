@@ -26,14 +26,21 @@ import {
 import { DonorTransaction } from "@/data/donor/donorTransaction";
 import { cn } from "@/lib/utils";
 import { PDFDownloadLink } from "@react-pdf/renderer";
-import DonationReceiptPDF from "../../custom/DonationReceiptPDF";
 
 const DataTable = dynamic(() => import("@/components/data-table/Table"), {
   loading: () => <Loader className="h-[600px]" />,
   ssr: false,
 });
 
-export function DonorTransactions({
+const DonationReceiptPDF = dynamic(
+  () => import("@/components/custom/DonationReceiptPDF"),
+  {
+    loading: () => <Loader className="h-[600px]" />,
+    ssr: false,
+  },
+);
+
+export default function DonorTransactions({
   dataPromise,
 }: {
   dataPromise: Promise<any>;

@@ -1,3 +1,5 @@
+"use client";
+
 // components/DonationReceiptPDF.tsx
 import { Document, Page, StyleSheet, Text, View } from "@react-pdf/renderer";
 
@@ -48,50 +50,50 @@ interface Props {
   paymentMethod: string;
 }
 
-const DonationReceiptPDF = ({
+export default function DonationReceiptPDF({
   date,
   trxId,
   projectName,
   amount,
   status,
   paymentMethod,
-}: Props) => (
-  <Document>
-    <Page size="A4" style={styles.page}>
-      <Text style={styles.title}>Donation Receipt</Text>
+}: Props) {
+  return (
+    <Document>
+      <Page size="A4" style={styles.page}>
+        <Text style={styles.title}>Donation Receipt</Text>
 
-      <View style={styles.borderBox}>
-        <View style={styles.row}>
-          <Text style={styles.label}>Date:</Text>
-          <Text>{date}</Text>
+        <View style={styles.borderBox}>
+          <View style={styles.row}>
+            <Text style={styles.label}>Date:</Text>
+            <Text>{date}</Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.label}>Transaction ID:</Text>
+            <Text>{trxId}</Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.label}>Project Name:</Text>
+            <Text>{projectName}</Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.label}>Amount:</Text>
+            <Text>Tk. {amount.toLocaleString()}</Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.label}>Status:</Text>
+            <Text>{status}</Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.label}>Payment Method:</Text>
+            <Text>{paymentMethod}</Text>
+          </View>
         </View>
-        <View style={styles.row}>
-          <Text style={styles.label}>Transaction ID:</Text>
-          <Text>{trxId}</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.label}>Project Name:</Text>
-          <Text>{projectName}</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.label}>Amount:</Text>
-          <Text>Tk. {amount.toLocaleString()}</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.label}>Status:</Text>
-          <Text>{status}</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.label}>Payment Method:</Text>
-          <Text>{paymentMethod}</Text>
-        </View>
-      </View>
 
-      <Text style={styles.footer}>
-        Thank you for your generous contribution.
-      </Text>
-    </Page>
-  </Document>
-);
-
-export default DonationReceiptPDF;
+        <Text style={styles.footer}>
+          Thank you for your generous contribution.
+        </Text>
+      </Page>
+    </Document>
+  );
+}

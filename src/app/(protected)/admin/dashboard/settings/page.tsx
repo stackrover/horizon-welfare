@@ -1,3 +1,5 @@
+"use client";
+
 import { BottomFooter, SocialIconSection } from "@/components";
 import {
   Accordion,
