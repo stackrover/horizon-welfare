@@ -1,17 +1,18 @@
 "use client";
 
+import { TruncateString } from "@/components";
 import DataTable from "@/components/data-table/Table";
+import EventDeleteButton from "@/components/forms/EventDeleteButton";
+import UpdateEventStatus from "@/components/forms/UpdateEventStatus";
 import { Button } from "@/components/ui/button";
 import { EventDetail } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
 import { getImageURL } from "@/lib/utils";
+import { IconEdit, IconEye } from "@tabler/icons-react";
 import { format } from "date-fns";
 import { Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import UpdateEventStatus from "@/components/forms/UpdateEventStatus";
-import { IconEdit, IconEye } from "@tabler/icons-react";
-import EventDeleteButton from "@/components/forms/EventDeleteButton";
 
 export default function Events() {
   const { data, isLoading, refresh } = useSWR("/event/list/all");
@@ -82,7 +83,11 @@ export default function Events() {
               id: "eventTitle",
               header: "Title",
               accessorKey: "title",
-              cell: (i) => i.getValue(),
+              cell: (i) => (
+                <TruncateString length={30}>
+                  {i.getValue() as string}
+                </TruncateString>
+              ),
             },
 
             {
@@ -90,7 +95,11 @@ export default function Events() {
               header: "location",
               accessorKey: "location",
               enableSorting: false,
-              cell: (i) => i.getValue(),
+              cell: (i) => (
+                <TruncateString length={40}>
+                  {i.getValue() as string}
+                </TruncateString>
+              ),
             },
 
             {

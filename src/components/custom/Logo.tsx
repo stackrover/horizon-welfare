@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn, getImageURL } from "@/lib/utils";
 import Image from "next/image";
 
 export function Logo({
@@ -21,7 +21,7 @@ export function Logo({
         priority
         placeholder="blur"
         blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Vg8AAnEBdzTCX3oAAAAASUVORK5CYII="
-        src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}${logo}`}
+        src={getImageURL(logo as string)}
         alt="Logo"
       />
       <h3 className={cn("text-2xl leading-6 text-[#4ED9FF]", textClass)}>

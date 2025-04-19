@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn, getImageURL } from "@/lib/utils";
 import { StoryCardProps } from "@/types/types";
 import { IconArrowRight } from "@tabler/icons-react";
 import Image from "next/image";
@@ -16,7 +16,7 @@ export function StoryCard({
     <div className={cn(`group relative overflow-hidden`, className)}>
       <div className="from-black via-black/0 to-black/0 bg-cover bg-center transition-all duration-300 ease-in-out before:absolute before:left-0 before:top-0 before:h-full before:w-full before:bg-gradient-to-t before:content-[''] group-hover:scale-110">
         <Image
-          src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}${image}`}
+          src={getImageURL(image)}
           alt="image"
           height={600}
           width={800}

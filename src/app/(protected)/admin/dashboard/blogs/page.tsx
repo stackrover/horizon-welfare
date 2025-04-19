@@ -1,18 +1,23 @@
 "use client";
 
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { useSWR } from "@/hooks/use-swr";
-import { Blog } from "@/data";
+import { TruncateString } from "@/components";
 import DataTable from "@/components/data-table/Table";
-import { IconEdit, IconEye } from "@tabler/icons-react";
+import BlogDeleteButton from "@/components/forms/BlogDeleteButton";
+import BlogCommentList from "@/components/page-sections/admin/blogs/BlogComments";
+import { Button } from "@/components/ui/button";
+import { Blog } from "@/data";
+import { useSWR } from "@/hooks/use-swr";
+import { IconEdit, IconEye, IconMessage } from "@tabler/icons-react";
+import { PlusIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Plus, PlusIcon } from "lucide-react";
+import React from "react";
 
 export default function Blogs() {
+  const [selectedId, setSelectedId] = React.useState<number | null>(null);
+  const [isOpen, setIsOpen] = React.useState(false);
   const pathname = usePathname();
-  const { data, isLoading, isError } = useSWR("/blog/list/all");
+  const { data, isLoading, isError, refresh } = useSWR("/blog/list/all");
 
   if (isError) {
     return (
@@ -63,7 +68,11 @@ export default function Blogs() {
               id: "title",
               accessorFn: (r) => r.getTitle(),
               header: "Title",
-              cell: (i) => i.getValue(),
+              cell: (i) => (
+                <TruncateString length={30}>
+                  {i.getValue() as string}
+                </TruncateString>
+              ),
             },
 
             {
@@ -96,12 +105,37 @@ export default function Blogs() {
                       <IconEdit />
                     </Link>
                   </Button>
+
+                  {/* Delete button */}
+                  <BlogDeleteButton
+                    blogId={row.original.id}
+                    refresh={refresh}
+                  />
+
+                  {/* <BlogCommentList blogId={row.original.id} /> */}
+                  <Button
+                    type="button"
+                    onClick={() => {
+                      setIsOpen(true);
+                      setSelectedId(row.original.id);
+                    }}
+                    variant="ghost"
+                    size="icon"
+                    className="text-gray-500 hover:text-gray-900"
+                  >
+                    <IconMessage />
+                  </Button>
                 </div>
               ),
             },
           ]}
         />
       </div>
+      <BlogCommentList
+        blogId={selectedId}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
     </section>
   );
 }

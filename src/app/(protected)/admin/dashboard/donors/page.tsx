@@ -10,7 +10,7 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 
 export default function Donors() {
-  const { data, isLoading } = useSWR("/donor/profile/list");
+  const { data, isLoading, refresh } = useSWR("/donor/profile/list");
   const sp = useSearchParams();
   const pathname = usePathname();
 
@@ -113,7 +113,17 @@ export default function Donors() {
               {
                 id: "actions",
                 header: "Action",
-                cell: ({ row }) => <DonorProfileDrawer donor={row.original} />,
+                cell: ({ row }) => (
+                  <div className="flex items-center gap-0.5">
+                    <DonorProfileDrawer donor={row.original} />
+
+                    {/* Delete button */}
+                    {/* <UserDeleteButton
+                      userId={row.original.id}
+                      refresh={refresh}
+                    /> */}
+                  </div>
+                ),
               },
             ]}
           />

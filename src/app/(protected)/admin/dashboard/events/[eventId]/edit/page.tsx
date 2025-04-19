@@ -7,7 +7,7 @@ import { EventDetail } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
 import { EventUpdateSchema } from "@/schemas/eventSchema";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { UseFormReturn } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
@@ -16,15 +16,28 @@ type EventFormData = z.infer<typeof EventUpdateSchema>;
 
 export default function EditEvent() {
   const params = useParams() as { eventId: string };
-  const router = useRouter();
 
-  const { data, isLoading } = useSWR(`/event/show/${params.eventId}`);
+  const { data, isLoading, refresh } = useSWR(`/event/show/${params.eventId}`);
 
   // Function to handle form submission
   const onSubmit = async (fd: EventFormData, form: UseFormReturn) => {
     const formData = new FormData();
     Object.entries(fd).forEach(([key, value]) => {
-      formData.append(key, value || "");
+      if (key === "documents" && Array.isArray(value)) {
+        value.forEach((file) => {
+          if (file instanceof File) {
+            formData.append("documents[]", file);
+          }
+        });
+      } else if (key === "images" && Array.isArray(value)) {
+        value.forEach((file) => {
+          if (file instanceof File) {
+            formData.append("images[]", file);
+          }
+        });
+      } else {
+        formData.append(key, value as any);
+      }
     });
 
     const res = await updateEvent(formData, data?.data?.results?.id);
@@ -32,7 +45,7 @@ export default function EditEvent() {
     if (res.status === "success") {
       toast.success(res.message);
       form.reset();
-      router.push("/admin/dashboard/events");
+      refresh();
     } else {
       toast.error(res.message);
     }
@@ -68,8 +81,13 @@ export default function EditEvent() {
           schedule_date: event.scheduleDate || "",
           schedule_time: event.scheduleTime || "",
           status: event.status,
+          documents: [],
+          images: [],
         }}
         preview={event.thumbnail}
+        documents={event.documents || []}
+        images={event.images || []}
+        refresh={refresh}
       />
     </div>
   );

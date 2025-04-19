@@ -5,12 +5,13 @@ import React from "react";
 type SocialIconType = {
   className?: string;
   icon?: React.ReactNode;
+  url: string;
 };
 
-export function SocialIcon({ className, icon }: SocialIconType) {
+export function SocialIcon({ className, icon, url }: SocialIconType) {
   return (
     <Link
-      href="/"
+      href={url}
       className={cn(
         "flex h-[60px] w-[60px] items-center justify-center rounded-full bg-primary/10 from-primary-light to-primary text-primary hover:bg-gradient-to-r hover:text-base-0 xmd:h-[75px] xmd:w-[75px]",
         className,

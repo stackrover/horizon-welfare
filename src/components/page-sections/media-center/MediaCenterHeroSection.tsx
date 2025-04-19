@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { MediaCenterHero } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
 import { cn } from "@/lib/utils";
-import { format } from "date-fns";
 import _ from "lodash";
 import toast from "react-hot-toast";
 
@@ -19,6 +18,8 @@ export function MediaCenterHeroSection({
   editable?: boolean;
 }) {
   const { data, isLoading, isError, refresh } = useSWR("/media/page/hero/show");
+
+  console.log(data);
 
   if (isLoading) {
     return <Loader className="h-[800px]" />;
@@ -92,10 +93,7 @@ export function MediaCenterHeroSection({
             >
               <NewsCard
                 title={serializedData.news1.title}
-                date={format(
-                  new Date(serializedData.news1.createdAt),
-                  "dd'th' MMM yyyy",
-                )}
+                date={serializedData.news1.createdAt}
                 description={serializedData.news1.description}
                 image={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}${serializedData.news1.thumbnail}`}
               />
@@ -109,10 +107,7 @@ export function MediaCenterHeroSection({
             >
               <NewsCard
                 title={serializedData.news2.title}
-                date={format(
-                  new Date(serializedData.news2.createdAt),
-                  "dd'th' MMM yyyy",
-                )}
+                date={serializedData.news2.createdAt}
                 description={serializedData.news2.description}
                 image={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}${serializedData.news2.thumbnail}`}
               />
@@ -126,10 +121,7 @@ export function MediaCenterHeroSection({
             >
               <NewsCard
                 title={serializedData.news3.title}
-                date={format(
-                  new Date(serializedData.news3.createdAt),
-                  "dd'th' MMM yyyy",
-                )}
+                date={serializedData.news3.createdAt}
                 description={serializedData.news3.description}
                 image={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}${serializedData.news3.thumbnail}`}
               />

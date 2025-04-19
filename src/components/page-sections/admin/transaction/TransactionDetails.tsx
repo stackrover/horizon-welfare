@@ -10,9 +10,9 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Transaction } from "@/data/transactions/Transaction";
 import { IconCheck, IconEye, IconX } from "@tabler/icons-react";
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import _ from "lodash";
 
 export default function TransactionDetail({

@@ -1,14 +1,13 @@
 "use client";
 
 import { handleSignOut } from "@/app/actions/authActions";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { IconBell, IconChevronDown, IconLogout2 } from "@tabler/icons-react";
+import { IconChevronDown, IconLogout2 } from "@tabler/icons-react";
 import { useSession } from "next-auth/react";
 
 export function DashboardNavbar() {
@@ -18,7 +17,7 @@ export function DashboardNavbar() {
     <div className="sticky inset-x-0 left-0 top-0 z-50 flex h-16 flex-row items-center border-b bg-white px-6">
       <div className="ml-auto flex items-center gap-x-5">
         {/* Profile dropdown */}
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
           <DropdownMenuTrigger className="flex items-center gap-6 text-left">
             <div className="flex items-center gap-2">
               <div>

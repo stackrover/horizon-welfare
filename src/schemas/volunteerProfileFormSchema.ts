@@ -11,15 +11,9 @@ export const volunteerProfileFormSchema = z
     l_name: z.string().min(1, {
       message: "Last name is required.",
     }),
-    division: z.string().min(1, {
-      message: "Select a division.",
-    }),
-    district: z.string().min(1, {
-      message: "Select a district.",
-    }),
-    thana: z.string().min(1, {
-      message: "Select a thana.",
-    }),
+    division: z.string().optional(),
+    district: z.string().optional(),
+    thana: z.string().optional(),
     age: z.number({ required_error: "Age is required." }),
     gender: z.string().min(1, {
       message: "Choose a gender.",

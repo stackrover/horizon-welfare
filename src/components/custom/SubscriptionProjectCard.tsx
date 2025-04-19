@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn, getImageURL } from "@/lib/utils";
 import { SubscriptionCardProps } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -43,7 +43,7 @@ export function SubscriptionProjectCard({
       </div>
       <div className="order-1 flex justify-center sm:order-2 sm:block">
         <Image
-          src={process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL + imageUrl}
+          src={getImageURL(imageUrl)}
           alt="subscription"
           height={166}
           width={166}

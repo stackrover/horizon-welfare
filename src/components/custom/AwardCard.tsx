@@ -1,12 +1,13 @@
 import { AwardCardProps } from "@/types/types";
 import Image from "next/image";
+import { getImageURL } from "../../lib/utils";
 
 export function AwardCard({ imageUrl, year, name, place }: AwardCardProps) {
   return (
     <div className="flex w-full justify-center">
       <div className="flex w-fit flex-col items-center gap-y-1">
         <Image
-          src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}/${imageUrl}`}
+          src={getImageURL(imageUrl)}
           height={119}
           width={92}
           alt="Award Image"

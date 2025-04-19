@@ -19,6 +19,7 @@ import { IconFileTypeDoc, IconX } from "@tabler/icons-react";
 import Image from "next/image";
 import React from "react";
 import SirenIcon from "../../../../public/icons/SirenIcon";
+import { getImageURL } from "../../../lib/utils";
 
 export function ProjectDetailsPage({
   session,
@@ -33,7 +34,11 @@ export function ProjectDetailsPage({
 
   const serializedData = new Project(data?.results);
 
-  return (
+  return !data ? (
+    <main className="flex h-[500px] w-full items-center justify-center">
+      <h4 className="text-2xl font-semibold text-base-400">No Data Found!</h4>
+    </main>
+  ) : (
     <main>
       {/* image gallery section  */}
       <section className="container mt-[60px]">
@@ -50,11 +55,11 @@ export function ProjectDetailsPage({
 
         <div className="mt-10 flex items-start gap-2">
           <Image
-            src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}${serializedData.thumbnail}`}
+            src={getImageURL(serializedData.thumbnail)}
             alt="project image"
             width={1800}
             height={600}
-            className="h-fit max-h-[1000px] w-full"
+            className="aspect-video max-h-[1000px] w-full"
           />
         </div>
       </section>
@@ -68,7 +73,7 @@ export function ProjectDetailsPage({
               ? serializedData.images.map((img) => (
                   <Image
                     key={img.id}
-                    src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}${img.link}`}
+                    src={getImageURL(img.link)}
                     alt={img.title}
                     width={356}
                     height={246}
@@ -118,7 +123,7 @@ export function ProjectDetailsPage({
                           </DrawerHeader>
                           <div className="h-full">
                             <iframe
-                              src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}${doc.link}`}
+                              src={getImageURL(doc.link)}
                               className="h-full w-full border-0"
                             ></iframe>
                           </div>

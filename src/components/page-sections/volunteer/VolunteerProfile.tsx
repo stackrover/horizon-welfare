@@ -45,6 +45,8 @@ export function VolunteerProfile({
   const serializedData =
     data.status === "success" ? new VolunteerData(data?.results) : null;
 
+  console.log(data);
+
   const [file, setFile] = React.useState<File[]>([]);
   const [profileImg, setProfileImg] = React.useState<File[]>([]);
   const [profileData, setProfileData] = React.useState<VolunteerData>();
@@ -118,7 +120,7 @@ export function VolunteerProfile({
           `/district/${serializedData.district}`,
         );
 
-        if (thanaList.length > 0) {
+        if (thanaList?.length) {
           setThanas(thanaList[0].upazillas);
         }
 
@@ -140,7 +142,11 @@ export function VolunteerProfile({
 
     // Loop through the object keys and append them to FormData
     (Object.keys(values) as (keyof typeof values)[]).forEach((key) => {
-      formData.append(key, values[key].toString());
+      if (values[key]) {
+        formData.append(key, values[key].toString());
+      } else {
+        formData.append(key, "");
+      }
     });
 
     if (file.length > 0) {
@@ -153,6 +159,8 @@ export function VolunteerProfile({
 
     // Call the action handler
     const response = await updateVolunteerProfileAction(formData, userId);
+
+    console.log(response);
 
     if (response.status === "success") {
       toast.success(response.message);
@@ -183,7 +191,7 @@ export function VolunteerProfile({
     field.onChange(val);
     setThanas([]);
     const thanaList = await getLocationData(`/district/${val}`);
-    if (thanaList.length > 0) {
+    if (thanaList?.length) {
       setThanas(thanaList[0].upazillas);
     }
     form.setValue("thana", "");
@@ -469,7 +477,7 @@ export function VolunteerProfile({
                     <FormItem className="col-span-6">
                       <FormLabel>Division</FormLabel>
                       <Select
-                        disabled={divisions.length === 0}
+                        disabled={!!divisions?.length}
                         onValueChange={(val) =>
                           handleDivisionChange(val, field)
                         }
@@ -481,7 +489,7 @@ export function VolunteerProfile({
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {divisions.length > 0
+                          {divisions?.length
                             ? divisions.map((division, index) => (
                                 <SelectItem
                                   key={index}
@@ -507,7 +515,7 @@ export function VolunteerProfile({
                     <FormItem className="col-span-6">
                       <FormLabel>District</FormLabel>
                       <Select
-                        disabled={districts.length === 0}
+                        disabled={!!districts?.length}
                         onValueChange={(val) =>
                           handleDistrictChange(val, field)
                         }
@@ -519,7 +527,7 @@ export function VolunteerProfile({
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {districts.length > 0
+                          {districts?.length
                             ? districts.map((district, index) => (
                                 <SelectItem
                                   key={index}
@@ -556,7 +564,7 @@ export function VolunteerProfile({
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {thanas.length > 0
+                          {thanas?.length
                             ? thanas.map((thana, index) => (
                                 <SelectItem key={index} value={thana}>
                                   {thana}

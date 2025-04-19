@@ -40,6 +40,8 @@ export function ProjectDonation({
 
     if (resp.status === "success" && window) {
       window.location.href = resp.checkoutUrl;
+    } else {
+      toast.error("Something went wrong! Please try again.");
     }
   };
 

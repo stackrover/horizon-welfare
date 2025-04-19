@@ -1,3 +1,5 @@
+import { updateContactUsHero } from "../../app/actions/admin/pages/ContactUs";
+
 enum nameEnum {
   id = "id",
   title = "title",
@@ -58,5 +60,22 @@ export class ContactUsContent {
 
   getInputName(name: keyof typeof nameEnum): string {
     return nameEnum[name];
+  }
+
+  async updateData(formData: Record<string, string | Blob>) {
+    // Create a new FormData instance
+    const fd = new FormData();
+
+    // Populate the FormData object
+    Object.keys(formData).forEach((key) => {
+      const value = formData[key];
+      if (typeof value === "string" || value instanceof Blob) {
+        fd.append(key, value);
+      } else {
+        fd.append(key, "");
+      }
+    });
+
+    return updateContactUsHero(fd);
   }
 }

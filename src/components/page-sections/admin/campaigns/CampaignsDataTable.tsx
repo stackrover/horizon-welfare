@@ -1,15 +1,17 @@
 "use client";
 
+import { TruncateString } from "@/components/custom/TruncateString";
 import DataTable from "@/components/data-table/Table";
+import ProjectDeleteButton from "@/components/forms/ProjectDeleteButton";
 import { Button } from "@/components/ui/button";
 import { useSWR } from "@/hooks/use-swr";
-import { TrashIcon } from "@radix-ui/react-icons";
+import { IconEdit, IconEye } from "@tabler/icons-react";
 import { addDays, format } from "date-fns";
 import _ from "lodash";
-import { Trash2 } from "lucide-react";
+import Link from "next/link";
 
 export const CampaignsDataTable = () => {
-  const { data, isLoading } = useSWR("/project/list-details");
+  const { data, isLoading, refresh } = useSWR("/project/list-details");
   const campaignProjects = data?.data?.results || [];
 
   if (isLoading) {
@@ -31,7 +33,11 @@ export const CampaignsDataTable = () => {
             id: "title",
             header: "Project title",
             accessorKey: "title",
-            cell: (i) => i.getValue(),
+            cell: (i) => (
+              <TruncateString length={30}>
+                {i.getValue() as string}
+              </TruncateString>
+            ),
           },
           {
             id: "category",
@@ -84,8 +90,50 @@ export const CampaignsDataTable = () => {
               </span>
             ),
           },
+          {
+            id: "action",
+            header: "Action",
+            enableSorting: false,
+            cell: ({ row }) => (
+              <div className="flex items-center gap-0.5">
+                {/* Preview button */}
+                <Button
+                  asChild
+                  variant="ghost"
+                  size="icon"
+                  className="text-gray-500"
+                >
+                  <Link href={`/projects/details/${row.original.id}`}>
+                    <IconEye />
+                  </Link>
+                </Button>
+
+                {/* Edit button */}
+                <Button
+                  asChild
+                  variant="ghost"
+                  size="icon"
+                  className="text-gray-500"
+                >
+                  <Link
+                    href={`/admin/dashboard/campaigns/${row.original.id}/edit`}
+                  >
+                    <IconEdit />
+                  </Link>
+                </Button>
+
+                {/* Delete button */}
+                <ProjectDeleteButton
+                  projectId={row.original.id}
+                  refresh={refresh}
+                />
+              </div>
+            ),
+          },
         ]}
       />
     </div>
   );
 };
+
+// /project/delete/{id}

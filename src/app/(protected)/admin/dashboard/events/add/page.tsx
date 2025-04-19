@@ -17,21 +17,35 @@ export default function AddNewEvent() {
 
   // Function to handle form submission
   const onSubmit = async (fd: EventFormData, form: UseFormReturn) => {
-    console.log({ fd });
-
     const formData = new FormData();
     Object.entries(fd).forEach(([key, value]) => {
-      formData.append(key, value || "");
+      if (key === "documents" && Array.isArray(value)) {
+        value.forEach((file) => {
+          if (file instanceof File) {
+            formData.append("documents[]", file);
+          }
+        });
+      } else if (key === "images" && Array.isArray(value)) {
+        value.forEach((file) => {
+          if (file instanceof File) {
+            formData.append("images[]", file);
+          }
+        });
+      } else {
+        formData.append(key, value as any);
+      }
     });
+    try {
+      const res = await createEvent(formData);
 
-    const res = await createEvent(formData);
-
-    if (res.status === "success") {
-      toast.success(res.message);
-      form.reset();
-      router.push("/admin/dashboard/events");
-    } else {
-      toast.error(res.message);
+      if (res.status === "success") {
+        toast.success(res.message);
+        router.push("/admin/dashboard/events");
+      } else {
+        toast.error(res.message);
+      }
+    } catch (error) {
+      toast.error("Something went wrong. Please try again.");
     }
   };
 
@@ -43,7 +57,11 @@ export default function AddNewEvent() {
           <Link href="/admin/dashboard/events"> Back </Link>
         </Button>
       </div>
-      <EventForm formSchema={EventCreateSchema} onSubmit={onSubmit as any} />
+      <EventForm
+        refresh={() => {}}
+        formSchema={EventCreateSchema}
+        onSubmit={onSubmit as any}
+      />
     </div>
   );
 }

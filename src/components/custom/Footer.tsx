@@ -3,15 +3,9 @@
 import {
   BottomFooter,
   NewsletterSection,
-  SocialIcon,
+  SocialIconSection,
   TopPartnersSection,
 } from "@/components";
-import {
-  IconBrandFacebook,
-  IconBrandInstagram,
-  IconBrandTwitter,
-  IconBrandYoutube,
-} from "@tabler/icons-react";
 import dynamic from "next/dynamic";
 
 const SummaryCards = dynamic(() => import("@/components/custom/SummaryCards"), {
@@ -34,12 +28,7 @@ export function Footer() {
           <NewsletterSection />
 
           {/* social media section  */}
-          <div className="flex h-full items-center justify-between gap-x-4 rounded-2xl bg-base-0 p-4 shadow-[7px_20px_50px_rgba(0,0,0,0.09)] xmd:gap-x-5 xmd:p-8">
-            <SocialIcon icon={<IconBrandFacebook size={30} />} />
-            <SocialIcon icon={<IconBrandInstagram size={30} />} />
-            <SocialIcon icon={<IconBrandTwitter size={30} />} />
-            <SocialIcon icon={<IconBrandYoutube size={30} />} />
-          </div>
+          <SocialIconSection />
           {/* top footer end  */}
         </div>
 

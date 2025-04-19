@@ -5,6 +5,7 @@ import { ProjectType } from "@/types/types";
 import { IconGift } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
+import { getImageURL } from "../../lib/utils";
 
 export function DonationCard({ cardData }: { cardData: ProjectType }) {
   const goalAmount = cardData?.goalAmount ? +cardData.goalAmount : 0;
@@ -13,17 +14,17 @@ export function DonationCard({ cardData }: { cardData: ProjectType }) {
     ? +cardData.totalCollections
     : 0;
 
-  const percentage = totalCollection / (goalAmount / 100);
+  const percentage = (totalCollection / (goalAmount / 100)).toFixed(2);
 
   return (
     <div className="group overflow-hidden rounded-xl border shadow">
       <Image
-        src={`${process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL}${cardData.thumbnail}`}
+        src={getImageURL(cardData.thumbnail)}
         alt="Donation"
         loading="lazy"
         blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Vg8AAnEBdzTCX3oAAAAASUVORK5CYII="
         placeholder="blur"
-        className="w-full transition-all duration-300 ease-in-out group-hover:scale-105"
+        className="aspect-video w-full transition-all duration-300 ease-in-out group-hover:scale-105"
         height={175}
         width={500}
         quality={75}

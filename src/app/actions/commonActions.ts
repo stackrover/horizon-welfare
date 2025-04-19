@@ -22,15 +22,15 @@ export const subscribe = async (prevState: StateType, formData: FormData) => {
 // contact us form action handler
 export const contactUs = async (prevState: StateType, formData: FormData) => {
   try {
-    const firstName = formData.get("contact-us-first_name");
-    const lastName = formData.get("contact-us-last_name");
+    const firstName = formData.get("contact-us-first-name");
+    const lastName = formData.get("contact-us-last-name");
     const email = formData.get("contact-us-email");
     const subject = formData.get("contact-us-subject");
     const message = formData.get("contact-us-message");
 
-    const { data } = await axiosInstance.post("/newsletter/subscriber/add", {
-      firstName,
-      lastName,
+    const { data } = await axiosInstance.post("/contact/form/add", {
+      first_name: firstName,
+      last_name: lastName,
       email,
       subject,
       message,
@@ -38,6 +38,7 @@ export const contactUs = async (prevState: StateType, formData: FormData) => {
 
     return data;
   } catch (error) {
-    return { ...ERROR_OBJ_FORMAT, error: error };
+    console.log({ error_from_action: error });
+    return { ...ERROR_OBJ_FORMAT };
   }
 };

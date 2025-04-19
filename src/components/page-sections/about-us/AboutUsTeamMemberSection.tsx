@@ -40,16 +40,6 @@ export function AboutUsTeamMemberSection({
             <TeamMemberCard key={item.id} item={item} />
           ))
         : null}
-      {serializedData.length > 0
-        ? serializedData.map((item: TeamMember) => (
-            <TeamMemberCard key={item.id} item={item} />
-          ))
-        : null}
-      {serializedData.length > 0
-        ? serializedData.map((item: TeamMember) => (
-            <TeamMemberCard key={item.id} item={item} />
-          ))
-        : null}
     </SectionWrapper>
   );
 }

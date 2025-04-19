@@ -31,6 +31,7 @@ const UserSchema = z.object({
   email_verified_at: z.string().nullable(),
   created_at: z.string(),
   updated_at: z.string(),
+  panel_access: z.string(),
 });
 
 type UserData = z.infer<typeof UserSchema>;
@@ -48,6 +49,7 @@ export class User {
   readonly createdAt: string;
   readonly updatedAt: string;
   readonly original: UserData;
+  readonly panelAccess: string;
 
   constructor(data: UserData) {
     // Validate incoming data using the schema
@@ -63,6 +65,7 @@ export class User {
     this.mobile = parsedData.mobile_number;
     this.status = parsedData.status;
     this.role = parsedData.base_role;
+    this.panelAccess = parsedData.panel_access;
     this.verified = Boolean(parsedData.email_verified_at);
     this.createdAt = this.formatDate(parsedData.created_at);
     this.updatedAt = this.formatDate(parsedData.updated_at);
@@ -101,6 +104,10 @@ export class User {
 
   getStatus(): UserStatus {
     return this.status;
+  }
+
+  getPanelAccess(): string {
+    return this.panelAccess;
   }
 
   getRole(): UserRole {

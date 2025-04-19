@@ -25,6 +25,7 @@ export function Blogs({ url }: { url: string; editable?: boolean }) {
       errorClass="h-[540px]"
       loadingClass="h-[540px]"
       className="mx-4 mt-[100px] grid grid-cols-1 gap-4 gap-x-6 gap-y-8 md:mx-10 xmd:grid-cols-2 xl:grid-cols-3 3xl:grid-cols-4 3xl:gap-6"
+      hidden={false}
     >
       {serializedData.length > 0
         ? serializedData.map((blog: Blog) => (

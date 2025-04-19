@@ -1,9 +1,9 @@
 "use client";
 
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { IconTrash } from "@tabler/icons-react";
 import { deleteEvent } from "@/app/actions/admin/events";
+import { Button } from "@/components/ui/button";
+import { IconLoader2, IconTrash } from "@tabler/icons-react";
+import React from "react";
 import toast from "react-hot-toast";
 
 export default function EventDeleteButton({
@@ -13,7 +13,16 @@ export default function EventDeleteButton({
   eventId: number;
   refresh: VoidFunction;
 }) {
+  const [loading, setLoading] = React.useState(false);
+
   const handleDeleteEvent = async () => {
+    const confirm = window.confirm(
+      "Are you sure you want to delete this event?",
+    );
+    if (!confirm) return;
+
+    setLoading(true);
+
     const res = await deleteEvent(eventId.toString());
     if (res.status === "success") {
       toast.success(res.message);
@@ -21,6 +30,8 @@ export default function EventDeleteButton({
     } else {
       toast.error(res.message);
     }
+
+    setLoading(false);
   };
 
   return (
@@ -30,7 +41,7 @@ export default function EventDeleteButton({
       className="text-gray-500 hover:text-red-500"
       onClick={handleDeleteEvent}
     >
-      <IconTrash />
+      {loading ? <IconLoader2 className="animate-spin" /> : <IconTrash />}
     </Button>
   );
 }

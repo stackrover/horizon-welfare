@@ -11,7 +11,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
 import { loginFormSchema } from "@/schemas/loginFromSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IconEye, IconEyeOff } from "@tabler/icons-react";
@@ -152,7 +151,7 @@ export default function Login() {
                 </form>
               </Form>
 
-              <div className="my-4 flex items-center gap-x-4">
+              {/* <div className="my-4 flex items-center gap-x-4">
                 <Separator className="shrink" />
                 <span>OR</span>
                 <Separator className="shrink" />
@@ -164,7 +163,7 @@ export default function Login() {
                 className="mt-2 w-full rounded-full border shadow-none"
               >
                 <span>Continue with Google</span>
-              </Button>
+              </Button> */}
 
               <div className="mt-4">
                 <span>By continuing, you agree to the</span>{" "}

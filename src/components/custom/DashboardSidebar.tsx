@@ -1,6 +1,6 @@
-import Image from "next/image";
-import _ from "lodash";
 import { SidebarLink } from "@/components";
+import _ from "lodash";
+import Image from "next/image";
 import { ScrollArea } from "../ui/scroll-area";
 
 const sidebarItems = [
@@ -10,11 +10,13 @@ const sidebarItems = [
     childrens: [
       { id: "dashboard", title: "Dashboard", pathname: "" },
       { id: "campaigns", title: "Campaigns", pathname: "/campaigns" },
+      { id: "packages", title: "Subscription Packages", pathname: "/packages" },
       { id: "transactions", title: "Transactions", pathname: "/transactions" },
       { id: "donors", title: "Donors", pathname: "/donors" },
       { id: "volunteers", title: "Volunteers", pathname: "/volunteers" },
       { id: "blogs", title: "Blogs", pathname: "/blogs" },
       { id: "events", title: "Events", pathname: "/events" },
+      { id: "messages", title: "Messages", pathname: "/messages" },
     ],
   },
   {
@@ -26,6 +28,8 @@ const sidebarItems = [
       { id: "what-we-do", title: "What we do", pathname: "/what-we-do" },
       { id: "media-center", title: "Media center", pathname: "/media-center" },
       { id: "donate-now", title: "Donate now", pathname: "/donate-now" },
+      { id: "contact-us", title: "Contact Us", pathname: "/contact-us" },
+      { id: "about-us", title: "About Us", pathname: "/about-us" },
       {
         id: "video-gallery",
         title: "Video gallery",
