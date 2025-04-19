@@ -23,18 +23,19 @@ export function ContactUsForm({ className }: { className?: string }) {
     initialState,
   );
 
-  console.log(state);
-
   // show toast message on success or error
   React.useEffect(() => {
-    if (state.status === "success") {
-      toast.success(state.message);
-      if (formRef.current) {
-        formRef.current.reset();
+    if (state.status) {
+      if (state.status === "success") {
+        toast.success(state.message);
+        if (formRef.current) {
+          formRef.current.reset();
+        }
+      } else if (state.status === "error" && state.error_type === "general") {
+        toast.error(state.message);
+      } else {
+        toast.error("Something went wrong. Please try again.");
       }
-    } else if (state.status === "error") {
-      // toast.error(state.message);
-      console.log(state);
     }
   }, [state]);
 

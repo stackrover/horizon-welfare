@@ -36,7 +36,6 @@ export default function BlogCategoryForm({ refresh }: { refresh: () => void }) {
   });
 
   async function onSubmit(formData: TFormData) {
-    console.log("submitting add category");
     const fd = new FormData();
     // Populate the FormData object
     Object.keys(formData).forEach((key) => {

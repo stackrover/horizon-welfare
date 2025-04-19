@@ -30,8 +30,6 @@ export default function PackageAddButton({
   ) => {
     const fd = new FormData();
 
-    console.log(values);
-
     Object.keys(values).forEach((key) => {
       const typedKey = key as keyof TFormData;
       const value = values[typedKey];

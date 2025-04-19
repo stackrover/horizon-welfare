@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -9,16 +9,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod";
+import _ from "lodash";
 import { Plus } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { mutate } from "swr";
+import { z } from "zod";
+import { createNewCategory } from "../../app/actions/admin/pages/campaigns";
 import InputField from "../forms/InputField";
 import { Form } from "../ui/form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { createNewCategory } from "../../app/actions/admin/pages/campaigns";
-import toast from "react-hot-toast";
-import _ from "lodash";
 
 const formSchema = z.object({
   title: z.string({ required_error: "Title is required." }),
@@ -76,6 +77,7 @@ export const CreateCategory = () => {
     const res = await createNewCategory(fd);
     if (res.status === "success") {
       toast.success(res.message);
+      mutate(`/project/category/list`);
       setOpen(false);
     } else {
       toast.error(res.message);

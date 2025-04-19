@@ -24,6 +24,7 @@ import { Separator } from "@/components/ui/separator";
 import { bloodGroups } from "@/constants/blood-groups";
 import { VolunteerData } from "@/data";
 import { getLocationData } from "@/hooks/get-locations";
+import { getImageURL } from "@/lib/utils";
 import { volunteerProfileFormSchema } from "@/schemas/volunteerProfileFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IconCloudUpload, IconEdit, IconX } from "@tabler/icons-react";
@@ -44,8 +45,6 @@ export function VolunteerProfile({
   const data = React.use(dataPromise);
   const serializedData =
     data.status === "success" ? new VolunteerData(data?.results) : null;
-
-  console.log(data);
 
   const [file, setFile] = React.useState<File[]>([]);
   const [profileImg, setProfileImg] = React.useState<File[]>([]);
@@ -159,8 +158,6 @@ export function VolunteerProfile({
 
     // Call the action handler
     const response = await updateVolunteerProfileAction(formData, userId);
-
-    console.log(response);
 
     if (response.status === "success") {
       toast.success(response.message);
@@ -290,8 +287,7 @@ export function VolunteerProfile({
                         profileImg[0]
                           ? URL.createObjectURL(profileImg[0])
                           : profileData?.profile_image
-                            ? process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL +
-                              profileData?.profile_image
+                            ? getImageURL(profileData?.profile_image)
                             : "/"
                       }
                       alt="profile"
@@ -699,8 +695,7 @@ export function VolunteerProfile({
                   <Image
                     src={
                       profileData?.bannar_image
-                        ? process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL +
-                          profileData?.bannar_image
+                        ? getImageURL(profileData?.bannar_image)
                         : "/"
                     }
                     alt="banner"
@@ -714,8 +709,7 @@ export function VolunteerProfile({
                         <Image
                           src={
                             profileData?.profile_image
-                              ? process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL +
-                                profileData?.profile_image
+                              ? getImageURL(profileData?.profile_image)
                               : "/"
                           }
                           alt="profile"

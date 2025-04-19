@@ -91,12 +91,7 @@ export default function TeamEntryForm<T extends z.ZodType<any, any>>({
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(handleSubmit, (error) =>
-          console.log({ error }),
-        )}
-        className="p-1"
-      >
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="p-1">
         <div className="flex flex-col gap-y-4 @container">
           {TeamEntryFormFields.map((field) => (
             <InputField

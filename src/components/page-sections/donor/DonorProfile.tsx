@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { DonorData } from "@/data";
+import { getImageURL } from "@/lib/utils";
 import { donorProfileFormSchema } from "@/schemas/donorProfileUpdateSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -224,8 +225,7 @@ export function DonorProfile({
                         profileImg[0]
                           ? URL.createObjectURL(profileImg[0])
                           : profileData?.profile_image
-                            ? process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL +
-                              profileData?.profile_image
+                            ? getImageURL(profileData?.profile_image)
                             : "/"
                       }
                       alt="profile"
@@ -452,8 +452,7 @@ export function DonorProfile({
                   <Image
                     src={
                       profileData?.bannar_image
-                        ? process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL +
-                          profileData?.bannar_image
+                        ? getImageURL(profileData?.bannar_image)
                         : "/"
                     }
                     alt="banner"
@@ -467,8 +466,7 @@ export function DonorProfile({
                         <Image
                           src={
                             profileData?.profile_image
-                              ? process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL +
-                                profileData?.profile_image
+                              ? getImageURL(profileData?.profile_image)
                               : "/"
                           }
                           alt="profile"

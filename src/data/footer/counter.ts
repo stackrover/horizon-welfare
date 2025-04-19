@@ -1,3 +1,22 @@
+import { updateCounter } from "../../app/actions/admin/pages/settings";
+
+enum nameEnum {
+  id = "id",
+  number1 = "number_1",
+  title1 = "title_1",
+  icon1 = "icon_1",
+  number2 = "number_2",
+  title2 = "title_2",
+  icon2 = "icon_2",
+  number3 = "number_3",
+  title3 = "title_3",
+  icon3 = "icon_3",
+  status = "status",
+  updatedBy = "updated_by",
+  createdAt = "created_at",
+  updatedAt = "updated_at",
+}
+
 export class Counter {
   id: number;
   number1: number;
@@ -13,6 +32,7 @@ export class Counter {
   updatedBy: number;
   createdAt: string;
   updatedAt: string;
+  original: any;
 
   constructor(data: any) {
     this.id = data?.id;
@@ -29,5 +49,36 @@ export class Counter {
     this.updatedBy = data?.updated_by;
     this.createdAt = data?.created_at;
     this.updatedAt = data?.updated_at;
+
+    this.original = data;
+  }
+
+  getFormData() {
+    return this.original;
+  }
+
+  getInputName(name: keyof typeof nameEnum): string {
+    return nameEnum[name];
+  }
+
+  async updateData(formData: Record<string, string | Blob>) {
+    // Create a new FormData instance
+    const fd = new FormData();
+
+    Object.entries(formData).forEach(([key, value]) => {
+      if (
+        value instanceof Blob ||
+        typeof value === "string" ||
+        typeof value === "number"
+      ) {
+        fd.append(key, value.toString());
+      } else if (value !== undefined && value !== null) {
+        fd.append(key, String(value));
+      } else {
+        fd.append(key, "");
+      }
+    });
+
+    return updateCounter(fd);
   }
 }

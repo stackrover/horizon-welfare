@@ -1,16 +1,16 @@
 "use client";
 
-import React from "react";
+import { updateEventStatus } from "@/app/actions/admin/events";
 import { Badge } from "@/components/ui/badge";
-import _ from "lodash";
+import { Command, CommandItem, CommandList } from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import _ from "lodash";
 import { ChevronDown } from "lucide-react";
-import { Command, CommandItem, CommandList } from "@/components/ui/command";
-import { updateEventStatus } from "@/app/actions/admin/events";
+import React from "react";
 import toast from "react-hot-toast";
 
 export default function UpdateEventStatus({
@@ -28,8 +28,6 @@ export default function UpdateEventStatus({
     setStatus(status);
 
     const res = await updateEventStatus(event.id, status);
-
-    console.log({ res });
 
     if (res.status === "success") {
       toast.success(res.message);

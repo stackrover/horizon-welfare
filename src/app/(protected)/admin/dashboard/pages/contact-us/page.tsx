@@ -32,7 +32,6 @@ export default function ContactUs() {
         toast.promise(contactInfo.updateData(values), {
           loading: "Loading...",
           success: (res) => {
-            console.log(res);
             refresh();
             return res.message;
           },

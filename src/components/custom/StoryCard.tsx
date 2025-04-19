@@ -27,7 +27,6 @@ export function StoryCard({
         <h1 className="mb-2 text-xl font-semibold leading-6 text-base-0">
           {title}
         </h1>
-        <h5 className="mb-4 text-sm leading-[18px] text-base-200">{subtext}</h5>
         <Link href={link ?? "#"}>
           <Button
             className="h-fit gap-x-2 px-0 py-0 font-bold text-destructive transition-all duration-300 ease-in-out hover:gap-x-3"

@@ -41,7 +41,6 @@ export function SocialIconSection({
         toast.promise(serializedData.updateData(values), {
           loading: "Loading...",
           success: (res) => {
-            console.log(res);
             refresh();
             return res.message;
           },

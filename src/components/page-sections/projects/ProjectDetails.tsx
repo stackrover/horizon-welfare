@@ -15,11 +15,11 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Project } from "@/data";
+import { getImageURL } from "@/lib/utils";
 import { IconFileTypeDoc, IconX } from "@tabler/icons-react";
 import Image from "next/image";
 import React from "react";
 import SirenIcon from "../../../../public/icons/SirenIcon";
-import { getImageURL } from "../../../lib/utils";
 
 export function ProjectDetailsPage({
   session,
@@ -33,6 +33,16 @@ export function ProjectDetailsPage({
   const data = React.use(dataPromise);
 
   const serializedData = new Project(data?.results);
+
+  const goalAmount = serializedData?.goalAmount
+    ? +serializedData.goalAmount
+    : 0;
+
+  const totalCollection = serializedData?.totalCollections
+    ? +serializedData.totalCollections
+    : 0;
+
+  console.log(goalAmount, totalCollection);
 
   return !data ? (
     <main className="flex h-[500px] w-full items-center justify-center">
@@ -148,10 +158,12 @@ export function ProjectDetailsPage({
         {/* about section end  */}
 
         {/* aside section  */}
-        <ProjectAsideCardSection
-          serializedData={serializedData}
-          session={session}
-        />
+        {goalAmount > totalCollection && (
+          <ProjectAsideCardSection
+            serializedData={serializedData}
+            session={session}
+          />
+        )}
       </section>
     </main>
   );

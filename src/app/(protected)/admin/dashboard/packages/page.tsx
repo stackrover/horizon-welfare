@@ -15,8 +15,6 @@ export default function Packages() {
     (d: any) => new Package(d),
   );
 
-  console.log(campaignProjects);
-
   if (isLoading) {
     return <div className="py-6"> Loading... </div>;
   }

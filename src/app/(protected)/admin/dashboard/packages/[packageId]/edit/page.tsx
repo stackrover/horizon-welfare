@@ -23,8 +23,6 @@ export default function EditCampaign<T extends z.ZodType<any, any>>() {
     ? new Project(data?.data?.results)
     : null;
 
-  console.log(serializedData);
-
   const onSubmit = async (formData: ProjectFormData) => {
     const fd = new FormData();
 

@@ -93,9 +93,9 @@ export type SpecialNeedCardProps = {
 
 // summary card props
 export type SummaryCardProps = {
-  imageUrl: string;
+  image: React.ReactNode;
   title: string | React.ReactNode;
-  subTitle: string;
+  subTitle: string | React.ReactNode;
 };
 
 // single comment props
