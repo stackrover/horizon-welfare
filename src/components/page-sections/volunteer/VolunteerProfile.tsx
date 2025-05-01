@@ -1,7 +1,6 @@
 "use client";
 
 import { updateVolunteerProfileAction } from "@/app/actions/volunteerActions";
-import { VolunteerProjectCard } from "@/components";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -23,10 +22,14 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { bloodGroups } from "@/constants/blood-groups";
 import { VolunteerData } from "@/data";
-import { getLocationData } from "@/hooks/get-locations";
+import { getData } from "@/hooks/get-data";
+import { useSWR } from "@/hooks/use-swr";
+import { cn, getImageURL } from "@/lib/utils";
 import { volunteerProfileFormSchema } from "@/schemas/volunteerProfileFormSchema";
+import { LocationType } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IconCloudUpload, IconEdit, IconX } from "@tabler/icons-react";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React from "react";
 import { useDropzone } from "react-dropzone";
@@ -37,26 +40,27 @@ import { z } from "zod";
 export function VolunteerProfile({
   dataPromise,
   userId,
+  containerClass,
+  formClass,
 }: {
   dataPromise: Promise<any>;
   userId: number | string | undefined;
+  containerClass?: string;
+  formClass?: string;
 }) {
   const data = React.use(dataPromise);
   const serializedData =
     data.status === "success" ? new VolunteerData(data?.results) : null;
 
-  console.log(data);
+  const { data: divisions } = useSWR(`/shared/geo/division`);
 
   const [file, setFile] = React.useState<File[]>([]);
   const [profileImg, setProfileImg] = React.useState<File[]>([]);
   const [profileData, setProfileData] = React.useState<VolunteerData>();
-  const [divisions, setDivisions] = React.useState<Record<string, string>[]>(
-    [],
-  );
-  const [districts, setDistricts] = React.useState<Record<string, string>[]>(
-    [],
-  );
-  const [thanas, setThanas] = React.useState<string[]>([]);
+  const [isShown, setIsShown] = React.useState<boolean>(false);
+  const [districts, setDistricts] = React.useState<LocationType[]>([]);
+  const [thanas, setThanas] = React.useState<LocationType[]>([]);
+  const auth = useSession();
 
   const {
     acceptedFiles,
@@ -83,58 +87,62 @@ export function VolunteerProfile({
   const form = useForm<z.infer<typeof volunteerProfileFormSchema>>({
     resolver: zodResolver(volunteerProfileFormSchema),
     defaultValues: {
-      f_name: "",
-      l_name: "",
-      gender: "",
-      age: 0,
-      division: "",
-      district: "",
-      thana: "",
-      nationality: "",
-      email: "",
-      address: "",
-      blood_group: "",
-      mobile_number: "",
-      profession: "",
-      education: "",
+      f_name: serializedData?.f_name || "",
+      l_name: serializedData?.l_name || "",
+      gender: serializedData?.gender || "",
+      age: serializedData?.age || 0,
+      division: serializedData?.division || "",
+      district: serializedData?.district || "",
+      thana: serializedData?.thana || "",
+      nationality: serializedData?.nationality || "",
+      email: serializedData?.email || "",
+      address: serializedData?.address || "",
+      blood_group: serializedData?.blood_group || "",
+      mobile_number: serializedData?.mobile_number || "",
+      profession: serializedData?.profession || "",
+      education: serializedData?.education || "",
     },
   });
 
-  // load profile data on initial render
   React.useEffect(() => {
-    if (serializedData) {
-      const fetchData = async () => {
-        const divisionList = await getLocationData("/divisions");
-        if (divisionList) {
-          setDivisions(divisionList);
-        }
+    const fetchData = async () => {
+      if (!serializedData || !divisions?.data?.length) return;
 
-        const districtList = await getLocationData(
-          `/division/${serializedData.division}`,
+      const divisionId = divisions.data.find(
+        (d: LocationType) => d.en_name === serializedData.division,
+      )?.id;
+
+      if (divisionId) {
+        const districtList = await getData(
+          `/shared/geo/district?pid=${divisionId}`,
+          auth.data?.user.token,
         );
-        if (districtList) {
-          setDistricts(districtList);
-        }
+        if (districtList) setDistricts(districtList);
+      }
+    };
 
-        const thanaList = await getLocationData(
-          `/district/${serializedData.district}`,
+    fetchData();
+  }, [data, divisions?.data]);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      if (!serializedData || !districts?.length) return;
+
+      const districtId = districts?.find(
+        (d: LocationType) => d.en_name === serializedData.district,
+      )?.id;
+
+      if (districtId) {
+        const thanaList = await getData(
+          `/shared/geo/upazila?pid=${districtId}`,
+          auth.data?.user.token,
         );
+        if (thanaList) setThanas(thanaList);
+      }
+    };
 
-        if (thanaList?.length) {
-          setThanas(thanaList[0].upazillas);
-        }
-
-        // destructuring the data
-        const { uid, balance, bannar_image, profile_image, id, ...restData } =
-          serializedData;
-
-        form.reset(restData);
-        setProfileData(serializedData);
-      };
-      fetchData();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
+    fetchData();
+  }, [data, districts]);
 
   //  Form submit handler.
   async function onSubmit(values: z.infer<typeof volunteerProfileFormSchema>) {
@@ -157,10 +165,11 @@ export function VolunteerProfile({
       formData.append("profile_image", profileImg[0]);
     }
 
+    console.log(formData.get("bannar_image"));
+    console.log(formData.get("profile_image"));
+
     // Call the action handler
     const response = await updateVolunteerProfileAction(formData, userId);
-
-    console.log(response);
 
     if (response.status === "success") {
       toast.success(response.message);
@@ -178,9 +187,16 @@ export function VolunteerProfile({
     field.onChange(val);
     setDistricts([]);
     setThanas([]);
-    const divisionLIst = await getLocationData(`/division/${val}`);
-    if (divisionLIst) {
-      setDistricts(divisionLIst);
+    const divisionId = divisions?.data?.find(
+      (d: LocationType) => d.en_name === val,
+    )?.id;
+    const data = await getData(
+      `/shared/geo/district?pid=${divisionId}`,
+      auth.data?.user.token,
+    );
+
+    if (data) {
+      setDistricts(data);
     }
     form.setValue("district", "");
     form.setValue("thana", "");
@@ -190,9 +206,16 @@ export function VolunteerProfile({
   const handleDistrictChange = async (val: string, field: any) => {
     field.onChange(val);
     setThanas([]);
-    const thanaList = await getLocationData(`/district/${val}`);
-    if (thanaList?.length) {
-      setThanas(thanaList[0].upazillas);
+    const districtId = districts?.find(
+      (d: LocationType) => d.en_name === val,
+    )?.id;
+    const data = await getData(
+      `/shared/geo/upazila?pid=${districtId}`,
+      auth.data?.user.token,
+    );
+
+    if (data.length > 0) {
+      setThanas(data);
     }
     form.setValue("thana", "");
   };
@@ -200,7 +223,7 @@ export function VolunteerProfile({
   return (
     <main>
       {/* personal info  */}
-      <section className="container mt-10">
+      <section className={cn("container mt-10", containerClass)}>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="">
             <div className="flex items-start justify-between gap-4">
@@ -223,7 +246,7 @@ export function VolunteerProfile({
 
             <Separator className="my-4" />
 
-            <div className="grid grid-cols-12 gap-x-4 gap-y-6">
+            <div className={cn("grid grid-cols-12 gap-x-4 gap-y-6", formClass)}>
               {/* left side column  */}
               <div className="order-2 col-span-12 grid grid-cols-12 gap-x-4 gap-y-6 xl:order-1 xl:col-span-8">
                 <label className="col-span-12 font-medium sm:col-span-4">
@@ -289,9 +312,8 @@ export function VolunteerProfile({
                       src={
                         profileImg[0]
                           ? URL.createObjectURL(profileImg[0])
-                          : profileData?.profile_image
-                            ? process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL +
-                              profileData?.profile_image
+                          : serializedData?.profile_image
+                            ? getImageURL(serializedData?.profile_image)
                             : "/"
                       }
                       alt="profile"
@@ -477,7 +499,7 @@ export function VolunteerProfile({
                     <FormItem className="col-span-6">
                       <FormLabel>Division</FormLabel>
                       <Select
-                        disabled={!!divisions?.length}
+                        disabled={!divisions?.data?.length}
                         onValueChange={(val) =>
                           handleDivisionChange(val, field)
                         }
@@ -489,13 +511,13 @@ export function VolunteerProfile({
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {divisions?.length
-                            ? divisions.map((division, index) => (
+                          {divisions?.data?.length
+                            ? divisions.data.map((division: LocationType) => (
                                 <SelectItem
-                                  key={index}
-                                  value={division.division}
+                                  key={division.id}
+                                  value={division.en_name}
                                 >
-                                  {division.division}
+                                  {division.en_name}
                                 </SelectItem>
                               ))
                             : null}
@@ -515,7 +537,7 @@ export function VolunteerProfile({
                     <FormItem className="col-span-6">
                       <FormLabel>District</FormLabel>
                       <Select
-                        disabled={!!districts?.length}
+                        disabled={!districts?.length}
                         onValueChange={(val) =>
                           handleDistrictChange(val, field)
                         }
@@ -528,12 +550,12 @@ export function VolunteerProfile({
                         </FormControl>
                         <SelectContent>
                           {districts?.length
-                            ? districts.map((district, index) => (
+                            ? districts.map((district) => (
                                 <SelectItem
-                                  key={index}
-                                  value={district.district}
+                                  key={district.id}
+                                  value={district.en_name}
                                 >
-                                  {district.district}
+                                  {district.en_name}
                                 </SelectItem>
                               ))
                             : null}
@@ -555,7 +577,6 @@ export function VolunteerProfile({
                       <Select
                         disabled={thanas.length === 0}
                         onValueChange={field.onChange}
-                        defaultValue={field.value}
                         value={field.value}
                       >
                         <FormControl>
@@ -565,9 +586,12 @@ export function VolunteerProfile({
                         </FormControl>
                         <SelectContent>
                           {thanas?.length
-                            ? thanas.map((thana, index) => (
-                                <SelectItem key={index} value={thana}>
-                                  {thana}
+                            ? thanas.map((thana) => (
+                                <SelectItem
+                                  key={thana.id}
+                                  value={thana.en_name}
+                                >
+                                  {thana.en_name}
                                 </SelectItem>
                               ))
                             : null}
@@ -698,9 +722,8 @@ export function VolunteerProfile({
                 <div className="sticky top-[130px] ml-0 overflow-hidden rounded-xl border shadow-sm xl:ml-4">
                   <Image
                     src={
-                      profileData?.bannar_image
-                        ? process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL +
-                          profileData?.bannar_image
+                      serializedData?.bannar_image
+                        ? getImageURL(serializedData?.bannar_image)
                         : "/"
                     }
                     alt="banner"
@@ -713,9 +736,8 @@ export function VolunteerProfile({
                       <div className="h-[50px] w-[50px] rounded-full bg-base-200">
                         <Image
                           src={
-                            profileData?.profile_image
-                              ? process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL +
-                                profileData?.profile_image
+                            serializedData?.profile_image
+                              ? getImageURL(serializedData?.profile_image)
                               : "/"
                           }
                           alt="profile"
@@ -740,12 +762,6 @@ export function VolunteerProfile({
           </form>
         </Form>
       </section>
-
-      {/* available volunteer projects  */}
-      <VolunteerProjectCard
-        title="Available Volunteering Projects"
-        endpoint={`/volunteer/available/project/list/${userId}`}
-      />
     </main>
   );
 }

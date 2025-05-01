@@ -93,9 +93,9 @@ export type SpecialNeedCardProps = {
 
 // summary card props
 export type SummaryCardProps = {
-  imageUrl: string;
+  image: React.ReactNode;
   title: string | React.ReactNode;
-  subTitle: string;
+  subTitle: string | React.ReactNode;
 };
 
 // single comment props
@@ -134,6 +134,13 @@ export type EventProps = {
 export type VideoCardProps = {
   videoUrl: string;
   title: string;
+};
+
+export type LocationType = {
+  id: number;
+  pid?: number;
+  en_name: string;
+  bn_name: string;
 };
 
 export type TruncateStringProps = {

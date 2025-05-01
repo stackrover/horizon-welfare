@@ -44,8 +44,6 @@ export default function AddCampaign() {
     try {
       const res = await addNewProject(fd);
 
-      console.log(res);
-
       if (res.status === "success") {
         toast.success(res.message);
         router.push("/admin/dashboard/campaigns");

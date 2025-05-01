@@ -12,7 +12,18 @@ import Link from "next/link";
 
 export const CampaignsDataTable = () => {
   const { data, isLoading, refresh } = useSWR("/project/list-details");
-  const campaignProjects = data?.data?.results || [];
+  const campaignProjects = data?.data?.results
+    ? data?.data?.results.map((d: any) => ({
+        ...d,
+        category_name: d?.category?.title || "",
+        collection_days: format(
+          addDays(new Date(d?.created_at), d?.collection_days),
+          "MMM dd, yyyy",
+        ),
+      }))
+    : [];
+
+  console.log(campaignProjects);
 
   if (isLoading) {
     return <div className="py-6"> Loading... </div>;
@@ -25,7 +36,7 @@ export const CampaignsDataTable = () => {
         columns={[
           {
             id: "id",
-            header: "#",
+            header: "ID",
             accessorKey: "id",
             cell: (info) => info.getValue(),
           },
@@ -40,42 +51,35 @@ export const CampaignsDataTable = () => {
             ),
           },
           {
-            id: "category",
+            id: "category_name",
             header: "Category",
-            accessorKey: "category.title",
+            accessorKey: "category_name",
             cell: (i) => i.getValue(),
           },
           {
-            id: "goalAmount",
+            id: "goal_amount",
             header: "Goal amount (BDT)",
             accessorKey: "goal_amount",
             cell: (i) => i.getValue() + " BDT",
           },
           {
-            id: "totalCollections",
+            id: "total_collections",
             header: "Collections (BDT)",
             accessorKey: "total_collections",
             cell: (i) => i.getValue() + " BDT",
           },
           {
-            id: "isEmergency",
+            id: "is_emergency",
             header: "Is Emergency",
             accessorKey: "is_emergency",
             cell: (i) =>
               Boolean(i.getValue() ?? false) ? "Emergency" : "Not Emergency",
           },
           {
-            id: "deadline",
+            id: "collection_days",
             header: "Deadline",
             accessorKey: "collection_days",
-            cell: ({ row }: any) =>
-              format(
-                addDays(
-                  new Date(row.original?.created_at),
-                  row.original?.collection_days,
-                ),
-                "MMM dd, yyyy",
-              ),
+            cell: (i) => i.getValue(),
           },
           {
             id: "status",
@@ -91,7 +95,7 @@ export const CampaignsDataTable = () => {
             ),
           },
           {
-            id: "action",
+            id: "actions",
             header: "Action",
             enableSorting: false,
             cell: ({ row }) => (

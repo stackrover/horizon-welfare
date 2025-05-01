@@ -7,10 +7,28 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import dynamic from "next/dynamic";
+
+const SummaryCards = dynamic(() => import("@/components/custom/SummaryCards"), {
+  ssr: false,
+});
 
 export default function Settings() {
   return (
     <div>
+      <div className="m-8 rounded-lg bg-base-0 p-8 shadow-md">
+        <Accordion type="single" collapsible>
+          <AccordionItem value="counter" className="border-b-0">
+            <AccordionTrigger className="hover:no-underline">
+              Summary Counter
+            </AccordionTrigger>
+            <AccordionContent>
+              <SummaryCards className="shadow-none" editable={true} />
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </div>
+
       <div className="m-8 rounded-lg bg-base-0 p-8 shadow-md">
         <Accordion type="single" collapsible>
           <AccordionItem value="social-icons" className="border-b-0">

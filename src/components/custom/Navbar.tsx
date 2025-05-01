@@ -12,11 +12,14 @@ import {
 } from "@/components/ui/sheet";
 import { IconLogout, IconMenu2, IconUser } from "@tabler/icons-react";
 import Link from "next/link";
+import { getImageURL } from "../../lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 
@@ -75,21 +78,34 @@ export async function Navbar() {
           <DropdownMenu>
             <DropdownMenuTrigger
               asChild
-              className="group-data-[session=false]:hidden"
+              className="cursor-pointer group-data-[session=false]:hidden"
             >
               <Avatar className="2xl:h-[45px] 2xl:w-[45px]">
                 <AvatarImage
-                  src="https://github.com/shadcn.png"
-                  alt="@shadcn"
+                  src={
+                    session?.user?.image
+                      ? getImageURL(session?.user?.image as string)
+                      : "/images/user-placeholder.png"
+                  }
+                  alt="user"
                 />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent
               align="end"
-              className="w-[150px]"
+              className="min-w-[200px]"
               sideOffset={10}
             >
+              <DropdownMenuLabel>
+                <p className="text-base capitalize text-base-400">
+                  {session?.user?.name || ""}
+                </p>
+                <p className="font-normal capitalize text-base-300">
+                  {session?.user?.role || ""}
+                </p>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
               <Link
                 href={
                   session?.user?.role

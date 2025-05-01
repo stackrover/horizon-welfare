@@ -15,6 +15,8 @@ export class Transaction {
   readonly updatedAt: Date;
   readonly project: Project;
   readonly donor: User | null;
+  readonly donorName: string;
+  readonly projectName: string;
   readonly original: Record<string, any>;
 
   constructor(data: Record<string, any>) {
@@ -32,6 +34,8 @@ export class Transaction {
     this.updatedAt = new Date(data?.updated_at);
     this.donor = data?.donor ? new User(data?.donor) : null;
     this.project = new Project(data?.project);
+    this.donorName = `${this.donor?.firstName} ${this.donor?.lastName}`;
+    this.projectName = this.project.title || "";
   }
 
   getId(): number {

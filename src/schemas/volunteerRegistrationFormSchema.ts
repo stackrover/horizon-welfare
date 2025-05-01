@@ -1,7 +1,6 @@
 import { z } from "zod";
 
-const regex =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d.*\d)(?=.*[^a-zA-Z0-9].*[^a-zA-Z0-9])[a-zA-Z0-9\S]{6,}$/;
+const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
 
 export const volunteerRegistrationFormSchema = z
   .object({
@@ -11,9 +10,15 @@ export const volunteerRegistrationFormSchema = z
     l_name: z.string().min(1, {
       message: "Last name is required.",
     }),
-    division: z.string().optional(),
-    district: z.string().optional(),
-    thana: z.string().optional(),
+    division: z.string().min(1, {
+      message: "Select one.",
+    }),
+    district: z.string().min(1, {
+      message: "Select one.",
+    }),
+    thana: z.string().min(1, {
+      message: "Select one.",
+    }),
     email: z
       .string()
       .min(1, {
@@ -30,7 +35,7 @@ export const volunteerRegistrationFormSchema = z
       })
       .refine((val) => regex.test(val), {
         message:
-          "Password must contain at least 6 characters, 1 uppercase, 1 lowercase, 2 digits & 2 special characters!",
+          "Password must contain at least 6 characters, 1 uppercase, 1 lowercase, 1 digits!",
       }),
     confirm_password: z.string(),
     blood_group: z.string().min(1, {

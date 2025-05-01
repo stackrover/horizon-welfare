@@ -50,19 +50,19 @@ export default function Transactions() {
             data={getTableData(data?.data?.results)}
             columns={[
               {
-                id: "trx",
+                id: "trxId",
                 header: "trxId",
                 accessorFn: (row) => row.getTrxId(),
                 cell: (i) => i.getValue(),
               },
               {
-                id: "name",
+                id: "donorName",
                 header: "Donor",
                 accessorFn: (r) => r.getDonor()?.getName(),
                 cell: (i) => i.getValue(),
               },
               {
-                id: "project",
+                id: "projectName",
                 header: "Project",
                 accessorFn: (r) => r.getProject().getTitle(),
                 cell: (i) => i.getValue(),
@@ -78,7 +78,7 @@ export default function Transactions() {
                 ),
               },
               {
-                id: "Trx_status",
+                id: "trxStatus",
                 header: "Trx status",
                 accessorFn: (r) => r.getTrxStatus(),
                 cell: (i) => (
@@ -92,7 +92,7 @@ export default function Transactions() {
               },
 
               {
-                id: "subscription",
+                id: "subscriptionMoneyStatus",
                 header: "Subscription",
                 accessorFn: (r) => r.isSubscriptionMoney(),
                 cell: (i) => _.startCase(i.getValue() as string),

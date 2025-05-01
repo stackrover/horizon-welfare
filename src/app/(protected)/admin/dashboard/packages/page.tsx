@@ -15,8 +15,6 @@ export default function Packages() {
     (d: any) => new Package(d),
   );
 
-  console.log(campaignProjects);
-
   if (isLoading) {
     return <div className="py-6"> Loading... </div>;
   }
@@ -35,7 +33,7 @@ export default function Packages() {
           columns={[
             {
               id: "id",
-              header: "#",
+              header: "ID",
               accessorKey: "id",
               cell: (info) => info.getValue(),
             },
@@ -69,7 +67,7 @@ export default function Packages() {
               ),
             },
             {
-              id: "action",
+              id: "actions",
               header: "Action",
               enableSorting: false,
               cell: ({ row }) => (

@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { DonorData } from "@/data";
+import { cn, getImageURL } from "@/lib/utils";
 import { donorProfileFormSchema } from "@/schemas/donorProfileUpdateSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -32,11 +33,17 @@ import { z } from "zod";
 export function DonorProfile({
   dataPromise,
   userId,
+  containerClass,
+  formClass,
 }: {
   dataPromise: Promise<any>;
   userId: number | string | undefined;
+  containerClass?: string;
+  formClass?: string;
 }) {
   const data = React.use(dataPromise);
+
+  console.log(data, userId);
 
   const serializedData =
     data.status === "success" ? new DonorData(data?.results) : null;
@@ -130,7 +137,7 @@ export function DonorProfile({
   return (
     <main>
       {/* personal info  */}
-      <section className="container mt-10">
+      <section className={cn("container mt-10", containerClass)}>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="">
             <div className="flex items-start justify-between gap-4">
@@ -153,7 +160,7 @@ export function DonorProfile({
 
             <Separator className="my-4" />
 
-            <div className="grid grid-cols-12 gap-x-4 gap-y-6">
+            <div className={cn("grid grid-cols-12 gap-x-4 gap-y-6", formClass)}>
               {/* left side column  */}
               <div className="order-2 col-span-12 grid grid-cols-12 gap-x-4 gap-y-6 xl:order-1 xl:col-span-8">
                 <label className="col-span-12 font-medium sm:col-span-4">
@@ -224,8 +231,7 @@ export function DonorProfile({
                         profileImg[0]
                           ? URL.createObjectURL(profileImg[0])
                           : profileData?.profile_image
-                            ? process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL +
-                              profileData?.profile_image
+                            ? getImageURL(profileData?.profile_image)
                             : "/"
                       }
                       alt="profile"
@@ -452,8 +458,7 @@ export function DonorProfile({
                   <Image
                     src={
                       profileData?.bannar_image
-                        ? process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL +
-                          profileData?.bannar_image
+                        ? getImageURL(profileData?.bannar_image)
                         : "/"
                     }
                     alt="banner"
@@ -467,8 +472,7 @@ export function DonorProfile({
                         <Image
                           src={
                             profileData?.profile_image
-                              ? process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL +
-                                profileData?.profile_image
+                              ? getImageURL(profileData?.profile_image)
                               : "/"
                           }
                           alt="profile"

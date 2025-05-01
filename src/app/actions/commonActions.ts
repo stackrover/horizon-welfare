@@ -25,6 +25,7 @@ export const contactUs = async (prevState: StateType, formData: FormData) => {
     const firstName = formData.get("contact-us-first-name");
     const lastName = formData.get("contact-us-last-name");
     const email = formData.get("contact-us-email");
+    const mobile_number = formData.get("contact-us-mobile-number");
     const subject = formData.get("contact-us-subject");
     const message = formData.get("contact-us-message");
 
@@ -32,13 +33,13 @@ export const contactUs = async (prevState: StateType, formData: FormData) => {
       first_name: firstName,
       last_name: lastName,
       email,
+      mobile_number,
       subject,
       message,
     });
 
     return data;
   } catch (error) {
-    console.log({ error_from_action: error });
     return { ...ERROR_OBJ_FORMAT };
   }
 };

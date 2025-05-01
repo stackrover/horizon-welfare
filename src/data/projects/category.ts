@@ -1,16 +1,19 @@
-enum STATUS {
+import { format } from "date-fns";
+
+export enum STATUS {
   ACTIVE = "active",
   INACTIVE = "inactive",
   PENDING = "pending",
 }
 
 export class ProjectCategory {
-  private title: string;
-  private icon: string;
-  private slug: string;
-  private id: number;
-  private status: STATUS;
-  private original: Record<string, any>;
+  readonly title: string;
+  readonly icon: string;
+  readonly slug: string;
+  readonly id: number;
+  readonly status: STATUS;
+  readonly createdAt: string;
+  readonly original: Record<string, any>;
 
   constructor(data: Record<string, any>) {
     this.title = data?.title || "";
@@ -20,6 +23,9 @@ export class ProjectCategory {
     this.status = Object.values(STATUS).includes(data?.status)
       ? data?.status
       : STATUS.PENDING;
+    this.createdAt = data?.created_at
+      ? format(data.created_at, "dd/MM/yyyy hh:mm a")
+      : "";
     this.original = data;
   }
 

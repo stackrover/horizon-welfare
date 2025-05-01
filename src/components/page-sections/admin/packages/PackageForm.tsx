@@ -55,8 +55,6 @@ export default function PackageForm<T extends z.ZodType<any, any>>({
     defaultValues: defaultValues,
   });
 
-  console.log(form.getValues());
-
   return (
     <Form {...form}>
       <form

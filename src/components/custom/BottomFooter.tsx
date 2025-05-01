@@ -33,7 +33,6 @@ export function BottomFooter({ editable = false }: { editable?: boolean }) {
         toast.promise(serializedData.updateData(values), {
           loading: "Loading...",
           success: (res) => {
-            console.log(res);
             refresh();
             return res.message;
           },

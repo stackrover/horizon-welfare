@@ -16,6 +16,9 @@ import { useSWR } from "@/hooks/use-swr";
 import { getImageURL } from "@/lib/utils";
 import { IconX } from "@tabler/icons-react";
 import Image from "next/image";
+import Link from "next/link";
+import { TruncateString } from "../../../custom/TruncateString";
+import { Separator } from "../../../ui/separator";
 
 export default function UserDetailsDrawer({
   userId,
@@ -33,6 +36,8 @@ export default function UserDetailsDrawer({
   const { data, isLoading } = useSWR(`user/details/${userId}`);
 
   const userDetail = new UserDetail(data?.data?.results);
+
+  console.log(userDetail);
 
   return (
     <Drawer direction="right" open={isOpen} onOpenChange={setIsOpen}>
@@ -138,6 +143,42 @@ export default function UserDetailsDrawer({
                   </TableRow>
                 </TableBody>
               </Table>
+
+              <Separator className="my-2.5" />
+
+              <div className="">
+                <h3 className="mb-4 font-medium opacity-70">Joined Project</h3>
+
+                <div className="flex gap-1.5 text-xs font-bold text-gray-600 [&_div]:px-4 [&_div]:py-1">
+                  <div className="line-clamp-1 flex-1">Project</div>
+                  <div className="text-right">Joining Date</div>
+                </div>
+
+                {userDetail?.projects.length ? (
+                  userDetail?.projects?.map((p) => (
+                    <div
+                      key={p.id}
+                      className="flex gap-1.5 text-sm text-gray-600 odd:bg-neutral-100 [&_div]:px-4 [&_div]:py-2"
+                    >
+                      <div className="line-clamp-1 flex-1">
+                        <Link
+                          href={`/projects/details/${p.id}`}
+                          className="hover:underline"
+                        >
+                          <TruncateString length={30}>{p.title}</TruncateString>
+                        </Link>
+                      </div>
+                      <div className="whitespace-nowrap text-right font-medium">
+                        {p.date}
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p className="bg-neutral-100 py-1 text-center text-gray-600">
+                    No data found!
+                  </p>
+                )}
+              </div>
             </div>
           )}
         </ScrollArea>

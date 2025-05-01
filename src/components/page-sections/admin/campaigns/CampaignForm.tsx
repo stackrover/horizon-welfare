@@ -27,6 +27,7 @@ import { Input } from "@/components/ui/input";
 import { getImageURL } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IconFileTypePdf, IconLoader2, IconX } from "@tabler/icons-react";
+import { Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -188,209 +189,218 @@ export default function CampaignForm<T extends z.ZodType<any, any>>({
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)}>
-        <div className="w-full p-6">
-          <div className="grid grid-cols-12 gap-x-6 gap-y-4 @container">
-            <div className="col-span-12 flex items-center justify-between">
-              <h2 className="text-2xl font-bold"> Campaign (Project) </h2>
-              <Button asChild>
-                <Link href="/admin/dashboard/campaigns"> Back </Link>
-              </Button>
-            </div>
-            <div className="col-span-12 flex flex-col gap-4 @3xl:col-span-6">
-              {FORM_FIELDS.map((field) => (
-                <InputField key={field.name} {...field} />
-              ))}
-              <InputField
-                name="manager_img"
-                label="Manager Image"
-                type="file"
-                className="min-h-[200px] border-black/20"
-                defaultPreview={getImageURL(managerImgPreview)}
-              />
-            </div>
+    <div className="w-full p-6">
+      <div className="col-span-12 mb-8 flex items-center justify-between">
+        <h2 className="text-2xl font-bold"> Campaign (Project) </h2>
+        <Button asChild>
+          <Link href="/admin/dashboard/campaigns"> Back </Link>
+        </Button>
+      </div>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(handleSubmit)}
+          className="rounded-lg border bg-white p-6"
+        >
+          <div>
+            <div className="grid grid-cols-12 gap-x-6 gap-y-4 @container">
+              <div className="col-span-12 flex flex-col gap-4 @3xl:col-span-6">
+                {FORM_FIELDS.map((field) => (
+                  <InputField key={field.name} {...field} />
+                ))}
+                <InputField
+                  name="manager_img"
+                  label="Manager Image"
+                  type="file"
+                  className="min-h-[200px] border-black/20"
+                  defaultPreview={getImageURL(managerImgPreview)}
+                />
+              </div>
 
-            {/* project id  */}
-            <div className="col-span-12 @3xl:col-span-6">
-              <div className="mb-4">
-                <FormField
-                  control={form.control}
-                  name={"category_id" as Path<z.infer<T>>}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-sm font-medium text-gray-500">
-                        Category
-                      </FormLabel>
-                      <div className="flex items-center gap-4">
-                        <SelectProjectCategory
-                          value={field.value}
-                          onSelectChange={field.onChange}
+              {/* project id  */}
+              <div className="col-span-12 @3xl:col-span-6">
+                <div className="mb-4">
+                  <FormField
+                    control={form.control}
+                    name={"category_id" as Path<z.infer<T>>}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-sm font-medium text-gray-500">
+                          Category
+                        </FormLabel>
+                        <div className="flex items-center gap-4">
+                          <SelectProjectCategory
+                            value={field.value}
+                            onSelectChange={field.onChange}
+                          />
+
+                          <CreateCategory>
+                            <Button type="button" size="icon">
+                              <Plus />
+                            </Button>
+                          </CreateCategory>
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <div className="mb-5">
+                  <InputField
+                    name="thumbnail"
+                    label="Thumbnail"
+                    type="file"
+                    className="h-[384px] border-black/20"
+                    defaultPreview={getImageURL(thumbnailPreview)}
+                  />
+
+                  <p className="mt-3 text-sm text-gray-500">
+                    Image size must have a 2:3 aspect ratio.
+                  </p>
+                </div>
+                <div className="mb-5">
+                  <InputField
+                    name="description"
+                    label="description"
+                    type="textarea"
+                    className="min-h-80"
+                  />
+                </div>
+              </div>
+              <div className="col-span-12">
+                <div className="mt-4">
+                  <label className="mb-1 block font-medium" htmlFor="images">
+                    Project Images (.png, .jpg, .jpeg)
+                  </label>
+                  <Input
+                    type="file"
+                    name="images"
+                    multiple
+                    className="block w-full rounded border p-2"
+                    onChange={(e) => {
+                      form.setValue(
+                        "images" as Path<z.infer<T>>,
+                        Array.from(e.target.files || []) as PathValue<
+                          z.infer<T>,
+                          Path<z.infer<T>>
+                        >,
+                      );
+                    }}
+                    accept="image/png, image/jpeg, image/jpg"
+                  />
+                </div>
+
+                {images && images.length > 0 ? (
+                  <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 xmd:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-6 3xl:grid-cols-8">
+                    {images.map((doc) => (
+                      <div key={doc?.id} className="relative">
+                        <Image
+                          src={getImageURL(doc.link)}
+                          alt="Event"
+                          height={360}
+                          width={992}
+                          className="aspect-video w-full"
                         />
-
-                        <CreateCategory />
+                        <button
+                          onClick={() => handleImageDelete(doc?.id)}
+                          disabled={documentDeleteLoading}
+                          type="button"
+                          className="absolute -right-1 -top-1 cursor-pointer rounded-full bg-destructive p-1 text-base-0"
+                        >
+                          {documentDeleteLoading && doc?.id === selectedId ? (
+                            <IconLoader2 size={18} className="animate-spin" />
+                          ) : (
+                            <IconX size={18} />
+                          )}
+                        </button>
                       </div>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+                    ))}
+                  </div>
+                ) : null}
 
-              <div className="mb-5">
-                <InputField
-                  name="thumbnail"
-                  label="Thumbnail"
-                  type="file"
-                  className="h-[384px] border-black/20"
-                  defaultPreview={getImageURL(thumbnailPreview)}
-                />
-
-                <p className="mt-3 text-sm text-gray-500">
-                  Image size must have a 2:3 aspect ratio.
-                </p>
-              </div>
-              <div className="mb-5">
-                <InputField
-                  name="description"
-                  label="description"
-                  type="textarea"
-                  className="min-h-80"
-                />
-              </div>
-            </div>
-            <div className="col-span-12">
-              <div className="mt-4">
-                <label className="mb-1 block font-medium" htmlFor="images">
-                  Project Images (.png, .jpg, .jpeg)
-                </label>
-                <Input
-                  type="file"
-                  name="images"
-                  multiple
-                  className="block w-full rounded border p-2"
-                  onChange={(e) => {
-                    form.setValue(
-                      "images" as Path<z.infer<T>>,
-                      Array.from(e.target.files || []) as PathValue<
-                        z.infer<T>,
-                        Path<z.infer<T>>
-                      >,
-                    );
-                  }}
-                  accept="image/png, image/jpeg, image/jpg"
-                />
-              </div>
-
-              {images && images.length > 0 ? (
-                <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 xmd:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-6 3xl:grid-cols-8">
-                  {images.map((doc) => (
-                    <div key={doc?.id} className="relative">
-                      <Image
-                        src={getImageURL(doc.link)}
-                        alt="Event"
-                        height={360}
-                        width={992}
-                        className="aspect-video w-full"
-                      />
-                      <button
-                        onClick={() => handleImageDelete(doc?.id)}
-                        disabled={documentDeleteLoading}
-                        type="button"
-                        className="absolute -right-1 -top-1 cursor-pointer rounded-full bg-destructive p-1 text-base-0"
-                      >
-                        {documentDeleteLoading && doc?.id === selectedId ? (
-                          <IconLoader2 size={18} className="animate-spin" />
-                        ) : (
-                          <IconX size={18} />
-                        )}
-                      </button>
-                    </div>
-                  ))}
+                <div className="mt-4">
+                  <label className="mb-1 block font-medium" htmlFor="documents">
+                    Project Documents (PDF)
+                  </label>
+                  <Input
+                    type="file"
+                    name="documents"
+                    multiple
+                    className="block w-full rounded border p-2"
+                    onChange={(e) => {
+                      form.setValue(
+                        "documents" as Path<z.infer<T>>,
+                        Array.from(e.target.files || []) as PathValue<
+                          z.infer<T>,
+                          Path<z.infer<T>>
+                        >,
+                      );
+                    }}
+                    accept=".pdf"
+                  />
                 </div>
-              ) : null}
 
-              <div className="mt-4">
-                <label className="mb-1 block font-medium" htmlFor="documents">
-                  Project Documents (PDF)
-                </label>
-                <Input
-                  type="file"
-                  name="documents"
-                  multiple
-                  className="block w-full rounded border p-2"
-                  onChange={(e) => {
-                    form.setValue(
-                      "documents" as Path<z.infer<T>>,
-                      Array.from(e.target.files || []) as PathValue<
-                        z.infer<T>,
-                        Path<z.infer<T>>
-                      >,
-                    );
-                  }}
-                  accept=".pdf"
-                />
-              </div>
-
-              {documents && documents.length > 0 ? (
-                <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 xmd:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-6 3xl:grid-cols-8">
-                  {documents.map((doc) => (
-                    <div key={doc?.id} className="relative">
-                      <Drawer>
-                        <DrawerTrigger className="flex aspect-square w-full flex-col items-center justify-center gap-4 rounded-md bg-base-50 p-4 text-base-300 shadow-sm hover:bg-base-100">
-                          <IconFileTypePdf size={32} />
-                          <p className="text-xs">{doc.title}</p>
-                        </DrawerTrigger>
-                        <DrawerContent className="h-[calc(100vh-50px)]">
-                          <DrawerHeader>
-                            <DialogTitle className="hidden">
-                              <DialogDescription></DialogDescription>
-                            </DialogTitle>
-                            <DrawerClose
-                              asChild
-                              className="absolute right-2 top-2"
-                            >
-                              <Button
-                                variant="secondary"
-                                size="icon"
-                                className="h-7 w-7"
+                {documents && documents.length > 0 ? (
+                  <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 xmd:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-6 3xl:grid-cols-8">
+                    {documents.map((doc) => (
+                      <div key={doc?.id} className="relative">
+                        <Drawer>
+                          <DrawerTrigger className="flex aspect-square w-full flex-col items-center justify-center gap-4 rounded-md bg-base-50 p-4 text-base-300 shadow-sm hover:bg-base-100">
+                            <IconFileTypePdf size={32} />
+                            <p className="text-xs">{doc.title}</p>
+                          </DrawerTrigger>
+                          <DrawerContent className="h-[calc(100vh-50px)]">
+                            <DrawerHeader>
+                              <DialogTitle className="hidden">
+                                <DialogDescription></DialogDescription>
+                              </DialogTitle>
+                              <DrawerClose
+                                asChild
+                                className="absolute right-2 top-2"
                               >
-                                <IconX size={18} />
-                              </Button>
-                            </DrawerClose>
-                          </DrawerHeader>
-                          <div className="h-full">
-                            <iframe
-                              src={getImageURL(doc?.link)}
-                              className="h-full w-full border-0"
-                            />
-                          </div>
-                        </DrawerContent>
-                      </Drawer>
-                      <button
-                        onClick={() => handleDocumentDelete(doc?.id)}
-                        disabled={documentDeleteLoading}
-                        type="button"
-                        className="absolute -right-1 -top-1 cursor-pointer rounded-full bg-destructive p-1 text-base-0"
-                      >
-                        {documentDeleteLoading && doc?.id === selectedId ? (
-                          <IconLoader2 size={18} className="animate-spin" />
-                        ) : (
-                          <IconX size={18} />
-                        )}
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              ) : null}
-            </div>
-            <div className="col-span-12 flex items-center justify-start">
-              <Button type="submit" disabled={form.formState.isSubmitting}>
-                {form.formState.isSubmitting ? "Submitting..." : "Submit"}
-              </Button>
+                                <Button
+                                  variant="secondary"
+                                  size="icon"
+                                  className="h-7 w-7"
+                                >
+                                  <IconX size={18} />
+                                </Button>
+                              </DrawerClose>
+                            </DrawerHeader>
+                            <div className="h-full">
+                              <iframe
+                                src={getImageURL(doc?.link)}
+                                className="h-full w-full border-0"
+                              />
+                            </div>
+                          </DrawerContent>
+                        </Drawer>
+                        <button
+                          onClick={() => handleDocumentDelete(doc?.id)}
+                          disabled={documentDeleteLoading}
+                          type="button"
+                          className="absolute -right-1 -top-1 cursor-pointer rounded-full bg-destructive p-1 text-base-0"
+                        >
+                          {documentDeleteLoading && doc?.id === selectedId ? (
+                            <IconLoader2 size={18} className="animate-spin" />
+                          ) : (
+                            <IconX size={18} />
+                          )}
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+              <div className="col-span-12 flex items-center justify-start">
+                <Button type="submit" disabled={form.formState.isSubmitting}>
+                  {form.formState.isSubmitting ? "Submitting..." : "Submit"}
+                </Button>
+              </div>
             </div>
           </div>
-        </div>
-      </form>
-    </Form>
+        </form>
+      </Form>
+    </div>
   );
 }

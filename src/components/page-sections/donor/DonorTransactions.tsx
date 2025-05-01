@@ -1,5 +1,9 @@
 "use client";
 
+import { Loader } from "@/components";
+import DonationReceiptPDF from "@/components/custom/DonationReceiptPDF";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,17 +11,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { CalendarIcon } from "@radix-ui/react-icons";
-import { IconDots, IconDownload, IconFilterX } from "@tabler/icons-react";
-import { ColumnDef } from "@tanstack/react-table";
-import { endOfDay, format, isWithinInterval, parse } from "date-fns";
-import dynamic from "next/dynamic";
-import * as React from "react";
-import { DateRange } from "react-day-picker";
-
-import { Loader } from "@/components";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
@@ -25,20 +18,20 @@ import {
 } from "@/components/ui/popover";
 import { DonorTransaction } from "@/data/donor/donorTransaction";
 import { cn } from "@/lib/utils";
-import { PDFDownloadLink } from "@react-pdf/renderer";
+import { CalendarIcon } from "@radix-ui/react-icons";
+import { pdf } from "@react-pdf/renderer";
+import { IconDots, IconDownload, IconFilterX } from "@tabler/icons-react";
+import { ColumnDef, Row } from "@tanstack/react-table";
+import { endOfDay, format, isWithinInterval, parse } from "date-fns";
+import { saveAs } from "file-saver";
+import dynamic from "next/dynamic";
+import * as React from "react";
+import { DateRange } from "react-day-picker";
 
 const DataTable = dynamic(() => import("@/components/data-table/Table"), {
   loading: () => <Loader className="h-[600px]" />,
   ssr: false,
 });
-
-const DonationReceiptPDF = dynamic(
-  () => import("@/components/custom/DonationReceiptPDF"),
-  {
-    loading: () => <Loader className="h-[600px]" />,
-    ssr: false,
-  },
-);
 
 export default function DonorTransactions({
   dataPromise,
@@ -118,6 +111,23 @@ export default function DonorTransactions({
     }
   }, [date?.from, date?.to, serializedData]);
 
+  const downloadPdf = async (row: Row<DonorTransaction>) => {
+    const blob = await pdf(
+      <DonationReceiptPDF
+        amount={row.original.amount}
+        date={row.original.createdAt}
+        paymentMethod={row.original.paymentMethod}
+        projectName={row.original.projectTitle}
+        status={
+          row.original.status === "completed" ? "Paid" : row.original.status
+        }
+        trxId={row.original.trxId}
+      />,
+    ).toBlob();
+
+    saveAs(blob, `Donation-Receipt-${row.original.trxId}.pdf`);
+  };
+
   const columns: ColumnDef<DonorTransaction>[] = React.useMemo(
     () => [
       {
@@ -180,31 +190,12 @@ export default function DonorTransactions({
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-fit">
                 <DropdownMenuGroup>
-                  <DropdownMenuItem className="gap-2 text-base-300 focus:cursor-pointer">
+                  <DropdownMenuItem
+                    onClick={() => downloadPdf(row)}
+                    className="gap-2 text-base-300 focus:cursor-pointer"
+                  >
                     <IconDownload size={18} />
-                    <div>
-                      <PDFDownloadLink
-                        document={
-                          <DonationReceiptPDF
-                            amount={row.original.amount}
-                            date={row.original.createdAt}
-                            paymentMethod={row.original.paymentMethod}
-                            projectName={row.original.projectTitle}
-                            status={
-                              row.original.status === "completed"
-                                ? "Paid"
-                                : row.original.status
-                            }
-                            trxId={row.original.trxId}
-                          />
-                        }
-                        fileName={`Donation-Receipt-${row.original.trxId}.pdf`}
-                      >
-                        {({ loading }) =>
-                          loading ? "Generating PDF..." : "Download Receipt PDF"
-                        }
-                      </PDFDownloadLink>
-                    </div>
+                    <span>Download Pdf</span>
                   </DropdownMenuItem>
                   {/* <DropdownMenuItem className="gap-2 text-base-300 focus:cursor-pointer">
                     <IconCopy size={18} />

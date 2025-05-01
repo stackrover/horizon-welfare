@@ -18,6 +18,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { z } from "zod";
 
 export default function Login() {
@@ -40,6 +41,8 @@ export default function Login() {
 
       if (result?.status === "error") {
         setError(result.message);
+      } else {
+        toast.success("Login Successful.");
       }
     } catch (error) {
       setError("Something went wrong. Please try again!");

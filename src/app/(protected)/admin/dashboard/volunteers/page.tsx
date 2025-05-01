@@ -7,8 +7,9 @@ import UserDetailsDrawer from "@/components/page-sections/admin/user/UserDetails
 import { Button } from "@/components/ui/button";
 import { User } from "@/data/users/User";
 import { useSWR } from "@/hooks/use-swr";
-import { IconEye } from "@tabler/icons-react";
+import { IconEdit, IconEye } from "@tabler/icons-react";
 import _ from "lodash";
+import Link from "next/link";
 import React from "react";
 
 export default function Volunteers() {
@@ -54,7 +55,7 @@ export default function Volunteers() {
               cell: (i) => i.getValue(),
             },
             {
-              id: "accountStatus",
+              id: "status",
               header: "Account status",
               accessorFn: (row) => row.getStatus(),
               cell: (i) => (
@@ -68,7 +69,7 @@ export default function Volunteers() {
             },
 
             {
-              id: "isVerified",
+              id: "verified",
               header: "Account v.status",
               accessorFn: (row) => row.isVerified(),
               cell: (i) => (
@@ -82,7 +83,7 @@ export default function Volunteers() {
             },
 
             {
-              id: "action",
+              id: "actions",
               header: "Action",
               enableSorting: false,
               cell: ({ row }) => (
@@ -99,6 +100,19 @@ export default function Volunteers() {
                   >
                     <IconEye />
                   </Button>
+
+                  <Link
+                    href={`/admin/dashboard/volunteers/${row.original.id}/edit`}
+                  >
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="text-gray-500 hover:text-gray-900"
+                    >
+                      <IconEdit />
+                    </Button>
+                  </Link>
 
                   {/* status change button */}
                   <UserStatusChangeButton

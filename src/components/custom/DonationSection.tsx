@@ -3,22 +3,17 @@
 import { donateAction } from "@/app/actions/donorActions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React from "react";
 import toast from "react-hot-toast";
+import { SelectProject } from "../forms/SelectProject";
 
 export function DonationSection() {
   const formRef = React.useRef<HTMLFormElement | null>(null);
   const [amount, setAmount] = React.useState<number>(10);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [projectId, setProjectId] = React.useState<string>("");
   const auth = useSession();
   const router = useRouter();
 
@@ -38,7 +33,7 @@ export function DonationSection() {
     try {
       setIsLoading(true);
       const resp = await donateAction({
-        projectId: 1,
+        projectId: projectId,
         isSubscriptionMoney: "no",
         totalAmount: amount,
         currency: "BDT",
@@ -68,20 +63,9 @@ export function DonationSection() {
       <form
         onSubmit={handleSubmit}
         ref={formRef}
-        className="grid w-full flex-1 grid-cols-2 gap-4 md:grid-cols-3 mlg:grid-cols-5"
+        className="grid w-full flex-1 grid-cols-2 gap-4 md:grid-cols-3"
       >
-        {[1, 2, 3].map((item) => (
-          <Select key={item}>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Pick an option" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <div className="p-4 text-gray-500">No Available option</div>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        ))}
+        <SelectProject onSelectChange={setProjectId} value={projectId} />
 
         {/* Amount input */}
         <Input

@@ -241,3 +241,60 @@ export async function deleteBlogComment(commentId: number) {
     return { ...ERROR_OBJ_FORMAT, error: error };
   }
 }
+
+export async function addBlogImage(formData: FormData) {
+  const controller = new AbortController();
+  const session = await auth();
+
+  // return error if user is not authenticated
+  if (!session?.user?.token) {
+    return { ...ERROR_OBJ_FORMAT, message: "Unauthorized" };
+  }
+
+  try {
+    const res = await fetcher("/blog/image/add", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${session?.user?.token}`,
+      },
+      body: formData,
+      signal: controller.signal,
+    });
+
+    const data = await res.json();
+
+    return data;
+  } catch (error) {
+    return { ...ERROR_OBJ_FORMAT, error: error };
+  }
+}
+
+export async function deleteBlogImage(image: string) {
+  const controller = new AbortController();
+  const session = await auth();
+
+  // return error if user is not authenticated
+  if (!session?.user?.token) {
+    return { ...ERROR_OBJ_FORMAT, message: "Unauthorized" };
+  }
+
+  try {
+    const res = await fetcher("/blog/image/delete", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${session?.user?.token}`,
+      },
+      body: JSON.stringify({ image }),
+      signal: controller.signal,
+    });
+
+    const data = await res.json();
+
+    return data;
+  } catch (error) {
+    return { ...ERROR_OBJ_FORMAT, error: error };
+  }
+}

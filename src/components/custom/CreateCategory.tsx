@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -9,16 +9,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import _ from "lodash";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { mutate } from "swr";
+import { z } from "zod";
+import { createNewCategory } from "../../app/actions/admin/pages/campaigns";
 import InputField from "../forms/InputField";
 import { Form } from "../ui/form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { createNewCategory } from "../../app/actions/admin/pages/campaigns";
-import toast from "react-hot-toast";
-import _ from "lodash";
 
 const formSchema = z.object({
   title: z.string({ required_error: "Title is required." }),
@@ -45,7 +45,13 @@ const FORM_FIELDS = [
   { name: "icon", label: "Icon", type: "file" },
 ];
 
-export const CreateCategory = () => {
+export const CreateCategory = ({
+  children,
+  refresh = () => {},
+}: {
+  children: React.ReactNode | string;
+  refresh?: () => void;
+}) => {
   const [open, setOpen] = useState(false);
   const form = useForm<TFormData>({
     resolver: zodResolver(formSchema),
@@ -76,6 +82,8 @@ export const CreateCategory = () => {
     const res = await createNewCategory(fd);
     if (res.status === "success") {
       toast.success(res.message);
+      mutate(`/project/category/list`);
+      refresh();
       setOpen(false);
     } else {
       toast.error(res.message);
@@ -83,12 +91,14 @@ export const CreateCategory = () => {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button type="button" size="icon">
-          <Plus />
-        </Button>
-      </DialogTrigger>
+    <Dialog
+      open={open}
+      onOpenChange={(val) => {
+        setOpen(val);
+        form.reset();
+      }}
+    >
+      <DialogTrigger asChild>{children}</DialogTrigger>
 
       <DialogContent>
         <DialogHeader>

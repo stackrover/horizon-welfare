@@ -5,9 +5,11 @@ import DonorProfileDrawer from "@/components/page-sections/admin/donor/ProfilePr
 import { Button } from "@/components/ui/button";
 import { DonorData } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
+import { IconEdit } from "@tabler/icons-react";
 import _ from "lodash";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
+import UserDeleteButton from "../../../../../components/forms/UserDeleteButton";
 
 export default function Donors() {
   const { data, isLoading, refresh } = useSWR("/donor/profile/list");
@@ -66,7 +68,7 @@ export default function Donors() {
                 cell: (i) => _.startCase(i.getValue() as string),
               },
               {
-                id: "mobile",
+                id: "mobile_number",
                 header: "Mobile",
                 accessorFn: (row) => row.getMobile(),
                 cell: (i) => i.getValue(),
@@ -86,7 +88,7 @@ export default function Donors() {
               },
 
               {
-                id: "donate",
+                id: "totalDonations",
                 header: "Donate",
                 accessorFn: (row) => row.getTotalDonation(),
                 cell: (i) => (
@@ -97,7 +99,7 @@ export default function Donors() {
               },
 
               {
-                id: "accountStatus",
+                id: "status",
                 header: "Account status",
                 accessorFn: (row) => row.getStatus(),
                 cell: (i) => (
@@ -117,11 +119,24 @@ export default function Donors() {
                   <div className="flex items-center gap-0.5">
                     <DonorProfileDrawer donor={row.original} />
 
+                    <Link
+                      href={`/admin/dashboard/donors/${row.original.uid}/edit`}
+                    >
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        className="text-gray-500 hover:text-gray-900"
+                      >
+                        <IconEdit />
+                      </Button>
+                    </Link>
+
                     {/* Delete button */}
-                    {/* <UserDeleteButton
-                      userId={row.original.id}
+                    <UserDeleteButton
+                      userId={row.original.uid}
                       refresh={refresh}
-                    /> */}
+                    />
                   </div>
                 ),
               },

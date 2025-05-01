@@ -51,7 +51,7 @@ export function VideoCard({
           content={videoUrl}
           editable={editable}
         >
-          <div className="user-none pointer-events-none">
+          <div className={editable ? "pointer-events-none" : ""}>
             <ReactPlayer
               width="100%"
               height="100%"

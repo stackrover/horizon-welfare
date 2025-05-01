@@ -1,9 +1,19 @@
 "use client";
 
+import { TruncateString } from "@/components";
 import DataTable from "@/components/data-table/Table";
 import BlogCommentList from "@/components/page-sections/admin/blogs/BlogComments";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Message } from "@/data/contact-us/message";
 import { useSWR } from "@/hooks/use-swr";
+import { IconEye } from "@tabler/icons-react";
 import { usePathname } from "next/navigation";
 import React from "react";
 
@@ -33,7 +43,7 @@ export default function Messages() {
   }
 
   // serialize data
-  const blogs = data?.data?.results?.map((d: any) => new Message(d));
+  const messages = data?.data?.results?.map((d: any) => new Message(d));
 
   return (
     <section className="p-6">
@@ -43,7 +53,7 @@ export default function Messages() {
 
       <div className="rounded-md border bg-white p-6">
         <DataTable<Message>
-          data={blogs || []}
+          data={messages || []}
           columns={[
             {
               id: "id",
@@ -67,6 +77,13 @@ export default function Messages() {
             },
 
             {
+              id: "mobile_number",
+              accessorKey: "mobile_number",
+              header: "Mobile No",
+              cell: (i) => i.getValue(),
+            },
+
+            {
               id: "subject",
               accessorKey: "subject",
               header: "Subject",
@@ -75,8 +92,31 @@ export default function Messages() {
             {
               id: "message",
               accessorKey: "message",
-              header: "Subject",
-              cell: (i) => i.getValue(),
+              header: "Message",
+              cell: (i) => (
+                <div className="flex items-center gap-2">
+                  <TruncateString length={10}>
+                    {i.getValue() as string}
+                  </TruncateString>
+                  {(i.getValue() as string).length > 10 && (
+                    <Dialog>
+                      <DialogTrigger>
+                        <IconEye size={24} />
+                      </DialogTrigger>
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle>
+                            Subject: {i.row.original.subject}
+                          </DialogTitle>
+                          <DialogDescription>
+                            {i.getValue() as string}
+                          </DialogDescription>
+                        </DialogHeader>
+                      </DialogContent>
+                    </Dialog>
+                  )}
+                </div>
+              ),
             },
             {
               id: "createdAt",

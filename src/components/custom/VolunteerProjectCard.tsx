@@ -2,6 +2,7 @@
 
 import { VolunteerCardData } from "@/data/volunteer/volunteer.-card-data";
 import { useSWR } from "@/hooks/use-swr";
+import { getImageURL } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { ProjectCard } from "./ProjectCard";
 import { SectionWrapper } from "./SectionWrapper";
@@ -43,9 +44,7 @@ export function VolunteerProjectCard({
                 title={project.title}
                 description={project.description}
                 path={`${pathname}/${project.id}`}
-                thumbnail={
-                  process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL + project.thumbnail
-                }
+                thumbnail={getImageURL(project.thumbnail)}
               />
             ))
           : null}

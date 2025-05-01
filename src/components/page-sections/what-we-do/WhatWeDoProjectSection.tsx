@@ -3,7 +3,7 @@
 import { Loader, ProjectCard, SectionWrapper } from "@/components";
 import { ProjectData, WhatWeDoProject } from "@/data";
 import { useSWR } from "@/hooks/use-swr";
-import { cn } from "@/lib/utils";
+import { cn, getImageURL } from "@/lib/utils";
 import _ from "lodash";
 
 export function WhatWeDoProjectSection({ className }: { className?: string }) {
@@ -53,12 +53,10 @@ export function WhatWeDoProjectSection({ className }: { className?: string }) {
           ? projectData.map((project: ProjectData) => (
               <ProjectCard
                 key={project.id}
-                thumbnail={
-                  process.env.NEXT_PUBLIC_BACKEND_IMAGE_URL + project.thumbnail
-                }
+                thumbnail={getImageURL(project.thumbnail)}
                 title={project.title}
                 description={project.description}
-                path="#"
+                path={`/projects/details/${project.id}`}
               />
             ))
           : null}
