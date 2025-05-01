@@ -1,7 +1,6 @@
 import { z } from "zod";
 
-const regex =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d.*\d)(?=.*[^a-zA-Z0-9].*[^a-zA-Z0-9])[a-zA-Z0-9\S]{6,}$/;
+const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
 
 export const donorRegistrationFormSchema = z
   .object({
@@ -27,7 +26,7 @@ export const donorRegistrationFormSchema = z
       })
       .refine((val) => regex.test(val), {
         message:
-          "Password must contain at least 6 characters, 1 uppercase, 1 lowercase, 2 digits & 2 special characters!",
+          "Password must contain at least 6 characters, 1 uppercase, 1 lowercase, 1 digits!",
       }),
     confirm_password: z.string(),
     honey_pot: z.string(),

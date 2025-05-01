@@ -102,3 +102,21 @@ export class ProjectData {
     this.status = data.status;
   }
 }
+
+export class CampaignData {
+  id: number;
+  categoryId: number;
+  title: string;
+  description: string;
+  thumbnail: string;
+  status: string;
+
+  constructor(data: any) {
+    this.id = data.id;
+    this.categoryId = data.category_id;
+    this.title = data.title;
+    this.description = data.description;
+    this.thumbnail = data.thumbnail;
+    this.status = data.status;
+  }
+}

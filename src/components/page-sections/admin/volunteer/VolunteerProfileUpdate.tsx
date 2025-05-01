@@ -1,6 +1,6 @@
 "use client";
 
-import { updateDonorProfileAction } from "@/app/actions/donorActions";
+import { updateVolunteerProfileAction } from "@/app/actions/volunteerActions";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -12,17 +12,24 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Separator } from "@/components/ui/separator";
-import { DonorData } from "@/data";
-import { cn, getImageURL } from "@/lib/utils";
-import { donorProfileFormSchema } from "@/schemas/donorProfileUpdateSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  IconCloudUpload,
-  IconCurrencyDollar,
-  IconEdit,
-  IconX,
-} from "@tabler/icons-react";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
+import { bloodGroups } from "@/constants/blood-groups";
+import { VolunteerData } from "@/data";
+import { getData } from "@/hooks/get-data";
+import { useSWR } from "@/hooks/use-swr";
+import { getImageURL } from "@/lib/utils";
+import { volunteerProfileFormSchema } from "@/schemas/volunteerProfileFormSchema";
+import { LocationType } from "@/types/types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { IconCloudUpload, IconEdit, IconX } from "@tabler/icons-react";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React from "react";
 import { useDropzone } from "react-dropzone";
@@ -30,27 +37,26 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
 
-export function DonorProfile({
+export function VolunteerProfileUpdate({
   dataPromise,
   userId,
-  containerClass,
-  formClass,
 }: {
   dataPromise: Promise<any>;
   userId: number | string | undefined;
-  containerClass?: string;
-  formClass?: string;
 }) {
   const data = React.use(dataPromise);
-
-  console.log(data, userId);
-
   const serializedData =
-    data.status === "success" ? new DonorData(data?.results) : null;
+    data.status === "success" ? new VolunteerData(data?.results) : null;
+
+  const { data: divisions } = useSWR(`/shared/geo/division`);
 
   const [file, setFile] = React.useState<File[]>([]);
   const [profileImg, setProfileImg] = React.useState<File[]>([]);
-  const [profileData, setProfileData] = React.useState<DonorData>();
+  const [profileData, setProfileData] = React.useState<VolunteerData>();
+  const [isShown, setIsShown] = React.useState<boolean>(false);
+  const [districts, setDistricts] = React.useState<LocationType[]>([]);
+  const [thanas, setThanas] = React.useState<LocationType[]>([]);
+  const auth = useSession();
 
   const {
     acceptedFiles,
@@ -73,45 +79,78 @@ export function DonorProfile({
     },
   });
 
-  const form = useForm<z.infer<typeof donorProfileFormSchema>>({
-    resolver: zodResolver(donorProfileFormSchema),
+  // form instance
+  const form = useForm<z.infer<typeof volunteerProfileFormSchema>>({
+    resolver: zodResolver(volunteerProfileFormSchema),
     defaultValues: {
-      f_name: "",
-      l_name: "",
-      address: "",
-      gender: "",
-      age: 0,
-      email: "",
-      nationality: "",
+      f_name: serializedData?.f_name || "",
+      l_name: serializedData?.l_name || "",
+      gender: serializedData?.gender || "",
+      age: serializedData?.age || 0,
+      division: serializedData?.division || "",
+      district: serializedData?.district || "",
+      thana: serializedData?.thana || "",
+      nationality: serializedData?.nationality || "",
+      email: serializedData?.email || "",
+      address: serializedData?.address || "",
+      blood_group: serializedData?.blood_group || "",
+      mobile_number: serializedData?.mobile_number || "",
+      profession: serializedData?.profession || "",
+      education: serializedData?.education || "",
     },
   });
 
   React.useEffect(() => {
-    if (serializedData) {
-      // destructuring the data
-      const {
-        uid,
-        balance,
-        bannar_image,
-        profile_image,
-        mobile_number,
-        id,
-        ...restData
-      } = serializedData;
+    const fetchData = async () => {
+      if (!serializedData || !divisions?.data?.length) return;
 
-      form.reset(restData);
-      setProfileData(serializedData);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
+      const divisionId = divisions.data.find(
+        (d: LocationType) => d.en_name === serializedData.division,
+      )?.id;
+
+      if (divisionId) {
+        const districtList = await getData(
+          `/shared/geo/district?pid=${divisionId}`,
+          auth.data?.user.token,
+        );
+        if (districtList) setDistricts(districtList);
+      }
+    };
+
+    fetchData();
+  }, [data, divisions?.data]);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      if (!serializedData || !districts?.length) return;
+
+      const districtId = districts?.find(
+        (d: LocationType) => d.en_name === serializedData.district,
+      )?.id;
+
+      if (districtId) {
+        const thanaList = await getData(
+          `/shared/geo/upazila?pid=${districtId}`,
+          auth.data?.user.token,
+        );
+        if (thanaList) setThanas(thanaList);
+      }
+    };
+
+    fetchData();
+  }, [data, districts]);
 
   //  Form submit handler.
-  async function onSubmit(values: z.infer<typeof donorProfileFormSchema>) {
+  async function onSubmit(values: z.infer<typeof volunteerProfileFormSchema>) {
     const formData = new FormData();
 
     // Loop through the object keys and append them to FormData
     (Object.keys(values) as (keyof typeof values)[]).forEach((key) => {
-      formData.append(key, values[key].toString());
+      if (values[key]) {
+        formData.append(key, values[key].toString());
+      } else {
+        formData.append(key, "");
+      }
     });
 
     if (file.length > 0) {
@@ -122,11 +161,16 @@ export function DonorProfile({
       formData.append("profile_image", profileImg[0]);
     }
 
+    console.log(formData.get("bannar_image"));
+    console.log(formData.get("profile_image"));
+
     // Call the action handler
-    const response = await updateDonorProfileAction(formData, userId);
+    const response = await updateVolunteerProfileAction(formData, userId);
 
     if (response.status === "success") {
       toast.success(response.message);
+      setFile([]);
+      setProfileImg([]);
     }
 
     if (response.status === "error") {
@@ -134,10 +178,48 @@ export function DonorProfile({
     }
   }
 
+  // division change handler
+  const handleDivisionChange = async (val: string, field: any) => {
+    field.onChange(val);
+    setDistricts([]);
+    setThanas([]);
+    const divisionId = divisions?.data?.find(
+      (d: LocationType) => d.en_name === val,
+    )?.id;
+    const data = await getData(
+      `/shared/geo/district?pid=${divisionId}`,
+      auth.data?.user.token,
+    );
+
+    if (data) {
+      setDistricts(data);
+    }
+    form.setValue("district", "");
+    form.setValue("thana", "");
+  };
+
+  // district change handler
+  const handleDistrictChange = async (val: string, field: any) => {
+    field.onChange(val);
+    setThanas([]);
+    const districtId = districts?.find(
+      (d: LocationType) => d.en_name === val,
+    )?.id;
+    const data = await getData(
+      `/shared/geo/upazila?pid=${districtId}`,
+      auth.data?.user.token,
+    );
+
+    if (data.length > 0) {
+      setThanas(data);
+    }
+    form.setValue("thana", "");
+  };
+
   return (
     <main>
       {/* personal info  */}
-      <section className={cn("container mt-10", containerClass)}>
+      <section className="container p-6">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="">
             <div className="flex items-start justify-between gap-4">
@@ -154,13 +236,13 @@ export function DonorProfile({
                 className="hidden w-[132px] md:flex"
                 type="submit"
               >
-                {form.formState.isSubmitting ? "Saving..." : "Save Settings"}
+                {form.formState.isSubmitting ? "Loading..." : "Save Settings"}
               </Button>
             </div>
 
             <Separator className="my-4" />
 
-            <div className={cn("grid grid-cols-12 gap-x-4 gap-y-6", formClass)}>
+            <div className="grid grid-cols-12 gap-x-4 gap-y-6 rounded-xl border bg-base-0 p-6">
               {/* left side column  */}
               <div className="order-2 col-span-12 grid grid-cols-12 gap-x-4 gap-y-6 xl:order-1 xl:col-span-8">
                 <label className="col-span-12 font-medium sm:col-span-4">
@@ -175,7 +257,7 @@ export function DonorProfile({
                       <FormControl>
                         <Input
                           type="text"
-                          placeholder="Type First Name"
+                          placeholder="First Name"
                           {...field}
                         />
                       </FormControl>
@@ -191,11 +273,7 @@ export function DonorProfile({
                   render={({ field }) => (
                     <FormItem className="col-span-6 sm:col-span-4">
                       <FormControl>
-                        <Input
-                          type="text"
-                          placeholder="Type Last Name"
-                          {...field}
-                        />
+                        <Input type="text" placeholder="Last Name" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -214,7 +292,7 @@ export function DonorProfile({
                       <FormControl>
                         <Input
                           type="email"
-                          placeholder="Type Email Address"
+                          placeholder="test@gmail.com"
                           {...field}
                         />
                       </FormControl>
@@ -230,8 +308,8 @@ export function DonorProfile({
                       src={
                         profileImg[0]
                           ? URL.createObjectURL(profileImg[0])
-                          : profileData?.profile_image
-                            ? getImageURL(profileData?.profile_image)
+                          : serializedData?.profile_image
+                            ? getImageURL(serializedData?.profile_image)
                             : "/"
                       }
                       alt="profile"
@@ -277,7 +355,7 @@ export function DonorProfile({
                           <FormControl>
                             <Input
                               type="text"
-                              placeholder="Type Nationality"
+                              placeholder="Nationality"
                               {...field}
                             />
                           </FormControl>
@@ -296,6 +374,7 @@ export function DonorProfile({
                           <FormControl>
                             <Input
                               type="number"
+                              min={0}
                               placeholder="Type Age"
                               {...field}
                               onChange={(e) => field.onChange(+e.target.value)}
@@ -354,38 +433,7 @@ export function DonorProfile({
                   </div>
                 </div>
 
-                {/* last donation  */}
-                {serializedData?.lastDonation ? (
-                  <div className="col-span-full mt-10">
-                    <div className="flex w-full items-center gap-4 rounded-lg bg-[#DEF8FF] px-4">
-                      <div className="left-0 top-0 flex h-[46px] w-fit min-w-[46px] items-center justify-center rounded-full outline outline-[6px] outline-[#8EE7FF]">
-                        <IconCurrencyDollar size={24} />
-                      </div>
-                      <h3 className="py-2 text-base font-semibold leading-7 text-base-400 xmd:text-lg">
-                        {`Your Last Donated Amount Was ${serializedData?.lastDonation} ${serializedData?.currency} at ${serializedData.lastDonationDate}`}
-                      </h3>
-                    </div>
-                  </div>
-                ) : null}
-
-                {/* location and banner image  */}
-                <label className="col-span-4">Address</label>
-                <FormField
-                  control={form.control}
-                  name="address"
-                  render={({ field }) => (
-                    <FormItem className="col-span-8">
-                      <FormControl>
-                        <Input
-                          type="text"
-                          placeholder="Type Location"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                {/* banner image  */}
 
                 <label className="col-span-12 xmd:col-span-4">
                   Banner Image
@@ -439,6 +487,219 @@ export function DonorProfile({
                   </div>
                 </div>
 
+                {/* division  */}
+                <FormField
+                  control={form.control}
+                  name="division"
+                  render={({ field }) => (
+                    <FormItem className="col-span-6">
+                      <FormLabel>Division</FormLabel>
+                      <Select
+                        disabled={!divisions?.data?.length}
+                        onValueChange={(val) =>
+                          handleDivisionChange(val, field)
+                        }
+                        value={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select one" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {divisions?.data?.length
+                            ? divisions.data.map((division: LocationType) => (
+                                <SelectItem
+                                  key={division.id}
+                                  value={division.en_name}
+                                >
+                                  {division.en_name}
+                                </SelectItem>
+                              ))
+                            : null}
+                        </SelectContent>
+                      </Select>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* district  */}
+                <FormField
+                  control={form.control}
+                  name="district"
+                  render={({ field }) => (
+                    <FormItem className="col-span-6">
+                      <FormLabel>District</FormLabel>
+                      <Select
+                        disabled={!districts?.length}
+                        onValueChange={(val) =>
+                          handleDistrictChange(val, field)
+                        }
+                        value={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select one" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {districts?.length
+                            ? districts.map((district) => (
+                                <SelectItem
+                                  key={district.id}
+                                  value={district.en_name}
+                                >
+                                  {district.en_name}
+                                </SelectItem>
+                              ))
+                            : null}
+                        </SelectContent>
+                      </Select>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* thana  */}
+                <FormField
+                  control={form.control}
+                  name="thana"
+                  render={({ field }) => (
+                    <FormItem className="col-span-6">
+                      <FormLabel>Thana</FormLabel>
+                      <Select
+                        disabled={thanas.length === 0}
+                        onValueChange={field.onChange}
+                        value={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select one" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {thanas?.length
+                            ? thanas.map((thana) => (
+                                <SelectItem
+                                  key={thana.id}
+                                  value={thana.en_name}
+                                >
+                                  {thana.en_name}
+                                </SelectItem>
+                              ))
+                            : null}
+                        </SelectContent>
+                      </Select>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* address in details  */}
+                <FormField
+                  control={form.control}
+                  name="address"
+                  render={({ field }) => (
+                    <FormItem className="col-span-6">
+                      <FormLabel>Address in Details</FormLabel>
+                      <FormControl>
+                        <Input type="text" placeholder="Address" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* blood group  */}
+                <FormField
+                  control={form.control}
+                  name="blood_group"
+                  render={({ field }) => (
+                    <FormItem className="col-span-6">
+                      <FormLabel>Blood Group</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        value={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select one" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {bloodGroups.map((bloodGroup) => (
+                            <SelectItem
+                              key={bloodGroup.id}
+                              value={bloodGroup.name}
+                            >
+                              {bloodGroup.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* mobile number  */}
+                <FormField
+                  control={form.control}
+                  name="mobile_number"
+                  render={({ field }) => (
+                    <FormItem className="col-span-6">
+                      <FormLabel>Mobile Number</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="text"
+                          placeholder="01*********"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* profession  */}
+                <FormField
+                  control={form.control}
+                  name="profession"
+                  render={({ field }) => (
+                    <FormItem className="col-span-12">
+                      <FormLabel>Profession</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="text"
+                          placeholder="Profession"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* education  */}
+                <FormField
+                  control={form.control}
+                  name="education"
+                  render={({ field }) => (
+                    <FormItem className="col-span-12">
+                      <FormLabel>Education</FormLabel>
+                      <FormControl>
+                        <Input type="text" placeholder="Education" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
                 <div className="col-span-12 md:hidden">
                   <Button
                     disabled={form.formState.isSubmitting}
@@ -446,7 +707,7 @@ export function DonorProfile({
                     type="submit"
                   >
                     {form.formState.isSubmitting
-                      ? "Saving..."
+                      ? "Loading..."
                       : "Save Settings"}
                   </Button>
                 </div>
@@ -454,11 +715,11 @@ export function DonorProfile({
 
               {/* right side column  */}
               <div className="order-1 col-span-12 xl:order-2 xl:col-span-4">
-                <div className="ml-0 overflow-hidden rounded-xl border shadow-sm xl:ml-4">
+                <div className="sticky top-[130px] ml-0 overflow-hidden rounded-xl border shadow-sm xl:ml-4">
                   <Image
                     src={
-                      profileData?.bannar_image
-                        ? getImageURL(profileData?.bannar_image)
+                      serializedData?.bannar_image
+                        ? getImageURL(serializedData?.bannar_image)
                         : "/"
                     }
                     alt="banner"
@@ -471,8 +732,8 @@ export function DonorProfile({
                       <div className="h-[50px] w-[50px] rounded-full bg-base-200">
                         <Image
                           src={
-                            profileData?.profile_image
-                              ? getImageURL(profileData?.profile_image)
+                            serializedData?.profile_image
+                              ? getImageURL(serializedData?.profile_image)
                               : "/"
                           }
                           alt="profile"
@@ -483,20 +744,12 @@ export function DonorProfile({
                       </div>
                       <div>
                         <h3 className="text-2xl font-semibold leading-8 text-base-400">
-                          {profileData?.f_name} {profileData?.l_name}
+                          {serializedData?.f_name +
+                            " " +
+                            serializedData?.l_name}
                         </h3>
-                        <p className="leading-7 text-base-300">
-                          {profileData?.address}
-                        </p>
+                        <p className="leading-7 text-base-300">Volunteer</p>
                       </div>
-                    </div>
-
-                    <Separator className="my-4 h-1 bg-[#BEF1FF]" />
-
-                    <div className="flex items-center justify-between gap-2">
-                      <h4 className="font-medium text-base-300">
-                        Total Donations : {profileData?.totalDonations} BDT
-                      </h4>
                     </div>
                   </div>
                 </div>

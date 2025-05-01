@@ -13,6 +13,7 @@ export class UserDetail {
   readonly createdAt: string;
   readonly gender: string;
   readonly nationality: string;
+  readonly projects: JoinedProject[];
 
   constructor(data: any = {}) {
     this.id = data.id || 0;
@@ -29,5 +30,23 @@ export class UserDetail {
       : "";
     this.gender = data?.profile?.gender || "";
     this.nationality = data?.profile?.nationality || "";
+    this.projects =
+      data?.profile && Array.isArray(data?.profile?.projects)
+        ? data?.profile?.projects?.map((d: any) => new JoinedProject(d))
+        : [];
+  }
+}
+
+class JoinedProject {
+  id: number;
+  title: string;
+  date: string;
+
+  constructor(data: any = {}) {
+    this.id = data?.project?.id || null;
+    this.title = data?.project ? data.project?.title : "";
+    this.date = data?.created_at
+      ? format(data.created_at, "dd/MM/yyyy hh:mm a")
+      : "";
   }
 }

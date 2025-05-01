@@ -10,12 +10,22 @@ const sidebarItems = [
     childrens: [
       { id: "dashboard", title: "Dashboard", pathname: "" },
       { id: "campaigns", title: "Campaigns", pathname: "/campaigns" },
+      {
+        id: "project-category",
+        title: "Campaign Categories",
+        pathname: "/project-category",
+      },
       { id: "packages", title: "Subscription Packages", pathname: "/packages" },
       { id: "transactions", title: "Transactions", pathname: "/transactions" },
       { id: "donors", title: "Donors", pathname: "/donors" },
       { id: "volunteers", title: "Volunteers", pathname: "/volunteers" },
       { id: "blogs", title: "Blogs", pathname: "/blogs" },
       { id: "events", title: "Events", pathname: "/events" },
+      {
+        id: "event-subscribers",
+        title: "Event Subscribers",
+        pathname: "/event-subscribers",
+      },
       { id: "messages", title: "Messages", pathname: "/messages" },
     ],
   },

@@ -1,13 +1,10 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { cn } from "@/lib/utils";
+import dynamic from "next/dynamic";
 import { useController, UseControllerProps } from "react-hook-form";
 import { match } from "ts-pattern";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Textarea } from "../ui/textarea";
-import { BlogSelection } from "./BlogSelection";
-import TextEditor from "./TextEditor";
-import UploadImage from "./UploadImage";
 import {
   Select,
   SelectContent,
@@ -15,8 +12,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { SelectProject } from "./SelectProject";
+import { Textarea } from "../ui/textarea";
+import { BlogSelection } from "./BlogSelection";
 import DatePicker from "./DatePicker";
+import { SelectProject } from "./SelectProject";
+import UploadImage from "./UploadImage";
+const TextEditor = dynamic(() => import("./TextEditor"), {
+  ssr: false,
+  loading: () => <p>Loading...</p>,
+});
 
 interface FormFieldProps extends UseControllerProps {
   label?: string;

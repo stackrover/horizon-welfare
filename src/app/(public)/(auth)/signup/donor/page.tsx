@@ -185,7 +185,7 @@ export default function DonorSignup() {
                         <Input
                           className="rounded-xl shadow-none"
                           type="Mobile number"
-                          placeholder="test@example.com"
+                          placeholder="01*********"
                           {...field}
                         />
                       </FormControl>

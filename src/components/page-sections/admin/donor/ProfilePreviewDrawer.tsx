@@ -31,7 +31,10 @@ export default function DonorProfileDrawer({ donor }: { donor: DonorData }) {
         <DrawerHeader className="relative">
           <div className="flex items-center gap-4">
             <Image
-              src={getImageURL(donor.getProfileImage())}
+              src={
+                getImageURL(donor.getProfileImage()) ||
+                "/images/user-placeholder.png"
+              }
               alt=""
               width={48}
               height={48}

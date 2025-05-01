@@ -61,6 +61,7 @@ export default function DonationReceiptPDF({
   return (
     <Document>
       <Page size="A4" style={styles.page}>
+        <Text style={styles.title}>Horizon Welfare</Text>
         <Text style={styles.title}>Donation Receipt</Text>
 
         <View style={styles.borderBox}>

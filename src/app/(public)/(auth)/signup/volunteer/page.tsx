@@ -20,10 +20,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { bloodGroups } from "@/constants/blood-groups";
-import { getLocationData } from "@/hooks/get-locations";
+import { getData } from "@/hooks/get-data";
+import { useSWR } from "@/hooks/use-swr";
 import { useToast } from "@/hooks/use-toast";
 import { volunteerRegistrationFormSchema } from "@/schemas/volunteerRegistrationFormSchema";
+import { LocationType } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -31,16 +34,15 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 export default function VolunteerSignup() {
+  const { data: divisions } = useSWR(`/shared/geo/division`);
   const [isShown, setIsShown] = React.useState<boolean>(false);
-  const [divisions, setDivisions] = React.useState<Record<string, string>[]>(
-    [],
-  );
-  const [districts, setDistricts] = React.useState<Record<string, string>[]>(
-    [],
-  );
-  const [thanas, setThanas] = React.useState<string[]>([]);
+  const [districts, setDistricts] = React.useState<LocationType[]>([]);
+  const [thanas, setThanas] = React.useState<LocationType[]>([]);
   const router = useRouter();
   const { toast } = useToast();
+  const auth = useSession();
+
+  console.log(divisions);
 
   const form = useForm<z.infer<typeof volunteerRegistrationFormSchema>>({
     resolver: zodResolver(volunteerRegistrationFormSchema),
@@ -61,17 +63,6 @@ export default function VolunteerSignup() {
       honey_pot: "",
     },
   });
-
-  // get the division lis on initial render
-  React.useEffect(() => {
-    const fetchData = async () => {
-      const data = await getLocationData("/divisions");
-      if (data) {
-        setDivisions(data);
-      }
-    };
-    fetchData();
-  }, []);
 
   const onSubmit = async (
     values: z.infer<typeof volunteerRegistrationFormSchema>,
@@ -104,7 +95,14 @@ export default function VolunteerSignup() {
     field.onChange(val);
     setDistricts([]);
     setThanas([]);
-    const data = await getLocationData(`/division/${val}`);
+    const divisionId = divisions?.data?.find(
+      (d: LocationType) => d.en_name === val,
+    )?.id;
+    const data = await getData(
+      `/shared/geo/district?pid=${divisionId}`,
+      auth.data?.user.token,
+    );
+
     if (data) {
       setDistricts(data);
     }
@@ -116,9 +114,16 @@ export default function VolunteerSignup() {
   const handleDistrictChange = async (val: string, field: any) => {
     field.onChange(val);
     setThanas([]);
-    const data = await getLocationData(`/district/${val}`);
+    const districtId = districts?.find(
+      (d: LocationType) => d.en_name === val,
+    )?.id;
+    const data = await getData(
+      `/shared/geo/upazila?pid=${districtId}`,
+      auth.data?.user.token,
+    );
+
     if (data.length > 0) {
-      setThanas(data[0].upazillas);
+      setThanas(data);
     }
     form.setValue("thana", "");
   };
@@ -211,7 +216,7 @@ export default function VolunteerSignup() {
                     <FormItem className="col-span-12 md:col-span-4">
                       <FormLabel className="text-base-300">Division</FormLabel>
                       <Select
-                        disabled={divisions.length === 0}
+                        disabled={divisions?.data?.length === 0}
                         onValueChange={(val) =>
                           handleDivisionChange(val, field)
                         }
@@ -223,13 +228,13 @@ export default function VolunteerSignup() {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {divisions.length > 0
-                            ? divisions.map((division, index) => (
+                          {divisions?.data?.length > 0
+                            ? divisions?.data?.map((division: LocationType) => (
                                 <SelectItem
-                                  key={index}
-                                  value={division.division}
+                                  key={division.id}
+                                  value={division.en_name}
                                 >
-                                  {division.division}
+                                  {division.en_name}
                                 </SelectItem>
                               ))
                             : null}
@@ -261,12 +266,12 @@ export default function VolunteerSignup() {
                         </FormControl>
                         <SelectContent>
                           {districts.length > 0
-                            ? districts.map((district, index) => (
+                            ? districts.map((district: LocationType) => (
                                 <SelectItem
-                                  key={index}
-                                  value={district.district}
+                                  key={district.id}
+                                  value={district.en_name}
                                 >
-                                  {district.district}
+                                  {district.en_name}
                                 </SelectItem>
                               ))
                             : null}
@@ -297,9 +302,12 @@ export default function VolunteerSignup() {
                         </FormControl>
                         <SelectContent>
                           {thanas.length > 0
-                            ? thanas.map((thana, index) => (
-                                <SelectItem key={index} value={thana}>
-                                  {thana}
+                            ? thanas.map((thana) => (
+                                <SelectItem
+                                  key={thana.id}
+                                  value={thana.en_name}
+                                >
+                                  {thana.en_name}
                                 </SelectItem>
                               ))
                             : null}

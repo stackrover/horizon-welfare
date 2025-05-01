@@ -1,5 +1,7 @@
 "use client";
 
+import { updateCategory } from "@/app/actions/admin/pages/campaigns";
+import InputField from "@/components/forms/InputField";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -9,21 +11,19 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Form } from "@/components/ui/form";
+import { STATUS } from "@/data/projects/category";
 import { zodResolver } from "@hookform/resolvers/zod";
 import _ from "lodash";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { mutate } from "swr";
 import { z } from "zod";
-import { createNewCategory } from "../../app/actions/admin/pages/campaigns";
-import InputField from "../forms/InputField";
-import { Form } from "../ui/form";
 
 const formSchema = z.object({
   title: z.string({ required_error: "Title is required." }),
   slug: z.string({ required_error: "Slug is required." }),
-  icon: z.instanceof(File),
+  icon: z.instanceof(File).optional(),
   status: z.enum(["active", "inactive", "pending"]),
 });
 
@@ -42,35 +42,47 @@ const FORM_FIELDS = [
     type: "text",
     placeholder: "Write a unique slug",
   },
-  { name: "icon", label: "Icon", type: "file" },
+  // { name: "icon", label: "Icon", type: "file" },
 ];
 
-export const CreateCategory = ({
-  children,
-  refresh = () => {},
-}: {
+type UpdateCategoryProps = {
   children: React.ReactNode | string;
-  refresh?: () => void;
-}) => {
+  preview: string;
+  title: string;
+  slug: string;
+  status: STATUS;
+  id: number;
+  refresh: () => void;
+};
+
+export const UpdateCategory = ({
+  children,
+  preview,
+  title,
+  slug,
+  status,
+  id,
+  refresh,
+}: UpdateCategoryProps) => {
   const [open, setOpen] = useState(false);
   const form = useForm<TFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      slug: "",
+      title,
+      slug,
       icon: undefined,
-      status: "active",
+      status,
     },
   });
 
   // hadnle slug
-  const title = form.watch("title");
+  const categoryTitle = form.watch("title");
 
   useEffect(() => {
-    if (title) {
-      form.setValue("slug", _.kebabCase(title));
+    if (categoryTitle) {
+      form.setValue("slug", _.kebabCase(categoryTitle));
     }
-  }, [title, form]);
+  }, [categoryTitle, form]);
 
   // handle form submission
   const onSubmit = async (formData: TFormData) => {
@@ -79,30 +91,23 @@ export const CreateCategory = ({
       fd.append(key, formData[key as keyof TFormData] || ""),
     );
 
-    const res = await createNewCategory(fd);
+    const res = await updateCategory(fd, id);
     if (res.status === "success") {
       toast.success(res.message);
-      mutate(`/project/category/list`);
-      refresh();
       setOpen(false);
+      refresh();
     } else {
       toast.error(res.message);
     }
   };
 
   return (
-    <Dialog
-      open={open}
-      onOpenChange={(val) => {
-        setOpen(val);
-        form.reset();
-      }}
-    >
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle> Add New Category </DialogTitle>
+          <DialogTitle> Update Category </DialogTitle>
           <DialogDescription className="hidden" />
         </DialogHeader>
 
@@ -112,9 +117,15 @@ export const CreateCategory = ({
               {FORM_FIELDS.map((field) => (
                 <InputField key={field.name} {...field} />
               ))}
+              <InputField
+                name="icon"
+                type="file"
+                defaultPreview={preview}
+                required
+              />
 
               <Button type="button" onClick={form.handleSubmit(onSubmit)}>
-                {form.formState.isSubmitting ? "Loading..." : "Create"}
+                {form.formState.isSubmitting ? "Loading..." : "Update"}
               </Button>
             </div>
           </form>

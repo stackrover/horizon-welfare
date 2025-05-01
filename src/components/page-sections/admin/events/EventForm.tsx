@@ -155,7 +155,10 @@ export default function EventForm<T extends z.ZodType<any, any>>({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)}>
+      <form
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className="rounded-lg border bg-white p-6"
+      >
         <div className="grid grid-cols-12 gap-x-6 gap-y-4 @container">
           {EventFormFields.map((group) => (
             <div

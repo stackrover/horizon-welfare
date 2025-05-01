@@ -15,6 +15,7 @@ import React from "react";
 
 import { Pagination } from "@/components";
 import { DebouncedInput } from "./DebouncedInput";
+import { ExportFile } from "./export-file";
 import { fuzzyFilter } from "./fuzzyFilter";
 
 type DataTableProps<T> = {
@@ -65,7 +66,10 @@ export default function DataTable<T>({
   return (
     <div className="block max-w-full p-2">
       <div className="mb-4 flex flex-col items-start gap-2 md:flex-row md:items-center md:justify-between">
-        <div>{elements ? elements : null}</div>
+        <div className="flex items-center gap-2">
+          <ExportFile columns={columns} data={data} />
+          {elements ? elements : null}
+        </div>
         <DebouncedInput
           type="search"
           value={globalFilter ?? ""}
@@ -122,29 +126,40 @@ export default function DataTable<T>({
             ))}
           </thead>
           <tbody>
-            {table.getRowModel().rows.map((row) => {
-              return (
-                <tr
-                  key={row.id}
-                  className="even:bg-neutral-50 hover:bg-neutral-100"
+            {data.length ? (
+              table.getRowModel().rows.map((row) => {
+                return (
+                  <tr
+                    key={row.id}
+                    className="even:bg-neutral-50 hover:bg-neutral-100"
+                  >
+                    {row.getVisibleCells().map((cell) => {
+                      return (
+                        <td
+                          key={cell.id}
+                          style={{ width: cell.column.getSize() }}
+                          className="border-y px-5 py-2 text-[10px] leading-[22px] text-[#4B465C] md:text-[15px]"
+                        >
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })
+            ) : (
+              <tr className="even:bg-neutral-50 hover:bg-neutral-100">
+                <td
+                  colSpan={table.getAllColumns().length}
+                  className="border-y px-5 py-2 text-center text-[10px] leading-[22px] text-[#4B465C] md:text-[15px]"
                 >
-                  {row.getVisibleCells().map((cell) => {
-                    return (
-                      <td
-                        key={cell.id}
-                        style={{ width: cell.column.getSize() }}
-                        className="border-y px-5 py-2 text-[10px] leading-[22px] text-[#4B465C] md:text-[15px]"
-                      >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
+                  No data available!
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

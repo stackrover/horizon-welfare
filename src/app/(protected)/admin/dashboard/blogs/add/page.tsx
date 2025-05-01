@@ -84,7 +84,7 @@ export default function BlogDetails() {
   const title = form.watch("title");
 
   useEffect(() => {
-    if (title && !form.getValues("slug")) {
+    if (title) {
       form.setValue("slug", _.kebabCase(title));
     }
   }, [title, form]);

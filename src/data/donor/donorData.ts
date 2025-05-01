@@ -16,6 +16,7 @@ export class DonorData {
   status: Status = "pending";
   f_name: string;
   l_name: string;
+  name: string;
   email: string;
   mobile_number: string;
   totalDonations: string;
@@ -42,6 +43,7 @@ export class DonorData {
     this.bannar_image = data.bannar_image;
     this.f_name = data.user.f_name;
     this.l_name = data.user.l_name;
+    this.name = `${this.f_name} ${this.l_name}`;
     this.status = data.user.status;
     this.email = data.user.email;
     this.mobile_number = data.user.mobile_number;

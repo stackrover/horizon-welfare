@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import { Loader, VolunteerProfile } from "@/components";
+import { Loader, VolunteerProfile, VolunteerProjectCard } from "@/components";
 import { getVolunteerProfile } from "@/hooks/get-volunteer-profile";
 import { config } from "@/utils/config";
 import { Suspense } from "react";
@@ -13,7 +13,15 @@ export default async function VolunteerProfilePage() {
 
   return (
     <Suspense fallback={<Loader className="h-screen" />}>
-      <VolunteerProfile dataPromise={dataPromise} userId={userId} />;
+      <>
+        <VolunteerProfile dataPromise={dataPromise} userId={userId} />
+
+        {/* available volunteer projects  */}
+        <VolunteerProjectCard
+          title="Available Volunteering Projects"
+          endpoint={`/volunteer/available/project/list/${userId}`}
+        />
+      </>
     </Suspense>
   );
 }

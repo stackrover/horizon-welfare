@@ -21,6 +21,8 @@ export default function Events() {
     return <div className="py-20 text-center"> Loading... </div>;
   }
 
+  console.log(data);
+
   const events = data?.data?.results?.map(
     (event: any) => new EventDetail(event),
   ) as EventDetail[];
@@ -46,7 +48,7 @@ export default function Events() {
           data={events || []}
           columns={[
             {
-              id: "eventId",
+              id: "id",
               header: "#",
               accessorKey: "id",
               maxSize: 120,
@@ -65,7 +67,7 @@ export default function Events() {
               cell: (i) => i.getValue(),
             },
             {
-              id: "thumbnail",
+              id: "thumbnail_image",
               header: "Thumbnail",
               accessorKey: "thumbnail",
               cell: (i) =>
@@ -80,7 +82,7 @@ export default function Events() {
                 ) : null,
             },
             {
-              id: "eventTitle",
+              id: "title",
               header: "Title",
               accessorKey: "title",
               cell: (i) => (
@@ -91,7 +93,7 @@ export default function Events() {
             },
 
             {
-              id: "Location",
+              id: "location",
               header: "location",
               accessorKey: "location",
               enableSorting: false,
@@ -103,7 +105,7 @@ export default function Events() {
             },
 
             {
-              id: "Map",
+              id: "mapLink",
               header: "Map iframe",
               accessorKey: "mapLink",
               enableSorting: false,
@@ -151,7 +153,7 @@ export default function Events() {
             },
 
             {
-              id: "action",
+              id: "actions",
               header: "Action",
               enableSorting: false,
               cell: ({ row }) => (

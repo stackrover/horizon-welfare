@@ -136,6 +136,13 @@ export type VideoCardProps = {
   title: string;
 };
 
+export type LocationType = {
+  id: number;
+  pid?: number;
+  en_name: string;
+  bn_name: string;
+};
+
 export type TruncateStringProps = {
   children: string;
   length: number;

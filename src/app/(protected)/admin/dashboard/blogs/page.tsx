@@ -76,14 +76,14 @@ export default function Blogs() {
             },
 
             {
-              id: "author",
+              id: "author_name",
               accessorFn: (r) => r.getAuthorName(),
               header: "Author",
               cell: (i) => i.getValue(),
             },
 
             {
-              id: "category",
+              id: "category_title",
               accessorFn: (r) => r.getCategoryTitle(),
               header: "Category",
               cell: (i) => i.getValue(),

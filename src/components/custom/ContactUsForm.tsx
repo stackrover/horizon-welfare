@@ -92,6 +92,21 @@ export function ContactUsForm({ className }: { className?: string }) {
       </div>
       <div>
         <label
+          htmlFor="contact-us-email"
+          className="font-semibold text-gray-400"
+        >
+          Mobile Number
+        </label>
+        <FormInput
+          type="number"
+          placeholder="Type your mobile number"
+          name="contact-us-mobile-number"
+          id="contact-us-mobile-number"
+          required
+        />
+      </div>
+      <div className="col-span-full">
+        <label
           htmlFor="contact-us-subject"
           className="font-semibold text-gray-400"
         >

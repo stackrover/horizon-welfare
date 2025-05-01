@@ -33,7 +33,7 @@ export default function Packages() {
           columns={[
             {
               id: "id",
-              header: "#",
+              header: "ID",
               accessorKey: "id",
               cell: (info) => info.getValue(),
             },
@@ -67,7 +67,7 @@ export default function Packages() {
               ),
             },
             {
-              id: "action",
+              id: "actions",
               header: "Action",
               enableSorting: false,
               cell: ({ row }) => (
